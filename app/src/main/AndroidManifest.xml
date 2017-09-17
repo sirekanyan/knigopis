@@ -5,10 +5,12 @@
     package="me.vadik.knigopis">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".App"
-        android:allowBackup="false"
+        android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@drawable/ic_letter_k"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_letter_k"
@@ -24,5 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="ru.ulogin.sdk.UloginAuthActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
 </manifest>
