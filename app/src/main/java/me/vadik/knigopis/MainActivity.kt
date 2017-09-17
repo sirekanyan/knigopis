@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
+import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +47,17 @@ class MainActivity : AppCompatActivity() {
 
       override fun onFailure(call: Call<Map<String, User>>?, t: Throwable?) {
         log("cannot load users", t)
+      }
+    })
+    api.latestBooksWithNotes().enqueue(object : Callback<Map<String, Book>> {
+      override fun onResponse(call: Call<Map<String, Book>>?, response: Response<Map<String, Book>>?) {
+        response?.body()?.values?.forEach { book ->
+          logw(book.notes)
+        }
+      }
+
+      override fun onFailure(call: Call<Map<String, Book>>?, t: Throwable?) {
+        log("cannot load latest books with notes", t)
       }
     })
   }

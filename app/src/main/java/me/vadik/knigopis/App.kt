@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class App : Application() {
 
-  val retrofit by lazy {
+  val retrofit: Retrofit by lazy {
     Retrofit.Builder()
         .baseUrl("http://api.knigopis.com")
         .addConverterFactory(GsonConverterFactory.create())

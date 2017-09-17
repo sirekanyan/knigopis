@@ -2,6 +2,7 @@ package me.vadik.knigopis
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import me.vadik.knigopis.model.User
 
 class UsersAdapter(private val users: List<User>) : RecyclerView.Adapter<UserViewHolder>() {
 

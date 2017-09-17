@@ -1,4 +1,4 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.model
 
 class User(
     val id: String,
