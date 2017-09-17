@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="me.vadik.knigopis">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@drawable/ic_letter_k"
         android:label="@string/app_name"
