@@ -5,7 +5,6 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.MenuItem
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.User
 import retrofit2.Call
@@ -18,21 +17,14 @@ class MainActivity : AppCompatActivity() {
   private val recyclerView by lazy { findViewById(R.id.recycler_view) as RecyclerView }
   private val users = mutableListOf<User>()
 
-  private val onNavigationItemSelectedListener = { item: MenuItem ->
-    supportActionBar!!.setTitle(when (item.itemId) {
-      R.id.navigation_home -> R.string.title_home
-      R.id.navigation_dashboard -> R.string.title_dashboard
-      R.id.navigation_notifications -> R.string.title_notifications
-      else -> throw UnsupportedOperationException()
-    })
-    true
-  }
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     val navigation = findViewById(R.id.navigation) as BottomNavigationView
-    navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+    navigation.setOnNavigationItemSelectedListener { item ->
+      supportActionBar!!.title = item.title
+      true
+    }
     val adapter = UsersAdapter(users)
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(this)

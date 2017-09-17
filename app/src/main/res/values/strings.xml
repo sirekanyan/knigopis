@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Knigopis</string>
     <string name="title_home">Latest</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_done">Done</string>
+    <string name="title_todo">Todo</string>
+    <string name="option_login">Login</string>
+    <string name="option_logout">Logout</string>
 </resources>

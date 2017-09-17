@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Книгопись</string>
-    <string name="title_home">Новые</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Читают</string>
+    <string name="title_done">Прочитано</string>
+    <string name="title_todo">Читать</string>
+    <string name="option_login">Войти</string>
+    <string name="option_logout">Выйти</string>
 </resources>
