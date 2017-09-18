@@ -1,6 +1,7 @@
 package me.vadik.knigopis
 
 import android.app.Activity
+import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 private const val TAG = "Knigopis"
 
 fun Activity.app() = application as App
+
+fun <T : View> Activity.findView(@IdRes id: Int): T = findViewById(id)
 
 fun logw(message: String) = Log.w(TAG, message)
 

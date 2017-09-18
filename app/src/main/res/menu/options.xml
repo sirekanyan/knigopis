@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/option_login"
-        android:title="@string/option_login"
-        android:visible="false"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/option_logout"
-        android:title="@string/option_logout"
-        android:visible="false"
-        app:showAsAction="never"/>
+        android:visible="false"/>
 
 </menu>

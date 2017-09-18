@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import me.vadik.knigopis.CurrentTab.*
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.User
 import retrofit2.Call
@@ -15,21 +16,16 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
   private val api by lazy { app().retrofit.create(Endpoint::class.java) }
-  private val recyclerView by lazy { findViewById(R.id.recycler_view) as RecyclerView }
-  private val toolbar by lazy { findViewById(R.id.toolbar) as Toolbar }
   private val users = mutableListOf<User>()
+  private val adapter = UsersAdapter(users)
+  private lateinit var currentTab: CurrentTab
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    val navigation = findViewById(R.id.navigation) as BottomNavigationView
-    navigation.setOnNavigationItemSelectedListener { item ->
-      toolbar.title = item.title
-      true
-    }
-    val adapter = UsersAdapter(users)
-    recyclerView.adapter = adapter
-    recyclerView.layoutManager = LinearLayoutManager(this)
+    initNavigationView(findView(R.id.navigation))
+    initRecyclerView(findView(R.id.recycler_view))
+    initToolbar(findView(R.id.toolbar))
     api.latestUsers().enqueue(object : Callback<Map<String, User>> {
       override fun onResponse(call: Call<Map<String, User>>?, response: Response<Map<String, User>>?) {
         users.clear()
@@ -54,5 +50,22 @@ class MainActivity : AppCompatActivity() {
         log("cannot load latest books with notes", t)
       }
     })
+  }
+
+  private fun initNavigationView(navigation: BottomNavigationView) {
+    currentTab = HOME_TAB
+    navigation.setOnNavigationItemSelectedListener { item ->
+      currentTab = CurrentTab.getByItemId(item.itemId)
+      true
+    }
+  }
+
+  private fun initRecyclerView(recyclerView: RecyclerView) {
+    recyclerView.adapter = adapter
+    recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+  }
+
+  private fun initToolbar(toolbar: Toolbar) {
+    toolbar.inflateMenu(R.menu.options)
   }
 }
