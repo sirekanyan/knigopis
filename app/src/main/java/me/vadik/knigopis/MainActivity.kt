@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.User
 import retrofit2.Call
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
   private val api by lazy { app().retrofit.create(Endpoint::class.java) }
   private val recyclerView by lazy { findViewById(R.id.recycler_view) as RecyclerView }
+  private val toolbar by lazy { findViewById(R.id.toolbar) as Toolbar }
   private val users = mutableListOf<User>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
     val navigation = findViewById(R.id.navigation) as BottomNavigationView
     navigation.setOnNavigationItemSelectedListener { item ->
-      supportActionBar!!.title = item.title
+      toolbar.title = item.title
       true
     }
     val adapter = UsersAdapter(users)
