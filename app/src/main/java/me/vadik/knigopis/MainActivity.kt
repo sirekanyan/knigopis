@@ -1,23 +1,32 @@
 package me.vadik.knigopis
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import me.vadik.knigopis.CurrentTab.*
+import android.view.MenuItem
+import me.vadik.knigopis.CurrentTab.DONE_TAB
+import me.vadik.knigopis.CurrentTab.HOME_TAB
+import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val ULOGIN_REQUEST_CODE = 0
+
 class MainActivity : AppCompatActivity() {
 
   private val api by lazy { app().retrofit.create(Endpoint::class.java) }
+  private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val users = mutableListOf<User>()
   private val adapter = UsersAdapter(users)
+  private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +61,27 @@ class MainActivity : AppCompatActivity() {
     })
   }
 
+  override fun onStart() {
+    super.onStart()
+    refreshOptionsMenu()
+    auth.requestAccessToken {
+      refreshOptionsMenu()
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    when (requestCode) {
+      ULOGIN_REQUEST_CODE -> {
+        if (resultCode == RESULT_OK && data != null) {
+          auth.saveTokenResponse(data)
+        }
+      }
+    }
+  }
+
   private fun initNavigationView(navigation: BottomNavigationView) {
-    currentTab = HOME_TAB
+    currentTab = if (auth.isAuthorized()) DONE_TAB else HOME_TAB
+    navigation.selectedItemId = currentTab.itemId
     navigation.setOnNavigationItemSelectedListener { item ->
       currentTab = CurrentTab.getByItemId(item.itemId)
       true
@@ -62,10 +90,36 @@ class MainActivity : AppCompatActivity() {
 
   private fun initRecyclerView(recyclerView: RecyclerView) {
     recyclerView.adapter = adapter
-    recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+    recyclerView.layoutManager = LinearLayoutManager(this)
   }
 
   private fun initToolbar(toolbar: Toolbar) {
     toolbar.inflateMenu(R.menu.options)
+    toolbar.setOnMenuItemClickListener { item ->
+      when (item.itemId) {
+        R.id.option_login -> {
+          if (auth.isAuthorized()) {
+            auth.logout()
+          } else {
+            startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
+          }
+          refreshOptionsMenu()
+          true
+        }
+        else -> false
+      }
+    }
+    loginOption = toolbar.menu.findItem(R.id.option_login)
+  }
+
+  private fun refreshOptionsMenu() {
+    loginOption.isVisible = true
+    if (auth.isAuthorized()) {
+      loginOption.setTitle(R.string.option_logout)
+      loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+    } else {
+      loginOption.setTitle(R.string.option_login)
+      loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+    }
   }
 }
