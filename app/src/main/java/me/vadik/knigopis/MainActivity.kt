@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
   private val users = mutableListOf<User>()
   private val books = mutableListOf<Book>()
   private val wishes = mutableListOf<Wish>()
-  private val usersAdapter = UsersAdapter(users)
-  private val booksAdapter = BooksAdapter(books)
-  private val wishesAdapter = WishesAdapter(wishes)
+  private val usersAdapter = UsersAdapter.create(users)
+  private val booksAdapter = BooksAdapter.create(books)
+  private val wishesAdapter = WishesAdapter.create(wishes)
   private lateinit var usersRecyclerView: RecyclerView
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var wishesRecyclerView: RecyclerView
