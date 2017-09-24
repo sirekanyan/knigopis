@@ -18,7 +18,7 @@ class BooksAdapter(private val imageEndpoint: ImageEndpoint) {
       books,
       R.layout.book,
       Adapter(R.id.book_image) { book ->
-        imageEndpoint.searchImage(book.title + " " + book.author)
+        imageEndpoint.searchImage("${book.title} ${book.author}")
             .delay((Math.random() * 3000).toLong(), TimeUnit.MICROSECONDS)
             .io2main()
             .subscribe({ thumbnail ->
@@ -30,7 +30,17 @@ class BooksAdapter(private val imageEndpoint: ImageEndpoint) {
               logError("cannot load thumbnail", it)
             })
       },
-      Adapter(R.id.book_title) { this as TextView; text = it.title },
-      Adapter(R.id.book_author) { this as TextView; text = it.author }
+      Adapter(R.id.book_title) {
+        this as TextView
+        text = it.title
+      },
+      Adapter(R.id.book_author) {
+        this as TextView
+        text = if (it.author.isEmpty()) {
+          "(автор не указан)"
+        } else {
+          it.author
+        }
+      }
   )
 }

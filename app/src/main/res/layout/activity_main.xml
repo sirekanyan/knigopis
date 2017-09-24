@@ -32,7 +32,7 @@
         tools:visibility="visible"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/books_recycler_view"
+        android:id="@+id/finished_books_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -41,7 +41,7 @@
         tools:visibility="visible"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/wishes_recycler_view"
+        android:id="@+id/planned_books_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

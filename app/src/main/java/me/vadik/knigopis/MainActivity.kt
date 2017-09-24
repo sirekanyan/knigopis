@@ -12,12 +12,11 @@ import android.view.View
 import me.vadik.knigopis.CurrentTab.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.adapters.UsersAdapter
-import me.vadik.knigopis.adapters.WishesAdapter
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
-import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.User
-import me.vadik.knigopis.model.Wish
+import me.vadik.knigopis.model.PlannedBook
 
 private const val ULOGIN_REQUEST_CODE = 0
 
@@ -27,23 +26,23 @@ class MainActivity : AppCompatActivity() {
   private val imageApi by lazy { app().imageApi.create(ImageEndpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val users = mutableListOf<User>()
-  private val books = mutableListOf<Book>()
-  private val wishes = mutableListOf<Wish>()
+  private val finishedBooks = mutableListOf<FinishedBook>()
+  private val plannedBooks = mutableListOf<PlannedBook>()
   private val usersAdapter = UsersAdapter.create(users)
-  private val booksAdapter by lazy { BooksAdapter(imageApi).create(books) }
-  private val wishesAdapter by lazy { WishesAdapter(imageApi).create(wishes) }
-  private lateinit var usersRecyclerView: RecyclerView
-  private lateinit var booksRecyclerView: RecyclerView
-  private lateinit var wishesRecyclerView: RecyclerView
+  private val finishedBooksAdapter by lazy { BooksAdapter(imageApi).create(finishedBooks) }
+  private val plannedBooksAdapter by lazy { BooksAdapter(imageApi).create(plannedBooks) }
+  private lateinit var usersView: RecyclerView
+  private lateinit var finishedBooksView: RecyclerView
+  private lateinit var plannedBooksView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    usersRecyclerView = initRecyclerView(findView(R.id.users_recycler_view), usersAdapter)
-    booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view), booksAdapter)
-    wishesRecyclerView = initRecyclerView(findView(R.id.wishes_recycler_view), wishesAdapter)
+    usersView = initRecyclerView(findView(R.id.users_recycler_view), usersAdapter)
+    finishedBooksView = initRecyclerView(findView(R.id.finished_books_view), finishedBooksAdapter)
+    plannedBooksView = initRecyclerView(findView(R.id.planned_books_view), plannedBooksAdapter)
     initNavigationView(findView(R.id.navigation))
     initToolbar(findView(R.id.toolbar))
   }
@@ -121,9 +120,9 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshHomeTab() {
-    usersRecyclerView.visibility = View.VISIBLE
-    booksRecyclerView.visibility = View.GONE
-    wishesRecyclerView.visibility = View.GONE
+    usersView.visibility = View.VISIBLE
+    finishedBooksView.visibility = View.GONE
+    plannedBooksView.visibility = View.GONE
     api.getLatestUsers()
         .io2main()
         .subscribe({ latestUsers ->
@@ -136,32 +135,32 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshDoneTab() {
-    usersRecyclerView.visibility = View.GONE
-    booksRecyclerView.visibility = View.VISIBLE
-    wishesRecyclerView.visibility = View.GONE
-    api.getBooks(auth.getAccessToken())
+    usersView.visibility = View.GONE
+    finishedBooksView.visibility = View.VISIBLE
+    plannedBooksView.visibility = View.GONE
+    api.getFinishedBooks(auth.getAccessToken())
         .io2main()
         .subscribe({
-          books.clear()
-          books.addAll(it)
-          usersAdapter.notifyDataSetChanged()
+          finishedBooks.clear()
+          finishedBooks.addAll(it)
+          finishedBooksAdapter.notifyDataSetChanged()
         }, {
-          logError("cannot load books", it)
+          logError("cannot load finished books", it)
         })
   }
 
   private fun refreshTodoTab() {
-    usersRecyclerView.visibility = View.GONE
-    booksRecyclerView.visibility = View.GONE
-    wishesRecyclerView.visibility = View.VISIBLE
-    api.getWishes(auth.getAccessToken())
+    usersView.visibility = View.GONE
+    finishedBooksView.visibility = View.GONE
+    plannedBooksView.visibility = View.VISIBLE
+    api.getPlannedBooks(auth.getAccessToken())
         .io2main()
         .subscribe({
-          wishes.clear()
-          wishes.addAll(it)
-          wishesAdapter.notifyDataSetChanged()
+          plannedBooks.clear()
+          plannedBooks.addAll(it)
+          plannedBooksAdapter.notifyDataSetChanged()
         }, {
-          logError("cannot load wishes", it)
+          logError("cannot load planned books", it)
         })
   }
 }
