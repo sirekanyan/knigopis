@@ -126,9 +126,9 @@ class MainActivity : AppCompatActivity() {
         Single.just(listOf(BookHeader("К прочтению"))),
         api.getPlannedBooks(auth.getAccessToken())
             .map { it.sortedByDescending { it.priority } },
-        Single.just(listOf(BookHeader("Прочитано"))),
         api.getFinishedBooks(auth.getAccessToken())
             .map { it.sortedByDescending(FinishedBook::order) }
+            .map { it.groupFinishedBooks() }
     ).io2main()
         .subscribe({
           allBooks.addAll(it)
@@ -162,5 +162,25 @@ class MainActivity : AppCompatActivity() {
         }, {
           logError("cannot load planned books", it)
         })
+  }
+
+  private fun List<FinishedBook>.groupFinishedBooks(): List<Book> {
+    val groupedBooks = mutableListOf<Book>()
+    var previousReadYear = Int.MAX_VALUE.toString()
+    forEachIndexed { index, book ->
+      val readYear = book.readYear
+      if (previousReadYear != readYear) {
+        groupedBooks.add(BookHeader(
+            when {
+              book.readYear.isEmpty() -> "Прочие года"
+              index == 0 -> "Прочитано в $readYear г."
+              else -> "$readYear г."
+            }
+        ))
+      }
+      groupedBooks.add(book)
+      previousReadYear = book.readYear
+    }
+    return groupedBooks
   }
 }
