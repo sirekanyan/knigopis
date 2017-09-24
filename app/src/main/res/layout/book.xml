@@ -44,24 +44,4 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="16dp">
-
-        <TextView
-            android:id="@+id/book_read_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="2011"/>
-
-        <CheckBox
-            android:id="@+id/book_read_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-    </FrameLayout>
-
 </FrameLayout>
