@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         .io2main()
         .subscribe({
           finishedBooks.clear()
-          finishedBooks.addAll(it)
+          finishedBooks.addAll(it.sortedByDescending(FinishedBook::order))
           finishedBooksAdapter.notifyDataSetChanged()
         }, {
           logError("cannot load finished books", it)
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         .io2main()
         .subscribe({
           plannedBooks.clear()
-          plannedBooks.addAll(it.sortedBy { -it.priority })
+          plannedBooks.addAll(it.sortedByDescending { it.priority })
           plannedBooksAdapter.notifyDataSetChanged()
         }, {
           logError("cannot load planned books", it)
