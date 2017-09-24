@@ -1,7 +1,6 @@
 package me.vadik.knigopis.adapters
 
 import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import me.vadik.knigopis.inflate
 
 class Adapter<T>(
     private val items: List<T>,
-    @LayoutRes private val itemLayout: Int
+    private val layout: (T) -> Int
 ) {
 
   val binders = mutableMapOf<@IdRes Int, (View, T) -> Unit>()
@@ -23,7 +22,7 @@ class Adapter<T>(
 
   fun build() = object : RecyclerView.Adapter<ViewsHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        parent.inflate(itemLayout).let { rootView ->
+        parent.inflate(viewType).let { rootView ->
           ViewsHolder(rootView, binders.mapValues { (key, _) ->
             rootView.findViewById<View>(key)
           })
@@ -37,6 +36,8 @@ class Adapter<T>(
         }
 
     override fun getItemCount() = items.size
+
+    override fun getItemViewType(position: Int) = layout(items[position])
   }
 }
 

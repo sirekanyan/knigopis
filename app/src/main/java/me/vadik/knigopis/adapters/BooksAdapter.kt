@@ -10,12 +10,19 @@ import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.R
 import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.PlannedBook
 
 class BooksAdapter(private val coverSearch: BookCoverSearch) {
 
-  fun build(books: List<Book>) = Adapter(books, R.layout.book)
+  fun build(books: List<Book>) = Adapter(books) {
+    if (it is BookHeader) {
+      R.layout.header
+    } else {
+      R.layout.book
+    }
+  }
       .bind<ImageView>(R.id.book_image) { book ->
         coverSearch.search(book)
             .subscribe({ coverUrl ->
@@ -50,12 +57,12 @@ class BooksAdapter(private val coverSearch: BookCoverSearch) {
         }
       }
       .bind<CheckBox>(R.id.book_read_checkbox) {
-        when (it) {
+        visibility = when (it) {
           is FinishedBook -> {
-            visibility = View.GONE
+            View.GONE
           }
           is PlannedBook -> {
-            visibility = View.VISIBLE
+            View.VISIBLE
           }
           else -> TODO()
         }

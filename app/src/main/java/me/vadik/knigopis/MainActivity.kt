@@ -123,10 +123,10 @@ class MainActivity : AppCompatActivity() {
     booksRecyclerView.adapter = allBooksAdapter
     allBooks.clear()
     Single.concat(
-        Single.just(listOf(FinishedBook("", "К прочтению", "", "", "", "", "", "", User("", "", 0, "")))),
+        Single.just(listOf(BookHeader("К прочтению"))),
         api.getPlannedBooks(auth.getAccessToken())
             .map { it.sortedByDescending { it.priority } },
-        Single.just(listOf(FinishedBook("", "Прочитано", "", "", "", "", "", "", User("", "", 0, "")))),
+        Single.just(listOf(BookHeader("Прочитано"))),
         api.getFinishedBooks(auth.getAccessToken())
             .map { it.sortedByDescending(FinishedBook::order) }
     ).io2main()

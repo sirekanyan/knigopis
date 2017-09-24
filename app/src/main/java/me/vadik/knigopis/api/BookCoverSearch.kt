@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 private const val PREFERENCE_PREFIX = "thumbnail_"
 private const val MAX_DELAY_IN_MICROSECONDS = 3000
-private const val MIN_TITLE_WORDS_COUNT = 1
+private const val MIN_TITLE_WORDS_COUNT = 2
 
 interface BookCoverSearch {
   fun search(book: Book): Single<String>
