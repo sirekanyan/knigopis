@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun initNavigationView(navigation: BottomNavigationView) {
-    setCurrentTab(if (auth.isAuthorized()) DONE_TAB else HOME_TAB)
+    setCurrentTab(HOME_TAB)
     navigation.selectedItemId = currentTab.itemId
     navigation.setOnNavigationItemSelectedListener { item ->
       setCurrentTab(CurrentTab.getByItemId(item.itemId))
@@ -114,8 +114,8 @@ class MainActivity : AppCompatActivity() {
     currentTab = tab
     when (tab) {
       HOME_TAB -> refreshHomeTab()
-      DONE_TAB -> refreshDoneTab()
-      TODO_TAB -> refreshTodoTab()
+      USERS_TAB -> refreshDoneTab()
+      NOTES_TAB -> refreshTodoTab()
     }
   }
 

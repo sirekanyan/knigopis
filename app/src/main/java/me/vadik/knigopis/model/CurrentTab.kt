@@ -6,8 +6,8 @@ import me.vadik.knigopis.R
 enum class CurrentTab(@IdRes val itemId: Int) {
 
   HOME_TAB(R.id.navigation_home),
-  DONE_TAB(R.id.navigation_done),
-  TODO_TAB(R.id.navigation_todo);
+  USERS_TAB(R.id.navigation_users),
+  NOTES_TAB(R.id.navigation_notes);
 
   companion object {
     fun getByItemId(@IdRes itemId: Int) =
