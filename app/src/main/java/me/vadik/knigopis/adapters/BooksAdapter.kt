@@ -1,7 +1,6 @@
 package me.vadik.knigopis.adapters
 
 import android.content.SharedPreferences
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -19,14 +18,18 @@ class BooksAdapter(
     private val preferences: SharedPreferences
 ) {
 
-  fun create(books: List<Book>) = createAdapter<Book, View>(
-      books,
-      R.layout.book,
-      Adapter(R.id.book_image) { book ->
+  fun build(books: List<Book>) = Adapter(books, R.layout.book)
+      .bind<ImageView>(R.id.book_image) { book ->
         val cachedUrl = preferences.getString("book${book.id}", null)
         Single.defer {
           if (cachedUrl == null) {
-            imageEndpoint.searchImage("${book.title} ${book.author}")
+            val titleWordsCount = book.title.split(" ").size
+            val searchQuery = if (titleWordsCount < 2) {
+              "${book.title} ${book.author}"
+            } else {
+              book.title
+            }
+            imageEndpoint.searchImage(searchQuery)
                 .delay((Math.random() * 3000).toLong(), TimeUnit.MICROSECONDS)
                 .map { thumbnail ->
                   ("https:" + thumbnail.url).also {
@@ -41,22 +44,20 @@ class BooksAdapter(
               Glide.with(context)
                   .load(thumbnailUrl)
                   .apply(RequestOptions.circleCropTransform())
-                  .into(this as ImageView)
+                  .into(this)
             }, {
               logError("cannot load thumbnail", it)
             })
-      },
-      Adapter(R.id.book_title) {
-        this as TextView
+      }
+      .bind<TextView>(R.id.book_title) {
         text = it.title
-      },
-      Adapter(R.id.book_author) {
-        this as TextView
+      }
+      .bind<TextView>(R.id.book_author) {
         text = if (it.author.isEmpty()) {
           "(автор не указан)"
         } else {
           it.author
         }
       }
-  )
+      .build()
 }

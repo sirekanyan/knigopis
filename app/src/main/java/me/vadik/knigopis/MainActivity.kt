@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         getSharedPreferences("knigopis", MODE_PRIVATE)
     )
   }
-  private val finishedBooksAdapter by lazy { booksAdapter.create(finishedBooks) }
-  private val plannedBooksAdapter by lazy { booksAdapter.create(plannedBooks) }
+  private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }
+  private val plannedBooksAdapter by lazy { booksAdapter.build(plannedBooks) }
   private lateinit var usersView: RecyclerView
   private lateinit var finishedBooksView: RecyclerView
   private lateinit var plannedBooksView: RecyclerView
