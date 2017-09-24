@@ -1,7 +1,7 @@
 package me.vadik.knigopis.model
 
 class FinishedBook(
-    val id: String,
+    override val id: String,
     override val title: String,
     override val author: String,
     val notes: String,

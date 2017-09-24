@@ -2,7 +2,7 @@
     <string name="app_name">Книгопись</string>
     <string name="title_home">Читают</string>
     <string name="title_done">Прочитано</string>
-    <string name="title_todo">Читать</string>
+    <string name="title_todo">К прочтению</string>
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
 </resources>

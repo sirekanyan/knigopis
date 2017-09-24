@@ -15,22 +15,27 @@ import me.vadik.knigopis.adapters.UsersAdapter
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBook
-import me.vadik.knigopis.model.User
 import me.vadik.knigopis.model.PlannedBook
+import me.vadik.knigopis.model.User
 
 private const val ULOGIN_REQUEST_CODE = 0
 
 class MainActivity : AppCompatActivity() {
 
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
-  private val imageApi by lazy { app().imageApi.create(ImageEndpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val users = mutableListOf<User>()
   private val finishedBooks = mutableListOf<FinishedBook>()
   private val plannedBooks = mutableListOf<PlannedBook>()
   private val usersAdapter = UsersAdapter.create(users)
-  private val finishedBooksAdapter by lazy { BooksAdapter(imageApi).create(finishedBooks) }
-  private val plannedBooksAdapter by lazy { BooksAdapter(imageApi).create(plannedBooks) }
+  private val booksAdapter by lazy {
+    BooksAdapter(
+        app().imageApi.create(ImageEndpoint::class.java),
+        getSharedPreferences("knigopis", MODE_PRIVATE)
+    )
+  }
+  private val finishedBooksAdapter by lazy { booksAdapter.create(finishedBooks) }
+  private val plannedBooksAdapter by lazy { booksAdapter.create(plannedBooks) }
   private lateinit var usersView: RecyclerView
   private lateinit var finishedBooksView: RecyclerView
   private lateinit var plannedBooksView: RecyclerView
@@ -157,7 +162,7 @@ class MainActivity : AppCompatActivity() {
         .io2main()
         .subscribe({
           plannedBooks.clear()
-          plannedBooks.addAll(it)
+          plannedBooks.addAll(it.sortedBy { -it.priority })
           plannedBooksAdapter.notifyDataSetChanged()
         }, {
           logError("cannot load planned books", it)

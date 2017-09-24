@@ -11,7 +11,7 @@ class Adapter<in T, in V : View>(@IdRes val id: Int, val bind: V.(T) -> Unit)
 
 class ViewHolder(rootView: View, val views: List<*>) : RecyclerView.ViewHolder(rootView)
 
-fun <T, V : View> createAdapter(
+inline fun <T, reified V : View> createAdapter(
     items: List<T>,
     @LayoutRes itemLayout: Int,
     vararg adapters: Adapter<T, V>
@@ -20,14 +20,12 @@ fun <T, V : View> createAdapter(
       override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
           parent.inflate(itemLayout).let { rootView ->
             ViewHolder(rootView, adapters.map {
-              @Suppress("UNCHECKED_CAST")
               rootView.findViewById<View>(it.id) as V
             })
           }
 
       override fun onBindViewHolder(holder: ViewHolder, position: Int) =
           adapters.forEachIndexed { index, adapter ->
-            @Suppress("UNCHECKED_CAST")
             adapter.bind.invoke(holder.views[index] as V, items[position])
           }
 
