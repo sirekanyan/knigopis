@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
   private val plannedBooks = mutableListOf<PlannedBook>()
   private val usersAdapter = UsersAdapter.create(users)
   private val booksAdapter by lazy {
-    BooksAdapter(
+    BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
         getSharedPreferences("knigopis", MODE_PRIVATE)
-    )
+    ))
   }
   private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }
   private val plannedBooksAdapter by lazy { booksAdapter.build(plannedBooks) }

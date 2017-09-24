@@ -1,48 +1,22 @@
 package me.vadik.knigopis.adapters
 
-import android.content.SharedPreferences
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import io.reactivex.Single
-import me.vadik.knigopis.ImageEndpoint
+import me.vadik.knigopis.BookCoverSearch
 import me.vadik.knigopis.R
-import me.vadik.knigopis.io2main
 import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.Book
-import java.util.concurrent.TimeUnit
 
-class BooksAdapter(
-    private val imageEndpoint: ImageEndpoint,
-    private val preferences: SharedPreferences
-) {
+class BooksAdapter(private val coverSearch: BookCoverSearch) {
 
   fun build(books: List<Book>) = Adapter(books, R.layout.book)
       .bind<ImageView>(R.id.book_image) { book ->
-        val cachedUrl = preferences.getString("book${book.id}", null)
-        Single.defer {
-          if (cachedUrl == null) {
-            val titleWordsCount = book.title.split(" ").size
-            val searchQuery = if (titleWordsCount < 2) {
-              "${book.title} ${book.author}"
-            } else {
-              book.title
-            }
-            imageEndpoint.searchImage(searchQuery)
-                .delay((Math.random() * 3000).toLong(), TimeUnit.MICROSECONDS)
-                .map { thumbnail ->
-                  ("https:" + thumbnail.url).also {
-                    preferences.edit().putString("book${book.id}", it).apply()
-                  }
-                }
-          } else {
-            Single.just(cachedUrl)
-          }
-        }.io2main()
-            .subscribe({ thumbnailUrl ->
+        coverSearch.search(book)
+            .subscribe({ coverUrl ->
               Glide.with(context)
-                  .load(thumbnailUrl)
+                  .load(coverUrl)
                   .apply(RequestOptions.circleCropTransform())
                   .into(this)
             }, {

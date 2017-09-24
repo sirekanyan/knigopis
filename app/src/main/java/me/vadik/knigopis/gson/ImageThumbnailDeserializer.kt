@@ -15,6 +15,6 @@ class ImageThumbnailDeserializer : JsonDeserializer<ImageThumbnail> {
           .getAsJsonArray("items")
           .firstOrNull()
           ?.asJsonObject
-          ?.let { ImageThumbnail(it["thumbnail"].asString) }
+          ?.let { ImageThumbnail("https:" + it["thumbnail"].asString) }
           ?: emptyThumbnail
 }
