@@ -2,7 +2,7 @@ package me.vadik.knigopis
 
 import android.app.Application
 import com.google.gson.GsonBuilder
-import me.vadik.knigopis.gson.ImageThumbnailDeserializer
+import me.vadik.knigopis.api.gson.ImageThumbnailDeserializer
 import me.vadik.knigopis.model.ImageThumbnail
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

@@ -1,4 +1,4 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.api
 
 import io.reactivex.Single
 import me.vadik.knigopis.model.FinishedBook

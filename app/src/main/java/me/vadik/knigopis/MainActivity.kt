@@ -9,11 +9,15 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
-import me.vadik.knigopis.CurrentTab.*
+import me.vadik.knigopis.model.CurrentTab.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.adapters.UsersAdapter
+import me.vadik.knigopis.api.BookCoverSearchImpl
+import me.vadik.knigopis.api.Endpoint
+import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
+import me.vadik.knigopis.model.CurrentTab
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.User

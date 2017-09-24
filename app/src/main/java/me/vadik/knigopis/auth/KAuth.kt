@@ -2,7 +2,7 @@ package me.vadik.knigopis.auth
 
 import android.content.Context
 import android.content.Intent
-import me.vadik.knigopis.Endpoint
+import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.io2main
 import me.vadik.knigopis.logError
 import ru.ulogin.sdk.UloginAuthActivity

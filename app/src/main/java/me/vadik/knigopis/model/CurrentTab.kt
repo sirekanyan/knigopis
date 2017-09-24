@@ -1,6 +1,7 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.model
 
 import android.support.annotation.IdRes
+import me.vadik.knigopis.R
 
 enum class CurrentTab(@IdRes val itemId: Int) {
 

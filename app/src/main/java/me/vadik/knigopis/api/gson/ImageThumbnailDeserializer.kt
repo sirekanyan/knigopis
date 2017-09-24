@@ -1,4 +1,4 @@
-package me.vadik.knigopis.gson
+package me.vadik.knigopis.api.gson
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
