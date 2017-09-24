@@ -3,13 +3,10 @@ package me.vadik.knigopis.auth
 import android.content.Context
 import android.content.Intent
 import me.vadik.knigopis.Endpoint
+import me.vadik.knigopis.io2main
 import me.vadik.knigopis.logError
-import me.vadik.knigopis.model.Credentials
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import ru.ulogin.sdk.UloginAuthActivity
-import java.util.HashMap
+import java.util.*
 
 private const val PREFS_NAME = "knigopis"
 private const val TOKEN_KEY = "token"
@@ -48,16 +45,14 @@ class KAuthImpl(
   override fun requestAccessToken(onSuccess: () -> Unit) {
     val token = preferences.getString(TOKEN_KEY, null)
     if (token != null && !isAuthorized()) {
-      api.getCredentials(token).enqueue(object : Callback<Credentials> {
-        override fun onResponse(call: Call<Credentials>?, response: Response<Credentials>?) {
-          preferences.edit().putString(ACCESS_TOKEN_KEY, response?.body()?.accessToken).apply()
-          onSuccess()
-        }
-
-        override fun onFailure(call: Call<Credentials>?, t: Throwable?) {
-          logError("cannot get credentials", t)
-        }
-      })
+      api.getCredentials(token)
+          .io2main()
+          .subscribe({
+            preferences.edit().putString(ACCESS_TOKEN_KEY, it.accessToken).apply()
+            onSuccess()
+          }, {
+            logError("cannot get credentials", it)
+          })
     }
   }
 

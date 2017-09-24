@@ -15,11 +15,17 @@ android {
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:support-vector-drawable:26.0.0-alpha1'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile "io.reactivex.rxjava2:rxjava:2.1.4"
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile('com.github.bumptech.glide:glide:4.1.1') {
+        exclude group: 'com.android.support' // todo remove
+    }
     compile(name: 'ulogin-sdk-v1.1', ext: 'aar')
 }

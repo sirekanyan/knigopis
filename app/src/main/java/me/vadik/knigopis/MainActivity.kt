@@ -18,22 +18,20 @@ import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.User
 import me.vadik.knigopis.model.Wish
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 private const val ULOGIN_REQUEST_CODE = 0
 
 class MainActivity : AppCompatActivity() {
 
-  private val api by lazy { app().retrofit.create(Endpoint::class.java) }
+  private val api by lazy { app().baseApi.create(Endpoint::class.java) }
+  private val imageApi by lazy { app().imageApi.create(ImageEndpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val users = mutableListOf<User>()
   private val books = mutableListOf<Book>()
   private val wishes = mutableListOf<Wish>()
   private val usersAdapter = UsersAdapter.create(users)
-  private val booksAdapter = BooksAdapter.create(books)
-  private val wishesAdapter = WishesAdapter.create(wishes)
+  private val booksAdapter by lazy { BooksAdapter(imageApi).create(books) }
+  private val wishesAdapter by lazy { WishesAdapter(imageApi).create(wishes) }
   private lateinit var usersRecyclerView: RecyclerView
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var wishesRecyclerView: RecyclerView
@@ -126,56 +124,44 @@ class MainActivity : AppCompatActivity() {
     usersRecyclerView.visibility = View.VISIBLE
     booksRecyclerView.visibility = View.GONE
     wishesRecyclerView.visibility = View.GONE
-    api.getLatestUsers().enqueue(object : Callback<Map<String, User>> {
-      override fun onResponse(call: Call<Map<String, User>>?, response: Response<Map<String, User>>?) {
-        users.clear()
-        response?.body()?.values?.forEach { user ->
-          users.add(user)
-        }
-        usersAdapter.notifyDataSetChanged()
-      }
-
-      override fun onFailure(call: Call<Map<String, User>>?, t: Throwable?) {
-        logError("cannot load users", t)
-      }
-    })
+    api.getLatestUsers()
+        .io2main()
+        .subscribe({ latestUsers ->
+          users.clear()
+          users.addAll(latestUsers.values)
+          usersAdapter.notifyDataSetChanged()
+        }, {
+          logError("cannot load users", it)
+        })
   }
 
   private fun refreshDoneTab() {
     usersRecyclerView.visibility = View.GONE
     booksRecyclerView.visibility = View.VISIBLE
     wishesRecyclerView.visibility = View.GONE
-    api.getBooks(auth.getAccessToken()).enqueue(object : Callback<List<Book>> {
-      override fun onResponse(call: Call<List<Book>>?, response: Response<List<Book>>?) {
-        books.clear()
-        response?.body()?.forEach { book ->
-          books.add(book)
-        }
-        usersAdapter.notifyDataSetChanged()
-      }
-
-      override fun onFailure(call: Call<List<Book>>?, t: Throwable?) {
-        logError("cannot load books", t)
-      }
-    })
+    api.getBooks(auth.getAccessToken())
+        .io2main()
+        .subscribe({
+          books.clear()
+          books.addAll(it)
+          usersAdapter.notifyDataSetChanged()
+        }, {
+          logError("cannot load books", it)
+        })
   }
 
   private fun refreshTodoTab() {
     usersRecyclerView.visibility = View.GONE
     booksRecyclerView.visibility = View.GONE
     wishesRecyclerView.visibility = View.VISIBLE
-    api.getWishes(auth.getAccessToken()).enqueue(object : Callback<List<Wish>> {
-      override fun onResponse(call: Call<List<Wish>>?, response: Response<List<Wish>>?) {
-        wishes.clear()
-        response?.body()?.forEach { wish ->
-          wishes.add(wish)
-        }
-        wishesAdapter.notifyDataSetChanged()
-      }
-
-      override fun onFailure(call: Call<List<Wish>>?, t: Throwable?) {
-        logError("cannot load wishes", t)
-      }
-    })
+    api.getWishes(auth.getAccessToken())
+        .io2main()
+        .subscribe({
+          wishes.clear()
+          wishes.addAll(it)
+          wishesAdapter.notifyDataSetChanged()
+        }, {
+          logError("cannot load wishes", it)
+        })
   }
 }
