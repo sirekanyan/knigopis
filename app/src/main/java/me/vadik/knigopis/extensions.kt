@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,4 +26,7 @@ fun ViewGroup.inflate(@LayoutRes layout: Int): View =
     LayoutInflater.from(context).inflate(layout, this, false)
 
 fun <T> Single<T>.io2main(): Single<T> =
+    subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+fun <T> Flowable<T>.io2main(): Flowable<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

@@ -23,29 +23,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/users_recycler_view"
+        android:id="@+id/books_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:visibility="gone"
-        tools:listitem="@layout/user"
-        tools:visibility="visible"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/finished_books_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone"
-        tools:listitem="@layout/book"
-        tools:visibility="visible"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/planned_books_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone"
         tools:listitem="@layout/book"/>
 
     <android.support.design.widget.BottomNavigationView

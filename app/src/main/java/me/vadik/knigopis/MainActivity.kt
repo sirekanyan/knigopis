@@ -8,19 +8,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
-import me.vadik.knigopis.model.CurrentTab.*
+import io.reactivex.Single
 import me.vadik.knigopis.adapters.BooksAdapter
-import me.vadik.knigopis.adapters.UsersAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
-import me.vadik.knigopis.model.CurrentTab
-import me.vadik.knigopis.model.FinishedBook
-import me.vadik.knigopis.model.PlannedBook
-import me.vadik.knigopis.model.User
+import me.vadik.knigopis.model.*
+import me.vadik.knigopis.model.CurrentTab.*
 
 private const val ULOGIN_REQUEST_CODE = 0
 
@@ -28,30 +24,26 @@ class MainActivity : AppCompatActivity() {
 
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
-  private val users = mutableListOf<User>()
+  private val allBooks = mutableListOf<Book>()
   private val finishedBooks = mutableListOf<FinishedBook>()
   private val plannedBooks = mutableListOf<PlannedBook>()
-  private val usersAdapter = UsersAdapter.create(users)
   private val booksAdapter by lazy {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
         getSharedPreferences("knigopis", MODE_PRIVATE)
     ))
   }
+  private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
   private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }
   private val plannedBooksAdapter by lazy { booksAdapter.build(plannedBooks) }
-  private lateinit var usersView: RecyclerView
-  private lateinit var finishedBooksView: RecyclerView
-  private lateinit var plannedBooksView: RecyclerView
+  private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    usersView = initRecyclerView(findView(R.id.users_recycler_view), usersAdapter)
-    finishedBooksView = initRecyclerView(findView(R.id.finished_books_view), finishedBooksAdapter)
-    plannedBooksView = initRecyclerView(findView(R.id.planned_books_view), plannedBooksAdapter)
+    booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view))
     initNavigationView(findView(R.id.navigation))
     initToolbar(findView(R.id.toolbar))
   }
@@ -83,8 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun initRecyclerView(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>): RecyclerView {
-    recyclerView.adapter = adapter
+  private fun initRecyclerView(recyclerView: RecyclerView): RecyclerView {
     recyclerView.layoutManager = LinearLayoutManager(this)
     return recyclerView
   }
@@ -129,24 +120,26 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshHomeTab() {
-    usersView.visibility = View.VISIBLE
-    finishedBooksView.visibility = View.GONE
-    plannedBooksView.visibility = View.GONE
-    api.getLatestUsers()
-        .io2main()
-        .subscribe({ latestUsers ->
-          users.clear()
-          users.addAll(latestUsers.values)
-          usersAdapter.notifyDataSetChanged()
+    booksRecyclerView.adapter = allBooksAdapter
+    allBooks.clear()
+    Single.concat(
+        Single.just(listOf(FinishedBook("", "К прочтению", "", "", "", "", "", "", User("", "", 0, "")))),
+        api.getPlannedBooks(auth.getAccessToken())
+            .map { it.sortedByDescending { it.priority } },
+        Single.just(listOf(FinishedBook("", "Прочитано", "", "", "", "", "", "", User("", "", 0, "")))),
+        api.getFinishedBooks(auth.getAccessToken())
+            .map { it.sortedByDescending(FinishedBook::order) }
+    ).io2main()
+        .subscribe({
+          allBooks.addAll(it)
+          allBooksAdapter.notifyDataSetChanged()
         }, {
-          logError("cannot load users", it)
+          logError("cannot load finished books", it)
         })
   }
 
   private fun refreshDoneTab() {
-    usersView.visibility = View.GONE
-    finishedBooksView.visibility = View.VISIBLE
-    plannedBooksView.visibility = View.GONE
+    booksRecyclerView.adapter = finishedBooksAdapter
     api.getFinishedBooks(auth.getAccessToken())
         .io2main()
         .subscribe({
@@ -159,9 +152,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshTodoTab() {
-    usersView.visibility = View.GONE
-    finishedBooksView.visibility = View.GONE
-    plannedBooksView.visibility = View.VISIBLE
+    booksRecyclerView.adapter = plannedBooksAdapter
     api.getPlannedBooks(auth.getAccessToken())
         .io2main()
         .subscribe({
