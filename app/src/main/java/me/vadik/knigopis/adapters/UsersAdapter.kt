@@ -7,11 +7,12 @@ import me.vadik.knigopis.model.User
 object UsersAdapter {
   fun create(users: List<User>) = Adapter(users, { R.layout.user })
       .bind<TextView>(R.id.user_name) {
-        text = it.nickname
+        text = users[it].nickname
       }
       .bind<TextView>(R.id.book_count) {
-        text = it.booksCount.toString()
-        setTextColor(it.color)
+        val user = users[it]
+        text = user.booksCount.toString()
+        setTextColor(user.color)
       }
       .build()
 }

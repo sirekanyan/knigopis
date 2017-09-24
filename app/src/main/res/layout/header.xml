@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/book_title"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:fontFamily="sans-serif-medium"
-    android:gravity="center_vertical"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:textColor="@color/black_54"
-    android:textSize="14sp"
-    tools:text="К прочтению"/>
+    android:layout_height="48dp">
+
+    <View
+        android:id="@+id/header_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/white_12"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/black_54"
+        android:textSize="14sp"
+        tools:text="К прочтению"/>
+
+</FrameLayout>

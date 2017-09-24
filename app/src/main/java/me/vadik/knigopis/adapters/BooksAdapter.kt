@@ -1,5 +1,6 @@
 package me.vadik.knigopis.adapters
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -19,8 +20,8 @@ class BooksAdapter(private val coverSearch: BookCoverSearch) {
       R.layout.book
     }
   }
-      .bind<ImageView>(R.id.book_image) { book ->
-        coverSearch.search(book)
+      .bind<ImageView>(R.id.book_image) {
+        coverSearch.search(books[it])
             .subscribe({ coverUrl ->
               Glide.with(context)
                   .load(coverUrl)
@@ -31,13 +32,16 @@ class BooksAdapter(private val coverSearch: BookCoverSearch) {
             })
       }
       .bind<TextView>(R.id.book_title) {
-        text = it.title
+        text = books[it].title
+      }
+      .bind<View>(R.id.header_divider) {
+        visibility = if (it == 0) View.INVISIBLE else View.VISIBLE
       }
       .bind<TextView>(R.id.book_author) {
-        text = if (it.author.isEmpty()) {
+        text = if (books[it].author.isEmpty()) {
           "(автор не указан)"
         } else {
-          it.author
+          books[it].author
         }
       }
       .build()

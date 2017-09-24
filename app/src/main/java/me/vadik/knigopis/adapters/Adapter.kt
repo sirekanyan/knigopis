@@ -11,11 +11,11 @@ class Adapter<T>(
     private val layout: (T) -> Int
 ) {
 
-  val binders = mutableMapOf<@IdRes Int, (View, T) -> Unit>()
+  val binders = mutableMapOf<@IdRes Int, (View, Int) -> Unit>()
 
-  inline fun <reified V : View> bind(@IdRes id: Int, crossinline binder: V.(T) -> Unit): Adapter<T> {
-    binders[id] = { view, model ->
-      binder(view as V, model)
+  inline fun <reified V : View> bind(@IdRes id: Int, crossinline binder: V.(Int) -> Unit): Adapter<T> {
+    binders[id] = { view, position ->
+      binder(view as V, position)
     }
     return this
   }
@@ -31,7 +31,7 @@ class Adapter<T>(
     override fun onBindViewHolder(holder: ViewsHolder, position: Int) =
         binders.forEach { (id, binder) ->
           holder.views[id]?.let { view ->
-            binder(view, items[position])
+            binder(view, position)
           }
         }
 
