@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import io.reactivex.Single
 import me.vadik.knigopis.io2main
 import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.ImageThumbnail
 import java.util.concurrent.TimeUnit
 
 private const val PREFERENCE_PREFIX = "thumbnail_"
@@ -12,6 +13,7 @@ private const val MIN_TITLE_WORDS_COUNT = 2
 
 interface BookCoverSearch {
   fun search(book: Book): Single<String>
+  fun search(query: String): Single<String>
 }
 
 class BookCoverSearchImpl(
@@ -23,17 +25,24 @@ class BookCoverSearchImpl(
       Single.defer {
         val cachedUrl = getFromCache(book.id)
         if (cachedUrl == null) {
-          imageEndpoint.searchImage(getSearchQuery(book))
-              .delay((Math.random() * MAX_DELAY_IN_MICROSECONDS).toLong(), TimeUnit.MICROSECONDS)
-              .map { thumbnail ->
-                thumbnail.url.also { url ->
-                  saveToCache(book.id, url)
-                }
+          searchThumbnail(getSearchQuery(book))
+              .map { thumbnailUrl ->
+                saveToCache(book.id, thumbnailUrl)
+                thumbnailUrl
               }
         } else {
           Single.just(cachedUrl)
         }
       }.io2main()
+
+  override fun search(query: String) =
+      searchThumbnail(query)
+          .io2main()
+
+  private fun searchThumbnail(query: String) =
+      imageEndpoint.searchImage(query)
+          .delay((Math.random() * MAX_DELAY_IN_MICROSECONDS).toLong(), TimeUnit.MICROSECONDS)
+          .map(ImageThumbnail::url)
 
   private fun getSearchQuery(book: Book) =
       book.title.split(" ").size.let { titleWordsCount ->

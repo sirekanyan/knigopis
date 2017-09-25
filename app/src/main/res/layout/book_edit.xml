@@ -29,6 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
 
         <EditText
+            android:id="@+id/book_title_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/book_hint_title"
@@ -124,6 +125,7 @@
         tools:checked="true" />
 
     <ImageView
+        android:id="@+id/cover_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
