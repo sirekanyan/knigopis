@@ -1,8 +1,23 @@
 <resources>
+    <!-- toolbar -->
     <string name="app_name">Knigopis</string>
+    <string name="book_add_title">Add book</string>
+    <string name="book_edit_title">Edit book</string>
+
+    <!-- navigation -->
     <string name="title_home">Books</string>
     <string name="title_users">Followers</string>
     <string name="title_notes">Notes</string>
+
+    <!-- menu -->
     <string name="option_login">Login</string>
     <string name="option_logout">Logout</string>
+
+    <!-- edit book -->
+    <string name="book_hint_title">Title</string>
+    <string name="book_hint_author">Author</string>
+    <string name="book_hint_year">Year</string>
+    <string name="book_hint_month">Month</string>
+    <string name="book_hint_day">Day</string>
+    <string name="book_read_checkbox">Done</string>
 </resources>

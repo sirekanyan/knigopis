@@ -3,6 +3,7 @@ package me.vadik.knigopis
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
   private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }
   private val plannedBooksAdapter by lazy { booksAdapter.build(plannedBooks) }
+  private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
@@ -46,6 +48,9 @@ class MainActivity : AppCompatActivity() {
     booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view))
     initNavigationView(findView(R.id.navigation))
     initToolbar(findView(R.id.toolbar))
+    fab.setOnClickListener {
+      startActivity(Intent(this, BookActivity::class.java))
+    }
   }
 
   override fun onStart() {
@@ -111,11 +116,12 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setCurrentTab(tab: CurrentTab) {
+    if (tab == HOME_TAB) fab.show() else fab.hide()
     currentTab = tab
     when (tab) {
       HOME_TAB -> refreshHomeTab()
-      USERS_TAB -> refreshDoneTab()
-      NOTES_TAB -> refreshTodoTab()
+      USERS_TAB -> refreshUsersTab()
+      NOTES_TAB -> refreshNotesTab()
     }
   }
 
@@ -138,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         })
   }
 
-  private fun refreshDoneTab() {
+  private fun refreshUsersTab() {
     booksRecyclerView.adapter = finishedBooksAdapter
     api.getFinishedBooks(auth.getAccessToken())
         .io2main()
@@ -151,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         })
   }
 
-  private fun refreshTodoTab() {
+  private fun refreshNotesTab() {
     booksRecyclerView.adapter = plannedBooksAdapter
     api.getPlannedBooks(auth.getAccessToken())
         .io2main()

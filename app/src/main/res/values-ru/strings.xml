@@ -1,8 +1,23 @@
 <resources>
+    <!-- toolbar -->
     <string name="app_name">Книгопись</string>
+    <string name="book_add_title">Добавить книгу</string>
+    <string name="book_edit_title">Редактировать книгу</string>
+
+    <!-- navigation -->
     <string name="title_home">Мои книги</string>
     <string name="title_users">Подписки</string>
     <string name="title_notes">Примечания</string>
+
+    <!-- menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
+
+    <!-- edit book -->
+    <string name="book_hint_title">Название</string>
+    <string name="book_hint_author">Автор</string>
+    <string name="book_hint_year">Год</string>
+    <string name="book_hint_month">Месяц</string>
+    <string name="book_hint_day">День</string>
+    <string name="book_read_checkbox">Прочитана</string>
 </resources>
