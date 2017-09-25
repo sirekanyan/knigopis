@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,4 +30,7 @@ fun <T> Single<T>.io2main(): Single<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 fun <T> Flowable<T>.io2main(): Flowable<T> =
+    subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+fun Completable.io2main(): Completable =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
