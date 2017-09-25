@@ -14,6 +14,7 @@
     <string name="option_logout">Logout</string>
 
     <!-- edit book -->
+    <string name="book_option_save">Save</string>
     <string name="book_hint_title">Title</string>
     <string name="book_hint_author">Author</string>
     <string name="book_hint_year">Year</string>

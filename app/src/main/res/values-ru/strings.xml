@@ -14,6 +14,7 @@
     <string name="option_logout">Выйти</string>
 
     <!-- edit book -->
+    <string name="book_option_save">Сохранить</string>
     <string name="book_hint_title">Название</string>
     <string name="book_hint_author">Автор</string>
     <string name="book_hint_year">Год</string>
