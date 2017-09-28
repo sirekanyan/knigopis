@@ -3,10 +3,7 @@ package me.vadik.knigopis.api
 import io.reactivex.Completable
 import io.reactivex.Single
 import me.vadik.knigopis.model.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface Endpoint {
 
@@ -22,6 +19,12 @@ interface Endpoint {
       @Body book: FinishedBookToSend
   ): Completable
 
+  @DELETE("books/{id}")
+  fun deleteFinishedBook(
+      @Path("id") id: String,
+      @Query("access-token") accessToken: String
+  ): Completable
+
   @GET("wishes")
   fun getPlannedBooks(@Query("access-token") accessToken: String): Single<List<PlannedBook>>
 
@@ -29,6 +32,12 @@ interface Endpoint {
   fun postPlannedBook(
       @Query("access-token") accessToken: String,
       @Body book: PlannedBookToSend
+  ): Completable
+
+  @DELETE("wishes/{id}")
+  fun deletePlannedBook(
+      @Path("id") id: String,
+      @Query("access-token") accessToken: String
   ): Completable
 
   @GET("users/latest")

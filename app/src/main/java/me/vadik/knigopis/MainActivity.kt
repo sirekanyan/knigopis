@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
         getSharedPreferences("knigopis", MODE_PRIVATE)
-    ))
+    ), api, auth)
   }
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
   private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }

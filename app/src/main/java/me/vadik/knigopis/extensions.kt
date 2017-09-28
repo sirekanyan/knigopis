@@ -1,12 +1,14 @@
 package me.vadik.knigopis
 
 import android.app.Activity
+import android.content.Context
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -14,6 +16,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 private const val TAG = "Knigopis"
+
+fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 fun Activity.app() = application as App
 
@@ -34,3 +38,5 @@ fun <T> Flowable<T>.io2main(): Flowable<T> =
 
 fun Completable.io2main(): Completable =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+fun String.orDefault(default: String) = if (isEmpty()) default else this
