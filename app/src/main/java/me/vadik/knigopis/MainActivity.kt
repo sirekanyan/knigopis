@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val allBooks = mutableListOf<Book>()
-  private val finishedBooks = mutableListOf<FinishedBook>()
-  private val plannedBooks = mutableListOf<PlannedBook>()
+  private val finishedBooks = mutableListOf<Book>()
+  private val plannedBooks = mutableListOf<Book>()
   private val booksAdapter by lazy {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     initNavigationView(findView(R.id.navigation))
     initToolbar(findView(R.id.toolbar))
     fab.setOnClickListener {
-      startActivity(Intent(this, BookActivity::class.java))
+      startActivity(createBookIntent())
     }
   }
 
@@ -140,7 +140,8 @@ class MainActivity : AppCompatActivity() {
           allBooks.addAll(it)
           allBooksAdapter.notifyDataSetChanged()
         }, {
-          logError("cannot load finished books", it)
+          toast("Не удалось загрузить книги")
+          logError("cannot load books", it)
         })
   }
 

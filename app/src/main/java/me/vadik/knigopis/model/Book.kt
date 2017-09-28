@@ -8,4 +8,5 @@ interface Book {
   val author: String
   val titleOrDefault get() = title.orDefault("(без названия)")
   val authorOrDefault get() = author.orDefault("(автор не указан)")
+  val fullTitle get() = titleOrDefault + " — " + authorOrDefault
 }

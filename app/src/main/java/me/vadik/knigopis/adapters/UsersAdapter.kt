@@ -14,5 +14,5 @@ object UsersAdapter {
         text = user.booksCount.toString()
         setTextColor(user.color)
       }
-      .build()
+      .get()
 }

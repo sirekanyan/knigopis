@@ -21,4 +21,15 @@
     <string name="book_hint_month">Месяц</string>
     <string name="book_hint_day">День</string>
     <string name="book_read_checkbox">Прочитана</string>
+
+    <!-- book menu -->
+    <array name="book_context_menu">
+        <item>Редактировать</item>
+        <item>Удалить</item>
+    </array>
+    <string name="book_delete_confirmation_title">Подтверждение</string>
+    <string name="book_delete_confirm_text">Удалить книгу \"%s\"?</string>
+    <string name="book_cancel_delete">Отмена</string>
+    <string name="book_confirm_delete">Удалить</string>
+    <string name="cannot_delete_book">Не получилось удалить</string>
 </resources>

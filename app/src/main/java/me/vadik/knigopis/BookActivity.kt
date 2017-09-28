@@ -1,5 +1,7 @@
 package me.vadik.knigopis
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -19,6 +21,8 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBookToSend
+
+fun Context.createBookIntent() = Intent(this, BookActivity::class.java)
 
 class BookActivity : AppCompatActivity() {
 

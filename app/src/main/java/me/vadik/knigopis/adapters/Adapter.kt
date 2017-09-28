@@ -12,15 +12,8 @@ class Adapter<T>(
 ) {
 
   val binders = mutableMapOf<@IdRes Int, (View, Int) -> Unit>()
-
-  inline fun <reified V : View> bind(@IdRes id: Int, crossinline binder: V.(Int) -> Unit): Adapter<T> {
-    binders[id] = { view, position ->
-      binder(view as V, position)
-    }
-    return this
-  }
-
-  fun build() = object : RecyclerView.Adapter<ViewsHolder>() {
+  @Suppress("MemberVisibilityCanPrivate")
+  val recyclerViewAdapter = object : RecyclerView.Adapter<ViewsHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         parent.inflate(viewType).let { rootView ->
           ViewsHolder(rootView, binders.mapValues { (key, _) ->
@@ -39,6 +32,22 @@ class Adapter<T>(
 
     override fun getItemViewType(position: Int) = layout(items[position])
   }
+
+  inline fun <reified V : View> bind(@IdRes id: Int, crossinline binder: V.(Int) -> Unit): Adapter<T> {
+    binders[id] = { view, position ->
+      binder(view as V, position)
+    }
+    return this
+  }
+
+  inline fun <reified V : View> bind2(@IdRes id: Int, crossinline binder: V.(Int, RecyclerView.Adapter<ViewsHolder>) -> Unit): Adapter<T> {
+    binders[id] = { view, position ->
+      binder(view as V, position, recyclerViewAdapter)
+    }
+    return this
+  }
+
+  fun get() = recyclerViewAdapter
 }
 
 class ViewsHolder(rootView: View, val views: Map<Int, View>) : RecyclerView.ViewHolder(rootView)

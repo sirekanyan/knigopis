@@ -19,6 +19,8 @@ private const val TAG = "Knigopis"
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
+fun Context.toast(@IdRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+
 fun Activity.app() = application as App
 
 fun <T : View> Activity.findView(@IdRes id: Int): T = findViewById(id)
