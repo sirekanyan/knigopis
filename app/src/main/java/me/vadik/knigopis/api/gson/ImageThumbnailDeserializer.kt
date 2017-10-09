@@ -4,7 +4,6 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import me.vadik.knigopis.model.ImageThumbnail
-import me.vadik.knigopis.model.emptyThumbnail
 import java.lang.reflect.Type
 
 class ImageThumbnailDeserializer : JsonDeserializer<ImageThumbnail> {
@@ -13,8 +12,7 @@ class ImageThumbnailDeserializer : JsonDeserializer<ImageThumbnail> {
           .getAsJsonObject("data")
           .getAsJsonObject("result")
           .getAsJsonArray("items")
-          .firstOrNull()
-          ?.asJsonObject
-          ?.let { ImageThumbnail("https:" + it["thumbnail"].asString) }
-          ?: emptyThumbnail
+          .map { it.asJsonObject["thumbnail"].asString }
+          .map { "https:" + it }
+          .let(::ImageThumbnail)
 }

@@ -42,7 +42,8 @@ class BookCoverSearchImpl(
   private fun searchThumbnail(query: String) =
       imageEndpoint.searchImage(query)
           .delay((Math.random() * MAX_DELAY_IN_MICROSECONDS).toLong(), TimeUnit.MICROSECONDS)
-          .map(ImageThumbnail::url)
+          .map(ImageThumbnail::urls)
+          .map(List<String>::first)
 
   private fun getSearchQuery(book: Book) =
       book.title.split(" ").size.let { titleWordsCount ->
