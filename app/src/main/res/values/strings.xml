@@ -32,4 +32,5 @@
     <string name="book_cancel_delete">Cancel</string>
     <string name="book_confirm_delete">Delete</string>
     <string name="cannot_delete_book">Cannot delete book</string>
+    <string name="book_hint_notes">Notes</string>
 </resources>

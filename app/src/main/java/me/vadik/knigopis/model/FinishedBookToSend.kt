@@ -6,5 +6,5 @@ class FinishedBookToSend(
     val readDay: String,
     val readMonth: String,
     val readYear: String,
-    val notes: String = "// todo"
+    val notes: String
 )

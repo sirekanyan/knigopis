@@ -32,4 +32,5 @@
     <string name="book_cancel_delete">Отмена</string>
     <string name="book_confirm_delete">Удалить</string>
     <string name="cannot_delete_book">Не получилось удалить</string>
+    <string name="book_hint_notes">Примечания</string>
 </resources>

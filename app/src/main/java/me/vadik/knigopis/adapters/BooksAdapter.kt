@@ -73,7 +73,7 @@ class BooksAdapter(
             .subscribe({ coverUrl ->
               Glide.with(context)
                   .load(coverUrl)
-                  .apply(RequestOptions.circleCropTransform())
+                  .apply(RequestOptions.centerCropTransform())
                   .into(this)
             }, {
               logError("cannot load thumbnail", it)

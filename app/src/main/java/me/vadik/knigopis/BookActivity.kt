@@ -42,6 +42,7 @@ class BookActivity : AppCompatActivity() {
   private val yearEditText by lazy { findView<TextView>(R.id.book_year_edit_text) }
   private val readCheckbox by lazy { findView<CheckBox>(R.id.book_read_checkbox) }
   private val coverImageView by lazy { findView<ImageView>(R.id.cover_image_view) }
+  private val notesTextArea by lazy { findView<TextView>(R.id.notes_text_area) }
   private val dateInputViews by lazy {
     arrayOf<View>(
         findView(R.id.book_day_input),
@@ -67,12 +68,14 @@ class BookActivity : AppCompatActivity() {
                 authorEditText.text.toString(),
                 dayEditText.text.toString(),
                 monthEditText.text.toString(),
-                yearEditText.text.toString()
+                yearEditText.text.toString(),
+                notesTextArea.text.toString()
             ))
           } else {
             api.postPlannedBook(auth.getAccessToken(), PlannedBookToSend(
                 titleEditText.text.toString(),
-                authorEditText.text.toString()
+                authorEditText.text.toString(),
+                notesTextArea.text.toString()
             ))
           }.io2main().subscribe(
               { finish() },
