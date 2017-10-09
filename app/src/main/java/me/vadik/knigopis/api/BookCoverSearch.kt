@@ -13,7 +13,7 @@ private const val MIN_TITLE_WORDS_COUNT = 2
 
 interface BookCoverSearch {
   fun search(book: Book): Single<String>
-  fun search(query: String): Single<String>
+  fun search(query: String): Single<List<String>>
 }
 
 class BookCoverSearchImpl(
@@ -26,6 +26,7 @@ class BookCoverSearchImpl(
         val cachedUrl = getFromCache(book.id)
         if (cachedUrl == null) {
           searchThumbnail(getSearchQuery(book))
+              .map { it.first() }
               .map { thumbnailUrl ->
                 saveToCache(book.id, thumbnailUrl)
                 thumbnailUrl
@@ -43,7 +44,6 @@ class BookCoverSearchImpl(
       imageEndpoint.searchImage(query)
           .delay((Math.random() * MAX_DELAY_IN_MICROSECONDS).toLong(), TimeUnit.MICROSECONDS)
           .map(ImageThumbnail::urls)
-          .map(List<String>::first)
 
   private fun getSearchQuery(book: Book) =
       book.title.split(" ").size.let { titleWordsCount ->

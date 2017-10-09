@@ -3,16 +3,14 @@ package me.vadik.knigopis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
@@ -21,6 +19,8 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBookToSend
+
+private const val IMAGE_PRELOAD_COUNT = 3
 
 fun Context.createBookIntent() = Intent(this, BookActivity::class.java)
 
@@ -41,7 +41,11 @@ class BookActivity : AppCompatActivity() {
   private val monthEditText by lazy { findView<TextView>(R.id.book_month_edit_text) }
   private val yearEditText by lazy { findView<TextView>(R.id.book_year_edit_text) }
   private val readCheckbox by lazy { findView<CheckBox>(R.id.book_read_checkbox) }
-  private val coverImageView by lazy { findView<ImageView>(R.id.cover_image_view) }
+  private val coverViewPager by lazy {
+    findView<ViewPager>(R.id.cover_image_views).apply {
+      offscreenPageLimit = IMAGE_PRELOAD_COUNT
+    }
+  }
   private val notesTextArea by lazy { findView<TextView>(R.id.notes_text_area) }
   private val dateInputViews by lazy {
     arrayOf<View>(
@@ -90,11 +94,8 @@ class BookActivity : AppCompatActivity() {
       val editable = titleEditText.editableText
       if (!focus && !editable.isEmpty()) {
         imageSearch.search(editable.toString())
-            .subscribe({ coverUrl ->
-              Glide.with(applicationContext)
-                  .load(coverUrl)
-                  .apply(RequestOptions.centerCropTransform())
-                  .into(coverImageView)
+            .subscribe({ urls ->
+              coverViewPager.adapter = CoverPagerAdapter(urls)
             }, {
               logError("cannot load thumbnail", it)
             })

@@ -145,8 +145,8 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/cover_image_view"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/cover_image_views"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
@@ -154,7 +154,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notes_text_input"
-        tools:ignore="ContentDescription"
-        tools:src="@color/colorAccent" />
+        tools:background="@color/colorAccent" />
 
 </android.support.constraint.ConstraintLayout>
