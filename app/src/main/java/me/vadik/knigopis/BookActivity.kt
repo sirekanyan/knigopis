@@ -7,8 +7,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.CheckBox
 import android.widget.TextView
 import me.vadik.knigopis.api.BookCoverSearch
@@ -95,7 +94,16 @@ class BookActivity : AppCompatActivity() {
       if (!focus && !editable.isEmpty()) {
         imageSearch.search(editable.toString())
             .subscribe({ urls ->
-              coverViewPager.adapter = CoverPagerAdapter(urls)
+              coverViewPager.visibility = INVISIBLE
+              coverViewPager.adapter = CoverPagerAdapter(urls,
+                  onClick = { position, last ->
+                    coverViewPager.currentItem = if (last) 0 else position + 1
+                  },
+                  onLoaded = { position ->
+                    if (position == 0) {
+                      coverViewPager.visibility = VISIBLE
+                    }
+                  })
             }, {
               logError("cannot load thumbnail", it)
             })
