@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     initNavigationView(findView(R.id.navigation))
     initToolbar(findView(R.id.toolbar))
     fab.setOnClickListener {
-      startActivity(createBookIntent())
+      startActivity(createNewBookIntent())
     }
   }
 

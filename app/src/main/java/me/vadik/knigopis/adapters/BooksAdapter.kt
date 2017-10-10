@@ -48,7 +48,7 @@ class BooksAdapter(
         }
         val onDeleteClicked: (DialogInterface, Int) -> Unit = { dialog, index ->
           when (index) {
-            0 -> context.startActivity(context.createBookIntent())
+            0 -> context.startActivity(context.createEditBookIntent(book.id, book is FinishedBook))
             1 -> {
               AlertDialog.Builder(context)
                   .setTitle(R.string.book_delete_confirmation_title)

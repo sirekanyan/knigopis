@@ -20,8 +20,15 @@ import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBookToSend
 
 private const val IMAGE_PRELOAD_COUNT = 3
+private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
+private const val EXTRA_BOOK_FINISHED = "me.vadik.knigopis.extra_book_finished"
 
-fun Context.createBookIntent() = Intent(this, BookActivity::class.java)
+fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
+
+fun Context.createEditBookIntent(bookId: String, finished: Boolean): Intent =
+    Intent(this, BookActivity::class.java)
+        .putExtra(EXTRA_BOOK_ID, bookId)
+        .putExtra(EXTRA_BOOK_FINISHED, finished)
 
 class BookActivity : AppCompatActivity() {
 
@@ -113,6 +120,34 @@ class BookActivity : AppCompatActivity() {
       dateInputViews.forEach { view ->
         view.visibility = if (checked) VISIBLE else GONE
       }
+    }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    val bookId = intent.getStringExtra(EXTRA_BOOK_ID)
+    val finished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
+    bookId?.let { id ->
+      if (finished) {
+        api.getFinishedBook(id)
+            .io2main()
+            .doOnSuccess { finishedBook ->
+              readCheckbox.isChecked = true
+              yearEditText.text = finishedBook.readYear
+              monthEditText.text = finishedBook.readMonth
+              dayEditText.text = finishedBook.readDay
+            }
+      } else {
+        api.getPlannedBook(id)
+            .io2main()
+            .doOnSuccess { plannedBook ->
+              readCheckbox.isChecked = false
+              notesTextArea.text = plannedBook.notes
+            }
+      }.subscribe({ book ->
+        titleEditText.text = book.title
+        authorEditText.text = book.author
+      }, { logError("cannot get planned book", it) })
     }
   }
 }

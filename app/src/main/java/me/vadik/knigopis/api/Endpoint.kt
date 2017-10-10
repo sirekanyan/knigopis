@@ -13,6 +13,9 @@ interface Endpoint {
   @GET("books")
   fun getFinishedBooks(@Query("access-token") accessToken: String): Single<List<FinishedBook>>
 
+  @GET("books/{id}")
+  fun getFinishedBook(@Path("id") id: String): Single<FinishedBook>
+
   @POST("books")
   fun postFinishedBook(
       @Query("access-token") accessToken: String,
@@ -27,6 +30,9 @@ interface Endpoint {
 
   @GET("wishes")
   fun getPlannedBooks(@Query("access-token") accessToken: String): Single<List<PlannedBook>>
+
+  @GET("wishes/{id}")
+  fun getPlannedBook(@Path("id") id: String): Single<PlannedBook>
 
   @POST("wishes")
   fun postPlannedBook(
