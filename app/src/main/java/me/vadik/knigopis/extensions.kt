@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ private const val TAG = "Knigopis"
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-fun Context.toast(@IdRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+fun Context.toast(@StringRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
 
 fun Activity.app() = application as App
 

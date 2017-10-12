@@ -1,7 +1,6 @@
 package me.vadik.knigopis.adapters
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,40 +29,48 @@ class BooksAdapter(
     }
   }
       .bind2<View>(R.id.book_item_container) { bookIndex, adapter ->
-        val book = books[bookIndex]
-        val onDeleteConfirmed: (DialogInterface, Int) -> Unit = { dialog, _ ->
-          when (book) {
-            is FinishedBook -> api.deleteFinishedBook(book.id, auth.getAccessToken())
-            is PlannedBook -> api.deletePlannedBook(book.id, auth.getAccessToken())
-            else -> throw UnsupportedOperationException()
-          }
-              .io2main()
-              .subscribe({}, {
-                context.toast(R.string.cannot_delete_book)
-                logError("cannot delete finished book", it)
-              })
-          books.removeAt(bookIndex)
-          adapter.notifyItemRemoved(bookIndex)
-          dialog.dismiss()
-        }
-        val onDeleteClicked: (DialogInterface, Int) -> Unit = { dialog, index ->
-          when (index) {
-            0 -> context.startActivity(context.createEditBookIntent(book.id, book is FinishedBook))
-            1 -> {
-              AlertDialog.Builder(context)
-                  .setTitle(R.string.book_delete_confirmation_title)
-                  .setMessage(context.getString(R.string.book_delete_confirm_text, book.fullTitle))
-                  .setNegativeButton(R.string.book_cancel_delete) { d, _ -> d.dismiss() }
-                  .setPositiveButton(R.string.book_confirm_delete, onDeleteConfirmed)
-                  .show()
+        val onDeleteConfirmed = { book: Book ->
+          val index = books.indexOfFirst { it.id == book.id }
+          if (index >= 0) {
+            when (book) {
+              is FinishedBook -> api.deleteFinishedBook(book.id, auth.getAccessToken())
+              is PlannedBook -> api.deletePlannedBook(book.id, auth.getAccessToken())
+              else -> throw UnsupportedOperationException()
             }
+                .io2main()
+                .subscribe({}, {
+                  context.toast(R.string.cannot_delete_book)
+                  logError("cannot delete finished book", it)
+                })
+            books.removeAt(index)
+            adapter.notifyItemRemoved(index)
           }
-          dialog.dismiss()
         }
+        val onEditClicked = { book: Book ->
+          context.startActivity(context.createEditBookIntent(book.id, book is FinishedBook))
+        }
+        val onDeleteClicked = { book: Book ->
+          AlertDialog.Builder(context)
+              .setTitle(R.string.book_delete_confirmation_title)
+              .setMessage(context.getString(R.string.book_delete_confirm_text, book.fullTitle))
+              .setNegativeButton(R.string.book_cancel_delete) { d, _ -> d.dismiss() }
+              .setPositiveButton(R.string.book_confirm_delete) { d, _ ->
+                onDeleteConfirmed(book)
+                d.dismiss()
+              }
+              .show()
+        }
+        val book = books[bookIndex]
         setOnLongClickListener {
           AlertDialog.Builder(context)
               .setTitle(book.fullTitle)
-              .setItems(R.array.book_context_menu, onDeleteClicked)
+              .setItems(R.array.book_context_menu) { dialog, menu ->
+                when (menu) {
+                  0 -> onEditClicked(book)
+                  1 -> onDeleteClicked(book)
+                }
+                dialog.dismiss()
+              }
               .show()
           true
         }
