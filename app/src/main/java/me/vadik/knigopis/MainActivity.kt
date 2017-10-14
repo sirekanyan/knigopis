@@ -12,18 +12,15 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import io.reactivex.Single
+import io.reactivex.rxkotlin.Singles
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
-import me.vadik.knigopis.model.Book
-import me.vadik.knigopis.model.BookHeader
-import me.vadik.knigopis.model.CurrentTab
+import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
-import me.vadik.knigopis.model.FinishedBook
 
 private const val ULOGIN_REQUEST_CODE = 0
 
@@ -32,8 +29,6 @@ class MainActivity : AppCompatActivity() {
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val allBooks = mutableListOf<Book>()
-  private val finishedBooks = mutableListOf<Book>()
-  private val plannedBooks = mutableListOf<Book>()
   private val booksAdapter by lazy {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
@@ -41,9 +36,9 @@ class MainActivity : AppCompatActivity() {
     ), api, auth)
   }
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-  private val finishedBooksAdapter by lazy { booksAdapter.build(finishedBooks) }
-  private val plannedBooksAdapter by lazy { booksAdapter.build(plannedBooks) }
   private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
+  private val progressBar by lazy { findView<View>(R.id.books_progress_bar) }
+  private val booksNotFoundView by lazy { findView<View>(R.id.books_not_found) }
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
@@ -129,7 +124,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setCurrentTab(tab: CurrentTab) {
-    if (tab == HOME_TAB) fab.show() else fab.hide()
+    fab.hide()
     currentTab = tab
     when (tab) {
       HOME_TAB -> refreshHomeTab()
@@ -139,49 +134,43 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshHomeTab() {
+    if (progressBar.alpha > 0) {
+      return
+    }
     booksRecyclerView.adapter = allBooksAdapter
     allBooks.clear()
-    Single.concat(
-        Single.just(listOf(BookHeader("К прочтению"))),
+    Singles.zip(
         api.getPlannedBooks(auth.getAccessToken())
-            .map { it.sortedByDescending { it.priority } },
+            .map { it.sortedByDescending(PlannedBook::priority) },
         api.getFinishedBooks(auth.getAccessToken())
             .map { it.sortedByDescending(FinishedBook::order) }
             .map { it.groupFinishedBooks() }
     ).io2main()
-        .subscribe({
-          allBooks.addAll(it)
+        .doOnSubscribe {
+          progressBar.fadeIn()
+          booksNotFoundView.fadeOut()
+        }
+        .doAfterTerminate {
+          progressBar.fadeOut()
+        }
+        .subscribe({ (planned, finished) ->
+          allBooks.add(BookHeader("К прочтению"))
+          allBooks.addAll(planned)
+          allBooks.addAll(finished)
           allBooksAdapter.notifyDataSetChanged()
+          fab.show()
         }, {
-          toast("Не удалось загрузить книги")
           logError("cannot load books", it)
+          booksNotFoundView.fadeIn()
         })
   }
 
   private fun refreshUsersTab() {
-    booksRecyclerView.adapter = finishedBooksAdapter
-    api.getFinishedBooks(auth.getAccessToken())
-        .io2main()
-        .subscribe({
-          finishedBooks.clear()
-          finishedBooks.addAll(it.sortedByDescending(FinishedBook::order))
-          finishedBooksAdapter.notifyDataSetChanged()
-        }, {
-          logError("cannot load finished books", it)
-        })
+    // todo
   }
 
   private fun refreshNotesTab() {
-    booksRecyclerView.adapter = plannedBooksAdapter
-    api.getPlannedBooks(auth.getAccessToken())
-        .io2main()
-        .subscribe({
-          plannedBooks.clear()
-          plannedBooks.addAll(it.sortedByDescending { it.priority })
-          plannedBooksAdapter.notifyDataSetChanged()
-        }, {
-          logError("cannot load planned books", it)
-        })
+    // todo
   }
 
   private fun List<FinishedBook>.groupFinishedBooks(): List<Book> {

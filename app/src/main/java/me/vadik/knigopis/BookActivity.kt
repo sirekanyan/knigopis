@@ -110,10 +110,8 @@ class BookActivity : AppCompatActivity() {
                   onClick = { position, last ->
                     coverViewPager.currentItem = if (last) 0 else position + 1
                   },
-                  onLoaded = { position ->
-                    if (position == 0) {
-                      coverViewPager.visibility = VISIBLE
-                    }
+                  onFirstLoaded = {
+                    coverViewPager.visibility = VISIBLE
                   })
             }, {
               logError("cannot load thumbnail", it)

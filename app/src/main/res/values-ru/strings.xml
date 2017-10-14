@@ -41,4 +41,7 @@
     <string name="about_developer">Разработка: vadik@sirekanyan.com</string>
     <string name="about_designer">Дизайн: anna@sirekanyan.com</string>
 
+    <!-- error -->
+    <string name="error_loading_books">Проверьте подключение к сети.</string>
+
 </resources>

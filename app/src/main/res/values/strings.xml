@@ -41,4 +41,7 @@
     <string name="about_developer">Developer: vadik@sirekanyan.com</string>
     <string name="about_designer">Designer: anna@sirekanyan.com</string>
 
+    <!-- error -->
+    <string name="error_loading_books">Check your network connection.</string>
+
 </resources>

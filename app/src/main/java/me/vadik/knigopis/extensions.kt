@@ -10,8 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -36,10 +40,42 @@ fun ViewGroup.inflate(@LayoutRes layout: Int): View =
 fun <T> Single<T>.io2main(): Single<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
-fun <T> Flowable<T>.io2main(): Flowable<T> =
-    subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-
 fun Completable.io2main(): Completable =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 fun String.orDefault(default: String) = if (isEmpty()) default else this
+
+fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> =
+    listener(object : RequestListener<T> {
+      override fun onResourceReady(
+          resource: T?,
+          model: Any?,
+          target: Target<T>?,
+          dataSource: DataSource?,
+          isFirstResource: Boolean
+      ): Boolean {
+        onSuccess()
+        return false
+      }
+
+      override fun onLoadFailed(
+          e: GlideException?,
+          model: Any?,
+          target: Target<T>?,
+          isFirstResource: Boolean
+      ): Boolean {
+        return false
+      }
+    })
+
+fun View.show() {
+  alpha = 1f
+}
+
+fun View.hide() {
+  alpha = 0f
+}
+
+fun View.fadeIn() = animate().alpha(1f).setDuration(200).start()
+
+fun View.fadeOut() = animate().alpha(0f).setDuration(200).start()

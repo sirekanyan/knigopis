@@ -76,10 +76,12 @@ class BooksAdapter(
         }
       }
       .bind<ImageView>(R.id.book_image) {
+        hide()
         coverSearch.search(books[it])
             .subscribe({ coverUrl ->
               Glide.with(context)
                   .load(coverUrl)
+                  .doOnSuccess { fadeIn() }
                   .apply(RequestOptions.centerCropTransform())
                   .into(this)
             }, {
