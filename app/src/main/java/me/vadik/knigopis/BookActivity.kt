@@ -14,7 +14,6 @@ import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
-import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBookToSend
@@ -33,7 +32,10 @@ fun Context.createEditBookIntent(bookId: String, finished: Boolean): Intent =
 class BookActivity : AppCompatActivity() {
 
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
-  private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
+  private val repository by lazy {
+    val auth = KAuthImpl(applicationContext, api)
+    BookRepositoryImpl(api, auth) as BookRepository
+  }
   private val imageSearch: BookCoverSearch by lazy {
     BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
@@ -60,10 +62,12 @@ class BookActivity : AppCompatActivity() {
         findView(R.id.book_year_input)
     )
   }
+  private var bookId: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.book_edit)
+    bookId = intent.getStringExtra(EXTRA_BOOK_ID)
     toolbar.inflateMenu(R.menu.book_menu)
     toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
     toolbar.setNavigationOnClickListener {
@@ -73,7 +77,7 @@ class BookActivity : AppCompatActivity() {
       when (it.itemId) {
         R.id.option_save_book -> {
           if (readCheckbox.isChecked) {
-            api.postFinishedBook(auth.getAccessToken(), FinishedBookToSend(
+            repository.saveBook(bookId, FinishedBookToSend(
                 titleEditText.text.toString(),
                 authorEditText.text.toString(),
                 dayEditText.text.toString(),
@@ -82,7 +86,7 @@ class BookActivity : AppCompatActivity() {
                 notesTextArea.text.toString()
             ))
           } else {
-            api.postPlannedBook(auth.getAccessToken(), PlannedBookToSend(
+            repository.saveBook(bookId, PlannedBookToSend(
                 titleEditText.text.toString(),
                 authorEditText.text.toString(),
                 notesTextArea.text.toString()
@@ -125,7 +129,6 @@ class BookActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    val bookId = intent.getStringExtra(EXTRA_BOOK_ID)
     val finished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
     bookId?.let { id ->
       if (finished) {

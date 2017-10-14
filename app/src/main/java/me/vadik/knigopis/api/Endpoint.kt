@@ -16,6 +16,13 @@ interface Endpoint {
   @GET("books/{id}")
   fun getFinishedBook(@Path("id") id: String): Single<FinishedBook>
 
+  @PUT("books/{id}")
+  fun putFinishedBook(
+      @Path("id") id: String,
+      @Query("access-token") accessToken: String,
+      @Body book: FinishedBookToSend
+  ): Completable
+
   @POST("books")
   fun postFinishedBook(
       @Query("access-token") accessToken: String,
@@ -33,6 +40,13 @@ interface Endpoint {
 
   @GET("wishes/{id}")
   fun getPlannedBook(@Path("id") id: String): Single<PlannedBook>
+
+  @PUT("wishes/{id}")
+  fun putPlannedBook(
+      @Path("id") id: String,
+      @Query("access-token") accessToken: String,
+      @Body book: PlannedBookToSend
+  ): Completable
 
   @POST("wishes")
   fun postPlannedBook(
