@@ -12,6 +12,7 @@
     <!-- menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
+    <string name="option_about">О приложении</string>
 
     <!-- edit book -->
     <string name="book_option_save">Сохранить</string>
@@ -33,4 +34,11 @@
     <string name="book_confirm_delete">Удалить</string>
     <string name="cannot_delete_book">Не получилось удалить</string>
     <string name="book_hint_notes">Примечания</string>
+
+    <!-- about -->
+    <string name="about_idea">Идея: http://knigopis.com</string>
+    <string name="about_logo">Логотип: https://twitter.com</string>
+    <string name="about_developer">Разработка: vadik@sirekanyan.com</string>
+    <string name="about_designer">Дизайн: anna@sirekanyan.com</string>
+
 </resources>

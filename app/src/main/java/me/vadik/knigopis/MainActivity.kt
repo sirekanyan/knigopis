@@ -4,11 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import io.reactivex.Single
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
@@ -16,8 +19,11 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
-import me.vadik.knigopis.model.*
+import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.BookHeader
+import me.vadik.knigopis.model.CurrentTab
 import me.vadik.knigopis.model.CurrentTab.*
+import me.vadik.knigopis.model.FinishedBook
 
 private const val ULOGIN_REQUEST_CODE = 0
 
@@ -96,6 +102,13 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
           }
           refreshOptionsMenu()
+          true
+        }
+        R.id.option_about -> {
+          val dialogView = View.inflate(this, R.layout.about, null)
+          val versionView = dialogView.findViewById<TextView>(R.id.about_app_version)
+          versionView.text = BuildConfig.VERSION_NAME
+          AlertDialog.Builder(this).setView(dialogView).show()
           true
         }
         else -> false

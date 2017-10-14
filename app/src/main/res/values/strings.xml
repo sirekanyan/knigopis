@@ -12,6 +12,7 @@
     <!-- menu -->
     <string name="option_login">Login</string>
     <string name="option_logout">Logout</string>
+    <string name="option_about">About</string>
 
     <!-- edit book -->
     <string name="book_option_save">Save</string>
@@ -33,4 +34,11 @@
     <string name="book_confirm_delete">Delete</string>
     <string name="cannot_delete_book">Cannot delete book</string>
     <string name="book_hint_notes">Notes</string>
+
+    <!-- about -->
+    <string name="about_idea">API: http://knigopis.com</string>
+    <string name="about_logo">Logo: https://twitter.com</string>
+    <string name="about_developer">Developer: vadik@sirekanyan.com</string>
+    <string name="about_designer">Designer: anna@sirekanyan.com</string>
+
 </resources>
