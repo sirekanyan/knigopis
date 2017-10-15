@@ -48,6 +48,7 @@
             android:alpha="0"
             android:gravity="center"
             android:padding="16dp"
+            android:textSize="16sp"
             tools:alpha="1"
             tools:text="@string/error_loading_books" />
 

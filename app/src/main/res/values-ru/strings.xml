@@ -14,6 +14,12 @@
     <string name="option_logout">Выйти</string>
     <string name="option_about">О приложении</string>
 
+    <!-- books -->
+    <string name="book_header_todo">К прочтению</string>
+    <string name="book_header_done_first">Прочитано в %s г.</string>
+    <string name="book_header_done">%s г.</string>
+    <string name="book_header_done_other">Прочие года</string>
+
     <!-- edit book -->
     <string name="book_option_save">Сохранить</string>
     <string name="book_hint_title">Название</string>
@@ -44,5 +50,6 @@
     <!-- error -->
     <string name="error_unauthorized">Это — Книгопись. Привет!</string>
     <string name="error_loading_books">Проверьте подключение к сети.</string>
+    <string name="error_no_books">У вас пока нет книг.</string>
 
 </resources>

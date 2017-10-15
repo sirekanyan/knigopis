@@ -171,7 +171,15 @@ class MainActivity : AppCompatActivity(), Router {
         api.getFinishedBooks(auth.getAccessToken())
             .map { it.sortedByDescending(FinishedBook::order) }
             .map { it.groupFinishedBooks() }
-    ).io2main()
+    ).map { (planned, finished) ->
+      mutableListOf<Book>().apply {
+        if (planned.isNotEmpty()) {
+          add(BookHeader(getString(R.string.book_header_todo)))
+        }
+        addAll(planned)
+        addAll(finished)
+      }
+    }.io2main()
         .doOnSubscribe {
           progressBar.fadeIn()
           booksPlaceholder.fadeOut()
@@ -179,10 +187,12 @@ class MainActivity : AppCompatActivity(), Router {
         .doAfterTerminate {
           progressBar.fadeOut()
         }
-        .subscribe({ (planned, finished) ->
-          allBooks.add(BookHeader("К прочтению"))
-          allBooks.addAll(planned)
-          allBooks.addAll(finished)
+        .subscribe({ books ->
+          if (books.isEmpty()) {
+            booksPlaceholder.setText(R.string.error_no_books)
+            booksPlaceholder.fadeIn()
+          }
+          allBooks.addAll(books)
           allBooksAdapter.notifyDataSetChanged()
           fab.show()
         }, {
@@ -214,9 +224,9 @@ class MainActivity : AppCompatActivity(), Router {
       if (previousReadYear != readYear) {
         groupedBooks.add(BookHeader(
             when {
-              book.readYear.isEmpty() -> "Прочие года"
-              index == 0 -> "Прочитано в $readYear г."
-              else -> "$readYear г."
+              book.readYear.isEmpty() -> getString(R.string.book_header_done_other)
+              index == 0 -> getString(R.string.book_header_done_first, readYear)
+              else -> getString(R.string.book_header_done, readYear)
             }
         ))
       }
