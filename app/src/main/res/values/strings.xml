@@ -51,4 +51,7 @@
     <string name="error_loading_books">Check your network connection.</string>
     <string name="error_no_books">You don\'t have any books.</string>
 
+    <!-- dev -->
+    <string name="dev_mode_message">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
+
 </resources>

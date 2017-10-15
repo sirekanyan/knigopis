@@ -25,6 +25,7 @@ import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
+private const val MAX_VERSION_CLICK_COUNT = 12
 
 class MainActivity : AppCompatActivity(), Router {
 
@@ -130,10 +131,9 @@ class MainActivity : AppCompatActivity(), Router {
           versionView.text = BuildConfig.VERSION_NAME
           var count = 0
           versionView.setOnClickListener {
-            (++count == 12).let { enable ->
-              config.setDevMode(enable)
-              if (enable) toast("???")
-            }
+            count += 1
+            config.setDevMode(count >= MAX_VERSION_CLICK_COUNT)
+            if (count == MAX_VERSION_CLICK_COUNT) toast(R.string.dev_mode_message)
           }
           AlertDialog.Builder(this).setView(dialogView).show()
           true
