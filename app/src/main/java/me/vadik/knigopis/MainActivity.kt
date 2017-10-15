@@ -1,7 +1,10 @@
 package me.vadik.knigopis
 
+import android.Manifest.permission.READ_PHONE_STATE
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AlertDialog
@@ -12,6 +15,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.Singles
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
@@ -116,13 +120,7 @@ class MainActivity : AppCompatActivity(), Router {
     toolbar.setOnMenuItemClickListener { item ->
       when (item.itemId) {
         R.id.option_login -> {
-          if (auth.isAuthorized()) {
-            auth.logout()
-            refresh()
-          } else {
-            startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
-          }
-          refreshOptionsMenu()
+          login()
           true
         }
         R.id.option_about -> {
@@ -142,6 +140,49 @@ class MainActivity : AppCompatActivity(), Router {
       }
     }
     loginOption = toolbar.menu.findItem(R.id.option_login)
+  }
+
+  private fun login() {
+    RxPermissions(this).requestEach(READ_PHONE_STATE).subscribe({
+      when {
+        it.granted -> {
+          if (auth.isAuthorized()) {
+            auth.logout()
+            refresh()
+          } else {
+            startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
+          }
+          refreshOptionsMenu()
+        }
+        it.shouldShowRequestPermissionRationale -> {
+          AlertDialog.Builder(this)
+              .setTitle(R.string.no_access)
+              .setMessage(R.string.no_access_message)
+              .setPositiveButton(R.string.no_access_retry_button) { _, _ ->
+                login()
+              }
+              .setNegativeButton(R.string.dialog_cancel_button, null)
+              .setCancelable(false)
+              .show()
+        }
+        else -> {
+          AlertDialog.Builder(this)
+              .setTitle(R.string.no_permissions)
+              .setMessage(R.string.no_permissions_message)
+              .setPositiveButton(R.string.no_permissions_goto_settings_button) { _, _ ->
+                startActivity(Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null)
+                ))
+              }
+              .setNegativeButton(R.string.dialog_cancel_button, null)
+              .setCancelable(false)
+              .show()
+        }
+      }
+    }, {
+      logError("cannot request permission", it)
+    })
   }
 
   private fun refreshOptionsMenu() {

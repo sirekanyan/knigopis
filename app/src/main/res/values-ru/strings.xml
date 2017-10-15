@@ -51,4 +51,16 @@
     <string name="error_loading_books">Проверьте подключение к сети.</string>
     <string name="error_no_books">У вас пока нет книг.</string>
 
+    <!-- permissions -->
+    <string name="no_access">Нет доступа</string>
+    <string name="no_access_message">Данное разрешение необходимо для авторизации через ulogin</string>
+    <string name="no_access_retry_button">Повторить</string>
+    <string name="no_permissions">Разрешения</string>
+    <string name="no_permissions_message">Подтвердите разрешения в настройках, чтобы войти в приложение</string>
+    <string name="no_permissions_goto_settings_button">В настройки</string>
+    <string name="dialog_cancel_button">Отменить</string>
+
+    <!-- dev -->
+    <string name="dev_mode_message">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
+
 </resources>

@@ -51,7 +51,16 @@
     <string name="error_loading_books">Check your network connection.</string>
     <string name="error_no_books">You don\'t have any books.</string>
 
+    <!-- permissions -->
+    <string name="no_access">Permission denied</string>
+    <string name="no_access_message">This permission is necessary to authorize with ulogin, please try again</string>
+    <string name="no_access_retry_button">Retry</string>
+    <string name="no_permissions">Permissions</string>
+    <string name="no_permissions_message">Please allow permissions in order to login</string>
+    <string name="no_permissions_goto_settings_button">Goto settings</string>
+    <string name="dialog_cancel_button">Cancel</string>
+
     <!-- dev -->
-    <string name="dev_mode_message">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
+    <string name="dev_mode_message">We Present A SPECIAL PRESENTATION</string>
 
 </resources>
