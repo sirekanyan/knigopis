@@ -18,7 +18,8 @@ import me.vadik.knigopis.model.PlannedBook
 class BooksAdapter(
     private val coverSearch: BookCoverSearch,
     private val api: Endpoint,
-    private val auth: KAuth
+    private val auth: KAuth,
+    private val router: Router
 ) {
 
   fun build(books: MutableList<Book>) = Adapter(books) {
@@ -46,9 +47,6 @@ class BooksAdapter(
             adapter.notifyItemRemoved(index)
           }
         }
-        val onEditClicked = { book: Book ->
-          context.startActivity(context.createEditBookIntent(book.id, book is FinishedBook))
-        }
         val onDeleteClicked = { book: Book ->
           AlertDialog.Builder(context)
               .setTitle(R.string.book_delete_confirmation_title)
@@ -66,7 +64,7 @@ class BooksAdapter(
               .setTitle(book.fullTitle)
               .setItems(R.array.book_context_menu) { dialog, menu ->
                 when (menu) {
-                  0 -> onEditClicked(book)
+                  0 -> router.openEditBookScreen(book)
                   1 -> onDeleteClicked(book)
                 }
                 dialog.dismiss()

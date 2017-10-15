@@ -92,7 +92,10 @@ class BookActivity : AppCompatActivity() {
                 notesTextArea.text.toString()
             ))
           }.io2main().subscribe(
-              { finish() },
+              {
+                setResult(RESULT_OK)
+                finish()
+              },
               { logError("cannot post planned book", it) }
           )
           true

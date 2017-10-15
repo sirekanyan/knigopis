@@ -23,8 +23,9 @@ import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
 
 private const val ULOGIN_REQUEST_CODE = 0
+private const val BOOK_REQUEST_CODE = 1
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Router {
 
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
@@ -33,12 +34,14 @@ class MainActivity : AppCompatActivity() {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
         getSharedPreferences("knigopis", MODE_PRIVATE)
-    ), api, auth)
+    ), api, auth, this)
   }
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
+  private val navigation by lazy { findView<BottomNavigationView>(R.id.navigation) }
   private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
   private val progressBar by lazy { findView<View>(R.id.books_progress_bar) }
   private val booksNotFoundView by lazy { findView<View>(R.id.books_not_found) }
+  private var needUpdate = false
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
@@ -47,10 +50,10 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view))
-    initNavigationView(findView(R.id.navigation))
+    initNavigationView()
     initToolbar(findView(R.id.toolbar))
     fab.setOnClickListener {
-      startActivity(createNewBookIntent())
+      startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
     }
   }
 
@@ -59,6 +62,10 @@ class MainActivity : AppCompatActivity() {
     refreshOptionsMenu()
     auth.requestAccessToken {
       refreshOptionsMenu()
+    }
+    if (needUpdate) {
+      refreshCurrentTab(currentTab)
+      navigation.selectedItemId = currentTab.itemId
     }
   }
 
@@ -69,14 +76,21 @@ class MainActivity : AppCompatActivity() {
           auth.saveTokenResponse(data)
         }
       }
+      BOOK_REQUEST_CODE -> {
+        needUpdate = resultCode == RESULT_OK
+      }
     }
   }
 
-  private fun initNavigationView(navigation: BottomNavigationView) {
-    setCurrentTab(HOME_TAB)
-    navigation.selectedItemId = currentTab.itemId
+  override fun openEditBookScreen(book: Book) {
+    startActivityForResult(createEditBookIntent(book.id, book is FinishedBook), BOOK_REQUEST_CODE)
+  }
+
+  private fun initNavigationView() {
+    refreshCurrentTab(HOME_TAB)
+    navigation.selectedItemId = HOME_TAB.itemId
     navigation.setOnNavigationItemSelectedListener { item ->
-      setCurrentTab(CurrentTab.getByItemId(item.itemId))
+      refreshCurrentTab(CurrentTab.getByItemId(item.itemId))
       true
     }
   }
@@ -123,7 +137,8 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun setCurrentTab(tab: CurrentTab) {
+  private fun refreshCurrentTab(tab: CurrentTab) {
+    needUpdate = false
     fab.hide()
     currentTab = tab
     when (tab) {
