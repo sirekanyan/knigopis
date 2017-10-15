@@ -65,9 +65,14 @@ class MainActivity : AppCompatActivity(), Router {
       refreshOptionsMenu()
     }
     if (needUpdate) {
-      refreshCurrentTab(currentTab)
-      navigation.selectedItemId = currentTab.itemId
+      refresh()
     }
+    booksPlaceholder.setOnClickListener { refresh() }
+  }
+
+  override fun onStop() {
+    booksPlaceholder.setOnClickListener(null)
+    super.onStop()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,10 +93,9 @@ class MainActivity : AppCompatActivity(), Router {
   }
 
   private fun initNavigationView() {
-    refreshCurrentTab(HOME_TAB)
-    navigation.selectedItemId = HOME_TAB.itemId
+    refresh(HOME_TAB)
     navigation.setOnNavigationItemSelectedListener { item ->
-      refreshCurrentTab(CurrentTab.getByItemId(item.itemId))
+      setCurrentTab(CurrentTab.getByItemId(item.itemId))
       true
     }
   }
@@ -108,6 +112,7 @@ class MainActivity : AppCompatActivity(), Router {
         R.id.option_login -> {
           if (auth.isAuthorized()) {
             auth.logout()
+            refresh()
           } else {
             startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
           }
@@ -138,7 +143,12 @@ class MainActivity : AppCompatActivity(), Router {
     }
   }
 
-  private fun refreshCurrentTab(tab: CurrentTab) {
+  private fun refresh(tab: CurrentTab = currentTab) {
+    setCurrentTab(tab)
+    navigation.selectedItemId = tab.itemId
+  }
+
+  private fun setCurrentTab(tab: CurrentTab) {
     needUpdate = false
     fab.hide()
     currentTab = tab

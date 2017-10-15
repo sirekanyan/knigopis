@@ -36,10 +36,10 @@
     <string name="book_hint_notes">Notes</string>
 
     <!-- about -->
-    <string name="about_idea">API: http://knigopis.com</string>
-    <string name="about_logo">Logo: https://twitter.com</string>
-    <string name="about_developer">Developer: vadik@sirekanyan.com</string>
-    <string name="about_designer">Designer: anna@sirekanyan.com</string>
+    <string name="about_idea">API — http://knigopis.com</string>
+    <string name="about_logo">Logo — https://twitter.com</string>
+    <string name="about_developer">Developer — vadik@sirekanyan.com</string>
+    <string name="about_designer">Designer — anna@sirekanyan.com</string>
 
     <!-- error -->
     <string name="error_loading_books">Check your network connection.</string>
