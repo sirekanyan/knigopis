@@ -28,6 +28,7 @@ private const val BOOK_REQUEST_CODE = 1
 
 class MainActivity : AppCompatActivity(), Router {
 
+  private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
   private val allBooks = mutableListOf<Book>()
@@ -38,7 +39,11 @@ class MainActivity : AppCompatActivity(), Router {
     ), api, auth, this)
   }
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-  private val navigation by lazy { findView<BottomNavigationView>(R.id.navigation) }
+  private val navigation by lazy {
+    findView<BottomNavigationView>(R.id.navigation).apply {
+      visibility = if (config.isDevMode()) View.VISIBLE else View.GONE
+    }
+  }
   private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
   private val progressBar by lazy { findView<View>(R.id.books_progress_bar) }
   private val booksPlaceholder by lazy { findView<TextView>(R.id.books_placeholder) }
@@ -123,6 +128,13 @@ class MainActivity : AppCompatActivity(), Router {
           val dialogView = View.inflate(this, R.layout.about, null)
           val versionView = dialogView.findViewById<TextView>(R.id.about_app_version)
           versionView.text = BuildConfig.VERSION_NAME
+          var count = 0
+          versionView.setOnClickListener {
+            (++count >= 12).let { enable ->
+              config.setDevMode(enable)
+              if (enable) toast("???")
+            }
+          }
           AlertDialog.Builder(this).setView(dialogView).show()
           true
         }
