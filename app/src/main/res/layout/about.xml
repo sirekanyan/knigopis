@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,10 +14,10 @@
     android:paddingTop="16dp">
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/ic_letter_k"
+        android:src="@mipmap/ic_launcher"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -47,10 +46,6 @@
         <TextView
             style="@style/AboutItem"
             android:text="@string/about_idea" />
-
-        <TextView
-            style="@style/AboutItem"
-            android:text="@string/about_logo" />
 
         <TextView
             style="@style/AboutItem"

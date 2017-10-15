@@ -43,9 +43,8 @@
 
     <!-- about -->
     <string name="about_idea">API — http://knigopis.com</string>
-    <string name="about_logo">Logo — https://twitter.com</string>
-    <string name="about_developer">Developer — vadik@sirekanyan.com</string>
-    <string name="about_designer">Designer — anna@sirekanyan.com</string>
+    <string name="about_developer">Development — vadik@sirekanyan.com</string>
+    <string name="about_designer">Design — anna@sirekanyan.com</string>
 
     <!-- error -->
     <string name="error_unauthorized">Welcome to Knigopis! Please log in.</string>

@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity(), Router {
           versionView.text = BuildConfig.VERSION_NAME
           var count = 0
           versionView.setOnClickListener {
-            (++count >= 12).let { enable ->
+            (++count == 12).let { enable ->
               config.setDevMode(enable)
               if (enable) toast("???")
             }
