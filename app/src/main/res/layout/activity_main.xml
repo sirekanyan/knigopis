@@ -41,15 +41,15 @@
             tools:alpha="1" />
 
         <TextView
-            android:id="@+id/books_not_found"
+            android:id="@+id/books_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:alpha="0"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/error_loading_books"
-            tools:alpha="1" />
+            tools:alpha="1"
+            tools:text="@string/error_loading_books" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_book_button"

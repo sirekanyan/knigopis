@@ -21,6 +21,7 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
+import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), Router {
   private val navigation by lazy { findView<BottomNavigationView>(R.id.navigation) }
   private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
   private val progressBar by lazy { findView<View>(R.id.books_progress_bar) }
-  private val booksNotFoundView by lazy { findView<View>(R.id.books_not_found) }
+  private val booksPlaceholder by lazy { findView<TextView>(R.id.books_placeholder) }
   private var needUpdate = false
   private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
@@ -163,7 +164,7 @@ class MainActivity : AppCompatActivity(), Router {
     ).io2main()
         .doOnSubscribe {
           progressBar.fadeIn()
-          booksNotFoundView.fadeOut()
+          booksPlaceholder.fadeOut()
         }
         .doAfterTerminate {
           progressBar.fadeOut()
@@ -176,7 +177,14 @@ class MainActivity : AppCompatActivity(), Router {
           fab.show()
         }, {
           logError("cannot load books", it)
-          booksNotFoundView.fadeIn()
+          booksPlaceholder.setText(
+              if (it is HttpException && it.code() == 401) {
+                R.string.error_unauthorized
+              } else {
+                R.string.error_loading_books
+              }
+          )
+          booksPlaceholder.fadeIn()
         })
   }
 
