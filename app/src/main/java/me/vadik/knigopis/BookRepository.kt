@@ -30,3 +30,12 @@ class BookRepositoryImpl(
         api.putPlannedBook(bookId, auth.getAccessToken(), book)
       }
 }
+
+class BookRepositoryMock : BookRepository {
+
+  override fun saveBook(bookId: String?, book: FinishedBookToSend): Completable =
+      Completable.fromAction { Thread.sleep(2000) }
+
+  override fun saveBook(bookId: String?, book: PlannedBookToSend): Completable =
+      Completable.fromAction { Thread.sleep(2000) }
+}

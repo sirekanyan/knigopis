@@ -21,4 +21,8 @@
         <item name="android:padding">4dp</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="WhiteAccent">
+        <item name="colorAccent">@color/white</item>
+    </style>
 </resources>

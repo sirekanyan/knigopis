@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
@@ -79,3 +80,10 @@ fun View.hide() {
 fun View.fadeIn() = animate().alpha(1f).setDuration(200).start()
 
 fun View.fadeOut() = animate().alpha(0f).setDuration(200).start()
+
+fun Activity.hideKeyboard() {
+  currentFocus?.let { view ->
+    (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow(view.windowToken, 0)
+  }
+}

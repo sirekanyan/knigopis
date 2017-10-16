@@ -31,10 +31,15 @@ fun Context.createEditBookIntent(bookId: String, finished: Boolean): Intent =
 
 class BookActivity : AppCompatActivity() {
 
+  private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
   private val api by lazy { app().baseApi.create(Endpoint::class.java) }
   private val repository by lazy {
     val auth = KAuthImpl(applicationContext, api)
-    BookRepositoryImpl(api, auth) as BookRepository
+    if (config.isDevMode()) {
+      BookRepositoryMock()
+    } else {
+      BookRepositoryImpl(api, auth)
+    }
   }
   private val imageSearch: BookCoverSearch by lazy {
     BookCoverSearchImpl(
@@ -73,9 +78,11 @@ class BookActivity : AppCompatActivity() {
     toolbar.setNavigationOnClickListener {
       finish()
     }
-    toolbar.setOnMenuItemClickListener {
-      when (it.itemId) {
+    val progressMenuItem = toolbar.menu.findItem(R.id.option_progress_bar)
+    toolbar.setOnMenuItemClickListener { saveMenuItem ->
+      when (saveMenuItem.itemId) {
         R.id.option_save_book -> {
+          hideKeyboard()
           if (readCheckbox.isChecked) {
             repository.saveBook(bookId, FinishedBookToSend(
                 titleEditText.text.toString(),
@@ -91,16 +98,24 @@ class BookActivity : AppCompatActivity() {
                 authorEditText.text.toString(),
                 notesTextArea.text.toString()
             ))
-          }.io2main().subscribe(
-              {
+          }.io2main()
+              .doOnSubscribe {
+                saveMenuItem.isVisible = false
+                progressMenuItem.isVisible = true
+                progressMenuItem.actionView.fadeIn()
+              }
+              .doOnError {
+                progressMenuItem.isVisible = false
+                progressMenuItem.actionView.fadeOut()
+                saveMenuItem.isVisible = true
+              }
+              .subscribe({
                 setResult(RESULT_OK)
                 finish()
-              },
-              {
+              }, {
                 toast("Ошибка при сохранении книги")
                 logError("cannot post planned book", it)
-              }
-          )
+              })
           true
         }
         else -> false
