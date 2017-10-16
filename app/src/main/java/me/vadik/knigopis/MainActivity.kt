@@ -29,7 +29,8 @@ import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
-private const val MAX_VERSION_CLICK_COUNT = 12
+private const val VERSION_CLICK_COUNT_OFF = 1
+private const val VERSION_CLICK_COUNT_ON = 12
 
 class MainActivity : AppCompatActivity(), Router {
 
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity(), Router {
   private lateinit var currentTab: CurrentTab
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    if (config.isDevMode()) {
+      setTheme(R.style.DevTheme)
+    }
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view))
@@ -128,10 +132,20 @@ class MainActivity : AppCompatActivity(), Router {
           val versionView = dialogView.findViewById<TextView>(R.id.about_app_version)
           versionView.text = BuildConfig.VERSION_NAME
           var count = 0
+          val enabled = config.isDevMode()
+          val max = if (enabled) {
+            VERSION_CLICK_COUNT_OFF
+          } else {
+            VERSION_CLICK_COUNT_ON
+          }
           versionView.setOnClickListener {
-            count += 1
-            config.setDevMode(count >= MAX_VERSION_CLICK_COUNT)
-            if (count == MAX_VERSION_CLICK_COUNT) toast(R.string.dev_mode_message)
+            if (++count == max) {
+              enabled.not().let {
+                if (it) toast(R.string.dev_mode_message)
+                config.setDevMode(it)
+                recreate()
+              }
+            }
           }
           AlertDialog.Builder(this).setView(dialogView).show()
           true

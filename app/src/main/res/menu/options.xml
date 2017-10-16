@@ -3,10 +3,12 @@
 
     <item
         android:id="@+id/option_login"
+        android:orderInCategory="2"
         android:visible="false" />
 
     <item
         android:id="@+id/option_about"
+        android:orderInCategory="1"
         android:title="@string/option_about" />
 
 </menu>

@@ -6,6 +6,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DevTheme" parent="AppTheme">
+        <item name="colorPrimary">#9C27B0</item>
+        <item name="colorPrimaryDark">#7B1FA2</item>
+    </style>
+
     <style name="AppBarTheme">
         <item name="actionMenuTextColor">@color/white</item>
         <item name="titleTextColor">@color/white</item>
