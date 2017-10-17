@@ -77,9 +77,17 @@ fun View.hide() {
   alpha = 0f
 }
 
-fun View.fadeIn() = animate().alpha(1f).setDuration(200).start()
+fun View.fadeIn() {
+  animate().alpha(1f).setDuration(200)
+      .withStartAction { visibility = View.VISIBLE }
+      .start()
+}
 
-fun View.fadeOut() = animate().alpha(0f).setDuration(200).start()
+fun View.fadeOut() {
+  animate().alpha(0f).setDuration(200)
+      .withEndAction { visibility = View.GONE }
+      .start()
+}
 
 fun Activity.hideKeyboard() {
   currentFocus?.let { view ->
