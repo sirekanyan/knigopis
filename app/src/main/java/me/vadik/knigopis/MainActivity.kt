@@ -248,16 +248,16 @@ class MainActivity : AppCompatActivity(), Router {
       }
     }.io2main()
         .doOnSubscribe {
-          progressBar.fadeIn()
-          booksPlaceholder.fadeOut()
+          progressBar.show()
+          booksPlaceholder.hide()
         }
         .doAfterTerminate {
-          progressBar.fadeOut()
+          progressBar.hide()
         }
         .subscribe({ books ->
           if (books.isEmpty()) {
             booksPlaceholder.setText(R.string.error_no_books)
-            booksPlaceholder.fadeIn()
+            booksPlaceholder.show()
           }
           allBooks.addAll(books)
           allBooksAdapter.notifyDataSetChanged()
@@ -271,7 +271,7 @@ class MainActivity : AppCompatActivity(), Router {
                 R.string.error_loading_books
               }
           )
-          booksPlaceholder.fadeIn()
+          booksPlaceholder.show()
         })
   }
 

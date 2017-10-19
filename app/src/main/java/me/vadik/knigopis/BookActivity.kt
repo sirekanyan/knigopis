@@ -102,11 +102,11 @@ class BookActivity : AppCompatActivity() {
               .doOnSubscribe {
                 saveMenuItem.isVisible = false
                 progressMenuItem.isVisible = true
-                progressMenuItem.actionView.fadeIn()
+                progressMenuItem.actionView.show()
               }
               .doOnError {
                 progressMenuItem.isVisible = false
-                progressMenuItem.actionView.fadeOut()
+                progressMenuItem.actionView.hide()
                 saveMenuItem.isVisible = true
               }
               .subscribe({

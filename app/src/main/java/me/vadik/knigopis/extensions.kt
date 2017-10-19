@@ -69,21 +69,21 @@ fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> 
       }
     })
 
-fun View.show() {
+fun View.showNow() {
   alpha = 1f
 }
 
-fun View.hide() {
+fun View.hideNow() {
   alpha = 0f
 }
 
-fun View.fadeIn() {
+fun View.show() {
   animate().alpha(1f).setDuration(200)
       .withStartAction { visibility = View.VISIBLE }
       .start()
 }
 
-fun View.fadeOut() {
+fun View.hide() {
   animate().alpha(0f).setDuration(200)
       .withEndAction { visibility = View.GONE }
       .start()
