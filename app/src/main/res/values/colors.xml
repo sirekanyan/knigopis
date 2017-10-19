@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- default colors -->
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <!-- green and yellow -->
+    <!--<color name="colorPrimary">#4CAF50</color>-->
+    <!--<color name="colorPrimaryDark">#388E3C</color>-->
+    <!--<color name="colorAccent">#FFC400</color>-->
+
+    <!-- purple and orange -->
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#FF3D00</color>
+
     <color name="white">#FFFFFF</color>
     <color name="white_12">#E1E1E1</color>
     <color name="black_12">#1F1F1F</color>
