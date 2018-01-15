@@ -1,0 +1,8 @@
+<lint>
+    <issue id="UnusedResources">
+        <ignore path="res/drawable"/>
+        <ignore path="res/layout"/>
+        <ignore path="res/menu"/>
+        <ignore path="res/values"/>
+    </issue>
+</lint>

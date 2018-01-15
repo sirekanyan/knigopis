@@ -4,7 +4,7 @@
     android:id="@+id/book_item_container"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/book_image"
