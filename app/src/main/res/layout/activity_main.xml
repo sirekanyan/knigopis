@@ -27,13 +27,13 @@
         android:layout_weight="1">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/books_recycler_view"
+            android:id="@+id/booksRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/book" />
 
         <ProgressBar
-            android:id="@+id/books_progress_bar"
+            android:id="@+id/booksProgressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,7 +41,7 @@
             tools:alpha="1" />
 
         <TextView
-            android:id="@+id/books_placeholder"
+            android:id="@+id/booksPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -55,7 +55,7 @@
             tools:visibility="visible" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_book_button"
+            android:id="@+id/addBookButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

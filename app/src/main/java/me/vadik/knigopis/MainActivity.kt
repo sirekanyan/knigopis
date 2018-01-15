@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import android.view.View
 import android.widget.TextView
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.Singles
+import kotlinx.android.synthetic.main.activity_main.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
@@ -50,11 +50,7 @@ class MainActivity : AppCompatActivity(), Router {
       visibility = if (config.isDevMode()) View.VISIBLE else View.GONE
     }
   }
-  private val fab by lazy { findView<FloatingActionButton>(R.id.add_book_button) }
-  private val progressBar by lazy { findView<View>(R.id.books_progress_bar) }
-  private val booksPlaceholder by lazy { findView<TextView>(R.id.books_placeholder) }
   private var needUpdate = false
-  private lateinit var booksRecyclerView: RecyclerView
   private lateinit var loginOption: MenuItem
   private lateinit var currentTab: CurrentTab
 
@@ -64,10 +60,10 @@ class MainActivity : AppCompatActivity(), Router {
     }
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    booksRecyclerView = initRecyclerView(findView(R.id.books_recycler_view))
+    initRecyclerView(booksRecyclerView)
     initNavigationView()
-    initToolbar(findView(R.id.toolbar))
-    fab.setOnClickListener {
+    initToolbar(toolbar)
+    addBookButton.setOnClickListener {
       startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
     }
   }
@@ -217,7 +213,7 @@ class MainActivity : AppCompatActivity(), Router {
 
   private fun setCurrentTab(tab: CurrentTab) {
     needUpdate = false
-    fab.hide()
+    addBookButton.hide()
     currentTab = tab
     when (tab) {
       HOME_TAB -> refreshHomeTab()
@@ -227,7 +223,7 @@ class MainActivity : AppCompatActivity(), Router {
   }
 
   private fun refreshHomeTab() {
-    if (progressBar.alpha > 0) {
+    if (booksProgressBar.alpha > 0) {
       return
     }
     booksRecyclerView.adapter = allBooksAdapter
@@ -248,11 +244,11 @@ class MainActivity : AppCompatActivity(), Router {
       }
     }.io2main()
         .doOnSubscribe {
-          progressBar.show()
+          booksProgressBar.show()
           booksPlaceholder.hide()
         }
         .doAfterTerminate {
-          progressBar.hide()
+          booksProgressBar.hide()
         }
         .subscribe({ books ->
           if (books.isEmpty()) {
@@ -261,7 +257,7 @@ class MainActivity : AppCompatActivity(), Router {
           }
           allBooks.addAll(books)
           allBooksAdapter.notifyDataSetChanged()
-          fab.show()
+          addBookButton.show()
         }, {
           logError("cannot load books", it)
           booksPlaceholder.setText(
