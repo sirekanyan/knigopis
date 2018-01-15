@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/book_add_title" />
+            app:title="@string/book_add_title"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/book_hint_title"
                     android:inputType="textCapSentences"
-                    tools:text="Два капитана" />
+                    tools:text="Два капитана"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/book_hint_author"
                     android:inputType="textCapWords"
-                    tools:text="Вениамин Каверин" />
+                    tools:text="Вениамин Каверин"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +80,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/book_title_input"
                 tools:background="@color/colorAccent"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/bookYearInput"
@@ -99,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/book_hint_year"
                     android:inputType="number"
-                    tools:text="2012" />
+                    tools:text="2012"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -119,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/book_hint_month"
-                    android:inputType="number" />
+                    android:inputType="number"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -139,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/book_hint_day"
-                    android:inputType="number" />
+                    android:inputType="number"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -153,24 +154,23 @@
                 android:text="@string/book_read_checkbox"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/bookYearInput"
-                tools:checked="true" />
+                tools:checked="true"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/notes_text_input"
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/notesTextArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/readCheckbox">
-
-                <EditText
-                    android:id="@+id/notesTextArea"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_notes"
-                    android:inputType="textCapSentences"
-                    tools:text="Неистово плюсую" />
-
-            </android.support.design.widget.TextInputLayout>
+                android:background="@drawable/text_area_background"
+                android:drawableEnd="@drawable/ic_comment_gray"
+                android:drawablePadding="16dp"
+                android:hint="@string/book_hint_notes"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="2"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/readCheckbox"
+                tools:text="Неистово плюсую"/>
 
         </android.support.constraint.ConstraintLayout>
 
