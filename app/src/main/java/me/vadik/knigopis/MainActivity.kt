@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), Router {
   private val booksAdapter by lazy {
     BooksAdapter(BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
-        getSharedPreferences("knigopis", MODE_PRIVATE)
+        BookCoverCacheImpl(applicationContext)
     ), api, auth, this)
   }
   private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }

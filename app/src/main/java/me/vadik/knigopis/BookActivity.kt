@@ -40,7 +40,7 @@ class BookActivity : AppCompatActivity() {
   private val imageSearch: BookCoverSearch by lazy {
     BookCoverSearchImpl(
         app().imageApi.create(ImageEndpoint::class.java),
-        getSharedPreferences("knigopis", MODE_PRIVATE)
+        BookCoverCacheImpl(applicationContext)
     )
   }
   private var bookId: String? = null
