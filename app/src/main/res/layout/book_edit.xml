@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/book_add_title"/>
+            tools:title="@string/book_add_title"/>
 
     </android.support.design.widget.AppBarLayout>
 
