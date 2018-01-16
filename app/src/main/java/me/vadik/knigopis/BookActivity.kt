@@ -50,6 +50,7 @@ class BookActivity : AppCompatActivity() {
     setContentView(R.layout.book_edit)
     bookId = intent.getStringExtra(EXTRA_BOOK_ID)
     toolbar.inflateMenu(R.menu.book_menu)
+    if (bookId == null) titleEditText.requestFocus()
     toolbar.setTitle(if (bookId == null) R.string.book_add_title else R.string.book_edit_title)
     toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
     toolbar.setNavigationOnClickListener {
