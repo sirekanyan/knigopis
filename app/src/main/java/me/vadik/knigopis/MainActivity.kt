@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity(), Router {
     refreshOptionsMenu()
     auth.requestAccessToken {
       refreshOptionsMenu()
-    }
-    if (needUpdate) {
-      refresh()
+      if (needUpdate) {
+        refresh()
+      }
     }
   }
 
@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), Router {
       ULOGIN_REQUEST_CODE -> {
         if (resultCode == RESULT_OK && data != null) {
           auth.saveTokenResponse(data)
+          needUpdate = true
         }
       }
       BOOK_REQUEST_CODE -> {
