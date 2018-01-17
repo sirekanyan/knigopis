@@ -43,9 +43,9 @@
     <string name="book_hint_notes">Notes</string>
 
     <!-- about -->
-    <string name="about_idea">API\nhttp://knigopis.com</string>
-    <string name="about_developer">Development\nvadik@sirekanyan.com</string>
-    <string name="about_designer">Design\nanna@sirekanyan.com</string>
+    <string name="about_idea">API:\nhttp://knigopis.com</string>
+    <string name="about_developer">Development:\nvadik@sirekanyan.com</string>
+    <string name="about_designer">Design:\nanna@sirekanyan.com</string>
 
     <!-- error -->
     <string name="error_unauthorized">Welcome to Knigopis! Please log in.</string>
