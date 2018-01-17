@@ -12,6 +12,7 @@
     <!-- menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
+    <string name="option_refresh">Обновить</string>
     <string name="option_about">О приложении</string>
 
     <!-- books -->

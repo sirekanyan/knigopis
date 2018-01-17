@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/option_login"
-        android:orderInCategory="2"
-        android:visible="false" />
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/option_refresh"
+        android:title="@string/option_refresh"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/option_about"
-        android:orderInCategory="1"
-        android:title="@string/option_about" />
+        android:title="@string/option_about"
+        app:showAsAction="never"/>
 
 </menu>

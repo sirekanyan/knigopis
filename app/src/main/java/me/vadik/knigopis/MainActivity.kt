@@ -77,12 +77,6 @@ class MainActivity : AppCompatActivity(), Router {
     if (needUpdate) {
       refresh()
     }
-    booksPlaceholder.setOnClickListener { refresh() }
-  }
-
-  override fun onStop() {
-    booksPlaceholder.setOnClickListener(null)
-    super.onStop()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -144,6 +138,10 @@ class MainActivity : AppCompatActivity(), Router {
             }
           }
           AlertDialog.Builder(this).setView(dialogView).show()
+          true
+        }
+        R.id.option_refresh -> {
+          refresh()
           true
         }
         else -> false
