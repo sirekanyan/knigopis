@@ -27,7 +27,7 @@
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/about_app_version"
+        android:id="@+id/aboutAppVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -52,6 +52,7 @@
             android:text="@string/about_developer"/>
 
         <TextView
+            android:id="@+id/aboutDesignerText"
             style="@style/AboutItem"
             android:drawableStart="@drawable/ic_about_designer"
             android:text="@string/about_designer"/>

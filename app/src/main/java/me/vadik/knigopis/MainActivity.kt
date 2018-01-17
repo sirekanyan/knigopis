@@ -13,9 +13,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.rxkotlin.Singles
+import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
@@ -120,7 +120,8 @@ class MainActivity : AppCompatActivity(), Router {
         }
         R.id.option_about -> {
           val dialogView = View.inflate(this, R.layout.about, null)
-          val versionView = dialogView.findViewById<TextView>(R.id.about_app_version)
+          val versionView = dialogView.aboutAppVersion
+          val designerView = dialogView.aboutDesignerText
           versionView.text = BuildConfig.VERSION_NAME
           var count = 0
           val enabled = config.isDevMode()
@@ -128,6 +129,11 @@ class MainActivity : AppCompatActivity(), Router {
             VERSION_CLICK_COUNT_OFF
           } else {
             VERSION_CLICK_COUNT_ON
+          }
+          if (enabled) {
+            designerView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                R.drawable.ic_about_designer_highlighted, 0, 0, 0
+            )
           }
           versionView.setOnClickListener {
             if (++count == max) {
