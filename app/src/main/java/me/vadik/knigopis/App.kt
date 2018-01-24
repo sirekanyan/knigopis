@@ -3,7 +3,9 @@ package me.vadik.knigopis
 import android.app.Application
 import com.google.gson.GsonBuilder
 import me.vadik.knigopis.api.gson.ImageThumbnailDeserializer
+import me.vadik.knigopis.api.gson.NotesTypeAdapter
 import me.vadik.knigopis.model.ImageThumbnail
+import me.vadik.knigopis.model.Notes
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,7 +19,12 @@ class App : Application() {
     Retrofit.Builder()
         .baseUrl(MAIN_API_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(
+            GsonBuilder().registerTypeAdapter(
+                Notes::class.java,
+                NotesTypeAdapter()
+            ).create()
+        ))
         .build()
   }
 
