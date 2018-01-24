@@ -18,9 +18,22 @@ class NotesTypeAdapterTest {
     }
 
     @Test
+    fun writeZeroProgress() {
+        val notes = Notes("text", 0)
+        assertEquals("\"text\"", gson.toJson(notes))
+    }
+
+    @Test
     fun read() {
         val notes = gson.fromJson("\"text // text // 25%\"", Notes::class.java)
         assertEquals("text // text", notes.text)
         assertEquals(25, notes.progress)
+    }
+
+    @Test
+    fun readZeroProgress() {
+        val notes = gson.fromJson("\"text // text\"", Notes::class.java)
+        assertEquals("text // text", notes.text)
+        assertEquals(0, notes.progress)
     }
 }

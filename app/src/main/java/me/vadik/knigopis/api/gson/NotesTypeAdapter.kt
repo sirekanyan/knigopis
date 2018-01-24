@@ -10,7 +10,11 @@ class NotesTypeAdapter : TypeAdapter<Notes>() {
     private val regex = Regex("(.*) // (\\d+)%")
 
     override fun write(output: JsonWriter, notes: Notes) {
-        output.value("${notes.text} // ${notes.progress}%")
+        if (notes.progress == 0) {
+            output.value(notes.text)
+        } else {
+            output.value("${notes.text} // ${notes.progress}%")
+        }
     }
 
     override fun read(input: JsonReader): Notes {
