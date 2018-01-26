@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -19,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/app_name"/>
+            app:title="@string/app_name" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -32,7 +31,7 @@
             android:id="@+id/booksRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/book"/>
+            tools:listitem="@layout/book" />
 
         <ProgressBar
             android:id="@+id/booksProgressBar"
@@ -40,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:alpha="0"
-            tools:alpha="1"/>
+            tools:alpha="1" />
 
         <TextView
             android:id="@+id/booksPlaceholder"
@@ -54,7 +53,7 @@
             android:visibility="gone"
             tools:alpha="1"
             tools:text="@string/error_loading_books"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addBookButton"
@@ -63,7 +62,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:tint="@color/white"
-            app:srcCompat="@drawable/ic_add"/>
+            app:srcCompat="@drawable/ic_add" />
 
     </FrameLayout>
 
@@ -73,6 +72,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:menu="@menu/navigation"/>
+        app:menu="@menu/navigation" />
 
 </LinearLayout>
