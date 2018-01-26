@@ -7,12 +7,16 @@ import me.vadik.knigopis.model.ImageThumbnail
 import java.lang.reflect.Type
 
 class ImageThumbnailDeserializer : JsonDeserializer<ImageThumbnail> {
-  override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext) =
-      json.asJsonObject
-          .getAsJsonObject("data")
-          .getAsJsonObject("result")
-          .getAsJsonArray("items")
-          .map { it.asJsonObject["thumbnail"].asString }
-          .map { "https:" + it }
-          .let(::ImageThumbnail)
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ) =
+        json.asJsonObject
+            .getAsJsonObject("data")
+            .getAsJsonObject("result")
+            .getAsJsonArray("items")
+            .map { it.asJsonObject["thumbnail"].asString }
+            .map { "https:" + it }
+            .let(::ImageThumbnail)
 }

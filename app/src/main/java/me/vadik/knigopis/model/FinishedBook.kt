@@ -11,7 +11,7 @@ class FinishedBook(
     val createdAt: String,
     val user: User
 ) : Book {
-  val order
-    get() = arrayOf(readYear, readMonth, readDay)
-        .joinToString("") { it.padStart(4, '0') }
+    val order
+        get() = arrayOf(readYear, readMonth, readDay)
+            .joinToString("") { it.padStart(4, '0') }
 }

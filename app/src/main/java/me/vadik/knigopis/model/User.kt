@@ -7,9 +7,9 @@ class User(
     val updatedAt: String
 ) {
 
-  val color: Int
-    get() {
-      val alpha = Math.min(0xff, booksCount)
-      return alpha shl 24
-    }
+    val color: Int
+        get() {
+            val alpha = Math.min(0xff, booksCount)
+            return alpha shl 24
+        }
 }

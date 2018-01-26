@@ -25,7 +25,8 @@ private const val TAG = "Knigopis"
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-fun Context.toast(@StringRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+fun Context.toast(@StringRes messageId: Int) =
+    Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
 
 fun Activity.app() = application as App
 
@@ -48,50 +49,50 @@ fun String.orDefault(default: String) = if (isEmpty()) default else this
 
 fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> =
     listener(object : RequestListener<T> {
-      override fun onResourceReady(
-          resource: T?,
-          model: Any?,
-          target: Target<T>?,
-          dataSource: DataSource?,
-          isFirstResource: Boolean
-      ): Boolean {
-        onSuccess()
-        return false
-      }
+        override fun onResourceReady(
+            resource: T?,
+            model: Any?,
+            target: Target<T>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            onSuccess()
+            return false
+        }
 
-      override fun onLoadFailed(
-          e: GlideException?,
-          model: Any?,
-          target: Target<T>?,
-          isFirstResource: Boolean
-      ): Boolean {
-        return false
-      }
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<T>?,
+            isFirstResource: Boolean
+        ): Boolean {
+            return false
+        }
     })
 
 fun View.showNow() {
-  alpha = 1f
+    alpha = 1f
 }
 
 fun View.hideNow() {
-  alpha = 0f
+    alpha = 0f
 }
 
 fun View.show() {
-  animate().alpha(1f).setDuration(200)
-      .withStartAction { visibility = View.VISIBLE }
-      .start()
+    animate().alpha(1f).setDuration(200)
+        .withStartAction { visibility = View.VISIBLE }
+        .start()
 }
 
 fun View.hide() {
-  animate().alpha(0f).setDuration(200)
-      .withEndAction { visibility = View.GONE }
-      .start()
+    animate().alpha(0f).setDuration(200)
+        .withEndAction { visibility = View.GONE }
+        .start()
 }
 
 fun Activity.hideKeyboard() {
-  currentFocus?.let { view ->
-    (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-        .hideSoftInputFromWindow(view.windowToken, 0)
-  }
+    currentFocus?.let { view ->
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

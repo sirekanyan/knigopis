@@ -15,29 +15,33 @@ private const val IMAGE_API_URL = "https://api.qwant.com/api/"
 
 class App : Application() {
 
-  val baseApi: Retrofit by lazy {
-    Retrofit.Builder()
-        .baseUrl(MAIN_API_URL)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(
-            GsonBuilder().registerTypeAdapter(
-                Notes::class.java,
-                NotesTypeAdapter()
-            ).create()
-        ))
-        .build()
-  }
+    val baseApi: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(MAIN_API_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().registerTypeAdapter(
+                        Notes::class.java,
+                        NotesTypeAdapter()
+                    ).create()
+                )
+            )
+            .build()
+    }
 
-  val imageApi: Retrofit by lazy {
-    Retrofit.Builder()
-        .baseUrl(IMAGE_API_URL)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(
-            GsonBuilder().registerTypeAdapter(
-                ImageThumbnail::class.java,
-                ImageThumbnailDeserializer()
-            ).create()
-        ))
-        .build()
-  }
+    val imageApi: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(IMAGE_API_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().registerTypeAdapter(
+                        ImageThumbnail::class.java,
+                        ImageThumbnailDeserializer()
+                    ).create()
+                )
+            )
+            .build()
+    }
 }

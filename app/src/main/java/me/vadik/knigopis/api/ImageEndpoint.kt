@@ -7,9 +7,9 @@ import retrofit2.http.Query
 
 interface ImageEndpoint {
 
-  @GET("search/images")
-  fun searchImage(
-      @Query("q") query: String,
-      @Query("count") count: Int = 10
-  ): Single<ImageThumbnail>
+    @GET("search/images")
+    fun searchImage(
+        @Query("q") query: String,
+        @Query("count") count: Int = 10
+    ): Single<ImageThumbnail>
 }
