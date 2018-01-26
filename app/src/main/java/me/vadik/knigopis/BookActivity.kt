@@ -124,9 +124,7 @@ class BookActivity : AppCompatActivity() {
             }
         }
         readCheckbox.setOnCheckedChangeListener { _, checked ->
-            arrayOf(bookDayInput, bookMonthInput, bookYearInput).forEach { view ->
-                view.visibility = if (checked) VISIBLE else GONE
-            }
+            bookDateInputGroup.visibility = if (checked) VISIBLE else GONE
         }
     }
 

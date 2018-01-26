@@ -88,12 +88,10 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookMonthInput"
-                app:layout_constraintTop_toBottomOf="@id/book_author_input"
-                tools:visibility="visible">
+                app:layout_constraintTop_toBottomOf="@id/book_author_input">
 
                 <EditText
                     android:id="@+id/yearEditText"
@@ -110,11 +108,9 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintLeft_toRightOf="@id/bookYearInput"
                 app:layout_constraintRight_toLeftOf="@+id/bookDayInput"
-                app:layout_constraintTop_toBottomOf="@id/book_author_input"
-                tools:visibility="visible">
+                app:layout_constraintTop_toBottomOf="@id/book_author_input">
 
                 <EditText
                     android:id="@+id/monthEditText"
@@ -130,11 +126,9 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintLeft_toRightOf="@id/bookMonthInput"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/book_author_input"
-                tools:visibility="visible">
+                app:layout_constraintTop_toBottomOf="@id/book_author_input">
 
                 <EditText
                     android:id="@+id/dayEditText"
@@ -174,14 +168,22 @@
 
             <!-- todo: remove -->
             <EditText
-                android:hint="priority (temp)"
                 android:id="@+id/bookPriority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:hint="priority (temp)"
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/notesTextArea" />
+
+            <android.support.constraint.Group
+                android:id="@+id/bookDateInputGroup"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:constraint_referenced_ids="bookYearInput,bookMonthInput,bookDayInput"
+                tools:visibility="visible" />
 
         </android.support.constraint.ConstraintLayout>
 
