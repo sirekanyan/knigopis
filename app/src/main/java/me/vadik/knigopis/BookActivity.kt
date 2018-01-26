@@ -12,7 +12,6 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBookToSend
-import me.vadik.knigopis.model.Notes
 import me.vadik.knigopis.model.PlannedBookToSend
 
 private const val IMAGE_PRELOAD_COUNT = 3
@@ -78,10 +77,8 @@ class BookActivity : AppCompatActivity() {
                             bookId, PlannedBookToSend(
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
-                                Notes(
-                                    notesTextArea.text.toString(),
-                                    0 // todo: actual progress
-                                )
+                                notesTextArea.text.toString(),
+                                bookPriority.text.toString().toInt()
                             )
                         )
                     }.io2main()
@@ -151,7 +148,8 @@ class BookActivity : AppCompatActivity() {
                     .io2main()
                     .doOnSuccess { plannedBook ->
                         readCheckbox.isChecked = false
-                        notesTextArea.setText(plannedBook.notes.text)
+                        notesTextArea.setText(plannedBook.notes)
+                        bookPriority.setText(plannedBook.priority.toString())
                     }
             }.subscribe({ book ->
                 titleEditText.setText(book.title)

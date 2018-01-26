@@ -8,5 +8,5 @@ class PlannedBook(
     override val title: String,
     override val author: String,
     val priority: Int,
-    val notes: Notes
+    val notes: String
 ) : Book

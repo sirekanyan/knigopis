@@ -169,9 +169,19 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/readCheckbox"
                 tools:text="Неистово плюсую" />
+
+            <!-- todo: remove -->
+            <EditText
+                android:hint="priority (temp)"
+                android:id="@+id/bookPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/notesTextArea" />
 
         </android.support.constraint.ConstraintLayout>
 
