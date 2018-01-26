@@ -1,5 +1,6 @@
 package me.vadik.knigopis
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.support.annotation.IdRes
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.SeekBar
 import android.widget.Toast
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
@@ -88,6 +90,22 @@ fun View.hide() {
     animate().alpha(0f).setDuration(200)
         .withEndAction { visibility = View.GONE }
         .start()
+}
+
+fun SeekBar.show() {
+    animate().alpha(1f)
+        .withStartAction { isEnabled = true }
+        .start()
+}
+
+fun SeekBar.hide() {
+    animate().alpha(0f)
+        .withEndAction { isEnabled = false }
+        .start()
+}
+
+fun SeekBar.setProgressSmoothly(progress: Int) {
+    ObjectAnimator.ofInt(this, "progress", progress).start()
 }
 
 fun Activity.hideKeyboard() {

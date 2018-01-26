@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent.ACTION_UP
 import android.view.View.*
 import kotlinx.android.synthetic.main.book_edit.*
 import me.vadik.knigopis.api.BookCoverSearch
@@ -78,7 +79,7 @@ class BookActivity : AppCompatActivity() {
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
                                 notesTextArea.text.toString(),
-                                bookPriority.text.toString().toInt()
+                                progressSeekBar.progress
                             )
                         )
                     }.io2main()
@@ -124,7 +125,21 @@ class BookActivity : AppCompatActivity() {
             }
         }
         readCheckbox.setOnCheckedChangeListener { _, checked ->
-            bookDateInputGroup.visibility = if (checked) VISIBLE else GONE
+            if (checked) {
+                bookDateInputGroup.visibility = VISIBLE
+                progressSeekBar.setProgressSmoothly(100)
+                progressSeekBar.hide()
+            } else {
+                bookDateInputGroup.visibility = GONE
+                progressSeekBar.setProgressSmoothly(0)
+                progressSeekBar.show()
+            }
+        }
+        progressSeekBar.setOnTouchListener { _, event ->
+            if (event.action == ACTION_UP && progressSeekBar.progress == 100) {
+                readCheckbox.isChecked = true
+            }
+            false
         }
     }
 
@@ -147,7 +162,7 @@ class BookActivity : AppCompatActivity() {
                     .doOnSuccess { plannedBook ->
                         readCheckbox.isChecked = false
                         notesTextArea.setText(plannedBook.notes)
-                        bookPriority.setText(plannedBook.priority.toString())
+                        progressSeekBar.setProgressSmoothly(plannedBook.priority)
                     }
             }.subscribe({ book ->
                 titleEditText.setText(book.title)

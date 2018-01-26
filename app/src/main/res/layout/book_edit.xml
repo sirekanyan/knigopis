@@ -141,7 +141,7 @@
 
             <CheckBox
                 android:id="@+id/readCheckbox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="9dp"
@@ -151,8 +151,19 @@
                 android:paddingStart="8dp"
                 android:text="@string/book_read_checkbox"
                 android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bookYearInput"
                 tools:checked="true" />
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/progressSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/readCheckbox"
+                app:layout_constraintLeft_toRightOf="@id/readCheckbox"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/readCheckbox"
+                tools:progress="20" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/notesTextArea"
@@ -166,19 +177,9 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"
                 android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/readCheckbox"
                 tools:text="Неистово плюсую" />
-
-            <!-- todo: remove -->
-            <EditText
-                android:id="@+id/bookPriority"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="priority (temp)"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notesTextArea" />
 
             <android.support.constraint.Group
                 android:id="@+id/bookDateInputGroup"
