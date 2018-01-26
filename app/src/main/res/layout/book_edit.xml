@@ -33,9 +33,9 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/book_title_input"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toTopOf="parent">
@@ -52,9 +52,9 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/book_author_input"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toBottomOf="@id/book_title_input">
@@ -85,11 +85,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/bookYearInput"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:visibility="gone"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookMonthInput"
                 app:layout_constraintTop_toBottomOf="@id/book_author_input"
@@ -107,9 +107,9 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/bookMonthInput"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:visibility="gone"
                 app:layout_constraintLeft_toRightOf="@id/bookYearInput"
                 app:layout_constraintRight_toLeftOf="@+id/bookDayInput"
@@ -127,9 +127,9 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/bookDayInput"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:visibility="gone"
                 app:layout_constraintLeft_toRightOf="@id/bookMonthInput"
                 app:layout_constraintRight_toRightOf="parent"
