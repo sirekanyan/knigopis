@@ -64,6 +64,9 @@ class BooksAdapter(
                     .show()
             }
             val book = books[bookIndex]
+            setOnClickListener {
+                router.openEditBookScreen(book)
+            }
             setOnLongClickListener {
                 AlertDialog.Builder(context)
                     .setTitle(book.fullTitle)
