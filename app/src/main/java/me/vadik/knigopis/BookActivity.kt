@@ -20,14 +20,18 @@ import java.util.*
 
 private const val IMAGE_PRELOAD_COUNT = 3
 private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
+private const val EXTRA_BOOK_TITLE = "me.vadik.knigopis.extra_book_title"
+private const val EXTRA_BOOK_AUTHOR = "me.vadik.knigopis.extra_book_author"
 private const val EXTRA_BOOK_FINISHED = "me.vadik.knigopis.extra_book_finished"
 
 fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
 
-fun Context.createEditBookIntent(bookId: String, finished: Boolean): Intent =
+fun Context.createEditBookIntent(id: String, title: String, author: String, done: Boolean): Intent =
     Intent(this, BookActivity::class.java)
-        .putExtra(EXTRA_BOOK_ID, bookId)
-        .putExtra(EXTRA_BOOK_FINISHED, finished)
+        .putExtra(EXTRA_BOOK_ID, id)
+        .putExtra(EXTRA_BOOK_TITLE, title)
+        .putExtra(EXTRA_BOOK_AUTHOR, author)
+        .putExtra(EXTRA_BOOK_FINISHED, done)
 
 class BookActivity : AppCompatActivity() {
 
@@ -151,6 +155,8 @@ class BookActivity : AppCompatActivity() {
         super.onStart()
         val finished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
         bookId?.let { id ->
+            titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
+            authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
             if (finished) {
                 api.getFinishedBook(id)
                     .io2main()
@@ -167,10 +173,9 @@ class BookActivity : AppCompatActivity() {
                         notesTextArea.setText(plannedBook.notes)
                         progressSeekBar.setProgressSmoothly(plannedBook.priority)
                     }
-            }.subscribe({ book ->
-                titleEditText.setText(book.title)
-                authorEditText.setText(book.author)
-            }, { logError("cannot get planned book", it) })
+            }.subscribe({}, {
+                logError("cannot get planned book", it)
+            })
         }
     }
 }

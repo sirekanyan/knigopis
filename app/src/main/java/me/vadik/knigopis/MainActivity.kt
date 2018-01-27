@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), Router {
 
     override fun openEditBookScreen(book: Book) {
         startActivityForResult(
-            createEditBookIntent(book.id, book is FinishedBook),
+            createEditBookIntent(book.id, book.title, book.author, book is FinishedBook),
             BOOK_REQUEST_CODE
         )
     }
