@@ -52,7 +52,8 @@ class MainActivity : AppCompatActivity(), Router {
             visibility = if (config.isDevMode()) View.VISIBLE else View.GONE
         }
     }
-    private var needUpdate = false
+    private var userLoggedIn = false
+    private var booksChanged = false
     private lateinit var loginOption: MenuItem
     private lateinit var currentTab: CurrentTab
 
@@ -75,9 +76,14 @@ class MainActivity : AppCompatActivity(), Router {
         refreshOptionsMenu()
         auth.requestAccessToken {
             refreshOptionsMenu()
-            if (needUpdate) {
+            if (userLoggedIn) {
+                userLoggedIn = false
                 refresh()
             }
+        }
+        if (booksChanged) {
+            booksChanged = false
+            refresh()
         }
     }
 
@@ -86,11 +92,11 @@ class MainActivity : AppCompatActivity(), Router {
             ULOGIN_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK && data != null) {
                     auth.saveTokenResponse(data)
-                    needUpdate = true
+                    userLoggedIn = true
                 }
             }
             BOOK_REQUEST_CODE -> {
-                needUpdate = resultCode == RESULT_OK
+                booksChanged = resultCode == RESULT_OK
             }
         }
     }
@@ -225,7 +231,6 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun setCurrentTab(tab: CurrentTab) {
-        needUpdate = false
         addBookButton.hide()
         currentTab = tab
         when (tab) {
