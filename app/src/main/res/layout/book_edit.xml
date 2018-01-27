@@ -37,6 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:hint="@string/book_hint_title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toTopOf="parent">
@@ -45,8 +46,8 @@
                     android:id="@+id/titleEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_title"
                     android:inputType="textCapSentences"
+                    tools:ignore="LabelFor"
                     tools:text="Два капитана" />
 
             </android.support.design.widget.TextInputLayout>
@@ -57,6 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:hint="@string/book_hint_author"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toBottomOf="@id/book_title_input">
@@ -65,8 +67,8 @@
                     android:id="@+id/authorEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_author"
                     android:inputType="textCapWords"
+                    tools:ignore="LabelFor"
                     tools:text="Вениамин Каверин" />
 
             </android.support.design.widget.TextInputLayout>
@@ -109,6 +111,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/book_hint_year"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookMonthInput"
@@ -118,8 +121,8 @@
                     android:id="@+id/yearEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_year"
                     android:inputType="number"
+                    tools:ignore="LabelFor"
                     tools:text="2012" />
 
             </android.support.design.widget.TextInputLayout>
@@ -129,6 +132,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/book_hint_month"
                 app:layout_constraintLeft_toRightOf="@id/bookYearInput"
                 app:layout_constraintRight_toLeftOf="@+id/bookDayInput"
                 app:layout_constraintTop_toBottomOf="@id/progressSeekBar">
@@ -137,8 +141,8 @@
                     android:id="@+id/monthEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_month"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    tools:ignore="LabelFor" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -147,6 +151,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/book_hint_day"
                 app:layout_constraintLeft_toRightOf="@id/bookMonthInput"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/progressSeekBar">
@@ -155,8 +160,8 @@
                     android:id="@+id/dayEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/book_hint_day"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    tools:ignore="LabelFor" />
 
             </android.support.design.widget.TextInputLayout>
 
