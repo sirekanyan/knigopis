@@ -73,11 +73,11 @@ fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> 
     })
 
 fun View.showNow() {
-    alpha = 1f
+    visibility = View.VISIBLE
 }
 
 fun View.hideNow() {
-    alpha = 0f
+    visibility = View.GONE
 }
 
 fun View.show() {
@@ -89,18 +89,6 @@ fun View.show() {
 fun View.hide() {
     animate().alpha(0f).setDuration(200)
         .withEndAction { visibility = View.GONE }
-        .start()
-}
-
-fun SeekBar.show() {
-    animate().alpha(1f)
-        .withStartAction { isEnabled = true }
-        .start()
-}
-
-fun SeekBar.hide() {
-    animate().alpha(0f)
-        .withEndAction { isEnabled = false }
         .start()
 }
 

@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent.ACTION_UP
-import android.view.View.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import kotlinx.android.synthetic.main.book_edit.*
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.BookCoverSearchImpl
@@ -62,7 +64,7 @@ class BookActivity : AppCompatActivity() {
             when (saveMenuItem.itemId) {
                 R.id.option_save_book -> {
                     hideKeyboard()
-                    if (readCheckbox.isChecked) {
+                    if (progressSeekBar.progress == 100) {
                         repository.saveBook(
                             bookId, FinishedBookToSend(
                                 titleEditText.text.toString(),
@@ -124,23 +126,17 @@ class BookActivity : AppCompatActivity() {
                     })
             }
         }
-        readCheckbox.setOnCheckedChangeListener { _, checked ->
-            if (checked) {
-                bookDateInputGroup.visibility = VISIBLE
-                progressSeekBar.setProgressSmoothly(100)
-                progressSeekBar.hide()
-            } else {
-                bookDateInputGroup.visibility = GONE
-                progressSeekBar.setProgressSmoothly(0)
-                progressSeekBar.show()
+        progressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (progress == 100) {
+                    bookDateInputGroup.showNow()
+                } else {
+                    bookDateInputGroup.hideNow()
+                }
             }
-        }
-        progressSeekBar.setOnTouchListener { _, event ->
-            if (event.action == ACTION_UP && progressSeekBar.progress == 100) {
-                readCheckbox.isChecked = true
-            }
-            false
-        }
+        })
     }
 
     override fun onStart() {
@@ -151,16 +147,15 @@ class BookActivity : AppCompatActivity() {
                 api.getFinishedBook(id)
                     .io2main()
                     .doOnSuccess { finishedBook ->
-                        readCheckbox.isChecked = true
                         yearEditText.setText(finishedBook.readYear)
                         monthEditText.setText(finishedBook.readMonth)
                         dayEditText.setText(finishedBook.readDay)
+                        progressSeekBar.setProgressSmoothly(100)
                     }
             } else {
                 api.getPlannedBook(id)
                     .io2main()
                     .doOnSuccess { plannedBook ->
-                        readCheckbox.isChecked = false
                         notesTextArea.setText(plannedBook.notes)
                         progressSeekBar.setProgressSmoothly(plannedBook.priority)
                     }

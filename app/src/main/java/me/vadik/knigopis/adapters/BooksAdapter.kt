@@ -82,7 +82,7 @@ class BooksAdapter(
             }
         }
         .bind<ImageView>(R.id.book_image) {
-            hideNow()
+            alpha = 0f
             coverSearch.search(books[it])
                 .subscribe({ coverUrl ->
                     Glide.with(context)
