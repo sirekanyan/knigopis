@@ -14,7 +14,9 @@ import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuthImpl
+import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.FinishedBookToSend
+import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.PlannedBookToSend
 import java.util.*
 
@@ -22,16 +24,35 @@ private const val IMAGE_PRELOAD_COUNT = 3
 private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
 private const val EXTRA_BOOK_TITLE = "me.vadik.knigopis.extra_book_title"
 private const val EXTRA_BOOK_AUTHOR = "me.vadik.knigopis.extra_book_author"
+private const val EXTRA_BOOK_YEAR = "me.vadik.knigopis.extra_book_year"
+private const val EXTRA_BOOK_MONTH = "me.vadik.knigopis.extra_book_month"
+private const val EXTRA_BOOK_DAY = "me.vadik.knigopis.extra_book_day"
+private const val EXTRA_BOOK_NOTES = "me.vadik.knigopis.extra_book_notes"
+private const val EXTRA_BOOK_PROGRESS = "me.vadik.knigopis.extra_book_progress"
 private const val EXTRA_BOOK_FINISHED = "me.vadik.knigopis.extra_book_finished"
 
 fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
 
-fun Context.createEditBookIntent(id: String, title: String, author: String, done: Boolean): Intent =
+fun Context.createEditBookIntent(book: PlannedBook): Intent =
     Intent(this, BookActivity::class.java)
-        .putExtra(EXTRA_BOOK_ID, id)
-        .putExtra(EXTRA_BOOK_TITLE, title)
-        .putExtra(EXTRA_BOOK_AUTHOR, author)
-        .putExtra(EXTRA_BOOK_FINISHED, done)
+        .putExtra(EXTRA_BOOK_ID, book.id)
+        .putExtra(EXTRA_BOOK_TITLE, book.title)
+        .putExtra(EXTRA_BOOK_AUTHOR, book.author)
+        .putExtra(EXTRA_BOOK_NOTES, book.notes)
+        .putExtra(EXTRA_BOOK_PROGRESS, book.priority)
+        .putExtra(EXTRA_BOOK_FINISHED, false)
+
+fun Context.createEditBookIntent(book: FinishedBook): Intent =
+    Intent(this, BookActivity::class.java)
+        .putExtra(EXTRA_BOOK_ID, book.id)
+        .putExtra(EXTRA_BOOK_TITLE, book.title)
+        .putExtra(EXTRA_BOOK_AUTHOR, book.author)
+        .putExtra(EXTRA_BOOK_YEAR, book.readYear)
+        .putExtra(EXTRA_BOOK_MONTH, book.readMonth)
+        .putExtra(EXTRA_BOOK_DAY, book.readDay)
+        .putExtra(EXTRA_BOOK_NOTES, book.notes)
+        .putExtra(EXTRA_BOOK_PROGRESS, 100)
+        .putExtra(EXTRA_BOOK_FINISHED, true)
 
 class BookActivity : AppCompatActivity() {
 
@@ -153,29 +174,14 @@ class BookActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val finished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
-        bookId?.let { id ->
-            titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
-            authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
-            if (finished) {
-                api.getFinishedBook(id)
-                    .io2main()
-                    .doOnSuccess { finishedBook ->
-                        yearEditText.setText(finishedBook.readYear)
-                        monthEditText.setText(finishedBook.readMonth)
-                        dayEditText.setText(finishedBook.readDay)
-                        progressSeekBar.setProgressSmoothly(100)
-                    }
-            } else {
-                api.getPlannedBook(id)
-                    .io2main()
-                    .doOnSuccess { plannedBook ->
-                        notesTextArea.setText(plannedBook.notes)
-                        progressSeekBar.setProgressSmoothly(plannedBook.priority)
-                    }
-            }.subscribe({}, {
-                logError("cannot get planned book", it)
-            })
+        titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
+        authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
+        progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
+        notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
+        if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {
+            yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))
+            monthEditText.setText(intent.getStringExtra(EXTRA_BOOK_MONTH))
+            dayEditText.setText(intent.getStringExtra(EXTRA_BOOK_DAY))
         }
     }
 }

@@ -96,10 +96,11 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     override fun openEditBookScreen(book: Book) {
-        startActivityForResult(
-            createEditBookIntent(book.id, book.title, book.author, book is FinishedBook),
-            BOOK_REQUEST_CODE
-        )
+        when (book) {
+            is PlannedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
+            is FinishedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
+            else -> UnsupportedOperationException()
+        }
     }
 
     private fun initNavigationView() {
