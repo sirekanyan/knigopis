@@ -16,6 +16,7 @@ import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBookToSend
+import java.util.*
 
 private const val IMAGE_PRELOAD_COUNT = 3
 private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
@@ -46,6 +47,7 @@ class BookActivity : AppCompatActivity() {
             BookCoverCacheImpl(applicationContext)
         )
     }
+    private val today = Calendar.getInstance()
     private var bookId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,8 +132,14 @@ class BookActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                progressText.text = "$progress%"
                 if (progress == 100) {
                     bookDateInputGroup.showNow()
+                    if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
+                        yearEditText.setText(today.get(Calendar.YEAR).toString())
+                        monthEditText.setText(today.get(Calendar.MONTH).inc().toString())
+                        dayEditText.setText(today.get(Calendar.DAY_OF_MONTH).toString())
+                    }
                 } else {
                     bookDateInputGroup.hideNow()
                 }
