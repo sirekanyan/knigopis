@@ -6,6 +6,17 @@
     android:layout_height="72dp"
     android:foreground="?android:attr/selectableItemBackground">
 
+    <ProgressBar
+        android:id="@+id/book_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:progressDrawable="@drawable/light_progress_bar_background"
+        tools:progress="80" />
+
     <ImageView
         android:id="@+id/book_image"
         android:layout_width="40dp"

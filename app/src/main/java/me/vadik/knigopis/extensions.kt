@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.SeekBar
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
@@ -92,7 +92,7 @@ fun View.hide() {
         .start()
 }
 
-fun SeekBar.setProgressSmoothly(progress: Int) {
+fun ProgressBar.setProgressSmoothly(progress: Int) {
     ObjectAnimator.ofInt(this, "progress", progress).start()
 }
 

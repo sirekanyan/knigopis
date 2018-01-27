@@ -3,6 +3,7 @@ package me.vadik.knigopis.adapters
 import android.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -79,6 +80,16 @@ class BooksAdapter(
                     }
                     .show()
                 true
+            }
+        }
+        .bind<ProgressBar>(R.id.book_progress) {
+            val book = books[it]
+            if (book is PlannedBook) {
+                showNow()
+                setProgressSmoothly(book.priority)
+            } else {
+                hideNow()
+                progress = 0
             }
         }
         .bind<ImageView>(R.id.book_image) {
