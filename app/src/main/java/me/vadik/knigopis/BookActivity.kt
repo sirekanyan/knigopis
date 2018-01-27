@@ -113,7 +113,7 @@ class BookActivity : AppCompatActivity() {
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
                                 notesTextArea.text.toString(),
-                                progressSeekBar.progress
+                                progressSeekBar.progress.takeIf { it in (1..100) }
                             ),
                             wasFinished
                         )
