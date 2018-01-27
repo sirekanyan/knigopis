@@ -4,6 +4,9 @@ import android.app.Application
 import com.google.gson.GsonBuilder
 import me.vadik.knigopis.api.gson.ImageThumbnailDeserializer
 import me.vadik.knigopis.model.ImageThumbnail
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,6 +21,11 @@ class App : Application() {
             .baseUrl(MAIN_API_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
+            .client(
+                OkHttpClient.Builder()
+                    .setDebugEnabled(BuildConfig.DEBUG)
+                    .build()
+            )
             .build()
     }
 
@@ -34,5 +42,14 @@ class App : Application() {
                 )
             )
             .build()
+    }
+
+    private fun OkHttpClient.Builder.setDebugEnabled(debugEnabled: Boolean): OkHttpClient.Builder {
+        if (debugEnabled) {
+            addNetworkInterceptor(HttpLoggingInterceptor().also {
+                it.level = Level.BODY
+            })
+        }
+        return this
     }
 }
