@@ -84,12 +84,12 @@ class BooksAdapter(
         }
         .bind<ProgressBar>(R.id.book_progress) {
             val book = books[it]
+            progress = 0
             if (book is PlannedBook) {
                 showNow()
                 setProgressSmoothly(book.priority)
             } else {
                 hideNow()
-                progress = 0
             }
         }
         .bind<ImageView>(R.id.book_image) {
