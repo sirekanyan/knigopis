@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), Router {
         when (book) {
             is PlannedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
             is FinishedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
-            else -> UnsupportedOperationException()
+            else -> throw UnsupportedOperationException()
         }
     }
 

@@ -91,25 +91,31 @@ class BookActivity : AppCompatActivity() {
             when (saveMenuItem.itemId) {
                 R.id.option_save_book -> {
                     hideKeyboard()
+                    val wasFinished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
+                        .takeUnless { bookId == null }
                     if (progressSeekBar.progress == 100) {
                         repository.saveBook(
-                            bookId, FinishedBookToSend(
+                            bookId,
+                            FinishedBookToSend(
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
                                 dayEditText.text.toString(),
                                 monthEditText.text.toString(),
                                 yearEditText.text.toString(),
                                 notesTextArea.text.toString()
-                            )
+                            ),
+                            wasFinished
                         )
                     } else {
                         repository.saveBook(
-                            bookId, PlannedBookToSend(
+                            bookId,
+                            PlannedBookToSend(
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
                                 notesTextArea.text.toString(),
                                 progressSeekBar.progress
-                            )
+                            ),
+                            wasFinished
                         )
                     }.io2main()
                         .doOnSubscribe {
@@ -160,7 +166,7 @@ class BookActivity : AppCompatActivity() {
                 progressText.text = "$progress%"
                 if (progress == 100) {
                     bookDateInputGroup.showNow()
-                    if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
+                    if (bookId != null && yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
                         yearEditText.setText(today.get(Calendar.YEAR).toString())
                         monthEditText.setText(today.get(Calendar.MONTH).inc().toString())
                         dayEditText.setText(today.get(Calendar.DAY_OF_MONTH).toString())
@@ -174,14 +180,16 @@ class BookActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
-        authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
-        progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
-        notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
-        if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {
-            yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))
-            monthEditText.setText(intent.getStringExtra(EXTRA_BOOK_MONTH))
-            dayEditText.setText(intent.getStringExtra(EXTRA_BOOK_DAY))
+        if (bookId != null) {
+            titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
+            authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
+            progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
+            notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
+            if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {
+                yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))
+                monthEditText.setText(intent.getStringExtra(EXTRA_BOOK_MONTH))
+                dayEditText.setText(intent.getStringExtra(EXTRA_BOOK_DAY))
+            }
         }
     }
 }

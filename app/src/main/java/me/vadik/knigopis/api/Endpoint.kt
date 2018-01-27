@@ -17,14 +17,14 @@ interface Endpoint {
     fun getFinishedBook(@Path("id") id: String): Single<FinishedBook>
 
     @PUT("books/{id}")
-    fun putFinishedBook(
+    fun updateFinishedBook(
         @Path("id") id: String,
         @Query("access-token") accessToken: String,
         @Body book: FinishedBookToSend
     ): Completable
 
     @POST("books")
-    fun postFinishedBook(
+    fun createFinishedBook(
         @Query("access-token") accessToken: String,
         @Body book: FinishedBookToSend
     ): Completable
@@ -42,14 +42,14 @@ interface Endpoint {
     fun getPlannedBook(@Path("id") id: String): Single<PlannedBook>
 
     @PUT("wishes/{id}")
-    fun putPlannedBook(
+    fun updatePlannedBook(
         @Path("id") id: String,
         @Query("access-token") accessToken: String,
         @Body book: PlannedBookToSend
     ): Completable
 
     @POST("wishes")
-    fun postPlannedBook(
+    fun createPlannedBook(
         @Query("access-token") accessToken: String,
         @Body book: PlannedBookToSend
     ): Completable
