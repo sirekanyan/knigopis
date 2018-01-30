@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import me.vadik.knigopis.*
 import me.vadik.knigopis.api.BookCoverSearch
@@ -93,13 +94,15 @@ class BooksAdapter(
             }
         }
         .bind<ImageView>(R.id.book_image) {
-            alpha = 0f
             coverSearch.search(books[it])
                 .subscribe({ coverUrl ->
                     Glide.with(context)
                         .load(coverUrl)
-                        .doOnSuccess { show() }
-                        .apply(RequestOptions.centerCropTransform())
+                        .apply(
+                            RequestOptions.centerCropTransform()
+                                .placeholder(R.color.image_placeholder_color)
+                        )
+                        .transition(DrawableTransitionOptions.withCrossFade())
                         .into(this)
                 }, {
                     logError("cannot load thumbnail", it)

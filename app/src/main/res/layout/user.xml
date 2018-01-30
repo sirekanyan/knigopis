@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="72dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/userAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/oval_placeholder_background"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="16dp"
-        tools:text="Вася Пупкин" />
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="72dp">
 
-    <TextView
-        android:id="@+id/book_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        tools:text="100" />
+        <TextView
+            android:id="@+id/userNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="16sp"
+            tools:text="Павел Дуров" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/userProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/tertiary_text_light"
+            android:textSize="14sp"
+            tools:text="https://vk.com/id1" />
+
+    </LinearLayout>
+
+</FrameLayout>

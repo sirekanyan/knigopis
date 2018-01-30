@@ -5,14 +5,13 @@
     <string name="book_edit_title">Редактировать книгу</string>
 
     <!-- navigation -->
-    <string name="title_home">Мои книги</string>
+    <string name="title_home">Книги</string>
     <string name="title_users">Подписки</string>
-    <string name="title_notes">Примечания</string>
+    <string name="title_notes">Заметки</string>
 
     <!-- menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
-    <string name="option_refresh">Обновить</string>
     <string name="option_about">О приложении</string>
 
     <!-- books -->

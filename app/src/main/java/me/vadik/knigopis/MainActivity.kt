@@ -18,6 +18,8 @@ import io.reactivex.rxkotlin.Singles
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import me.vadik.knigopis.adapters.BooksAdapter
+import me.vadik.knigopis.adapters.notes.NotesAdapter
+import me.vadik.knigopis.adapters.users.UsersAdapter
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.api.ImageEndpoint
@@ -25,6 +27,8 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
+import me.vadik.knigopis.model.note.Note
+import me.vadik.knigopis.model.subscription.Subscription
 import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
@@ -38,6 +42,8 @@ class MainActivity : AppCompatActivity(), Router {
     private val api by lazy { app().baseApi.create(Endpoint::class.java) }
     private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
     private val allBooks = mutableListOf<Book>()
+    private val allUsers = mutableListOf<Subscription>()
+    private val allNotes = mutableListOf<Note>()
     private val booksAdapter by lazy {
         BooksAdapter(
             BookCoverSearchImpl(
@@ -47,6 +53,8 @@ class MainActivity : AppCompatActivity(), Router {
         )
     }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
+    private val usersAdapter by lazy { UsersAdapter(allUsers) }
+    private val notesAdapter by lazy { NotesAdapter(allNotes) }
     private val navigation by lazy {
         findView<BottomNavigationView>(R.id.navigation).apply {
             visibility = if (config.isDevMode()) View.VISIBLE else View.GONE
@@ -64,6 +72,8 @@ class MainActivity : AppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRecyclerView(booksRecyclerView)
+        initRecyclerView(usersRecyclerView)
+        initRecyclerView(notesRecyclerView)
         initNavigationView()
         initToolbar(toolbar)
         addBookButton.setOnClickListener {
@@ -159,10 +169,6 @@ class MainActivity : AppCompatActivity(), Router {
                     AlertDialog.Builder(this).setView(dialogView).show()
                     true
                 }
-                R.id.option_refresh -> {
-                    refresh()
-                    true
-                }
                 else -> false
             }
         }
@@ -241,6 +247,9 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshHomeTab() {
+        usersRecyclerView.hideNow()
+        notesRecyclerView.hideNow()
+        booksRecyclerView.showNow()
         if (booksProgressBar.alpha > 0) {
             return
         }
@@ -265,7 +274,7 @@ class MainActivity : AppCompatActivity(), Router {
                 booksProgressBar.show()
                 booksPlaceholder.hide()
             }
-            .doAfterTerminate {
+            .doFinally {
                 booksProgressBar.hide()
             }
             .subscribe({ books ->
@@ -290,11 +299,59 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshUsersTab() {
-        // todo
+        booksRecyclerView.hideNow()
+        notesRecyclerView.hideNow()
+        usersRecyclerView.showNow()
+        usersRecyclerView.adapter = usersAdapter
+        allUsers.clear()
+        api.getSubscriptions(auth.getAccessToken())
+            .io2main()
+            .doOnSubscribe {
+                booksProgressBar.show()
+                booksPlaceholder.hide()
+            }
+            .doFinally {
+                booksProgressBar.hide()
+            }
+            .subscribe({ subscriptions ->
+                allUsers.addAll(subscriptions)
+                usersAdapter.notifyDataSetChanged()
+            }, {
+                logError("cannot load users", it)
+                booksPlaceholder.setText(
+                    if (it is HttpException && it.code() == 401) {
+                        R.string.error_unauthorized
+                    } else {
+                        R.string.error_loading_books
+                    }
+                )
+                booksPlaceholder.show()
+            })
     }
 
     private fun refreshNotesTab() {
-        // todo
+        booksRecyclerView.hideNow()
+        usersRecyclerView.hideNow()
+        notesRecyclerView.showNow()
+        notesRecyclerView.adapter = notesAdapter
+        allNotes.clear()
+        api.getLatestBooksWithNotes()
+            .io2main()
+            .doOnSubscribe {
+                booksProgressBar.show()
+                booksPlaceholder.hide()
+            }
+            .doFinally {
+                booksProgressBar.hide()
+            }
+            .subscribe({ notes ->
+                allNotes.addAll(notes.values)
+                notesAdapter.notifyDataSetChanged()
+            }, {
+                logError("cannot load notes", it)
+                booksPlaceholder.setText(R.string.error_loading_books)
+                booksPlaceholder.show()
+            })
     }
 
     private fun List<FinishedBook>.groupFinishedBooks(): List<Book> {

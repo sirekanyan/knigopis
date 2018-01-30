@@ -8,8 +8,8 @@
     </style>
 
     <style name="DevTheme" parent="AppTheme">
-        <item name="colorPrimary">#9C27B0</item>
-        <item name="colorPrimaryDark">#7B1FA2</item>
+        <!--<item name="colorPrimary">#9C27B0</item>-->
+        <!--<item name="colorPrimaryDark">#7B1FA2</item>-->
     </style>
 
     <style name="AppBarTheme">

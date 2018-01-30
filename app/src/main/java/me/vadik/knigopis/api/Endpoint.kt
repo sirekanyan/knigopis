@@ -3,6 +3,8 @@ package me.vadik.knigopis.api
 import io.reactivex.Completable
 import io.reactivex.Single
 import me.vadik.knigopis.model.*
+import me.vadik.knigopis.model.note.Note
+import me.vadik.knigopis.model.subscription.Subscription
 import retrofit2.http.*
 
 interface Endpoint {
@@ -64,5 +66,10 @@ interface Endpoint {
     fun getLatestUsers(): Single<Map<String, User>>
 
     @GET("books/latest-notes")
-    fun getLatestBooksWithNotes(): Single<Map<String, FinishedBook>>
+    fun getLatestBooksWithNotes(): Single<Map<String, Note>>
+
+    @GET("subscriptions")
+    fun getSubscriptions(
+        @Query("access-token") accessToken: String
+    ): Single<List<Subscription>>
 }

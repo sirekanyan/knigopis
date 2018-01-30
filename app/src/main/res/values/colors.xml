@@ -15,11 +15,14 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorPrimaryLight">#9575CD</color>
     <color name="colorPrimaryLightest">#B39DDB</color>
+    <color name="colorPrimary100">#D1C4E9</color>
+    <color name="colorPrimary50">#EDE7F6</color>
     <color name="colorAccent">#FF3D00</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_12">#E1E1E1</color>
     <color name="black_12">#1F1F1F</color>
     <color name="black_54">#757575</color>
+    <color name="image_placeholder_color">@color/colorPrimary50</color>
     <color name="ic_launcher_background">@color/colorPrimaryDark</color>
 </resources>
