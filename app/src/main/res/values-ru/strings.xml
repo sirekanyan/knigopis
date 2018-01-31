@@ -5,7 +5,7 @@
     <string name="book_edit_title">Редактировать книгу</string>
 
     <!-- navigation -->
-    <string name="title_home">Книги</string>
+    <string name="title_home">Мои книги</string>
     <string name="title_users">Подписки</string>
     <string name="title_notes">Заметки</string>
 
@@ -42,9 +42,9 @@
     <string name="book_hint_notes">Примечания</string>
 
     <!-- about -->
-    <string name="about_idea">Идея — http://knigopis.com</string>
-    <string name="about_developer">Разработка — vadik@sirekanyan.com</string>
-    <string name="about_designer">Дизайн — anna@sirekanyan.com</string>
+    <string name="about_idea">Идея:\nhttp://knigopis.com</string>
+    <string name="about_developer">Разработка:\nvadik@sirekanyan.com</string>
+    <string name="about_designer">Дизайн:\nanna@sirekanyan.com</string>
 
     <!-- error -->
     <string name="error_unauthorized">Это — Книгопись. Привет!</string>
