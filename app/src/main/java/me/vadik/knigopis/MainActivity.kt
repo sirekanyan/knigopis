@@ -79,6 +79,14 @@ class MainActivity : AppCompatActivity(), Router {
         addBookButton.setOnClickListener {
             startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
         }
+        booksRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                when {
+                    dy > 0 -> addBookButton.hide()
+                    dy < 0 -> addBookButton.show()
+                }
+            }
+        })
     }
 
     override fun onStart() {
