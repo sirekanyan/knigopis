@@ -3,6 +3,7 @@ package me.vadik.knigopis
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
@@ -24,6 +25,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 private const val TAG = "Knigopis"
+
+fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
+    if (packageManager.resolveActivity(intent, 0) == null) {
+        onError()
+    } else {
+        startActivity(intent)
+    }
+}
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
