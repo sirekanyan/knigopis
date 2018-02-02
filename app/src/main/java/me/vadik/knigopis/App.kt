@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val MAIN_API_URL = "http://api.knigopis.com"
 private const val IMAGE_API_URL = "https://api.qwant.com/api/"
+private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 class App : Application() {
 
@@ -20,7 +21,11 @@ class App : Application() {
         Retrofit.Builder()
             .baseUrl(MAIN_API_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().setDateFormat(DATE_FORMAT).create()
+                )
+            )
             .client(
                 OkHttpClient.Builder()
                     .setDebugEnabled(BuildConfig.DEBUG)
