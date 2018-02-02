@@ -63,4 +63,10 @@
     <!-- dev -->
     <string name="dev_mode_message">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
 
+    <!-- social networks -->
+    <string name="social_facebook">Фейсбук</string>
+    <string name="social_twitter">Твиттер</string>
+    <string name="social_google_plus">Google+</string>
+    <string name="social_vk_com">Вконтакте</string>
+    <string name="social_mail_ru">Mail.Ru</string>
 </resources>

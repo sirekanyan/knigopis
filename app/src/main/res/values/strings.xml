@@ -63,4 +63,10 @@
     <!-- dev -->
     <string name="dev_mode_message">We Present A SPECIAL PRESENTATION</string>
 
+    <!-- social networks -->
+    <string name="social_facebook">Facebook</string>
+    <string name="social_twitter">Twitter</string>
+    <string name="social_google_plus">Google+</string>
+    <string name="social_vk_com">VKontakte</string>
+    <string name="social_mail_ru">Mail.Ru</string>
 </resources>
