@@ -8,13 +8,13 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.user.view.*
 import me.vadik.knigopis.R
 
-class UserViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     var avatarUrl: String? = null
         set(value) {
             field = value
             Glide.with(view.context)
-                .load(avatarUrl)
+                .load(value)
                 .apply(
                     RequestOptions.circleCropTransform()
                         .placeholder(R.drawable.oval_placeholder_background)

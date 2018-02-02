@@ -2,6 +2,7 @@ package me.vadik.knigopis
 
 import android.Manifest.permission.READ_PHONE_STATE
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -27,6 +28,7 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
+import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
 import retrofit2.HttpException
@@ -53,8 +55,8 @@ class MainActivity : AppCompatActivity(), Router {
         )
     }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-    private val usersAdapter by lazy { UsersAdapter(allUsers) }
-    private val notesAdapter by lazy { NotesAdapter(allNotes) }
+    private val usersAdapter by lazy { UsersAdapter(allUsers, this) }
+    private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
     private val navigation by lazy {
         findView<BottomNavigationView>(R.id.navigation).apply {
             visibility = if (config.isDevMode()) View.VISIBLE else View.GONE
@@ -124,6 +126,18 @@ class MainActivity : AppCompatActivity(), Router {
             is PlannedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
             is FinishedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
             else -> throw UnsupportedOperationException()
+        }
+    }
+
+    override fun openUserScreen(user: Subscription) {
+    }
+
+    override fun openUserScreen(user: Identity) {
+    }
+
+    override fun openBrowser(uri: Uri) {
+        startActivityOrElse(Intent(ACTION_VIEW, uri)) {
+            toast("Невозможно открыть страницу")
         }
     }
 
