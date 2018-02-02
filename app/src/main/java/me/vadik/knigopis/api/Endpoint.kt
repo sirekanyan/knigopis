@@ -15,9 +15,6 @@ interface Endpoint {
     @GET("books")
     fun getFinishedBooks(@Query("access-token") accessToken: String): Single<List<FinishedBook>>
 
-    @GET("books/{id}")
-    fun getFinishedBook(@Path("id") id: String): Single<FinishedBook>
-
     @PUT("books/{id}")
     fun updateFinishedBook(
         @Path("id") id: String,
@@ -40,9 +37,6 @@ interface Endpoint {
     @GET("wishes")
     fun getPlannedBooks(@Query("access-token") accessToken: String): Single<List<PlannedBook>>
 
-    @GET("wishes/{id}")
-    fun getPlannedBook(@Path("id") id: String): Single<PlannedBook>
-
     @PUT("wishes/{id}")
     fun updatePlannedBook(
         @Path("id") id: String,
@@ -61,9 +55,6 @@ interface Endpoint {
         @Path("id") id: String,
         @Query("access-token") accessToken: String
     ): Completable
-
-    @GET("users/latest")
-    fun getLatestUsers(): Single<Map<String, User>>
 
     @GET("books/latest-notes")
     fun getLatestBooksWithNotes(): Single<Map<String, Note>>
