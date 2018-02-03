@@ -1,6 +1,7 @@
 package me.vadik.knigopis.adapters.notes
 
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
@@ -24,6 +25,7 @@ class NotesAdapter(
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.nickname = note.user.nickname
+        holder.date = DateUtils.getRelativeTimeSpanString(note.fixedCreatedAt.time)
         holder.notes = "${note.notes} // \"${note.title}\" (${note.author})"
         holder.view.setOnClickListener {
             router.openUserScreen(note.user)

@@ -12,6 +12,12 @@ class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             view.userNickname.text = value
         }
 
+    var date: CharSequence
+        get() = view.userDate.text
+        set(value) {
+            view.userDate.text = value
+        }
+
     var notes: String
         get() = view.userNotes.text.toString()
         set(value) {
