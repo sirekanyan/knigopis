@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
@@ -25,6 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 private const val TAG = "Knigopis"
+private val HTTP_SCHEMES = setOf("http", "https")
 
 fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
     if (packageManager.resolveActivity(intent, 0) == null) {
@@ -111,3 +113,9 @@ fun Activity.hideKeyboard() {
             .hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+
+fun String.toUriOrNull() =
+    Uri.parse(this).takeIf(Uri::isValidHttpLink)
+
+private fun Uri.isValidHttpLink() =
+    scheme in HTTP_SCHEMES && !host.isNullOrBlank()
