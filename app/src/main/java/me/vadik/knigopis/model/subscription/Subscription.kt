@@ -2,5 +2,7 @@ package me.vadik.knigopis.model.subscription
 
 class Subscription(
     val subUser: SubUser,
-    val lastBooksCount: Int
-)
+    private val lastBooksCount: Int
+) {
+    val recentBooksCount get() = subUser.booksCount - lastBooksCount
+}

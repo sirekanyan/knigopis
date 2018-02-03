@@ -23,4 +23,10 @@ class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         set(value) {
             view.userNotes.text = value
         }
+
+    var title: String
+        get() = view.bookTitle.text.toString()
+        set(value) {
+            view.bookTitle.text = value
+        }
 }

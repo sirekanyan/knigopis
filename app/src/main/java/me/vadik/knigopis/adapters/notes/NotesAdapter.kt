@@ -26,7 +26,8 @@ class NotesAdapter(
         val note = notes[position]
         holder.nickname = note.user.nickname
         holder.date = DateUtils.getRelativeTimeSpanString(note.fixedCreatedAt.time)
-        holder.notes = "${note.notes} // \"${note.title}\" (${note.author})"
+        holder.notes = note.notes
+        holder.title = "// \"${note.title}\" (${note.author})"
         holder.view.setOnClickListener {
             router.openUserScreen(note.user)
         }

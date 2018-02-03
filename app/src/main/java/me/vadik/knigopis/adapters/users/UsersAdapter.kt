@@ -25,9 +25,8 @@ class UsersAdapter(
         val user = users[position]
         with(user.subUser) {
             holder.avatarUrl = photo
-            val booksRead = "$booksCount (+${booksCount - user.lastBooksCount})"
+            val booksRead = "$booksCount (+${user.recentBooksCount})"
             holder.nickname = nickname + " // " + booksRead
-            holder.profile = profile ?: identity ?: ""
         }
         holder.view.setOnClickListener {
             router.openUserScreen(user)
