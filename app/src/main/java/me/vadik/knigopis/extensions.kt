@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers
 private const val TAG = "Knigopis"
 private val HTTP_SCHEMES = setOf("http", "https")
 
-fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
+inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
     if (packageManager.resolveActivity(intent, 0) == null) {
         onError()
     } else {

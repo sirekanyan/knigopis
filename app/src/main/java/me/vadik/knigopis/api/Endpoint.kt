@@ -2,6 +2,7 @@ package me.vadik.knigopis.api
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
@@ -63,4 +64,19 @@ interface Endpoint {
     fun getSubscriptions(
         @Query("access-token") accessToken: String
     ): Single<List<Subscription>>
+
+    @GET("users/{id}/books")
+    fun getUserBooks(@Path("id") userId: String): Single<List<UserBook>>
+
+    @POST("subscriptions/{subUserId}")
+    fun createSubscription(
+        @Path("subUserId") userId: String,
+        @Query("access-token") accessToken: String
+    ): Single<Any>
+
+    @DELETE("subscriptions/{subUserId}")
+    fun deleteSubscription(
+        @Path("subUserId") userId: String,
+        @Query("access-token") accessToken: String
+    ): Single<Any>
 }

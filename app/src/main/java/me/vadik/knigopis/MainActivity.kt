@@ -31,6 +31,7 @@ import me.vadik.knigopis.model.CurrentTab.*
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
+import me.vadik.knigopis.user.createUserIntent
 import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
@@ -130,9 +131,11 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     override fun openUserScreen(user: Subscription) {
+        startActivity(createUserIntent(user))
     }
 
     override fun openUserScreen(user: Identity) {
+        startActivity(createUserIntent(user))
     }
 
     override fun openBrowser(uri: Uri) {
