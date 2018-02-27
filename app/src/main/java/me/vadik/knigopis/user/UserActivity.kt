@@ -15,10 +15,12 @@ import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.adapters.users.toSocialNetwork
 import me.vadik.knigopis.api.Endpoint
+import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
+import javax.inject.Inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
 private const val EXTRA_USER_NAME = "me.vadik.knigopis.extra_user_name"
@@ -40,7 +42,12 @@ fun Context.createUserIntent(user: Identity): Intent =
 
 class UserActivity : AppCompatActivity() {
 
-    private val api by lazy { app().baseApi.create(Endpoint::class.java) }
+    @Inject
+    protected lateinit var api: Endpoint
+
+    @Inject
+    protected lateinit var imageApi: ImageEndpoint
+
     private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
@@ -50,6 +57,7 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
+        app.component.inject(this)
         toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
