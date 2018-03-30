@@ -32,8 +32,8 @@ import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
 import me.vadik.knigopis.user.createUserIntent
+import org.koin.android.ext.android.inject
 import retrofit2.HttpException
-import javax.inject.Inject
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
@@ -42,12 +42,8 @@ private const val VERSION_CLICK_COUNT_ON = 12
 
 class MainActivity : AppCompatActivity(), Router {
 
-    @Inject
-    protected lateinit var api: Endpoint
-
-    @Inject
-    protected lateinit var imageApi: ImageEndpoint
-
+    private val api by inject<Endpoint>()
+    private val imageApi by inject<ImageEndpoint>()
     private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
     private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
     private val allBooks = mutableListOf<Book>()
@@ -80,7 +76,6 @@ class MainActivity : AppCompatActivity(), Router {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        app.component.inject(this)
         initRecyclerView(booksRecyclerView)
         initRecyclerView(usersRecyclerView)
         initRecyclerView(notesRecyclerView)

@@ -20,7 +20,7 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
 private const val EXTRA_USER_NAME = "me.vadik.knigopis.extra_user_name"
@@ -42,12 +42,7 @@ fun Context.createUserIntent(user: Identity): Intent =
 
 class UserActivity : AppCompatActivity() {
 
-    @Inject
-    protected lateinit var api: Endpoint
-
-    @Inject
-    protected lateinit var imageApi: ImageEndpoint
-
+    private val api by inject<Endpoint>()
     private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
@@ -57,7 +52,6 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
-        app.component.inject(this)
         toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->

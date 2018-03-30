@@ -18,8 +18,8 @@ import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.PlannedBookToSend
+import org.koin.android.ext.android.inject
 import java.util.*
-import javax.inject.Inject
 
 private const val IMAGE_PRELOAD_COUNT = 3
 private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
@@ -57,12 +57,8 @@ fun Context.createEditBookIntent(book: FinishedBook): Intent =
 
 class BookActivity : AppCompatActivity() {
 
-    @Inject
-    protected lateinit var api: Endpoint
-
-    @Inject
-    protected lateinit var imageApi: ImageEndpoint
-
+    private val api by inject<Endpoint>()
+    private val imageApi by inject<ImageEndpoint>()
     private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
     private val repository by lazy {
         val auth = KAuthImpl(applicationContext, api)
@@ -84,7 +80,6 @@ class BookActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
-        app.component.inject(this)
         bookId = intent.getStringExtra(EXTRA_BOOK_ID)
         toolbar.inflateMenu(R.menu.book_menu)
         if (bookId == null) titleEditText.requestFocus()
