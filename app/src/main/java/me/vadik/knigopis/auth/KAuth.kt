@@ -56,7 +56,10 @@ class KAuthImpl(
                 .subscribe({
                     preferences.edit()
                         .putString(ACCESS_TOKEN_KEY, it.accessToken)
-                        .putString(USER_PROFILE, it.user.profile)
+                        .putString(
+                            USER_PROFILE,
+                            "http://www.knigopis.com/#/user/books?u=${it.user.id}"
+                        )
                         .apply()
                     onSuccess()
                 }, {

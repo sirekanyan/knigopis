@@ -14,12 +14,14 @@ private val defaultAvatars = setOf(
 
 class SubUser(
     val id: String,
-    val nickname: String,
+    private val nickname: String?,
     private val photo: String?,
     private val profile: String?,
     private val identity: String?,
     val booksCount: Int
 ) {
+
+    val name get() = nickname ?: id
 
     val profiles: List<Uri>
         get() = listOfNotNull(profile, identity)

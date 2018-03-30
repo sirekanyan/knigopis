@@ -101,6 +101,18 @@ class MainActivity : AppCompatActivity(), Router {
             booksChanged = false
             refresh()
         }
+        intent.data?.also {
+            val normalizedUri = Uri.parse(it.toString().replaceFirst("/#/", "/"))
+            normalizedUri.getQueryParameter("u")?.let { userId ->
+                api.createSubscription(userId, auth.getAccessToken())
+                    .io2main()
+                    .subscribe({
+                        toast("Successfully subscribed")
+                    }, {
+                        Log.e(TAG, "Cannot create subscription", it)
+                    })
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

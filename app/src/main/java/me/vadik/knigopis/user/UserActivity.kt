@@ -28,7 +28,7 @@ private const val EXTRA_USER_PROFILES = "me.vadik.knigopis.extra_user_profiles"
 fun Context.createUserIntent(user: Subscription): Intent =
     Intent(this, UserActivity::class.java)
         .putExtra(EXTRA_USER_ID, user.subUser.id)
-        .putExtra(EXTRA_USER_NAME, user.subUser.nickname)
+        .putExtra(EXTRA_USER_NAME, user.subUser.name)
         .putExtra(EXTRA_USER_PHOTO, user.subUser.avatar)
         .putExtra(EXTRA_USER_PROFILES, user.subUser.profiles.toTypedArray())
 

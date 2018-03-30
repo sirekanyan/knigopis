@@ -23,7 +23,7 @@ class UsersAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
-        holder.nickname = user.subUser.nickname
+        holder.nickname = user.subUser.name
         holder.avatarUrl = user.subUser.avatar
         holder.profile = "${user.subUser.booksCount} прочитано" + user.newBooksCount?.let {
             " (+$it новых)"
