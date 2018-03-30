@@ -25,7 +25,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-private const val TAG = "Knigopis"
+const val TAG = "Knigopis"
 private val HTTP_SCHEMES = setOf("http", "https")
 
 inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {

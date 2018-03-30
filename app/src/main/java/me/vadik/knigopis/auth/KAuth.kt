@@ -11,11 +11,13 @@ import java.util.*
 private const val PREFS_NAME = "knigopis"
 private const val TOKEN_KEY = "token"
 private const val ACCESS_TOKEN_KEY = "access_token"
+private const val USER_PROFILE = "user_profile"
 
 interface KAuth {
     fun isAuthorized(): Boolean
     fun getAccessToken(): String
     fun getTokenRequest(): Intent
+    fun getUserProfile(): String?
     fun saveTokenResponse(data: Intent)
     fun requestAccessToken(onSuccess: () -> Unit)
     fun logout()
@@ -37,6 +39,10 @@ class KAuthImpl(
             .putExtra(UloginAuthActivity.FIELDS, arrayOf(TOKEN_KEY))
     }
 
+    override fun getUserProfile(): String? {
+        return preferences.getString(USER_PROFILE, null)
+    }
+
     override fun saveTokenResponse(data: Intent) {
         val userData = data.getSerializableExtra(UloginAuthActivity.USERDATA) as HashMap<*, *>
         preferences.edit().putString(TOKEN_KEY, userData[TOKEN_KEY].toString()).apply()
@@ -48,7 +54,10 @@ class KAuthImpl(
             api.getCredentials(token)
                 .io2main()
                 .subscribe({
-                    preferences.edit().putString(ACCESS_TOKEN_KEY, it.accessToken).apply()
+                    preferences.edit()
+                        .putString(ACCESS_TOKEN_KEY, it.accessToken)
+                        .putString(USER_PROFILE, it.user.profile)
+                        .apply()
                     onSuccess()
                 }, {
                     logError("cannot get credentials", it)

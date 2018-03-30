@@ -12,6 +12,8 @@
     <!-- menu -->
     <string name="option_login">Login</string>
     <string name="option_logout">Logout</string>
+    <string name="option_share">Share</string>
+    <string name="option_share_title">Share your profile</string>
     <string name="option_about">About</string>
 
     <!-- books -->

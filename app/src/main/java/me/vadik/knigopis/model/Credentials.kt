@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class Credentials(
     @SerializedName("access-token")
     val accessToken: String,
-    val userFull: UserFull
+    val user: UserFull
 ) {
 
     class UserFull(

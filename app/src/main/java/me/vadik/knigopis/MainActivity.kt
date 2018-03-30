@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity(), Router {
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
+    private lateinit var shareOption: MenuItem
     private lateinit var currentTab: CurrentTab
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -158,6 +160,20 @@ class MainActivity : AppCompatActivity(), Router {
                     login()
                     true
                 }
+                R.id.option_share -> {
+                    auth.getUserProfile()?.let { profile ->
+                        val sharingIntent = Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, profile)
+                        startActivity(
+                            Intent.createChooser(
+                                sharingIntent,
+                                getString(R.string.option_share_title)
+                            )
+                        )
+                    } ?: Log.e(TAG, "Cannot share user profile: it's empty")
+                    true
+                }
                 R.id.option_about -> {
                     val dialogView = View.inflate(this, R.layout.about, null)
                     val versionView = dialogView.aboutAppVersion
@@ -191,6 +207,7 @@ class MainActivity : AppCompatActivity(), Router {
             }
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
+        shareOption = toolbar.menu.findItem(R.id.option_share)
     }
 
     private fun login() {
@@ -240,6 +257,7 @@ class MainActivity : AppCompatActivity(), Router {
 
     private fun refreshOptionsMenu() {
         loginOption.isVisible = true
+        shareOption.isVisible = auth.isAuthorized()
         if (auth.isAuthorized()) {
             loginOption.setTitle(R.string.option_logout)
             loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
