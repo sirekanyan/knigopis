@@ -10,10 +10,6 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import kotlinx.android.synthetic.main.book_edit.*
 import me.vadik.knigopis.api.BookCoverSearch
-import me.vadik.knigopis.api.BookCoverSearchImpl
-import me.vadik.knigopis.api.Endpoint
-import me.vadik.knigopis.api.ImageEndpoint
-import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBook
@@ -57,23 +53,8 @@ fun Context.createEditBookIntent(book: FinishedBook): Intent =
 
 class BookActivity : AppCompatActivity() {
 
-    private val api by inject<Endpoint>()
-    private val imageApi by inject<ImageEndpoint>()
-    private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
-    private val repository by lazy {
-        val auth = KAuthImpl(applicationContext, api)
-        if (config.isDevMode()) {
-            BookRepositoryMock()
-        } else {
-            BookRepositoryImpl(api, auth)
-        }
-    }
-    private val imageSearch: BookCoverSearch by lazy {
-        BookCoverSearchImpl(
-            imageApi,
-            BookCoverCacheImpl(applicationContext)
-        )
-    }
+    private val repository by inject<BookRepository>()
+    private val imageSearch by inject<BookCoverSearch>()
     private val today = Calendar.getInstance()
     private var bookId: String? = null
 

@@ -21,11 +21,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.adapters.notes.NotesAdapter
 import me.vadik.knigopis.adapters.users.UsersAdapter
-import me.vadik.knigopis.api.BookCoverSearchImpl
+import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
-import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
-import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
 import me.vadik.knigopis.model.note.Identity
@@ -43,20 +41,13 @@ private const val VERSION_CLICK_COUNT_ON = 12
 class MainActivity : AppCompatActivity(), Router {
 
     private val api by inject<Endpoint>()
-    private val imageApi by inject<ImageEndpoint>()
-    private val config by lazy { ConfigurationImpl(applicationContext) as Configuration }
-    private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
+    private val bookCoverSearch by inject<BookCoverSearch>()
+    private val config by inject<Configuration>()
+    private val auth by inject<KAuth>()
     private val allBooks = mutableListOf<Book>()
     private val allUsers = mutableListOf<Subscription>()
     private val allNotes = mutableListOf<Note>()
-    private val booksAdapter by lazy {
-        BooksAdapter(
-            BookCoverSearchImpl(
-                imageApi,
-                BookCoverCacheImpl(applicationContext)
-            ), api, auth, this
-        )
-    }
+    private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this) }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
     private val usersAdapter by lazy { UsersAdapter(allUsers, this) }
     private val notesAdapter by lazy { NotesAdapter(allNotes, this) }

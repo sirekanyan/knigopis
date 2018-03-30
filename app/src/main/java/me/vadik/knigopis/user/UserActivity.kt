@@ -15,9 +15,7 @@ import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.adapters.users.toSocialNetwork
 import me.vadik.knigopis.api.Endpoint
-import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.auth.KAuth
-import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
 import org.koin.android.ext.android.inject
@@ -43,7 +41,7 @@ fun Context.createUserIntent(user: Identity): Intent =
 class UserActivity : AppCompatActivity() {
 
     private val api by inject<Endpoint>()
-    private val auth by lazy { KAuthImpl(applicationContext, api) as KAuth }
+    private val auth by inject<KAuth>()
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
     private val booksAdapter = BooksAdapter(books)
