@@ -2,12 +2,12 @@
     <!-- toolbar -->
     <string name="app_name">Книгопись</string>
     <string name="book_add_title">Добавить книгу</string>
-    <string name="book_edit_title">Редактировать книгу</string>
+    <string name="book_edit_title">Изменить книгу</string>
 
     <!-- navigation -->
     <string name="title_home">Мои книги</string>
     <string name="title_users">Подписки</string>
-    <string name="title_notes">Заметки</string>
+    <string name="title_notes">Примечания</string>
 
     <!-- menu -->
     <string name="option_login">Войти</string>
@@ -67,6 +67,7 @@
 
     <!-- social networks -->
     <string name="social_facebook">Фейсбук</string>
+    <string name="social_instagram">Инстаграм</string>
     <string name="social_twitter">Твиттер</string>
     <string name="social_google_plus">Google+</string>
     <string name="social_vk_com">Вконтакте</string>
