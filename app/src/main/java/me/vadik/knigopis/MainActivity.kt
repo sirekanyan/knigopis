@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity(), Router {
                     .subscribe({
                         toast("Successfully subscribed")
                     }, {
-                        Log.e(TAG, "Cannot create subscription", it)
+                        logError("Cannot create subscription", it)
                     })
             }
         }
@@ -183,7 +182,7 @@ class MainActivity : AppCompatActivity(), Router {
                                 getString(R.string.option_share_title)
                             )
                         )
-                    } ?: Log.e(TAG, "Cannot share user profile: it's empty")
+                    } ?: logWarn("Cannot share user profile: it's empty")
                     true
                 }
                 R.id.option_about -> {
