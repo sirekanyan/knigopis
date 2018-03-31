@@ -6,17 +6,22 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "me.vadik.knigopis"
+        applicationId 'me.vadik.knigopis'
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 8
-        versionName "0.1.7"
+        versionName '0.1.7'
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables.useSupportLibrary = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
     }
 }
 
