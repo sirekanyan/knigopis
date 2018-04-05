@@ -14,6 +14,12 @@ class BookViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             view.bookTitle.text = value
         }
 
+    var author: String
+        get() = view.bookAuthor.text.toString()
+        set(value) {
+            view.bookAuthor.text = value
+        }
+
     var notes: String
         get() = view.bookNotes.text.toString()
         set(value) {

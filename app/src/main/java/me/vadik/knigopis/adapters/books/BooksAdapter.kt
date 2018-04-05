@@ -17,7 +17,8 @@ class BooksAdapter(
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = books[position]
-        holder.title = "\"${book.title}\" — ${book.author}"
+        holder.title = book.title
+        holder.author = book.author
         holder.notes = book.notes
     }
 }
