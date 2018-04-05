@@ -30,6 +30,11 @@ private const val EXTRA_BOOK_FINISHED = "me.vadik.knigopis.extra_book_finished"
 
 fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
 
+fun Context.createNewBookIntent(title: String, author: String): Intent =
+    Intent(this, BookActivity::class.java)
+        .putExtra(EXTRA_BOOK_TITLE, title)
+        .putExtra(EXTRA_BOOK_AUTHOR, author)
+
 fun Context.createEditBookIntent(book: PlannedBook): Intent =
     Intent(this, BookActivity::class.java)
         .putExtra(EXTRA_BOOK_ID, book.id)
@@ -149,23 +154,21 @@ class BookActivity : AppCompatActivity() {
                 progressText.text = "$progress%"
                 if (progress == 100) {
                     bookDateInputGroup.showNow()
-                    if (bookId != null && yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
+                    if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
                         yearEditText.setText(today.get(Calendar.YEAR).toString())
-                        monthEditText.setText(today.get(Calendar.MONTH).inc().toString())
-                        dayEditText.setText(today.get(Calendar.DAY_OF_MONTH).toString())
+                        if (bookId != null) {
+                            monthEditText.setText(today.get(Calendar.MONTH).inc().toString())
+                            dayEditText.setText(today.get(Calendar.DAY_OF_MONTH).toString())
+                        }
                     }
                 } else {
                     bookDateInputGroup.hideNow()
                 }
             }
         })
-    }
-
-    override fun onStart() {
-        super.onStart()
+        titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
+        authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
         if (bookId != null) {
-            titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
-            authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
             progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
             notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
             if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {

@@ -3,6 +3,7 @@ package me.vadik.knigopis.adapters.books
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import me.vadik.knigopis.R
+import me.vadik.knigopis.createNewBookIntent
 import me.vadik.knigopis.inflate
 
 class BooksAdapter(
@@ -20,5 +21,10 @@ class BooksAdapter(
         holder.title = book.title
         holder.author = book.author
         holder.notes = book.notes
+        val context = holder.view.context
+        holder.view.setOnLongClickListener {
+            context.startActivity(context.createNewBookIntent(book.title, book.author))
+            true
+        }
     }
 }
