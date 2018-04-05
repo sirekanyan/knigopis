@@ -329,6 +329,7 @@ class MainActivity : AppCompatActivity(), Router {
                     booksPlaceholder.setText(R.string.error_no_books)
                     booksPlaceholder.show()
                 }
+                allBooks.clear()
                 allBooks.addAll(books)
                 allBooksAdapter.notifyDataSetChanged()
                 addBookButton.show()
