@@ -43,6 +43,9 @@
     <string name="cannot_delete_book">Cannot delete book</string>
     <string name="book_hint_notes">Notes</string>
 
+    <!-- following -->
+    <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
+
     <!-- about -->
     <string name="about_idea">API:\nhttp://knigopis.com</string>
     <string name="about_developer">Development:\nvadik@sirekanyan.com</string>

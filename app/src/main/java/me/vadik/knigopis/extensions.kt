@@ -5,9 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
+import android.text.Html
+import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -87,6 +90,10 @@ fun View.showNow() {
     visibility = View.VISIBLE
 }
 
+fun View.showNow(value: Boolean) {
+    visibility = if (value) View.VISIBLE else View.GONE
+}
+
 fun View.hideNow() {
     visibility = View.GONE
 }
@@ -116,6 +123,17 @@ fun Activity.hideKeyboard() {
 
 fun String.toUriOrNull() =
     Uri.parse(this).takeIf(Uri::isValidHttpLink)
+
+fun Context.getHtmlString(resId: Int, vararg args: Any) =
+    getString(resId, *args).fromHtml()
+
+private fun String.fromHtml(): Spanned =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        @Suppress("DEPRECATION")
+        Html.fromHtml(this)
+    }
 
 private fun Uri.isValidHttpLink() =
     scheme in HTTP_SCHEMES && !host.isNullOrBlank()

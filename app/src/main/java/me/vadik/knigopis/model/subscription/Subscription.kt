@@ -4,5 +4,5 @@ class Subscription(
     val subUser: SubUser,
     private val lastBooksCount: Int
 ) {
-    val newBooksCount get() = (subUser.booksCount - lastBooksCount).takeIf { it > 0 }
+    val newBooksCount get() = subUser.booksCount - lastBooksCount
 }

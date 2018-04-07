@@ -7,31 +7,35 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.user.view.*
 import me.vadik.knigopis.R
+import me.vadik.knigopis.getHtmlString
+import me.vadik.knigopis.showNow
 
 class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    var avatarUrl: String? = null
-        set(value) {
-            field = value
-            Glide.with(view.context)
-                .load(value)
-                .apply(
-                    RequestOptions.circleCropTransform()
-                        .placeholder(R.drawable.oval_placeholder_background)
-                )
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(view.userAvatar)
-        }
+    private val context = view.context.applicationContext
 
-    var nickname: String
-        get() = view.userNickname.text.toString()
-        set(value) {
-            view.userNickname.text = value
-        }
+    fun setAvatarUrl(url: String?) =
+        Glide.with(view.context)
+            .load(url)
+            .apply(
+                RequestOptions.circleCropTransform()
+                    .placeholder(R.drawable.oval_placeholder_background)
+            )
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view.userAvatar)
 
-    var profile: String
-        get() = view.userProfile.text.toString()
-        set(value) {
-            view.userProfile.text = value
-        }
+    fun setNickname(nickname: String) {
+        view.userNickname.text = nickname
+    }
+
+    fun setBooksCount(count: Int) {
+        view.totalBooksCount.showNow(count > 0)
+        view.totalBooksCount.text = count.toString()
+    }
+
+    fun setNewBooksCount(count: Int) {
+        view.newBooksCount.showNow(count > 0)
+        view.newBooksCount.text = context.getHtmlString(R.string.user_new_books_count, count)
+    }
+
 }

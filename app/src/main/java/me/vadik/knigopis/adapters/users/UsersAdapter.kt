@@ -23,13 +23,13 @@ class UsersAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
-        holder.nickname = user.subUser.name
-        holder.avatarUrl = user.subUser.avatar
-        holder.profile = "${user.subUser.booksCount} прочитано" + user.newBooksCount?.let {
-            " (+$it новых)"
-        }.orEmpty()
+        holder.setAvatarUrl(user.subUser.avatar)
+        holder.setNickname(user.subUser.name)
+        holder.setBooksCount(user.subUser.booksCount)
+        holder.setNewBooksCount(user.newBooksCount)
         holder.view.setOnClickListener {
             router.openUserScreen(user)
         }
     }
+
 }
