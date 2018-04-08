@@ -1,60 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="8dp"
-    android:paddingEnd="8dp"
-    android:paddingStart="8dp"
-    android:paddingTop="8dp">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/image_placeholder_color"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp">
+        android:layout_marginStart="56dp"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/userNickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp"
-            tools:text="Павел Дуров" />
-
-        <TextView
-            android:id="@+id/userDate"
+            android:id="@+id/bookTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="16sp"
+            tools:text="Мастер и Маргарита Мастер и Маргарита Мастер и Маргарита Мастер и Маргарита" />
+
+        <TextView
+            android:id="@+id/bookAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="14sp"
+            tools:text="Михаил Булгаков Михаил Булгаков Михаил Булгаков Михаил Булгаков" />
+
+        <TextView
+            android:id="@+id/userNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:textColor="@android:color/tertiary_text_light"
-            android:textSize="12sp"
-            tools:text="5 минут назад" />
+            tools:text="Заявленный жанр - ужасы. Отзыв на книге самого Стивена Кинга(а я фанатею от Кинга) обещает нам трястись от страха. Реальность: довольно тошнотворная история о геноциде и рассизме. Было интересно читать о жизни различных национальных меньшинств в Америке. О том, как сложно жилось (и, возможно, живется) коренным жителям континента. Это действительно то, от чего Америке никогда не отмыться. Сюжетная линия завязана на 4х основных и множества второстепенных героев. ... Но как книга, увы, художественной ценности произведение не несет. И тем более ни чем не пугает. Для разнообразия почитать можно. Оценка: 4 из 10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="end|bottom">
+
+            <TextView
+                android:id="@+id/userDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="14sp"
+                tools:text="5 минут назад" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/note_date_delimiter"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/userNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="14sp"
+                tools:text="Павел Дуров" />
+
+            <ImageView
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/oval_placeholder_background"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/userNotes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:textColor="@android:color/tertiary_text_light"
-        android:textSize="14sp"
-        tools:text="Заявленный жанр - ужасы. Отзыв на книге самого Стивена Кинга(а я фанатею от Кинга) обещает нам трястись от страха. Реальность: довольно тошнотворная история о геноциде и рассизме. Было интересно читать о жизни различных национальных меньшинств в Америке. О том, как сложно жилось (и, возможно, живется) коренным жителям континента. Это действительно то, от чего Америке никогда не отмыться. Сюжетная линия завязана на 4х основных и множества второстепенных героев. Каждая глава повествует о конкретном человеке, его жизни и происшествиях. Часто возникает путаница, потому что 'скачат' главы между героями слишком часто, а т.к. герои между собой не связаны, то по-неволе начинаешь забывать фрагменты что и с кем происходит. Много лишных размышлений героев и комментирования авторов их жизни 'до'. Скучно читать то, что не имеет смысла к сюжету. Какой-то своей философии или цеплящих фраз/диалогов Вы не найдете в книге. Манера написания похожа на сценарий. На экране вышел бы неплохой современный блокбастер с интересным сюжетом и обилием графики. Но как книга, увы, художественной ценности произведение не несет. И тем более ни чем не пугает. Для разнообразия почитать можно. Оценка: 4 из 10" />
-
-    <TextView
-        android:id="@+id/bookTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:textColor="@android:color/tertiary_text_light"
-        android:textSize="14sp"
-        tools:text="// &quot;Кочегарка&quot; (Бентли Литтл)" />
-
-</LinearLayout>
+</FrameLayout>

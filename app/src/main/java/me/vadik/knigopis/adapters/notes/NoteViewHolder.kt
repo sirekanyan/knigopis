@@ -1,32 +1,30 @@
 package me.vadik.knigopis.adapters.notes
 
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.View
 import kotlinx.android.synthetic.main.note.view.*
 
 class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    var nickname: String
-        get() = view.userNickname.text.toString()
-        set(value) {
-            view.userNickname.text = value
-        }
+    fun setTitle(title: String) {
+        view.bookTitle.text = title
+    }
 
-    var date: CharSequence
-        get() = view.userDate.text
-        set(value) {
-            view.userDate.text = value
-        }
+    fun setAuthor(author: String) {
+        view.bookAuthor.text = author
+    }
 
-    var notes: String
-        get() = view.userNotes.text.toString()
-        set(value) {
-            view.userNotes.text = value
-        }
+    fun setNotes(notes: String) {
+        view.userNotes.text = notes
+    }
 
-    var title: String
-        get() = view.bookTitle.text.toString()
-        set(value) {
-            view.bookTitle.text = value
-        }
+    fun setTimestamp(timestamp: Long) {
+        view.userDate.text = DateUtils.getRelativeTimeSpanString(timestamp)
+    }
+
+    fun setNickname(nickname: String) {
+        view.userNickname.text = nickname
+    }
+
 }

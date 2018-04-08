@@ -46,6 +46,9 @@
     <!-- following -->
     <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
 
+    <!-- notes -->
+    <string name="note_date_delimiter" translatable="false">/</string>
+
     <!-- about -->
     <string name="about_idea">API:\nhttp://knigopis.com</string>
     <string name="about_developer">Development:\nvadik@sirekanyan.com</string>
