@@ -38,6 +38,7 @@ private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 private const val VERSION_CLICK_COUNT_OFF = 1
 private const val VERSION_CLICK_COUNT_ON = 12
+private const val CURRENT_TAB_KEY = "me.vadik.knigopis.current_tab"
 
 class MainActivity : AppCompatActivity(), Router {
 
@@ -72,7 +73,9 @@ class MainActivity : AppCompatActivity(), Router {
         initRecyclerView(booksRecyclerView)
         initRecyclerView(usersRecyclerView)
         initRecyclerView(notesRecyclerView)
-        initNavigationView()
+        val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
+        val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
+        initNavigationView(currentTab)
         initToolbar(toolbar)
         addBookButton.setOnClickListener {
             startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
@@ -113,6 +116,11 @@ class MainActivity : AppCompatActivity(), Router {
                     })
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putInt(CURRENT_TAB_KEY, currentTab.itemId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -163,8 +171,8 @@ class MainActivity : AppCompatActivity(), Router {
         )
     }
 
-    private fun initNavigationView() {
-        refresh(HOME_TAB)
+    private fun initNavigationView(currentTab: CurrentTab?) {
+        refresh(currentTab ?: HOME_TAB)
         navigation.setOnNavigationItemSelectedListener { item ->
             setCurrentTab(CurrentTab.getByItemId(item.itemId))
             true
