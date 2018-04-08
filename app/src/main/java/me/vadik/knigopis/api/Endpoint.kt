@@ -65,6 +65,11 @@ interface Endpoint {
         @Query("access-token") accessToken: String
     ): Single<List<Subscription>>
 
+    @GET("users/current")
+    fun getProfile(
+        @Query("access-token") accessToken: String
+    ): Single<Credentials.UserFull>
+
     @GET("users/{id}/books")
     fun getUserBooks(@Path("id") userId: String): Single<List<UserBook>>
 

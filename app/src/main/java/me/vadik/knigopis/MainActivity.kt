@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity(), Router {
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
-    private lateinit var shareOption: MenuItem
+    private lateinit var profileOption: MenuItem
     private lateinit var currentTab: CurrentTab
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,6 +151,18 @@ class MainActivity : AppCompatActivity(), Router {
         }
     }
 
+    override fun shareProfile(url: String) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+            .setType("text/plain")
+            .putExtra(Intent.EXTRA_TEXT, url)
+        startActivity(
+            Intent.createChooser(
+                sharingIntent,
+                getString(R.string.option_share_title)
+            )
+        )
+    }
+
     private fun initNavigationView() {
         refresh(HOME_TAB)
         navigation.setOnNavigationItemSelectedListener { item ->
@@ -171,18 +184,29 @@ class MainActivity : AppCompatActivity(), Router {
                     login()
                     true
                 }
-                R.id.option_share -> {
-                    auth.getUserProfile()?.let { profile ->
-                        val sharingIntent = Intent(Intent.ACTION_SEND)
-                            .setType("text/plain")
-                            .putExtra(Intent.EXTRA_TEXT, profile)
-                        startActivity(
-                            Intent.createChooser(
-                                sharingIntent,
-                                getString(R.string.option_share_title)
-                            )
-                        )
-                    } ?: logWarn("Cannot share user profile: it's empty")
+                R.id.option_profile -> {
+                    api.getProfile(auth.getAccessToken())
+                        .io2main()
+                        .subscribe({ user ->
+                            AlertDialog.Builder(this)
+                                .setTitle("Мой профиль")
+                                .setMessage(
+                                    """
+                                        Имя: ${user.nickname ?: "(не задано)"}
+                                        Книг: ${user.booksCount}
+                                        Подписок: ${user.subscriptions?.size ?: 0}
+                                        Создан: ${DateUtils.getRelativeTimeSpanString(user.fixedCreatedAt.time)}
+                                        Обновлен: ${DateUtils.getRelativeTimeSpanString(user.fixedUpdatedAt.time)}
+                                    """.trimIndent()
+                                )
+                                .setPositiveButton("Поделиться") { _, _ ->
+                                    shareProfile(user.fixedProfile)
+                                }
+                                .setNegativeButton("Закрыть", null)
+                                .show()
+                        }, {
+                            logError("Cannot get profile", it)
+                        })
                     true
                 }
                 R.id.option_about -> {
@@ -218,7 +242,7 @@ class MainActivity : AppCompatActivity(), Router {
             }
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
-        shareOption = toolbar.menu.findItem(R.id.option_share)
+        profileOption = toolbar.menu.findItem(R.id.option_profile)
     }
 
     private fun login() {
@@ -268,13 +292,13 @@ class MainActivity : AppCompatActivity(), Router {
 
     private fun refreshOptionsMenu() {
         loginOption.isVisible = true
-        shareOption.isVisible = auth.isAuthorized()
+        profileOption.isVisible = auth.isAuthorized()
         if (auth.isAuthorized()) {
             loginOption.setTitle(R.string.option_logout)
             loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
         } else {
             loginOption.setTitle(R.string.option_login)
-            loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         }
     }
 

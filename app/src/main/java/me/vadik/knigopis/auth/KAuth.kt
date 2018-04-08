@@ -58,7 +58,7 @@ class KAuthImpl(
                         .putString(ACCESS_TOKEN_KEY, it.accessToken)
                         .putString(
                             USER_PROFILE,
-                            "http://www.knigopis.com/#/user/books?u=${it.user.id}"
+                            it.user.fixedProfile
                         )
                         .apply()
                     onSuccess()

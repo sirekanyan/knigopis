@@ -12,7 +12,7 @@
     <!-- menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
-    <string name="option_share">Поделиться</string>
+    <string name="option_profile">Мой профиль</string>
     <string name="option_share_title">Отправить ссылку на профиль</string>
     <string name="option_about">О приложении</string>
 
