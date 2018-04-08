@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -65,7 +66,11 @@ class UserActivity : AppCompatActivity() {
                 })
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        userBooksRecyclerView.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        userBooksRecyclerView.layoutManager = layoutManager
+        userBooksRecyclerView.addItemDecoration(
+            DividerItemDecoration(this, layoutManager.orientation)
+        )
         userBooksRecyclerView.adapter = booksAdapter
         menuItems = intent.getParcelableArrayExtra(EXTRA_USER_PROFILES)
             .filterIsInstance(Uri::class.java)
