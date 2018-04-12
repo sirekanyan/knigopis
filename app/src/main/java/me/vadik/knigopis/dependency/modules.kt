@@ -9,6 +9,8 @@ import me.vadik.knigopis.api.ImageEndpoint
 import me.vadik.knigopis.api.gson.ImageThumbnailDeserializer
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
+import me.vadik.knigopis.common.ResourceProvider
+import me.vadik.knigopis.common.ResourceProviderImpl
 import me.vadik.knigopis.model.ImageThumbnail
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,12 +24,13 @@ private const val IMAGE_API_URL = "https://api.qwant.com/api/"
 private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 val appModule = applicationContext {
-    bean { BookRepositoryImpl(get(), get()) as BookRepository }
+    bean { BookRepositoryImpl(get(), get(), get()) as BookRepository }
     bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint() }
     bean { createImageEndpoint() }
     bean { ConfigurationImpl(get()) as Configuration }
+    bean { ResourceProviderImpl(get()) as ResourceProvider }
 }
 
 private fun createMainEndpoint() =

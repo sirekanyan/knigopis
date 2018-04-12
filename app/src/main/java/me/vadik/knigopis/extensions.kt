@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.text.Html
@@ -45,8 +44,6 @@ fun Context.toast(@StringRes messageId: Int) =
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
 
 fun Activity.app() = application as App
-
-fun <T : View> Activity.findView(@IdRes id: Int): T = findViewById(id)
 
 fun logWarn(message: String) = Log.w(TAG, message)
 
@@ -96,6 +93,10 @@ fun View.showNow(value: Boolean) {
 
 fun View.hideNow() {
     visibility = View.GONE
+}
+
+fun View.show(value: Boolean) {
+    if (value) show() else hide()
 }
 
 fun View.show() {

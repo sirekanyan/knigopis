@@ -22,72 +22,79 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/booksRecyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/book" />
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/usersRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            tools:listitem="@layout/user"
-            tools:visibility="gone" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/booksRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/book" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/notesRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            tools:listitem="@layout/note"
-            tools:visibility="gone" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/usersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                tools:listitem="@layout/user"
+                tools:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/booksProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0"
-            tools:alpha="1" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/notesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                tools:listitem="@layout/note"
+                tools:visibility="gone" />
 
-        <TextView
-            android:id="@+id/booksPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:visibility="gone"
-            tools:alpha="1"
-            tools:text="@string/error_loading_books"
-            tools:visibility="visible" />
+            <ProgressBar
+                android:id="@+id/booksProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                tools:alpha="1" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/addBookButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:tint="@color/white"
-            app:srcCompat="@drawable/ic_add" />
+            <TextView
+                android:id="@+id/booksPlaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:alpha="1"
+                tools:text="@string/error_loading_books"
+                tools:visibility="visible" />
 
-    </FrameLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/addBookButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_add" />
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
