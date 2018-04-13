@@ -11,5 +11,4 @@ interface Router {
     fun openUserScreen(user: Identity)
     fun openBrowser(uri: Uri)
     fun shareProfile(url: String)
-    fun unsubscribe(userId: String)
 }

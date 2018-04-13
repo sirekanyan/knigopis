@@ -23,7 +23,7 @@ class BottomSheetDialogFactory(private val context: Context) : DialogFactory {
         items.forEach { item ->
             val itemView = container.inflate(R.layout.bottom_sheet_dialog_item)
             itemView.bottomSheetItemIcon.setImageResource(item.iconRes)
-            itemView.bottomSheetItemText.setText(item.titleRes)
+            item.title.setValueTo(itemView.bottomSheetItemText)
             itemView.setOnClickListener {
                 item.onClick()
                 dialog.hide()

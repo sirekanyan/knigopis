@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.createNewBookIntent
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.dialog.DialogItem
+import me.vadik.knigopis.dialog.createDialogItem
 import me.vadik.knigopis.inflate
 
 class BooksAdapter(
@@ -28,10 +28,10 @@ class BooksAdapter(
         holder.view.setOnLongClickListener {
             dialogs.showDialog(
                 book.title + " — " + book.author,
-                DialogItem(R.string.add_book_todo, R.drawable.ic_playlist_add) {
+                createDialogItem(R.string.add_book_todo, R.drawable.ic_playlist_add) {
                     context.startActivity(context.createNewBookIntent(book.title, book.author))
                 },
-                DialogItem(R.string.add_book_done, R.drawable.ic_playlist_add_check) {
+                createDialogItem(R.string.add_book_done, R.drawable.ic_playlist_add_check) {
                     context.startActivity(context.createNewBookIntent(book.title, book.author, 100))
                 }
             )

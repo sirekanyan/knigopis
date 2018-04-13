@@ -41,10 +41,9 @@
     <string name="cannot_delete_book">Не получилось удалить</string>
     <string name="book_hint_notes">Примечания</string>
 
-    <!-- following menu -->
-    <string name="user_option_delete">Отписаться</string>
-
     <!-- user menu -->
+    <string name="user_option_copy">Скопировать ссылку</string>
+    <string name="user_option_unsubscribe">Отписаться</string>
     <string name="add_book_todo">К прочтению</string>
     <string name="add_book_done">Прочитано</string>
 
@@ -74,7 +73,8 @@
     <string name="social_facebook">Фейсбук</string>
     <string name="social_instagram">Инстаграм</string>
     <string name="social_twitter">Твиттер</string>
-    <string name="social_google_plus">Google+</string>
-    <string name="social_vk_com">Вконтакте</string>
-    <string name="social_mail_ru">Mail.Ru</string>
+    <string name="social_googleplus">Google+</string>
+    <string name="social_vkontakte">Вконтакте</string>
+    <string name="social_mailru">Mail.Ru</string>
+    <string name="social_linkedin">LinkedIn</string>
 </resources>

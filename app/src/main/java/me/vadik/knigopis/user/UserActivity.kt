@@ -1,5 +1,7 @@
 package me.vadik.knigopis.user
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,15 +13,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.user_activity.*
-import me.vadik.knigopis.*
+import me.vadik.knigopis.R
 import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.adapters.books.UserBook
-import me.vadik.knigopis.adapters.users.toSocialNetwork
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.dialog.DialogFactory
+import me.vadik.knigopis.io2main
+import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
+import me.vadik.knigopis.toast
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
@@ -48,7 +52,6 @@ class UserActivity : AppCompatActivity() {
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
     private val booksAdapter = BooksAdapter(books, dialogs)
-    private lateinit var menuItems: Map<Int, UriItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,14 +77,6 @@ class UserActivity : AppCompatActivity() {
             DividerItemDecoration(this, layoutManager.orientation)
         )
         userBooksRecyclerView.adapter = booksAdapter
-        menuItems = intent.getParcelableArrayExtra(EXTRA_USER_PROFILES)
-            .filterIsInstance(Uri::class.java)
-            .map(::UriItem)
-            .distinctBy(UriItem::key)
-            .mapIndexed { index, item ->
-                Menu.FIRST + index to item
-            }
-            .toMap()
     }
 
     override fun onStart() {
@@ -107,29 +102,31 @@ class UserActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuItems.forEach { (id, item) ->
-            if (item.socialNetworkTitleRes == null) {
-                menu.add(Menu.NONE, id, 0, item.personalPageTitle)
-            } else {
-                menu.add(Menu.NONE, id, 0, item.socialNetworkTitleRes)
-            }
-        }
+        menuInflater.inflate(R.menu.user_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        menuItems[item.itemId]?.uri?.let { uri ->
-            startActivityOrElse(Intent(Intent.ACTION_VIEW, uri)) {
-                toast("Невозможно открыть страницу")
+        return when (item.itemId) {
+            R.id.option_copy -> {
+                val link = "http://www.knigopis.com/#/user/books?u=$userId"
+                getSystemService(CLIPBOARD_SERVICE)?.let { clipboard ->
+                    clipboard as ClipboardManager
+                    clipboard.primaryClip = ClipData.newPlainText(null, link)
+                }
+                toast(link)
+                true
             }
-            return true
+            R.id.option_unsubscribe -> {
+                api.deleteSubscription(userId, auth.getAccessToken())
+                    .io2main()
+                    .subscribe({}, {
+                        logError("Cannot unsubscribe", it)
+                        toast("Не удалось отписаться")
+                    })
+                true
+            }
+            else -> false
         }
-        return false
     }
-}
-
-private class UriItem(val uri: Uri) {
-    val socialNetworkTitleRes = uri.toSocialNetwork()?.titleRes
-    val personalPageTitle = uri.scheme + "://" + uri.host
-    val key = socialNetworkTitleRes ?: personalPageTitle
 }

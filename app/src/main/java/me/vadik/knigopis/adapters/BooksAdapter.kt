@@ -13,7 +13,7 @@ import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.dialog.DialogItem
+import me.vadik.knigopis.dialog.createDialogItem
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook
@@ -75,10 +75,10 @@ class BooksAdapter(
             setOnLongClickListener {
                 dialogs.showDialog(
                     book.fullTitle,
-                    DialogItem(R.string.book_option_edit, R.drawable.ic_edit) {
+                    createDialogItem(R.string.book_option_edit, R.drawable.ic_edit) {
                         router.openEditBookScreen(book)
                     },
-                    DialogItem(R.string.book_option_delete, R.drawable.ic_delete) {
+                    createDialogItem(R.string.book_option_delete, R.drawable.ic_delete) {
                         onDeleteClicked(book)
                     }
                 )

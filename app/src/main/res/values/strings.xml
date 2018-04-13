@@ -44,10 +44,9 @@
     <!-- following -->
     <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
 
-    <!-- following menu -->
-    <string name="user_option_delete">Unsubscribe</string>
-
     <!-- user menu -->
+    <string name="user_option_copy">Copy link</string>
+    <string name="user_option_unsubscribe">Unsubscribe</string>
     <string name="add_book_todo">Todo</string>
     <string name="add_book_done">Done</string>
 
@@ -80,7 +79,8 @@
     <string name="social_facebook">Facebook</string>
     <string name="social_instagram">Instagram</string>
     <string name="social_twitter">Twitter</string>
-    <string name="social_google_plus">Google+</string>
-    <string name="social_vk_com">VKontakte</string>
-    <string name="social_mail_ru">Mail.Ru</string>
+    <string name="social_googleplus">Google+</string>
+    <string name="social_vkontakte">VKontakte</string>
+    <string name="social_mailru">Mail.Ru</string>
+    <string name="social_linkedin">LinkedIn</string>
 </resources>

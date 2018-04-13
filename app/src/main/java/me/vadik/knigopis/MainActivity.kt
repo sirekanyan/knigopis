@@ -23,6 +23,7 @@ import me.vadik.knigopis.adapters.users.UsersAdapter
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.CurrentTab
@@ -50,12 +51,13 @@ class MainActivity : AppCompatActivity(), Router {
     private val auth by inject<KAuth>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val bookRepository by inject<BookRepository>()
+    private val resources by inject<ResourceProvider>()
     private val allBooks = mutableListOf<Book>()
     private val allUsers = mutableListOf<Subscription>()
     private val allNotes = mutableListOf<Note>()
     private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this, dialogs) }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs) }
+    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs, resources) }
     private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
     private var userLoggedIn = false
     private var booksChanged = false
@@ -171,16 +173,6 @@ class MainActivity : AppCompatActivity(), Router {
                 getString(R.string.option_share_title)
             )
         )
-    }
-
-    override fun unsubscribe(userId: String) {
-        api.deleteSubscription(userId, auth.getAccessToken())
-            .io2main()
-            .subscribe({
-                refresh(isForce = true)
-            }, {
-                handleNetworkError("Cannot unsubscribe", it)
-            })
     }
 
     private fun initNavigationView(currentTab: CurrentTab?) {
