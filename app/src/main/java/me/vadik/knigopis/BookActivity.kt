@@ -30,10 +30,11 @@ private const val EXTRA_BOOK_FINISHED = "me.vadik.knigopis.extra_book_finished"
 
 fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
 
-fun Context.createNewBookIntent(title: String, author: String): Intent =
+fun Context.createNewBookIntent(title: String, author: String, progress: Int? = null): Intent =
     Intent(this, BookActivity::class.java)
         .putExtra(EXTRA_BOOK_TITLE, title)
         .putExtra(EXTRA_BOOK_AUTHOR, author)
+        .putExtra(EXTRA_BOOK_PROGRESS, progress)
 
 fun Context.createEditBookIntent(book: PlannedBook): Intent =
     Intent(this, BookActivity::class.java)
@@ -168,8 +169,8 @@ class BookActivity : AppCompatActivity() {
         })
         titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
         authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
+        progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
         if (bookId != null) {
-            progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
             notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
             if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {
                 yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))

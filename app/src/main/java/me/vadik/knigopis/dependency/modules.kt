@@ -11,6 +11,8 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.common.ResourceProviderImpl
+import me.vadik.knigopis.dialog.BottomSheetDialogFactory
+import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.ImageThumbnail
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,6 +33,7 @@ val appModule = applicationContext {
     bean { createImageEndpoint() }
     bean { ConfigurationImpl(get()) as Configuration }
     bean { ResourceProviderImpl(get()) as ResourceProvider }
+    factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
 }
 
 private fun createMainEndpoint() =

@@ -47,6 +47,10 @@
     <!-- following menu -->
     <string name="user_option_delete">Unsubscribe</string>
 
+    <!-- user menu -->
+    <string name="add_book_todo">Todo</string>
+    <string name="add_book_done">Done</string>
+
     <!-- notes -->
     <string name="note_date_delimiter" translatable="false">/</string>
 

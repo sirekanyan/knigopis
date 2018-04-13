@@ -17,6 +17,7 @@ import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.adapters.users.toSocialNetwork
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
 import org.koin.android.ext.android.inject
@@ -43,9 +44,10 @@ class UserActivity : AppCompatActivity() {
 
     private val api by inject<Endpoint>()
     private val auth by inject<KAuth>()
+    private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
-    private val booksAdapter = BooksAdapter(books)
+    private val booksAdapter = BooksAdapter(books, dialogs)
     private lateinit var menuItems: Map<Int, UriItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
