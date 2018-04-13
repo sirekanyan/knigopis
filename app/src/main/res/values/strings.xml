@@ -32,10 +32,8 @@
     <string name="book_read_checkbox">Done</string>
 
     <!-- book menu -->
-    <array name="book_context_menu">
-        <item>Edit</item>
-        <item>Delete</item>
-    </array>
+    <string name="book_option_edit">Edit</string>
+    <string name="book_option_delete">Delete</string>
     <string name="book_delete_confirmation_title">Confirmation</string>
     <string name="book_delete_confirm_text">Are you sure you want to delete \"%s\"?</string>
     <string name="book_cancel_delete">Cancel</string>

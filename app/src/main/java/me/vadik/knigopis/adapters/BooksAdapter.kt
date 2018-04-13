@@ -12,6 +12,8 @@ import me.vadik.knigopis.*
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.dialog.DialogFactory
+import me.vadik.knigopis.dialog.DialogItem
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook
@@ -21,7 +23,8 @@ class BooksAdapter(
     private val coverSearch: BookCoverSearch,
     private val api: Endpoint,
     private val auth: KAuth,
-    private val router: Router
+    private val router: Router,
+    private val dialogs: DialogFactory
 ) {
 
     fun build(books: MutableList<Book>) = Adapter(books) {
@@ -70,16 +73,15 @@ class BooksAdapter(
                 router.openEditBookScreen(book)
             }
             setOnLongClickListener {
-                AlertDialog.Builder(context)
-                    .setTitle(book.fullTitle)
-                    .setItems(R.array.book_context_menu) { dialog, menu ->
-                        when (menu) {
-                            0 -> router.openEditBookScreen(book)
-                            1 -> onDeleteClicked(book)
-                        }
-                        dialog.dismiss()
+                dialogs.showDialog(
+                    book.fullTitle,
+                    DialogItem(R.string.book_option_edit, R.drawable.ic_edit) {
+                        router.openEditBookScreen(book)
+                    },
+                    DialogItem(R.string.book_option_delete, R.drawable.ic_delete) {
+                        onDeleteClicked(book)
                     }
-                    .show()
+                )
                 true
             }
         }

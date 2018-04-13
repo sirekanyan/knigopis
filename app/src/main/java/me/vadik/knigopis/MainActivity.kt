@@ -23,6 +23,7 @@ import me.vadik.knigopis.adapters.users.UsersAdapter
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.dialog.BottomSheetDialogFactory
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.CurrentTab
 import me.vadik.knigopis.model.CurrentTab.*
@@ -51,7 +52,15 @@ class MainActivity : AppCompatActivity(), Router {
     private val allBooks = mutableListOf<Book>()
     private val allUsers = mutableListOf<Subscription>()
     private val allNotes = mutableListOf<Note>()
-    private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this) }
+    private val booksAdapter by lazy {
+        BooksAdapter(
+            bookCoverSearch,
+            api,
+            auth,
+            this,
+            BottomSheetDialogFactory(this)
+        )
+    }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
     private val usersAdapter by lazy { UsersAdapter(allUsers, this) }
     private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
