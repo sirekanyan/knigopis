@@ -52,17 +52,10 @@ class MainActivity : AppCompatActivity(), Router {
     private val allBooks = mutableListOf<Book>()
     private val allUsers = mutableListOf<Subscription>()
     private val allNotes = mutableListOf<Note>()
-    private val booksAdapter by lazy {
-        BooksAdapter(
-            bookCoverSearch,
-            api,
-            auth,
-            this,
-            BottomSheetDialogFactory(this)
-        )
-    }
+    private val dialogs by lazy { BottomSheetDialogFactory(this) }
+    private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this, dialogs) }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-    private val usersAdapter by lazy { UsersAdapter(allUsers, this) }
+    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs) }
     private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
     private var userLoggedIn = false
     private var booksChanged = false
@@ -178,6 +171,16 @@ class MainActivity : AppCompatActivity(), Router {
                 getString(R.string.option_share_title)
             )
         )
+    }
+
+    override fun unsubscribe(userId: String) {
+        api.deleteSubscription(userId, auth.getAccessToken())
+            .io2main()
+            .subscribe({
+                refresh(isForce = true)
+            }, {
+                handleNetworkError("Cannot unsubscribe", it)
+            })
     }
 
     private fun initNavigationView(currentTab: CurrentTab?) {

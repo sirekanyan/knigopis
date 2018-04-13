@@ -44,6 +44,9 @@
     <!-- following -->
     <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
 
+    <!-- following menu -->
+    <string name="user_option_delete">Unsubscribe</string>
+
     <!-- notes -->
     <string name="note_date_delimiter" translatable="false">/</string>
 
