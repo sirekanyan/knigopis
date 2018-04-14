@@ -7,7 +7,7 @@
     <!-- navigation -->
     <string name="title_home">Books</string>
     <string name="title_users">Following</string>
-    <string name="title_notes">Notes</string>
+    <string name="title_notes">Comments</string>
 
     <!-- menu -->
     <string name="option_login">Login</string>

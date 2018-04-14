@@ -7,7 +7,7 @@
     <!-- navigation -->
     <string name="title_home">Мои книги</string>
     <string name="title_users">Подписки</string>
-    <string name="title_notes">Примечания</string>
+    <string name="title_notes">Комментарии</string>
 
     <!-- menu -->
     <string name="option_login">Войти</string>
