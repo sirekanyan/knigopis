@@ -14,7 +14,9 @@ import android.support.v7.widget.Toolbar
 import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
@@ -359,15 +361,7 @@ class MainActivity : AppCompatActivity(), Router {
     private fun refreshHomeTab() {
         bookRepository.loadBooks()
             .io2main()
-            .doOnSubscribe {
-                if (!swipeRefresh.isRefreshing) {
-                    booksProgressBar.show()
-                }
-            }
-            .doFinally {
-                booksProgressBar.hide()
-                swipeRefresh.isRefreshing = false
-            }
+            .showProgressBar()
             .subscribe({ books ->
                 booksPlaceholder.show(books.isEmpty())
                 booksErrorPlaceholder.hide()
@@ -376,27 +370,14 @@ class MainActivity : AppCompatActivity(), Router {
                 allBooksAdapter.notifyDataSetChanged()
             }, {
                 logError("cannot load books", it)
-                if (booksPlaceholder.isVisible || allBooksAdapter.itemCount > 0) {
-                    toast(it.messageRes)
-                } else {
-                    booksErrorPlaceholder.setText(it.messageRes)
-                    booksErrorPlaceholder.show()
-                }
+                handleError(it, booksPlaceholder, booksErrorPlaceholder, allBooksAdapter)
             })
     }
 
     private fun refreshUsersTab() {
         api.getSubscriptions(auth.getAccessToken())
             .io2main()
-            .doOnSubscribe {
-                if (!swipeRefresh.isRefreshing) {
-                    booksProgressBar.show()
-                }
-            }
-            .doFinally {
-                booksProgressBar.hide()
-                swipeRefresh.isRefreshing = false
-            }
+            .showProgressBar()
             .subscribe({ subscriptions ->
                 usersPlaceholder.show(subscriptions.isEmpty())
                 usersErrorPlaceholder.hide()
@@ -405,27 +386,14 @@ class MainActivity : AppCompatActivity(), Router {
                 usersAdapter.notifyDataSetChanged()
             }, {
                 logError("cannot load users", it)
-                if (usersPlaceholder.isVisible || usersAdapter.itemCount > 0) {
-                    toast(it.messageRes)
-                } else {
-                    usersErrorPlaceholder.setText(it.messageRes)
-                    usersErrorPlaceholder.show()
-                }
+                handleError(it, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
             })
     }
 
     private fun refreshNotesTab() {
         api.getLatestBooksWithNotes()
             .io2main()
-            .doOnSubscribe {
-                if (!swipeRefresh.isRefreshing) {
-                    booksProgressBar.show()
-                }
-            }
-            .doFinally {
-                booksProgressBar.hide()
-                swipeRefresh.isRefreshing = false
-            }
+            .showProgressBar()
             .subscribe({ notes ->
                 notesPlaceholder.show(notes.isEmpty())
                 notesErrorPlaceholder.hide()
@@ -434,13 +402,32 @@ class MainActivity : AppCompatActivity(), Router {
                 notesAdapter.notifyDataSetChanged()
             }, {
                 logError("cannot load notes", it)
-                if (notesPlaceholder.isVisible || notesAdapter.itemCount > 0) {
-                    toast(it.messageRes)
-                } else {
-                    notesErrorPlaceholder.setText(it.messageRes)
-                    notesErrorPlaceholder.show()
-                }
+                handleError(it, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
             })
+    }
+
+    private fun <T> Single<T>.showProgressBar() =
+        doOnSubscribe {
+            if (!swipeRefresh.isRefreshing) {
+                booksProgressBar.show()
+            }
+        }.doFinally {
+            booksProgressBar.hide()
+            swipeRefresh.isRefreshing = false
+        }
+
+    private fun handleError(
+        th: Throwable,
+        placeholder: View,
+        errPlaceholder: TextView,
+        adapter: RecyclerView.Adapter<*>
+    ) {
+        if (placeholder.isVisible || adapter.itemCount > 0) {
+            toast(th.messageRes)
+        } else {
+            errPlaceholder.setText(th.messageRes)
+            errPlaceholder.show()
+        }
     }
 
     private val Throwable.messageRes
