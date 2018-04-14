@@ -111,6 +111,8 @@ fun View.hide() {
         .start()
 }
 
+val View.isVisible get() = visibility == View.VISIBLE
+
 fun ProgressBar.setProgressSmoothly(progress: Int) {
     ObjectAnimator.ofInt(this, "progress", progress).start()
 }

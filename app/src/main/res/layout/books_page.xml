@@ -13,18 +13,13 @@
         tools:listitem="@layout/book" />
 
     <TextView
+        android:id="@+id/booksErrorPlaceholder"
+        style="@style/PlaceholderStyle" />
+
+    <TextView
         android:id="@+id/booksPlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:alpha="0"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textSize="16sp"
-        android:visibility="gone"
-        tools:alpha="1"
-        tools:text="@string/error_loading_data"
-        tools:visibility="visible" />
+        style="@style/PlaceholderStyle"
+        android:text="@string/error_no_books" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addBookButton"

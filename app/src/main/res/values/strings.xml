@@ -59,10 +59,11 @@
     <string name="about_designer">Design:\nanna@sirekanyan.com</string>
 
     <!-- error -->
-    <string name="error_unauthorized">Welcome to Knigopis! Please log in.</string>
+    <string name="error_unauthorized">Please log in.</string>
     <string name="error_loading_data">Check your network connection.</string>
     <string name="error_no_books">You don\'t have any books.</string>
     <string name="error_no_users">You don\'t have any subscriptions yet.</string>
+    <string name="error_no_notes">No one is posted yet.</string>
 
     <!-- permissions -->
     <string name="no_access">Permission denied</string>

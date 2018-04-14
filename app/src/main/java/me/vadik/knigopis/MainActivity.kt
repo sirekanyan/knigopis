@@ -18,6 +18,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
+import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.adapters.notes.NotesAdapter
@@ -344,43 +345,43 @@ class MainActivity : AppCompatActivity(), Router {
 
     private fun isFirstOpenTab(tab: CurrentTab) =
         when (tab) {
-            HOME_TAB -> booksRecyclerView.adapter == null
-            USERS_TAB -> usersRecyclerView.adapter == null
-            NOTES_TAB -> notesRecyclerView.adapter == null
+            HOME_TAB -> booksRecyclerView.adapter == null || booksErrorPlaceholder.isVisible
+            USERS_TAB -> usersRecyclerView.adapter == null || usersErrorPlaceholder.isVisible
+            NOTES_TAB -> notesRecyclerView.adapter == null || notesErrorPlaceholder.isVisible
         }
 
     private fun togglePage(tab: CurrentTab) {
         booksPage.show(tab == HOME_TAB)
         usersPage.show(tab == USERS_TAB)
-        notesRecyclerView.show(tab == NOTES_TAB)
+        notesPage.show(tab == NOTES_TAB)
     }
 
     private fun refreshHomeTab() {
-        if (booksProgressBar.alpha > 0) {
-            return
-        }
         bookRepository.loadBooks()
             .io2main()
             .doOnSubscribe {
                 if (!swipeRefresh.isRefreshing) {
                     booksProgressBar.show()
                 }
-                booksPlaceholder.hide()
             }
             .doFinally {
                 booksProgressBar.hide()
                 swipeRefresh.isRefreshing = false
             }
             .subscribe({ books ->
-                if (books.isEmpty()) {
-                    booksPlaceholder.setText(R.string.error_no_books)
-                    booksPlaceholder.show()
-                }
+                booksPlaceholder.show(books.isEmpty())
+                booksErrorPlaceholder.hide()
                 allBooks.clear()
                 allBooks.addAll(books)
                 allBooksAdapter.notifyDataSetChanged()
             }, {
-                handleNetworkError("cannot load books", it)
+                logError("cannot load books", it)
+                if (booksPlaceholder.isVisible || allBooksAdapter.itemCount > 0) {
+                    toast(it.messageRes)
+                } else {
+                    booksErrorPlaceholder.setText(it.messageRes)
+                    booksErrorPlaceholder.show()
+                }
             })
     }
 
@@ -391,22 +392,25 @@ class MainActivity : AppCompatActivity(), Router {
                 if (!swipeRefresh.isRefreshing) {
                     booksProgressBar.show()
                 }
-                usersPlaceholder.hide()
             }
             .doFinally {
                 booksProgressBar.hide()
                 swipeRefresh.isRefreshing = false
             }
             .subscribe({ subscriptions ->
-                if (subscriptions.isEmpty()) {
-                    usersPlaceholder.setText(R.string.error_no_users)
-                    usersPlaceholder.show()
-                }
+                usersPlaceholder.show(subscriptions.isEmpty())
+                usersErrorPlaceholder.hide()
                 allUsers.clear()
                 allUsers.addAll(subscriptions)
                 usersAdapter.notifyDataSetChanged()
             }, {
-                handleNetworkError("cannot load users", it)
+                logError("cannot load users", it)
+                if (usersPlaceholder.isVisible || usersAdapter.itemCount > 0) {
+                    toast(it.messageRes)
+                } else {
+                    usersErrorPlaceholder.setText(it.messageRes)
+                    usersErrorPlaceholder.show()
+                }
             })
     }
 
@@ -423,23 +427,27 @@ class MainActivity : AppCompatActivity(), Router {
                 swipeRefresh.isRefreshing = false
             }
             .subscribe({ notes ->
+                notesPlaceholder.show(notes.isEmpty())
+                notesErrorPlaceholder.hide()
                 allNotes.clear()
                 allNotes.addAll(notes.values)
                 notesAdapter.notifyDataSetChanged()
             }, {
-                handleNetworkError("cannot load notes", it)
+                logError("cannot load notes", it)
+                if (notesPlaceholder.isVisible || notesAdapter.itemCount > 0) {
+                    toast(it.messageRes)
+                } else {
+                    notesErrorPlaceholder.setText(it.messageRes)
+                    notesErrorPlaceholder.show()
+                }
             })
     }
 
-    private fun handleNetworkError(message: String, throwable: Throwable) {
-        logError(message, throwable)
-        toast(
-            if (throwable is HttpException && throwable.code() == 401) {
-                R.string.error_unauthorized
-            } else {
-                R.string.error_loading_data
-            }
-        )
-    }
+    private val Throwable.messageRes
+        get() = if (this is HttpException && code() == 401) {
+            R.string.error_unauthorized
+        } else {
+            R.string.error_loading_data
+        }
 
 }
