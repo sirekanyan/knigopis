@@ -108,6 +108,10 @@ class BooksAdapter(
                         .into(this)
                 }, {
                     logError("cannot load thumbnail", it)
+                    Glide.with(context)
+                        .load(R.color.image_placeholder_color)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(this)
                 })
         }
         .bind<TextView>(R.id.book_title) {
