@@ -81,7 +81,9 @@ class MainActivity : AppCompatActivity(), Router {
         initRecyclerView(notesRecyclerView)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
-        initNavigationView(currentTab)
+        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
+        refresh(currentTab ?: defaultTab)
+        initNavigationView()
         initToolbar(toolbar)
         addBookButton.setOnClickListener {
             startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
@@ -180,12 +182,16 @@ class MainActivity : AppCompatActivity(), Router {
         )
     }
 
-    private fun initNavigationView(currentTab: CurrentTab?) {
-        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
-        refresh(currentTab ?: defaultTab)
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            setCurrentTab(CurrentTab.getByItemId(item.itemId))
-            true
+    private fun initNavigationView() {
+        if (auth.isAuthorized()) {
+            bottomNavigation.show()
+            bottomNavigation.setOnNavigationItemSelectedListener { item ->
+                setCurrentTab(CurrentTab.getByItemId(item.itemId))
+                true
+            }
+        } else {
+            bottomNavigation.hide()
+            bottomNavigation.setOnNavigationItemSelectedListener(null)
         }
     }
 
@@ -309,6 +315,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshOptionsMenu() {
+        initNavigationView()
         loginOption.isVisible = true
         profileOption.isVisible = auth.isAuthorized()
         if (auth.isAuthorized()) {

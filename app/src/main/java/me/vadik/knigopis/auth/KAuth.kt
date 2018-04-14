@@ -34,10 +34,7 @@ class KAuthImpl(
 
     override fun getAccessToken(): String = preferences.getString(ACCESS_TOKEN_KEY, "")
 
-    override fun getTokenRequest(): Intent {
-        return Intent(context, UloginAuthActivity::class.java)
-            .putExtra(UloginAuthActivity.FIELDS, arrayOf(TOKEN_KEY))
-    }
+    override fun getTokenRequest() = Intent(context, UloginAuthActivity::class.java)
 
     override fun getUserProfile(): String? {
         return preferences.getString(USER_PROFILE, null)
