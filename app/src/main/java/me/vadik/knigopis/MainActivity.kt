@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), Router {
         }
         if (booksChanged) {
             booksChanged = false
-            refresh()
+            refresh(isForce = true)
         }
         intent.data?.also {
             val normalizedUri = Uri.parse(it.toString().replaceFirst("/#/", "/"))
