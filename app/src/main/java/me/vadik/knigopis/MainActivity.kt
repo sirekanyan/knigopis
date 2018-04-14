@@ -17,6 +17,8 @@ import android.view.View
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.books_page.*
+import kotlinx.android.synthetic.main.users_page.*
 import me.vadik.knigopis.adapters.BooksAdapter
 import me.vadik.knigopis.adapters.notes.NotesAdapter
 import me.vadik.knigopis.adapters.users.UsersAdapter
@@ -321,9 +323,8 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
-        addBookButton.hide()
         currentTab = tab
-        toggleRecyclerView(tab)
+        togglePage(tab)
         val isFirst = isFirstOpenTab(tab)
         if (isFirst) {
             when (tab) {
@@ -348,10 +349,10 @@ class MainActivity : AppCompatActivity(), Router {
             NOTES_TAB -> notesRecyclerView.adapter == null
         }
 
-    private fun toggleRecyclerView(tab: CurrentTab) {
-        usersRecyclerView.show(tab == USERS_TAB)
+    private fun togglePage(tab: CurrentTab) {
+        booksPage.show(tab == HOME_TAB)
+        usersPage.show(tab == USERS_TAB)
         notesRecyclerView.show(tab == NOTES_TAB)
-        booksRecyclerView.show(tab == HOME_TAB)
     }
 
     private fun refreshHomeTab() {
@@ -378,7 +379,6 @@ class MainActivity : AppCompatActivity(), Router {
                 allBooks.clear()
                 allBooks.addAll(books)
                 allBooksAdapter.notifyDataSetChanged()
-                addBookButton.show()
             }, {
                 handleNetworkError("cannot load books", it)
             })
@@ -391,13 +391,17 @@ class MainActivity : AppCompatActivity(), Router {
                 if (!swipeRefresh.isRefreshing) {
                     booksProgressBar.show()
                 }
-                booksPlaceholder.hide()
+                usersPlaceholder.hide()
             }
             .doFinally {
                 booksProgressBar.hide()
                 swipeRefresh.isRefreshing = false
             }
             .subscribe({ subscriptions ->
+                if (subscriptions.isEmpty()) {
+                    usersPlaceholder.setText(R.string.error_no_users)
+                    usersPlaceholder.show()
+                }
                 allUsers.clear()
                 allUsers.addAll(subscriptions)
                 usersAdapter.notifyDataSetChanged()
@@ -413,7 +417,6 @@ class MainActivity : AppCompatActivity(), Router {
                 if (!swipeRefresh.isRefreshing) {
                     booksProgressBar.show()
                 }
-                booksPlaceholder.hide()
             }
             .doFinally {
                 booksProgressBar.hide()
@@ -434,7 +437,7 @@ class MainActivity : AppCompatActivity(), Router {
             if (throwable is HttpException && throwable.code() == 401) {
                 R.string.error_unauthorized
             } else {
-                R.string.error_loading_books
+                R.string.error_loading_data
             }
         )
     }

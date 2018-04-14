@@ -54,8 +54,9 @@
 
     <!-- error -->
     <string name="error_unauthorized">Это — Книгопись. Привет!</string>
-    <string name="error_loading_books">Проверьте подключение к сети.</string>
+    <string name="error_loading_data">Проверьте подключение к сети.</string>
     <string name="error_no_books">У вас пока нет книг.</string>
+    <string name="error_no_users">Вы ещё ни на кого не подписаны.</string>
 
     <!-- permissions -->
     <string name="no_access">Нет доступа</string>
