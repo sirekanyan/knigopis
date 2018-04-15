@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- TODO -->
+    <!--<item-->
+    <!--android:id="@+id/option_edit_profile"-->
+    <!--android:icon="@drawable/ic_edit"-->
+    <!--android:title="@string/profile_option_edit"-->
+    <!--app:iconTint="@color/white"-->
+    <!--app:showAsAction="ifRoom" />-->
+
+    <item
+        android:id="@+id/option_share_profile"
+        android:title="@string/profile_option_share"
+        app:showAsAction="never" />
+
+</menu>

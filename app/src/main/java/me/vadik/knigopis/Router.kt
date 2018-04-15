@@ -10,5 +10,4 @@ interface Router {
     fun openUserScreen(user: Subscription)
     fun openUserScreen(user: Identity)
     fun openBrowser(uri: Uri)
-    fun shareProfile(url: String)
 }

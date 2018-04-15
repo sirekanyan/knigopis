@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -38,6 +37,7 @@ import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
+import me.vadik.knigopis.profile.createProfileIntent
 import me.vadik.knigopis.user.createUserIntent
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
@@ -170,18 +170,6 @@ class MainActivity : AppCompatActivity(), Router {
         }
     }
 
-    override fun shareProfile(url: String) {
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-            .setType("text/plain")
-            .putExtra(Intent.EXTRA_TEXT, url)
-        startActivity(
-            Intent.createChooser(
-                sharingIntent,
-                getString(R.string.option_share_title)
-            )
-        )
-    }
-
     private fun initNavigationView() {
         if (auth.isAuthorized()) {
             bottomNavigation.show()
@@ -209,28 +197,7 @@ class MainActivity : AppCompatActivity(), Router {
                     true
                 }
                 R.id.option_profile -> {
-                    api.getProfile(auth.getAccessToken())
-                        .io2main()
-                        .subscribe({ user ->
-                            AlertDialog.Builder(this)
-                                .setTitle("Мой профиль")
-                                .setMessage(
-                                    """
-                                        Имя: ${user.nickname ?: "(не задано)"}
-                                        Книг: ${user.booksCount}
-                                        Подписок: ${user.subscriptions?.size ?: 0}
-                                        Создан: ${DateUtils.getRelativeTimeSpanString(user.fixedCreatedAt.time)}
-                                        Обновлен: ${DateUtils.getRelativeTimeSpanString(user.fixedUpdatedAt.time)}
-                                    """.trimIndent()
-                                )
-                                .setPositiveButton("Поделиться") { _, _ ->
-                                    shareProfile(user.fixedProfile)
-                                }
-                                .setNegativeButton("Закрыть", null)
-                                .show()
-                        }, {
-                            logError("Cannot get profile", it)
-                        })
+                    startActivity(createProfileIntent())
                     true
                 }
                 R.id.option_about -> {

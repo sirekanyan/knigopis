@@ -8,6 +8,11 @@
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
     </style>
 
+    <style name="ProfileTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimaryDark_97</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="DevTheme" parent="AppTheme">
         <!--<item name="colorPrimary">#9C27B0</item>-->
         <!--<item name="colorPrimaryDark">#7B1FA2</item>-->
@@ -28,6 +33,22 @@
         <item name="android:padding">8dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:drawablePadding">8dp</item>
+    </style>
+
+    <style name="ProfileCaptionItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TextInputLayoutStyle">

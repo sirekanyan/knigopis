@@ -43,7 +43,13 @@
             android:parentActivityName=".MainActivity"/>
 
         <activity
+            android:name=".profile.ProfileActivity"
+            android:theme="@style/ProfileTheme" />
+
+        <activity
             android:name="ru.ulogin.sdk.UloginAuthActivity"
             android:configChanges="orientation|screenSize"/>
+
     </application>
+
 </manifest>
