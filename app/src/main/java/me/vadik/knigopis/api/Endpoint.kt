@@ -73,6 +73,12 @@ interface Endpoint {
     @GET("users/{id}/books")
     fun getUserBooks(@Path("id") userId: String): Single<List<UserBook>>
 
+    @PUT("users/{id}")
+    fun updateProfile(
+        @Path("id") userId: String,
+        @Body profile: Profile
+    ): Completable
+
     @POST("subscriptions/{subUserId}")
     fun createSubscription(
         @Path("subUserId") userId: String,
