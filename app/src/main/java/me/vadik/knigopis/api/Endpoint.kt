@@ -76,6 +76,7 @@ interface Endpoint {
     @PUT("users/{id}")
     fun updateProfile(
         @Path("id") userId: String,
+        @Query("access-token") accessToken: String,
         @Body profile: Profile
     ): Completable
 
