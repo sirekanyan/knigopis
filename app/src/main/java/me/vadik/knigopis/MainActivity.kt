@@ -283,20 +283,16 @@ class MainActivity : AppCompatActivity(), Router {
 
     private fun refreshOptionsMenu() {
         initNavigationView()
-        loginOption.isVisible = true
-        profileOption.isVisible = auth.isAuthorized()
-        if (auth.isAuthorized()) {
-            loginOption.setTitle(R.string.option_logout)
-            loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-        } else {
-            loginOption.setTitle(R.string.option_login)
-            loginOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        auth.isAuthorized().let { authorized ->
+            loginOption.isVisible = !authorized
+            profileOption.isVisible = authorized
         }
     }
 
     private fun refresh(tab: CurrentTab = currentTab, isForce: Boolean = false) {
-        setCurrentTab(tab, isForce)
-        bottomNavigation.selectedItemId = tab.itemId
+        val t = if (auth.isAuthorized()) tab else NOTES_TAB
+        setCurrentTab(t, isForce)
+        bottomNavigation.selectedItemId = t.itemId
     }
 
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {

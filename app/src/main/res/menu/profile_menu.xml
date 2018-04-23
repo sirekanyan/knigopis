@@ -15,4 +15,9 @@
         android:title="@string/profile_option_share"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/option_logout_profile"
+        android:title="@string/option_logout"
+        app:showAsAction="never" />
+
 </menu>

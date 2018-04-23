@@ -92,6 +92,11 @@ class ProfileActivity : AppCompatActivity() {
                     }
                     true
                 }
+                R.id.option_logout_profile -> {
+                    auth.logout()
+                    finish()
+                    true
+                }
                 else -> false
             }
         }
