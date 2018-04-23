@@ -8,9 +8,12 @@
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
     </style>
 
-    <style name="ProfileTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/colorPrimaryDark_97</item>
-        <item name="android:windowIsTranslucent">true</item>
+    <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:listDivider">@drawable/recycler_view_divider</item>
     </style>
 
     <style name="DevTheme" parent="AppTheme">
