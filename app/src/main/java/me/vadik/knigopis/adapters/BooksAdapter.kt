@@ -102,14 +102,14 @@ class BooksAdapter(
                         .load(coverUrl)
                         .apply(
                             RequestOptions.centerCropTransform()
-                                .placeholder(R.color.image_placeholder_color)
+                                .placeholder(R.drawable.rectangle_placeholder_background)
                         )
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(this)
                 }, {
                     logError("cannot load thumbnail", it)
                     Glide.with(context)
-                        .load(R.color.image_placeholder_color)
+                        .load(R.drawable.rectangle_placeholder_background)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(this)
                 })
