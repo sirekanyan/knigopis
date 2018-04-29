@@ -16,7 +16,10 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.createTextShareIntent
 import me.vadik.knigopis.io2main
 import me.vadik.knigopis.logError
+import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.PlannedBook
 import org.koin.android.ext.android.inject
+import java.util.*
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 
@@ -24,6 +27,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private val api by inject<Endpoint>()
     private val auth by inject<KAuth>()
+    private val random = Random()
+    private val todoList = mutableListOf<Book>()
+    private val doingList = mutableListOf<Book>()
+    private val doneList = mutableListOf<Book>()
     private var profileUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +40,24 @@ class ProfileActivity : AppCompatActivity() {
         profileTodoCount.text = getString(R.string.profile_caption_todo, 0)
         profileDoingCount.text = getString(R.string.profile_caption_doing, 0)
         profileDoneCount.text = getString(R.string.profile_caption_done, 0)
+        profileTodoCount.setOnClickListener {
+            setRandomFooterBook(todoList)
+        }
+        profileDoingCount.setOnClickListener {
+            setRandomFooterBook(doingList)
+        }
+        profileDoneCount.setOnClickListener {
+            setRandomFooterBook(doneList)
+        }
+    }
+
+    private fun setRandomFooterBook(books: List<Book>) {
+        val book = books.random() ?: return
+        randomProfileBook.text = getString(
+            R.string.profile_book_random,
+            book.titleOrDefault,
+            (book as? PlannedBook)?.priority ?: 100
+        )
     }
 
     override fun onStart() {
@@ -57,25 +82,18 @@ class ProfileActivity : AppCompatActivity() {
         api.getFinishedBooks(auth.getAccessToken())
             .io2main()
             .subscribe({ finishedBooks ->
-                profileDoneCount.text = getString(
-                    R.string.profile_caption_done,
-                    finishedBooks.size
-                )
+                doneList.clearAndAddAll(finishedBooks)
+                profileDoneCount.text = getString(R.string.profile_caption_done, doneList.size)
             }, {
                 logError("cannot check finished books count", it)
             })
         api.getPlannedBooks(auth.getAccessToken())
             .io2main()
             .subscribe({ plannedBooks ->
-                val inProgressCount = plannedBooks.count { it.priority > 0 }
-                profileDoingCount.text = getString(
-                    R.string.profile_caption_doing,
-                    inProgressCount
-                )
-                profileTodoCount.text = getString(
-                    R.string.profile_caption_todo,
-                    plannedBooks.size - inProgressCount
-                )
+                doingList.clearAndAddAll(plannedBooks.filter { it.priority > 0 })
+                profileDoingCount.text = getString(R.string.profile_caption_doing, doingList.size)
+                todoList.clearAndAddAll(plannedBooks.filter { it.priority == 0 })
+                profileTodoCount.text = getString(R.string.profile_caption_todo, todoList.size)
             }, {
                 logError("cannot check planned books count", it)
             })
@@ -103,6 +121,16 @@ class ProfileActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    private fun <T> List<T>.random(): T? {
+        if (size == 0) return null
+        return get(random.nextInt(size))
+    }
+
+    private fun <T> MutableCollection<T>.clearAndAddAll(collection: Collection<T>) {
+        clear()
+        addAll(collection)
     }
 
 }

@@ -81,8 +81,14 @@
         android:layout_height="1dp"
         android:background="#BBFFFFFF" />
 
-    <View
+    <TextView
+        android:id="@+id/randomProfileBook"
         android:layout_width="match_parent"
-        android:layout_height="56dp" />
+        android:layout_height="56dp"
+        android:gravity="bottom|center"
+        android:padding="8dp"
+        android:textColor="@android:color/secondary_text_dark"
+        android:textSize="12sp"
+        tools:text="Мастер и маргарита — 90%" />
 
 </LinearLayout>

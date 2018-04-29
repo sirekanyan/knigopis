@@ -22,6 +22,7 @@
     <string name="profile_caption_done">%d\ndone</string>
     <string name="profile_hint_nickname">nickname</string>
     <string name="profile_hint_homepage">homepage</string>
+    <string name="profile_book_random" translatable="false">%s — %d%%</string>
 
     <!-- profile menu -->
     <string name="profile_option_edit">Edit</string>
