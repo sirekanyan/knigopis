@@ -88,7 +88,7 @@ class ProfileActivity : AppCompatActivity() {
             .subscribe({ user ->
                 userId = user.id
                 profileUrl = user.fixedProfile
-                profileNickname.text = user.nickname ?: "(не указано имя)"
+                profileNickname.text = user.nickname.orEmpty()
                 Glide.with(this)
                     .load(user.photo)
                     .apply(

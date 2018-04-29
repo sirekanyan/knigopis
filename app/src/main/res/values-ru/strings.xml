@@ -17,9 +17,9 @@
     <string name="option_about">О приложении</string>
 
     <!-- profile -->
-    <string name="profile_caption_todo">%d\n0%%</string>
-    <string name="profile_caption_doing">%d\n1—99%%</string>
-    <string name="profile_caption_done">%d\n100%%</string>
+    <string name="profile_caption_todo">%d\nв очереди</string>
+    <string name="profile_caption_doing">%d\nв процессе</string>
+    <string name="profile_caption_done">%d\nпрочитано</string>
     <string name="profile_hint_nickname">псевдоним</string>
     <string name="profile_hint_homepage">личная страница</string>
 
