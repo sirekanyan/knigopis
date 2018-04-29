@@ -104,12 +104,13 @@ class ProfileActivity : AppCompatActivity() {
             })
     }
 
+    @Suppress("USELESS_CAST")
     private fun refreshCounters() {
         api.getFinishedBooks(auth.getAccessToken())
             .io2main()
             .subscribe({ finishedBooks ->
                 doneList.clearAndAddAll(finishedBooks)
-                profileDoneCount.text = getString(R.string.profile_caption_done, doneList.size)
+                profileDoneCount.text = getString(R.string.profile_caption_done, doneList.size as Int)
             }, {
                 logError("cannot check finished books count", it)
             })
@@ -117,9 +118,9 @@ class ProfileActivity : AppCompatActivity() {
             .io2main()
             .subscribe({ plannedBooks ->
                 doingList.clearAndAddAll(plannedBooks.filter { it.priority > 0 })
-                profileDoingCount.text = getString(R.string.profile_caption_doing, doingList.size)
+                profileDoingCount.text = getString(R.string.profile_caption_doing, doingList.size as Int)
                 todoList.clearAndAddAll(plannedBooks.filter { it.priority == 0 })
-                profileTodoCount.text = getString(R.string.profile_caption_todo, todoList.size)
+                profileTodoCount.text = getString(R.string.profile_caption_todo, todoList.size as Int)
             }, {
                 logError("cannot check planned books count", it)
             })
