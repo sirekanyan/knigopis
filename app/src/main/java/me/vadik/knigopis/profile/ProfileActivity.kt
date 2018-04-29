@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -63,11 +64,16 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setRandomFooterBook(books: List<Book>) {
         val book = books.random() ?: return
+        randomProfileBook.alpha = 1f
         randomProfileBook.text = getString(
             R.string.profile_book_random,
             book.titleOrDefault,
             (book as? PlannedBook)?.priority ?: 100
         )
+        randomProfileBook.animate()
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(1000)
+            .alpha(0f)
     }
 
     override fun onStart() {
