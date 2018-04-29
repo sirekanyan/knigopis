@@ -5,21 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.inputmethod.EditorInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.profile_activity.*
-import kotlinx.android.synthetic.main.profile_contact_item.*
-import me.vadik.knigopis.R
+import me.vadik.knigopis.*
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.createTextShareIntent
-import me.vadik.knigopis.io2main
-import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.PlannedBook
+import me.vadik.knigopis.model.Profile
 import org.koin.android.ext.android.inject
 import java.util.*
+
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 
@@ -31,6 +31,7 @@ class ProfileActivity : AppCompatActivity() {
     private val todoList = mutableListOf<Book>()
     private val doingList = mutableListOf<Book>()
     private val doneList = mutableListOf<Book>()
+    private var userId: String? = null
     private var profileUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +50,15 @@ class ProfileActivity : AppCompatActivity() {
         profileDoneCount.setOnClickListener {
             setRandomFooterBook(doneList)
         }
+        profileNicknameEditText.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    updateNickname()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setRandomFooterBook(books: List<Book>) {
@@ -62,12 +72,17 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        refreshProfile()
+        refreshCounters()
+    }
+
+    private fun refreshProfile() {
         api.getProfile(auth.getAccessToken())
             .io2main()
             .subscribe({ user ->
+                userId = user.id
                 profileUrl = user.fixedProfile
                 profileNickname.text = user.nickname ?: "(не указано имя)"
-                profileContactTitle.text = user.identity
                 Glide.with(this)
                     .load(user.photo)
                     .apply(
@@ -79,6 +94,9 @@ class ProfileActivity : AppCompatActivity() {
             }, {
                 logError("cannot get profile", it)
             })
+    }
+
+    private fun refreshCounters() {
         api.getFinishedBooks(auth.getAccessToken())
             .io2main()
             .subscribe({ finishedBooks ->
@@ -99,12 +117,44 @@ class ProfileActivity : AppCompatActivity() {
             })
     }
 
+    private fun updateNickname() {
+        val id = userId ?: return
+        api.updateProfile(
+            id,
+            auth.getAccessToken(),
+            Profile(profileNicknameEditText.text.toString(), profileUrl.orEmpty())
+        ).io2main()
+            .subscribe({
+                profileNickname.text = profileNicknameEditText.text
+                quitEditMode()
+                refreshProfile()
+            }, {
+                toast("Не удалось обновить имя")
+                logError("cannot update profile", it)
+            })
+    }
+
     private fun initToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_close)
         toolbar.setNavigationOnClickListener { finish() }
         toolbar.inflateMenu(R.menu.profile_menu)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
+                R.id.option_edit_profile -> {
+                    if (isEditMode) {
+                        if (profileNickname.text.toString() == profileNicknameEditText.text.toString()) {
+                            quitEditMode()
+                        } else {
+                            updateNickname()
+                        }
+                    } else {
+                        enterEditMode()
+                        val nickname = profileNickname.text
+                        profileNicknameEditText.setText(nickname)
+                        profileNicknameEditText.setSelection(nickname.length, nickname.length)
+                    }
+                    true
+                }
                 R.id.option_share_profile -> {
                     profileUrl?.let {
                         startActivity(
@@ -122,6 +172,29 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        if (profileNickname.isVisible) {
+            super.onBackPressed()
+        } else {
+            quitEditMode()
+        }
+    }
+
+    private fun enterEditMode() {
+        topProfileSpace.hideNow()
+        profileNicknameSwitcher.displayedChild = 1
+        showKeyboard()
+    }
+
+    private fun quitEditMode() {
+        hideKeyboard()
+        topProfileSpace.showNow()
+        profileNicknameSwitcher.displayedChild = 0
+    }
+
+    private val isEditMode
+        get() = profileNicknameSwitcher.displayedChild == 1
 
     private fun <T> List<T>.random(): T? {
         if (size == 0) return null

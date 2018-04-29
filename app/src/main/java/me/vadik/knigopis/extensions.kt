@@ -128,6 +128,12 @@ fun ProgressBar.setProgressSmoothly(progress: Int) {
     ObjectAnimator.ofInt(this, "progress", progress).start()
 }
 
+fun Activity.showKeyboard() {
+    currentFocus?.let { view ->
+        systemInputMethodManager.showSoftInput(view, 0)
+    }
+}
+
 fun Activity.hideKeyboard() {
     currentFocus?.let { view ->
         systemInputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
