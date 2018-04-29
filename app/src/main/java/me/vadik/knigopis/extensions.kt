@@ -2,6 +2,7 @@ package me.vadik.knigopis
 
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -38,6 +39,15 @@ inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
     }
 }
 
+val Context.systemClipboardManager: ClipboardManager
+    get() = getAndroidSystemService(Context.CLIPBOARD_SERVICE)
+
+val Context.systemInputMethodManager: InputMethodManager
+    get() = getAndroidSystemService(Context.INPUT_METHOD_SERVICE)
+
+private inline fun <reified T> Context.getAndroidSystemService(name: String) =
+    getSystemService(name) as T
+
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 fun Context.toast(@StringRes messageId: Int) =
@@ -45,6 +55,7 @@ fun Context.toast(@StringRes messageId: Int) =
 
 fun Activity.app() = application as App
 
+@Suppress("unused")
 fun logWarn(message: String) = Log.w(TAG, message)
 
 fun logError(message: String, throwable: Throwable?) = Log.e(TAG, message, throwable)
@@ -119,8 +130,7 @@ fun ProgressBar.setProgressSmoothly(progress: Int) {
 
 fun Activity.hideKeyboard() {
     currentFocus?.let { view ->
-        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .hideSoftInputFromWindow(view.windowToken, 0)
+        systemInputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
 

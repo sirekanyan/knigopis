@@ -1,7 +1,6 @@
 package me.vadik.knigopis.user
 
 import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -23,6 +22,7 @@ import me.vadik.knigopis.io2main
 import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
+import me.vadik.knigopis.systemClipboardManager
 import me.vadik.knigopis.toast
 import org.koin.android.ext.android.inject
 
@@ -110,10 +110,7 @@ class UserActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.option_copy -> {
                 val link = "http://www.knigopis.com/#/user/books?u=$userId"
-                getSystemService(CLIPBOARD_SERVICE)?.let { clipboard ->
-                    clipboard as ClipboardManager
-                    clipboard.primaryClip = ClipData.newPlainText(null, link)
-                }
+                systemClipboardManager.primaryClip = ClipData.newPlainText(null, link)
                 toast(link)
                 true
             }
