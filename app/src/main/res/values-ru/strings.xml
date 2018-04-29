@@ -25,6 +25,7 @@
 
     <!-- profile menu -->
     <string name="profile_option_edit">Редактировать</string>
+    <string name="profile_option_save">Сохранить</string>
     <string name="profile_option_share">Поделиться</string>
 
     <!-- books -->

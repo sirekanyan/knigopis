@@ -26,6 +26,7 @@
 
     <!-- profile menu -->
     <string name="profile_option_edit">Edit</string>
+    <string name="profile_option_save">Save</string>
     <string name="profile_option_share">Share</string>
 
     <!-- books -->

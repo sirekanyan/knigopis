@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.bumptech.glide.Glide
@@ -34,6 +35,7 @@ class ProfileActivity : AppCompatActivity() {
     private val doneList = mutableListOf<Book>()
     private var userId: String? = null
     private var profileUrl: String? = null
+    private lateinit var editOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,7 @@ class ProfileActivity : AppCompatActivity() {
         profileNicknameEditText.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
-                    updateNickname()
+                    updateNicknameOrExitEditMode()
                     true
                 }
                 else -> false
@@ -123,6 +125,14 @@ class ProfileActivity : AppCompatActivity() {
             })
     }
 
+    private fun updateNicknameOrExitEditMode() {
+        if (profileNickname.text.toString() == profileNicknameEditText.text.toString()) {
+            quitEditMode()
+        } else {
+            updateNickname()
+        }
+    }
+
     private fun updateNickname() {
         val id = userId ?: return
         api.updateProfile(
@@ -148,11 +158,7 @@ class ProfileActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.option_edit_profile -> {
                     if (isEditMode) {
-                        if (profileNickname.text.toString() == profileNicknameEditText.text.toString()) {
-                            quitEditMode()
-                        } else {
-                            updateNickname()
-                        }
+                        updateNicknameOrExitEditMode()
                     } else {
                         enterEditMode()
                         val nickname = profileNickname.text
@@ -177,6 +183,7 @@ class ProfileActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        editOption = toolbar.menu.findItem(R.id.option_edit_profile)
     }
 
     override fun onBackPressed() {
@@ -188,12 +195,16 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun enterEditMode() {
+        editOption.setIcon(R.drawable.ic_done)
+        editOption.setTitle(R.string.profile_option_save)
         topProfileSpace.hideNow()
         profileNicknameSwitcher.displayedChild = 1
         showKeyboard()
     }
 
     private fun quitEditMode() {
+        editOption.setIcon(R.drawable.ic_edit)
+        editOption.setTitle(R.string.profile_option_edit)
         hideKeyboard()
         topProfileSpace.showNow()
         profileNicknameSwitcher.displayedChild = 0
