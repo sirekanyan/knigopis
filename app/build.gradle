@@ -9,8 +9,8 @@ android {
         applicationId 'me.vadik.knigopis'
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 13
-        versionName '0.1.12'
+        versionCode 14
+        versionName '0.1.13'
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables.useSupportLibrary = true
     }
