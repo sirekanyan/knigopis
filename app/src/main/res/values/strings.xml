@@ -17,9 +17,11 @@
     <string name="option_about">About</string>
 
     <!-- profile -->
-    <string name="profile_caption_books">%d\nbooks</string>
-    <string name="profile_caption_wishes">%d\nwishes</string>
-    <string name="profile_caption_reviews">%d\nreviews</string>
+    <string name="profile_caption_todo">%d\ntodo</string>
+    <string name="profile_caption_doing">%d\ndoing</string>
+    <string name="profile_caption_done">%d\ndone</string>
+    <string name="profile_hint_nickname">nickname</string>
+    <string name="profile_hint_homepage">homepage</string>
 
     <!-- profile menu -->
     <string name="profile_option_edit">Edit</string>

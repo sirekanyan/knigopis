@@ -63,15 +63,15 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/profileBooksCount"
+            android:id="@+id/profileTodoCount"
             style="@style/ProfileCaptionItem" />
 
         <TextView
-            android:id="@+id/profileWishesCount"
+            android:id="@+id/profileDoingCount"
             style="@style/ProfileCaptionItem" />
 
         <TextView
-            android:id="@+id/profileReviewsCount"
+            android:id="@+id/profileDoneCount"
             style="@style/ProfileCaptionItem" />
 
     </LinearLayout>

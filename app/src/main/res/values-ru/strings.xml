@@ -16,6 +16,17 @@
     <string name="option_share_title">Отправить ссылку на профиль</string>
     <string name="option_about">О приложении</string>
 
+    <!-- profile -->
+    <string name="profile_caption_todo">%d\n0%%</string>
+    <string name="profile_caption_doing">%d\n1—99%%</string>
+    <string name="profile_caption_done">%d\n100%%</string>
+    <string name="profile_hint_nickname">псевдоним</string>
+    <string name="profile_hint_homepage">личная страница</string>
+
+    <!-- profile menu -->
+    <string name="profile_option_edit">Редактировать</string>
+    <string name="profile_option_share">Поделиться</string>
+
     <!-- books -->
     <string name="book_header_todo">К прочтению</string>
     <string name="book_header_done_first">Прочитано в %s г.</string>

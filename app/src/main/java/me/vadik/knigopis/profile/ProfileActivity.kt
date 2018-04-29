@@ -30,9 +30,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
         initToolbar(profileToolbar)
-        profileBooksCount.text = getString(R.string.profile_caption_books, 0)
-        profileWishesCount.text = getString(R.string.profile_caption_wishes, 0)
-        profileReviewsCount.text = getString(R.string.profile_caption_reviews, 0)
+        profileTodoCount.text = getString(R.string.profile_caption_todo, 0)
+        profileDoingCount.text = getString(R.string.profile_caption_doing, 0)
+        profileDoneCount.text = getString(R.string.profile_caption_done, 0)
     }
 
     override fun onStart() {
@@ -51,30 +51,33 @@ class ProfileActivity : AppCompatActivity() {
                     )
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profileAvatar)
-                updateCounters(user.booksCount)
             }, {
                 logError("cannot get profile", it)
             })
-    }
-
-    private fun updateCounters(totalBooksCount: Int) {
         api.getFinishedBooks(auth.getAccessToken())
             .io2main()
             .subscribe({ finishedBooks ->
-                profileBooksCount.text = getString(
-                    R.string.profile_caption_books,
+                profileDoneCount.text = getString(
+                    R.string.profile_caption_done,
                     finishedBooks.size
                 )
-                profileWishesCount.text = getString(
-                    R.string.profile_caption_wishes,
-                    totalBooksCount - finishedBooks.size
+            }, {
+                logError("cannot check finished books count", it)
+            })
+        api.getPlannedBooks(auth.getAccessToken())
+            .io2main()
+            .subscribe({ plannedBooks ->
+                val inProgressCount = plannedBooks.count { it.priority > 0 }
+                profileDoingCount.text = getString(
+                    R.string.profile_caption_doing,
+                    inProgressCount
                 )
-                profileReviewsCount.text = getString(
-                    R.string.profile_caption_reviews,
-                    finishedBooks.count { it.notes.isNotEmpty() }
+                profileTodoCount.text = getString(
+                    R.string.profile_caption_todo,
+                    plannedBooks.size - inProgressCount
                 )
             }, {
-                logError("cannot check books count", it)
+                logError("cannot check planned books count", it)
             })
     }
 
