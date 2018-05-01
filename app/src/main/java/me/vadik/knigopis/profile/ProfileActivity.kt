@@ -8,14 +8,12 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.profile_activity.*
 import me.vadik.knigopis.*
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.createTextShareIntent
+import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.Profile
@@ -91,14 +89,7 @@ class ProfileActivity : AppCompatActivity() {
                 userId = user.id
                 profileUrl = user.fixedProfile
                 profileNickname.text = user.nickname.orEmpty()
-                Glide.with(this)
-                    .load(user.photo)
-                    .apply(
-                        RequestOptions.circleCropTransform()
-                            .placeholder(R.drawable.oval_placeholder_background)
-                    )
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(profileAvatar)
+                profileAvatar.setCircleImage(user.photo)
                 editOption.isVisible = true
             }, {
                 logError("cannot get profile", it)
@@ -111,7 +102,8 @@ class ProfileActivity : AppCompatActivity() {
             .io2main()
             .subscribe({ finishedBooks ->
                 doneList.clearAndAddAll(finishedBooks)
-                profileDoneCount.text = getString(R.string.profile_caption_done, doneList.size as Int)
+                profileDoneCount.text =
+                        getString(R.string.profile_caption_done, doneList.size as Int)
             }, {
                 logError("cannot check finished books count", it)
             })
@@ -119,9 +111,11 @@ class ProfileActivity : AppCompatActivity() {
             .io2main()
             .subscribe({ plannedBooks ->
                 doingList.clearAndAddAll(plannedBooks.filter { it.priority > 0 })
-                profileDoingCount.text = getString(R.string.profile_caption_doing, doingList.size as Int)
+                profileDoingCount.text =
+                        getString(R.string.profile_caption_doing, doingList.size as Int)
                 todoList.clearAndAddAll(plannedBooks.filter { it.priority == 0 })
-                profileTodoCount.text = getString(R.string.profile_caption_todo, todoList.size as Int)
+                profileTodoCount.text =
+                        getString(R.string.profile_caption_todo, todoList.size as Int)
             }, {
                 logError("cannot check planned books count", it)
             })

@@ -28,6 +28,8 @@ import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.ResourceProvider
+import me.vadik.knigopis.data.AvatarCache
+import me.vadik.knigopis.data.AvatarCacheImpl
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.CurrentTab
@@ -63,7 +65,8 @@ class MainActivity : AppCompatActivity(), Router {
     private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this, dialogs) }
     private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
     private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs, resources) }
-    private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
+    private val avatarCache by lazy { AvatarCacheImpl() as AvatarCache }
+    private val notesAdapter by lazy { NotesAdapter(allNotes, avatarCache, this) }
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -349,6 +352,7 @@ class MainActivity : AppCompatActivity(), Router {
             .io2main()
             .showProgressBar()
             .subscribe({ subscriptions ->
+                avatarCache.urls = subscriptions.map { it.subUser.id to it.subUser.avatar }.toMap()
                 usersPlaceholder.show(subscriptions.isEmpty())
                 usersErrorPlaceholder.hide()
                 allUsers.clear()

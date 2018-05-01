@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.view.View
 import kotlinx.android.synthetic.main.note.view.*
+import me.vadik.knigopis.common.setCircleImage
 
 class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -25,6 +26,10 @@ class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun setNickname(nickname: String) {
         view.userNickname.text = nickname
+    }
+
+    fun setAvatarUrl(url: String?) {
+        view.userSmallAvatar.setCircleImage(url)
     }
 
 }

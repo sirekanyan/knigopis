@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.koin:koin-android:0.9.1'
 
     // etc
-    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation(name: 'ulogin-sdk-v1.1', ext: 'aar')
 
     // testing
