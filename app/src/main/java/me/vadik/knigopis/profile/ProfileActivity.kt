@@ -99,6 +99,7 @@ class ProfileActivity : AppCompatActivity() {
                     )
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profileAvatar)
+                editOption.isVisible = true
             }, {
                 logError("cannot get profile", it)
             })

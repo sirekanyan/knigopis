@@ -6,6 +6,7 @@
         android:id="@+id/option_edit_profile"
         android:icon="@drawable/ic_edit"
         android:title="@string/profile_option_edit"
+        android:visible="false"
         app:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 
