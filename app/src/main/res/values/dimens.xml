@@ -1,4 +1,15 @@
 <resources>
+
+    <!-- common -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- user avatar -->
+    <dimen name="avatar_size_expanded">88dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="app_bar_height">160dp</dimen>
+    <dimen name="title_start_margin_expanded">120dp</dimen>
+    <dimen name="title_start_margin_collapsed">48dp</dimen>
+    <dimen name="image_view_elevation">4dp</dimen>
+
 </resources>

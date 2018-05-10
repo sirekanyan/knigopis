@@ -7,8 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.support.annotation.DimenRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
+import android.support.v4.view.ViewCompat
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
@@ -93,6 +95,10 @@ fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> 
             return false
         }
     })
+
+fun View.setElevationRes(@DimenRes elevation: Int) {
+    ViewCompat.setElevation(this, resources.getDimensionPixelSize(elevation).toFloat())
+}
 
 fun View.showNow() {
     visibility = View.VISIBLE

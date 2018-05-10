@@ -23,13 +23,9 @@
         <!--<item name="colorPrimaryDark">#7B1FA2</item>-->
     </style>
 
-    <style name="AppBarTheme">
-        <item name="actionMenuTextColor">@color/white</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="iconTint">@color/white</item>
-        <item name="android:tint">@color/white</item>
-    </style>
+    <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light" />
 
     <style name="AboutItem">
         <item name="android:layout_height">wrap_content</item>

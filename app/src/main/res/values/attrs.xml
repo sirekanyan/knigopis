@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="image_placeholder_color" format="reference|color" />
+    <declare-styleable name="ViewBehavior">
+        <attr name="appBarLayout" format="reference" />
+        <attr name="appBarMaxHeight" format="dimension" />
+        <attr name="appBarMinHeight" format="dimension" />
+        <attr name="toX" format="dimension" />
+        <attr name="toY" format="dimension" />
+        <attr name="toWidth" format="dimension" />
+        <attr name="toHeight" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -12,18 +12,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.user_activity.*
-import me.vadik.knigopis.R
+import me.vadik.knigopis.*
 import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.io2main
-import me.vadik.knigopis.logError
 import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.subscription.Subscription
-import me.vadik.knigopis.systemClipboardManager
-import me.vadik.knigopis.toast
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
@@ -57,6 +54,8 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)
+        toolbarImage.setCircleImage(intent.getStringExtra(EXTRA_USER_PHOTO), R.drawable.oval_dark_placeholder_background)
+        toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             fab.hide()
