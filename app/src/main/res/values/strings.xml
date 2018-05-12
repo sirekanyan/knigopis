@@ -1,101 +1,102 @@
 <resources>
     <!-- common -->
-    <string name="app_name">Knigopis</string>
-    <string name="error_loading_data">Check your network connection.</string>
+    <string name="common.title.app">Knigopis</string>
+    <string name="common.error.network">Check your network connection</string>
+    <string name="common.button.retry">Retry</string>
+    <string name="common.button.cancel">Cancel</string>
+    <string name="common.info.dev">We Present A SPECIAL PRESENTATION</string>
 
     <!-- main screen -->
-    <string name="title_home">Books</string>
-    <string name="title_users">Following</string>
-    <string name="title_notes">Comments</string>
-    <string name="error_unauthorized">Please log in.</string>
+    <string name="main.navigation.home">Books</string>
+    <string name="main.navigation.users">Following</string>
+    <string name="main.navigation.notes">Comments</string>
+    <string name="main.error.unauthorized">Please log in</string>
 
     <!-- main menu -->
-    <string name="option_login">Login</string>
-    <string name="option_logout">Logout</string>
-    <string name="option_profile">Profile</string>
-    <string name="option_about">About</string>
-    <string name="about_idea">API:\nhttp://knigopis.com</string>
-    <string name="about_developer">Development:\nvadik@sirekanyan.com</string>
-    <string name="about_designer">Design:\nanna@sirekanyan.com</string>
+    <string name="main.option.login">Login</string>
+    <string name="main.option.profile">Profile</string>
+    <string name="main.option.about">About</string>
+
+    <!-- about -->
+    <string name="about.text.idea">API:\nhttp://knigopis.com</string>
+    <string name="about.text.developer">Development:\nvadik@sirekanyan.com</string>
+    <string name="about.text.designer">Design:\nanna@sirekanyan.com</string>
 
     <!-- profile screen -->
-    <string name="profile_caption_todo">%d\ntodo</string>
-    <string name="profile_caption_doing">%d\ndoing</string>
-    <string name="profile_caption_done">%d\ndone</string>
-    <string name="profile_hint_nickname">nickname</string>
-    <string name="profile_hint_homepage">homepage</string>
-    <string name="profile_book_random">%s — %d%%</string>
+    <string name="profile.hint.nickname">nickname</string>
+    <string name="profile.hint.homepage">homepage</string>
+    <string name="profile.text.todo">%d\ntodo</string>
+    <string name="profile.text.doing">%d\ndoing</string>
+    <string name="profile.text.done">%d\ndone</string>
+    <string name="profile.text.random">%s — %d%%</string>
 
     <!-- profile menu -->
-    <string name="profile_option_edit">Edit</string>
-    <string name="profile_option_save">Save</string>
-    <string name="profile_option_save_failed">Cannot update profile</string>
-    <string name="profile_option_share">Share</string>
-    <string name="option_share_title">Share your profile</string>
+    <string name="profile.option.edit">Edit</string>
+    <string name="profile.option.save">Save</string>
+    <string name="profile.option.share">Share</string>
+    <string name="profile.option.logout">Logout</string>
+    <string name="profile.error.save">Cannot update profile</string>
+    <string name="profile.title.share">Share your profile</string>
 
     <!-- 🏠 books tab -->
-    <string name="error_no_books">You don\'t have any books.</string>
-    <string name="book_header_todo">Todo</string>
-    <string name="book_header_done_first">Done in %s</string>
-    <string name="book_header_done">%s</string>
-    <string name="book_header_done_other">Other years</string>
+    <string name="books.error.empty">You don\'t have any books</string>
+    <string name="books.header.todo">Todo</string>
+    <string name="books.header.done_first">Done in %s</string>
+    <string name="books.header.done">%s</string>
+    <string name="books.header.done_other">Other years</string>
+    <string name="books.button.edit">Edit</string>
+    <string name="books.button.delete">Delete</string>
+    <string name="books.title.confirm_delete">Confirmation</string>
+    <string name="books.message.confirm_delete">Are you sure you want to delete \"%s\"?</string>
+    <string name="books.button.confirm_delete">Delete</string>
+    <string name="books.error.delete">Cannot delete book</string>
 
     <!-- book screen -->
-    <string name="book_add_title">Add book</string>
-    <string name="book_edit_title">Edit book</string>
-    <string name="book_option_save">Save</string>
-    <string name="book_option_save_failed">Cannot save book</string>
-    <string name="book_hint_title">Title</string>
-    <string name="book_hint_author">Author</string>
-    <string name="book_hint_year">Year</string>
-    <string name="book_hint_month">Month</string>
-    <string name="book_hint_day">Day</string>
-    <string name="book_read_checkbox">Done</string>
+    <string name="book.title.add">Add book</string>
+    <string name="book.title.edit">Edit book</string>
+    <string name="book.hint.title">Title</string>
+    <string name="book.hint.author">Author</string>
+    <string name="book.hint.year">Year</string>
+    <string name="book.hint.month">Month</string>
+    <string name="book.hint.day">Day</string>
+    <string name="book.hint.notes">Notes</string>
+    <string name="book.checkbox.done">Done</string>
 
     <!-- book menu -->
-    <string name="book_option_edit">Edit</string>
-    <string name="book_option_delete">Delete</string>
-    <string name="book_delete_confirmation_title">Confirmation</string>
-    <string name="book_delete_confirm_text">Are you sure you want to delete \"%s\"?</string>
-    <string name="book_cancel_delete">Cancel</string>
-    <string name="book_confirm_delete">Delete</string>
-    <string name="cannot_delete_book">Cannot delete book</string>
-    <string name="book_hint_notes">Notes</string>
+    <string name="book.option.save">Save</string>
+    <string name="book.error.save">Cannot save book</string>
 
-    <!-- 👨 following tab -->
-    <string name="error_no_users">You don\'t have any subscriptions yet.</string>
-    <string name="following.toast.subscribed">Successfully subscribed</string>
-    <string name="following.toast.no_browser">No browser app found</string>
+    <!-- 👨 users tab -->
+    <string name="users.error.empty">You don\'t have any subscriptions yet</string>
+    <string name="users.info.subscribed">Successfully subscribed</string>
+    <string name="users.info.no_browser">No browser app found</string>
 
-    <!-- following menu -->
-    <string name="user_option_copy">Copy link</string>
-    <string name="user_option_copy_success">Copied: %s</string>
-    <string name="user_option_unsubscribe">Unsubscribe</string>
-    <string name="user_option_unsubscribe_failed">Cannot unsubscribe</string>
-    <string name="add_book_todo">Todo</string>
-    <string name="add_book_done">Done</string>
+    <!-- user screen -->
+    <string name="user.button.todo">Todo</string>
+    <string name="user.button.done">Done</string>
 
-    <!-- 🖍 comments tab -->
-    <string name="error_no_notes">No one is posted yet.</string>
+    <!-- user menu -->
+    <string name="user.option.copy">Copy link</string>
+    <string name="user.option.unsubscribe">Unsubscribe</string>
+    <string name="user.info.copied">Copied: %s</string>
+    <string name="user.error.unsubscribe">Cannot unsubscribe</string>
 
-    <!-- read phone state permission -->
-    <string name="no_access">Permission denied</string>
-    <string name="no_access_message">This permission is necessary to authorize with ulogin, please try again</string>
-    <string name="no_access_retry_button">Retry</string>
-    <string name="no_permissions">Permissions</string>
-    <string name="no_permissions_message">Please allow permissions in order to login</string>
-    <string name="no_permissions_goto_settings_button">Goto settings</string>
-    <string name="dialog_cancel_button">Cancel</string>
+    <!-- 🖍 notes tab -->
+    <string name="notes.error.empty">No one is posted yet</string>
 
-    <!-- dev -->
-    <string name="dev_mode_message">We Present A SPECIAL PRESENTATION</string>
+    <!-- permissions -->
+    <string name="permissions.title.no_access">Permission denied</string>
+    <string name="permissions.message.no_access">This permission is necessary to authorize with ulogin, please try again</string>
+    <string name="permissions.title.request">Permissions</string>
+    <string name="permissions.message.request">Please allow permissions in order to login</string>
+    <string name="permissions.button.settings">Goto settings</string>
 
     <!-- social networks -->
-    <string name="social_facebook">Facebook</string>
-    <string name="social_instagram">Instagram</string>
-    <string name="social_twitter">Twitter</string>
-    <string name="social_googleplus">Google+</string>
-    <string name="social_vkontakte">VKontakte</string>
-    <string name="social_mailru">Mail.Ru</string>
-    <string name="social_linkedin">LinkedIn</string>
+    <string name="common.social.facebook">Facebook</string>
+    <string name="common.social.instagram">Instagram</string>
+    <string name="common.social.twitter">Twitter</string>
+    <string name="common.social.googleplus">Google+</string>
+    <string name="common.social.vkontakte">VKontakte</string>
+    <string name="common.social.mailru">Mail.Ru</string>
+    <string name="common.social.linkedin">LinkedIn</string>
 </resources>

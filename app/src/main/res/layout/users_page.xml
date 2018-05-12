@@ -21,6 +21,6 @@
     <TextView
         android:id="@+id/usersPlaceholder"
         style="@style/PlaceholderStyle"
-        android:text="@string/error_no_users" />
+        android:text="@string/users.error.empty" />
 
 </FrameLayout>

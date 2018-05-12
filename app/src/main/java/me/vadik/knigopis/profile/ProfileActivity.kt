@@ -38,9 +38,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
         initToolbar(profileToolbar)
-        profileTodoCount.text = getString(R.string.profile_caption_todo, 0)
-        profileDoingCount.text = getString(R.string.profile_caption_doing, 0)
-        profileDoneCount.text = getString(R.string.profile_caption_done, 0)
+        profileTodoCount.text = getString(R.string.profile_text_todo, 0)
+        profileDoingCount.text = getString(R.string.profile_text_doing, 0)
+        profileDoneCount.text = getString(R.string.profile_text_done, 0)
         profileTodoCount.setOnClickListener {
             setRandomFooterBook(todoList)
         }
@@ -65,7 +65,7 @@ class ProfileActivity : AppCompatActivity() {
         val book = books.random() ?: return
         randomProfileBook.alpha = 1f
         randomProfileBook.text = getString(
-            R.string.profile_book_random,
+            R.string.profile_text_random,
             book.titleOrDefault,
             (book as? PlannedBook)?.priority ?: 100
         )
@@ -110,15 +110,15 @@ class ProfileActivity : AppCompatActivity() {
     @Suppress("USELESS_CAST")
     private fun onRefreshFinishedBooks(finishedBooks: List<FinishedBook>) {
         doneList.clearAndAddAll(finishedBooks)
-        profileDoneCount.text = getString(R.string.profile_caption_done, doneList.size as Int)
+        profileDoneCount.text = getString(R.string.profile_text_done, doneList.size as Int)
     }
 
     @Suppress("USELESS_CAST")
     private fun onRefreshPlannedBooks(plannedBooks: List<PlannedBook>) {
         doingList.clearAndAddAll(plannedBooks.filter { it.priority > 0 })
-        profileDoingCount.text = getString(R.string.profile_caption_doing, doingList.size as Int)
+        profileDoingCount.text = getString(R.string.profile_text_doing, doingList.size as Int)
         todoList.clearAndAddAll(plannedBooks.filter { it.priority == 0 })
-        profileTodoCount.text = getString(R.string.profile_caption_todo, todoList.size as Int)
+        profileTodoCount.text = getString(R.string.profile_text_todo, todoList.size as Int)
     }
 
     private fun updateNicknameOrExitEditMode() {
@@ -141,7 +141,7 @@ class ProfileActivity : AppCompatActivity() {
                 quitEditMode()
                 refreshProfile()
             }, {
-                toast(R.string.profile_option_save_failed)
+                toast(R.string.profile_error_save)
                 logError("cannot update profile", it)
             })
     }
@@ -166,7 +166,7 @@ class ProfileActivity : AppCompatActivity() {
                 R.id.option_share_profile -> {
                     profileUrl?.let {
                         startActivity(
-                            createTextShareIntent(it, getString(R.string.option_share_title))
+                            createTextShareIntent(it, getString(R.string.profile_title_share))
                         )
                     }
                     true

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"
-        android:text="@string/app_name"
+        android:text="@string/common.title.app"
         android:textSize="16sp" />
 
     <TextView
@@ -43,18 +43,18 @@
         <TextView
             style="@style/AboutItem"
             android:drawableStart="@drawable/ic_about_api"
-            android:text="@string/about_idea" />
+            android:text="@string/about.text.idea" />
 
         <TextView
             style="@style/AboutItem"
             android:drawableStart="@drawable/ic_about_developer"
-            android:text="@string/about_developer" />
+            android:text="@string/about.text.developer" />
 
         <TextView
             android:id="@+id/aboutDesignerText"
             style="@style/AboutItem"
             android:drawableStart="@drawable/ic_about_designer"
-            android:text="@string/about_designer" />
+            android:text="@string/about.text.designer" />
 
     </LinearLayout>
 

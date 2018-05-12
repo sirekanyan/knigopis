@@ -45,7 +45,7 @@ class BooksAdapter(
                     }
                         .io2main()
                         .subscribe({}, {
-                            context.toast(R.string.cannot_delete_book)
+                            context.toast(R.string.books_error_delete)
                             logError("cannot delete finished book", it)
                         })
                     books.removeAt(index)
@@ -54,15 +54,15 @@ class BooksAdapter(
             }
             val onDeleteClicked = { book: Book ->
                 AlertDialog.Builder(context)
-                    .setTitle(R.string.book_delete_confirmation_title)
+                    .setTitle(R.string.books_title_confirm_delete)
                     .setMessage(
                         context.getString(
-                            R.string.book_delete_confirm_text,
+                            R.string.books_message_confirm_delete,
                             book.fullTitle
                         )
                     )
-                    .setNegativeButton(R.string.book_cancel_delete) { d, _ -> d.dismiss() }
-                    .setPositiveButton(R.string.book_confirm_delete) { d, _ ->
+                    .setNegativeButton(R.string.common_button_cancel) { d, _ -> d.dismiss() }
+                    .setPositiveButton(R.string.books_button_confirm_delete) { d, _ ->
                         onDeleteConfirmed(book)
                         d.dismiss()
                     }
@@ -75,10 +75,10 @@ class BooksAdapter(
             setOnLongClickListener {
                 dialogs.showDialog(
                     book.fullTitle,
-                    createDialogItem(R.string.book_option_edit, R.drawable.ic_edit) {
+                    createDialogItem(R.string.books_button_edit, R.drawable.ic_edit) {
                         router.openEditBookScreen(book)
                     },
-                    createDialogItem(R.string.book_option_delete, R.drawable.ic_delete) {
+                    createDialogItem(R.string.books_button_delete, R.drawable.ic_delete) {
                         onDeleteClicked(book)
                     }
                 )

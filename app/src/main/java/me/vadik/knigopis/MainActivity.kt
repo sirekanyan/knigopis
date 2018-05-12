@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), Router {
                 api.createSubscription(userId, auth.getAccessToken())
                     .io2main()
                     .subscribe({
-                        toast(R.string.following_toast_subscribed)
+                        toast(R.string.users_info_subscribed)
                     }, {
                         logError("Cannot create subscription", it)
                     })
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(), Router {
 
     override fun openBrowser(uri: Uri) {
         startActivityOrElse(Intent(ACTION_VIEW, uri)) {
-            toast(R.string.following_toast_no_browser)
+            toast(R.string.users_info_no_browser)
         }
     }
 
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity(), Router {
                     versionView.setOnClickListener {
                         if (++count == max) {
                             enabled.not().let {
-                                if (it) toast(R.string.dev_mode_message)
+                                if (it) toast(R.string.common_info_dev)
                                 config.setDevMode(it)
                                 recreate()
                             }
@@ -248,20 +248,20 @@ class MainActivity : AppCompatActivity(), Router {
                 }
                 it.shouldShowRequestPermissionRationale -> {
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.no_access)
-                        .setMessage(R.string.no_access_message)
-                        .setPositiveButton(R.string.no_access_retry_button) { _, _ ->
+                        .setTitle(R.string.permissions_title_no_access)
+                        .setMessage(R.string.permissions_message_no_access)
+                        .setPositiveButton(R.string.common_button_retry) { _, _ ->
                             login()
                         }
-                        .setNegativeButton(R.string.dialog_cancel_button, null)
+                        .setNegativeButton(R.string.common_button_cancel, null)
                         .setCancelable(false)
                         .show()
                 }
                 else -> {
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.no_permissions)
-                        .setMessage(R.string.no_permissions_message)
-                        .setPositiveButton(R.string.no_permissions_goto_settings_button) { _, _ ->
+                        .setTitle(R.string.permissions_title_request)
+                        .setMessage(R.string.permissions_message_request)
+                        .setPositiveButton(R.string.permissions_button_settings) { _, _ ->
                             startActivity(
                                 Intent(
                                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -269,7 +269,7 @@ class MainActivity : AppCompatActivity(), Router {
                                 )
                             )
                         }
-                        .setNegativeButton(R.string.dialog_cancel_button, null)
+                        .setNegativeButton(R.string.common_button_cancel, null)
                         .setCancelable(false)
                         .show()
                 }
@@ -401,9 +401,9 @@ class MainActivity : AppCompatActivity(), Router {
 
     private val Throwable.messageRes
         get() = if (this is HttpException && code() == 401) {
-            R.string.error_unauthorized
+            R.string.main_error_unauthorized
         } else {
-            R.string.error_loading_data
+            R.string.common_error_network
         }
 
 }

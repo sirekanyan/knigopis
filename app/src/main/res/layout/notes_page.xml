@@ -21,6 +21,6 @@
     <TextView
         android:id="@+id/notesPlaceholder"
         style="@style/PlaceholderStyle"
-        android:text="@string/error_no_notes" />
+        android:text="@string/notes.error.empty" />
 
 </FrameLayout>

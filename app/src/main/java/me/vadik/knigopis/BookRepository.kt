@@ -34,7 +34,7 @@ class BookRepositoryImpl(
         ).map { (planned, finished) ->
             mutableListOf<Book>().apply {
                 if (planned.isNotEmpty()) {
-                    add(BookHeader(resources.getString(R.string.book_header_todo)))
+                    add(BookHeader(resources.getString(R.string.books_header_todo)))
                 }
                 addAll(planned)
                 addAll(finished)
@@ -73,11 +73,11 @@ class BookRepositoryImpl(
                     BookHeader(
                         when {
                             book.readYear.isEmpty() ->
-                                resources.getString(R.string.book_header_done_other)
+                                resources.getString(R.string.books_header_done_other)
                             index == 0 ->
-                                resources.getString(R.string.book_header_done_first, readYear)
+                                resources.getString(R.string.books_header_done_first, readYear)
                             else ->
-                                resources.getString(R.string.book_header_done, readYear)
+                                resources.getString(R.string.books_header_done, readYear)
                         }
                     )
                 )

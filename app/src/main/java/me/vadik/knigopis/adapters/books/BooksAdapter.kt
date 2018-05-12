@@ -28,10 +28,10 @@ class BooksAdapter(
         holder.view.setOnLongClickListener {
             dialogs.showDialog(
                 book.title + " — " + book.author,
-                createDialogItem(R.string.add_book_todo, R.drawable.ic_playlist_add) {
+                createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
                     context.startActivity(context.createNewBookIntent(book.title, book.author))
                 },
-                createDialogItem(R.string.add_book_done, R.drawable.ic_playlist_add_check) {
+                createDialogItem(R.string.user_button_done, R.drawable.ic_playlist_add_check) {
                     context.startActivity(context.createNewBookIntent(book.title, book.author, 100))
                 }
             )

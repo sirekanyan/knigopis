@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/profile_hint_nickname"
+            android:hint="@string/profile.hint.nickname"
             android:inputType="text"
             android:textSize="28sp" />
 

@@ -52,7 +52,7 @@ class UserActivity : AppCompatActivity() {
             api.createSubscription(userId, auth.getAccessToken())
                 .io2main()
                 .subscribe({
-                    view.snackbar(R.string.following_toast_subscribed)
+                    view.snackbar(R.string.users_info_subscribed)
                 }, {
                     fab.showScale()
                     logError("Cannot update subscription", it)
@@ -109,7 +109,7 @@ class UserActivity : AppCompatActivity() {
             R.id.option_copy -> {
                 val link = "http://www.knigopis.com/#/user/books?u=$userId"
                 systemClipboardManager.primaryClip = ClipData.newPlainText(null, link)
-                toast(R.string.user_option_copy_success, link)
+                toast(R.string.user_info_copied, link)
                 true
             }
             R.id.option_unsubscribe -> {
@@ -117,7 +117,7 @@ class UserActivity : AppCompatActivity() {
                     .io2main()
                     .subscribe({}, {
                         logError("Cannot unsubscribe", it)
-                        toast(R.string.user_option_unsubscribe_failed)
+                        toast(R.string.user_error_unsubscribe)
                     })
                 true
             }

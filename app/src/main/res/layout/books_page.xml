@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/booksPlaceholder"
         style="@style/PlaceholderStyle"
-        android:text="@string/error_no_books" />
+        android:text="@string/books.error.empty" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addBookButton"

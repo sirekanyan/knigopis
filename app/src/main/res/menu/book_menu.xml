@@ -6,12 +6,12 @@
     <item
         android:id="@+id/option_save_book"
         android:icon="@drawable/ic_done"
-        android:title="@string/book_option_save"
+        android:title="@string/book.option.save"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/option_progress_bar"
-        android:title="@string/book_option_save"
+        android:title="@string/book.option.save"
         android:visible="false"
         app:actionLayout="@layout/menu_progress_bar"
         app:showAsAction="always"

@@ -78,7 +78,7 @@
         android:id="@+id/userBooksErrorPlaceholder"
         style="@style/PlaceholderStyle"
         android:layout_marginTop="56dp"
-        android:text="@string/error_loading_data" />
+        android:text="@string/common.error.network" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

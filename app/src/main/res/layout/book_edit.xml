@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:popupTheme="@style/ToolbarPopupTheme"
-            tools:title="@string/book_add_title" />
+            tools:title="@string/book.title.add" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -38,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/book_hint_title"
+                android:hint="@string/book.hint.title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toTopOf="parent">
@@ -59,7 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/book_hint_author"
+                android:hint="@string/book.hint.author"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/coverImageViews"
                 app:layout_constraintTop_toBottomOf="@id/book_title_input">
@@ -112,7 +112,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/book_hint_year"
+                android:hint="@string/book.hint.year"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/bookMonthInput"
@@ -133,7 +133,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/book_hint_month"
+                android:hint="@string/book.hint.month"
                 app:layout_constraintLeft_toRightOf="@id/bookYearInput"
                 app:layout_constraintRight_toLeftOf="@+id/bookDayInput"
                 app:layout_constraintTop_toBottomOf="@id/progressSeekBar">
@@ -152,7 +152,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/book_hint_day"
+                android:hint="@string/book.hint.day"
                 app:layout_constraintLeft_toRightOf="@id/bookMonthInput"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/progressSeekBar">
@@ -174,7 +174,7 @@
                 android:background="@drawable/text_area_background"
                 android:drawableEnd="@drawable/ic_comment_gray"
                 android:drawablePadding="16dp"
-                android:hint="@string/book_hint_notes"
+                android:hint="@string/book.hint.notes"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"
                 android:padding="16dp"

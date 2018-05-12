@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/option_login"
-        android:title="@string/option_login"
+        android:title="@string/main.option.login"
         android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/option_profile"
-        android:title="@string/option_profile"
+        android:title="@string/main.option.profile"
         android:visible="false"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/option_about"
-        android:title="@string/option_about"
+        android:title="@string/main.option.about"
         app:showAsAction="never" />
 
 </menu>

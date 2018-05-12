@@ -1,101 +1,102 @@
 <resources>
     <!-- common -->
-    <string name="app_name">Книгопись</string>
-    <string name="error_loading_data">Проверьте подключение к сети.</string>
+    <string name="common.title.app">Книгопись</string>
+    <string name="common.error.network">Проверьте подключение к сети</string>
+    <string name="common.button.retry">Повторить</string>
+    <string name="common.button.cancel">Отмена</string>
+    <string name="common.info.dev">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
 
     <!-- main screen -->
-    <string name="title_home">Мои книги</string>
-    <string name="title_users">Подписки</string>
-    <string name="title_notes">Комментарии</string>
-    <string name="error_unauthorized">Пожалуйста, авторизуйтесь.</string>
+    <string name="main.navigation.home">Мои книги</string>
+    <string name="main.navigation.users">Подписки</string>
+    <string name="main.navigation.notes">Комментарии</string>
+    <string name="main.error.unauthorized">Пожалуйста, авторизуйтесь</string>
 
     <!-- main menu -->
-    <string name="option_login">Войти</string>
-    <string name="option_logout">Выйти</string>
-    <string name="option_profile">Мой профиль</string>
-    <string name="option_about">О приложении</string>
-    <string name="about_idea">Идея:\nhttp://knigopis.com</string>
-    <string name="about_developer">Разработка:\nvadik@sirekanyan.com</string>
-    <string name="about_designer">Дизайн:\nanna@sirekanyan.com</string>
+    <string name="main.option.login">Войти</string>
+    <string name="main.option.profile">Мой профиль</string>
+    <string name="main.option.about">О приложении</string>
+
+    <!-- about -->
+    <string name="about.text.idea">Идея:\nhttp://knigopis.com</string>
+    <string name="about.text.developer">Разработка:\nvadik@sirekanyan.com</string>
+    <string name="about.text.designer">Дизайн:\nanna@sirekanyan.com</string>
 
     <!-- profile screen -->
-    <string name="profile_caption_todo">%d\nв очереди</string>
-    <string name="profile_caption_doing">%d\nв процессе</string>
-    <string name="profile_caption_done">%d\nпрочитано</string>
-    <string name="profile_hint_nickname">псевдоним</string>
-    <string name="profile_hint_homepage">личная страница</string>
-    <string name="profile_book_random">%s — %d%%</string>
+    <string name="profile.hint.nickname">псевдоним</string>
+    <string name="profile.hint.homepage">личная страница</string>
+    <string name="profile.text.todo">%d\nв очереди</string>
+    <string name="profile.text.doing">%d\nв процессе</string>
+    <string name="profile.text.done">%d\nпрочитано</string>
+    <string name="profile.text.random">%s — %d%%</string>
 
     <!-- profile menu -->
-    <string name="profile_option_edit">Редактировать</string>
-    <string name="profile_option_save">Сохранить</string>
-    <string name="profile_option_save_failed">Не удалось обновить имя</string>
-    <string name="profile_option_share">Поделиться</string>
-    <string name="option_share_title">Отправить ссылку на профиль</string>
+    <string name="profile.option.edit">Редактировать</string>
+    <string name="profile.option.save">Сохранить</string>
+    <string name="profile.option.share">Поделиться</string>
+    <string name="profile.option.logout">Выйти</string>
+    <string name="profile.error.save">Не удалось обновить имя</string>
+    <string name="profile.title.share">Отправить ссылку на профиль</string>
 
     <!-- 🏠 books tab -->
-    <string name="error_no_books">У вас пока нет книг.</string>
-    <string name="book_header_todo">К прочтению</string>
-    <string name="book_header_done_first">Прочитано в %s г.</string>
-    <string name="book_header_done">%s г.</string>
-    <string name="book_header_done_other">Прочие года</string>
+    <string name="books.error.empty">У вас пока нет книг</string>
+    <string name="books.header.todo">К прочтению</string>
+    <string name="books.header.done_first">Прочитано в %s г.</string>
+    <string name="books.header.done">%s г.</string>
+    <string name="books.header.done_other">Прочие года</string>
+    <string name="books.button.edit">Редактировать</string>
+    <string name="books.button.delete">Удалить</string>
+    <string name="books.title.confirm_delete">Подтверждение</string>
+    <string name="books.message.confirm_delete">Удалить книгу \"%s\"?</string>
+    <string name="books.button.confirm_delete">Удалить</string>
+    <string name="books.error.delete">Не получилось удалить</string>
 
     <!-- book screen -->
-    <string name="book_add_title">Добавить книгу</string>
-    <string name="book_edit_title">Изменить книгу</string>
-    <string name="book_option_save">Сохранить</string>
-    <string name="book_option_save_failed">Не удалось сохранить книгу</string>
-    <string name="book_hint_title">Название</string>
-    <string name="book_hint_author">Автор</string>
-    <string name="book_hint_year">Год</string>
-    <string name="book_hint_month">Месяц</string>
-    <string name="book_hint_day">День</string>
-    <string name="book_read_checkbox">Прочитана</string>
+    <string name="book.title.add">Добавить книгу</string>
+    <string name="book.title.edit">Изменить книгу</string>
+    <string name="book.hint.title">Название</string>
+    <string name="book.hint.author">Автор</string>
+    <string name="book.hint.year">Год</string>
+    <string name="book.hint.month">Месяц</string>
+    <string name="book.hint.day">День</string>
+    <string name="book.hint.notes">Примечания</string>
+    <string name="book.checkbox.done">Прочитана</string>
 
     <!-- book menu -->
-    <string name="book_option_edit">Редактировать</string>
-    <string name="book_option_delete">Удалить</string>
-    <string name="book_delete_confirmation_title">Подтверждение</string>
-    <string name="book_delete_confirm_text">Удалить книгу \"%s\"?</string>
-    <string name="book_cancel_delete">Отмена</string>
-    <string name="book_confirm_delete">Удалить</string>
-    <string name="cannot_delete_book">Не получилось удалить</string>
-    <string name="book_hint_notes">Примечания</string>
+    <string name="book.option.save">Сохранить</string>
+    <string name="book.error.save">Не удалось сохранить книгу</string>
 
-    <!-- 👨 following tab -->
-    <string name="error_no_users">Вы ещё ни на кого не подписаны.</string>
-    <string name="following.toast.subscribed">Пользователь добавлен в избранное</string>
-    <string name="following.toast.no_browser">Не найдено приложение для просмотра страницы</string>
+    <!-- 👨 users tab -->
+    <string name="users.error.empty">Вы ещё ни на кого не подписаны</string>
+    <string name="users.info.subscribed">Пользователь добавлен в избранное</string>
+    <string name="users.info.no_browser">Не найдено приложение для просмотра страницы</string>
 
-    <!-- following menu -->
-    <string name="user_option_copy">Скопировать ссылку</string>
-    <string name="user_option_copy_success">Скопировано: %s</string>
-    <string name="user_option_unsubscribe">Отписаться</string>
-    <string name="user_option_unsubscribe_failed">Не удалось отписаться</string>
-    <string name="add_book_todo">К прочтению</string>
-    <string name="add_book_done">Прочитано</string>
+    <!-- user screen -->
+    <string name="user.button.todo">К прочтению</string>
+    <string name="user.button.done">Прочитано</string>
 
-    <!-- 🖍 comments tab -->
-    <string name="error_no_notes">Нет новых комментариев.</string>
+    <!-- user menu -->
+    <string name="user.option.copy">Скопировать ссылку</string>
+    <string name="user.option.unsubscribe">Отписаться</string>
+    <string name="user.info.copied">Скопировано: %s</string>
+    <string name="user.error.unsubscribe">Не удалось отписаться</string>
 
-    <!-- read phone state permission -->
-    <string name="no_access">Нет доступа</string>
-    <string name="no_access_message">Данное разрешение необходимо для авторизации через ulogin</string>
-    <string name="no_access_retry_button">Повторить</string>
-    <string name="no_permissions">Разрешения</string>
-    <string name="no_permissions_message">Подтвердите разрешения в настройках, чтобы войти в приложение</string>
-    <string name="no_permissions_goto_settings_button">В настройки</string>
-    <string name="dialog_cancel_button">Отменить</string>
+    <!-- 🖍 notes tab -->
+    <string name="notes.error.empty">Нет новых комментариев</string>
 
-    <!-- dev -->
-    <string name="dev_mode_message">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
+    <!-- permissions -->
+    <string name="permissions.title.no_access">Нет доступа</string>
+    <string name="permissions.message.no_access">Данное разрешение необходимо для авторизации через ulogin</string>
+    <string name="permissions.title.request">Разрешения</string>
+    <string name="permissions.message.request">Подтвердите разрешения в настройках, чтобы войти в приложение</string>
+    <string name="permissions.button.settings">В настройки</string>
 
     <!-- social networks -->
-    <string name="social_facebook">Фейсбук</string>
-    <string name="social_instagram">Инстаграм</string>
-    <string name="social_twitter">Твиттер</string>
-    <string name="social_googleplus">Google+</string>
-    <string name="social_vkontakte">Вконтакте</string>
-    <string name="social_mailru">Mail.Ru</string>
-    <string name="social_linkedin">LinkedIn</string>
+    <string name="common.social.facebook">Фейсбук</string>
+    <string name="common.social.instagram">Инстаграм</string>
+    <string name="common.social.twitter">Твиттер</string>
+    <string name="common.social.googleplus">Google+</string>
+    <string name="common.social.vkontakte">Вконтакте</string>
+    <string name="common.social.mailru">Mail.Ru</string>
+    <string name="common.social.linkedin">LinkedIn</string>
 </resources>
