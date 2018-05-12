@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), Router {
                 api.createSubscription(userId, auth.getAccessToken())
                     .io2main()
                     .subscribe({
-                        toast("Successfully subscribed")
+                        toast(R.string.following_toast_subscribed)
                     }, {
                         logError("Cannot create subscription", it)
                     })
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(), Router {
 
     override fun openBrowser(uri: Uri) {
         startActivityOrElse(Intent(ACTION_VIEW, uri)) {
-            toast("Невозможно открыть страницу")
+            toast(R.string.following_toast_no_browser)
         }
     }
 

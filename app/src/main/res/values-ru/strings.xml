@@ -22,13 +22,15 @@
     <string name="profile_caption_done">%d\nпрочитано</string>
     <string name="profile_hint_nickname">псевдоним</string>
     <string name="profile_hint_homepage">личная страница</string>
+    <string name="profile_book_random">%s — %d%%</string>
 
     <!-- profile menu -->
     <string name="profile_option_edit">Редактировать</string>
     <string name="profile_option_save">Сохранить</string>
+    <string name="profile_option_save_failed">Не удалось обновить имя</string>
     <string name="profile_option_share">Поделиться</string>
 
-    <!-- books -->
+    <!-- 🏠 books -->
     <string name="book_header_todo">К прочтению</string>
     <string name="book_header_done_first">Прочитано в %s г.</string>
     <string name="book_header_done">%s г.</string>
@@ -36,6 +38,7 @@
 
     <!-- edit book -->
     <string name="book_option_save">Сохранить</string>
+    <string name="book_option_save_failed">Не удалось сохранить книгу</string>
     <string name="book_hint_title">Название</string>
     <string name="book_hint_author">Автор</string>
     <string name="book_hint_year">Год</string>
@@ -53,9 +56,15 @@
     <string name="cannot_delete_book">Не получилось удалить</string>
     <string name="book_hint_notes">Примечания</string>
 
-    <!-- user menu -->
+    <!-- 👨 following -->
+    <string name="following.toast.subscribed">Пользователь добавлен в избранное</string>
+    <string name="following.toast.no_browser">Не найдено приложение для просмотра страницы</string>
+
+    <!-- following menu -->
     <string name="user_option_copy">Скопировать ссылку</string>
+    <string name="user_option_copy_success">Скопировано: %s</string>
     <string name="user_option_unsubscribe">Отписаться</string>
+    <string name="user_option_unsubscribe_failed">Не удалось отписаться</string>
     <string name="add_book_todo">К прочтению</string>
     <string name="add_book_done">Прочитано</string>
 

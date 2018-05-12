@@ -141,7 +141,7 @@ class ProfileActivity : AppCompatActivity() {
                 quitEditMode()
                 refreshProfile()
             }, {
-                toast("Не удалось обновить имя")
+                toast(R.string.profile_option_save_failed)
                 logError("cannot update profile", it)
             })
     }

@@ -22,14 +22,15 @@
     <string name="profile_caption_done">%d\ndone</string>
     <string name="profile_hint_nickname">nickname</string>
     <string name="profile_hint_homepage">homepage</string>
-    <string name="profile_book_random" translatable="false">%s — %d%%</string>
+    <string name="profile_book_random">%s — %d%%</string>
 
     <!-- profile menu -->
     <string name="profile_option_edit">Edit</string>
     <string name="profile_option_save">Save</string>
+    <string name="profile_option_save_failed">Cannot update profile</string>
     <string name="profile_option_share">Share</string>
 
-    <!-- books -->
+    <!-- 🏠 books -->
     <string name="book_header_todo">Todo</string>
     <string name="book_header_done_first">Done in %s</string>
     <string name="book_header_done">%s</string>
@@ -37,6 +38,7 @@
 
     <!-- edit book -->
     <string name="book_option_save">Save</string>
+    <string name="book_option_save_failed">Cannot save book</string>
     <string name="book_hint_title">Title</string>
     <string name="book_hint_author">Author</string>
     <string name="book_hint_year">Year</string>
@@ -54,17 +56,17 @@
     <string name="cannot_delete_book">Cannot delete book</string>
     <string name="book_hint_notes">Notes</string>
 
-    <!-- following -->
-    <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
+    <!-- 👨 Following -->
+    <string name="following.toast.subscribed">Successfully subscribed</string>
+    <string name="following.toast.no_browser">No browser app found</string>
 
-    <!-- user menu -->
+    <!-- following menu -->
     <string name="user_option_copy">Copy link</string>
+    <string name="user_option_copy_success">Copied: %s</string>
     <string name="user_option_unsubscribe">Unsubscribe</string>
+    <string name="user_option_unsubscribe_failed">Cannot unsubscribe</string>
     <string name="add_book_todo">Todo</string>
     <string name="add_book_done">Done</string>
-
-    <!-- notes -->
-    <string name="note_date_delimiter" translatable="false">/</string>
 
     <!-- about -->
     <string name="about_idea">API:\nhttp://knigopis.com</string>

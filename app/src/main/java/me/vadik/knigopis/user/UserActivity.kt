@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -53,8 +52,7 @@ class UserActivity : AppCompatActivity() {
             api.createSubscription(userId, auth.getAccessToken())
                 .io2main()
                 .subscribe({
-                    Snackbar.make(view, "Successfully subscribed", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
+                    view.snackbar(R.string.following_toast_subscribed)
                 }, {
                     fab.showScale()
                     logError("Cannot update subscription", it)
@@ -111,7 +109,7 @@ class UserActivity : AppCompatActivity() {
             R.id.option_copy -> {
                 val link = "http://www.knigopis.com/#/user/books?u=$userId"
                 systemClipboardManager.primaryClip = ClipData.newPlainText(null, link)
-                toast(link)
+                toast(R.string.user_option_copy_success, link)
                 true
             }
             R.id.option_unsubscribe -> {
@@ -119,7 +117,7 @@ class UserActivity : AppCompatActivity() {
                     .io2main()
                     .subscribe({}, {
                         logError("Cannot unsubscribe", it)
-                        toast("Не удалось отписаться")
+                        toast(R.string.user_option_unsubscribe_failed)
                     })
                 true
             }

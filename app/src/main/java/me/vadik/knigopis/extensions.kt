@@ -9,6 +9,7 @@ import android.os.Build
 import android.support.annotation.DimenRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
@@ -41,10 +42,14 @@ inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
     }
 }
 
-fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun Context.toast(@StringRes messageId: Int, vararg args: Any) =
+    Toast.makeText(this, getString(messageId, *args), Toast.LENGTH_SHORT).show()
 
 fun Context.toast(@StringRes messageId: Int) =
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+
+fun View.snackbar(@StringRes messageId: Int) =
+    Snackbar.make(this, messageId, Snackbar.LENGTH_LONG).show()
 
 fun Activity.app() = application as App
 

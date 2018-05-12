@@ -122,7 +122,7 @@ class BookActivity : AppCompatActivity() {
                             setResult(RESULT_OK)
                             finish()
                         }, {
-                            toast("Ошибка при сохранении книги")
+                            toast(R.string.book_option_save_failed)
                             logError("cannot post planned book", it)
                         })
                     true
