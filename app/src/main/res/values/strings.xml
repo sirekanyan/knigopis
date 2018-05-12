@@ -1,22 +1,24 @@
 <resources>
-    <!-- toolbar -->
+    <!-- common -->
     <string name="app_name">Knigopis</string>
-    <string name="book_add_title">Add book</string>
-    <string name="book_edit_title">Edit book</string>
+    <string name="error_loading_data">Check your network connection.</string>
 
-    <!-- navigation -->
+    <!-- main screen -->
     <string name="title_home">Books</string>
     <string name="title_users">Following</string>
     <string name="title_notes">Comments</string>
+    <string name="error_unauthorized">Please log in.</string>
 
-    <!-- menu -->
+    <!-- main menu -->
     <string name="option_login">Login</string>
     <string name="option_logout">Logout</string>
     <string name="option_profile">Profile</string>
-    <string name="option_share_title">Share your profile</string>
     <string name="option_about">About</string>
+    <string name="about_idea">API:\nhttp://knigopis.com</string>
+    <string name="about_developer">Development:\nvadik@sirekanyan.com</string>
+    <string name="about_designer">Design:\nanna@sirekanyan.com</string>
 
-    <!-- profile -->
+    <!-- profile screen -->
     <string name="profile_caption_todo">%d\ntodo</string>
     <string name="profile_caption_doing">%d\ndoing</string>
     <string name="profile_caption_done">%d\ndone</string>
@@ -29,14 +31,18 @@
     <string name="profile_option_save">Save</string>
     <string name="profile_option_save_failed">Cannot update profile</string>
     <string name="profile_option_share">Share</string>
+    <string name="option_share_title">Share your profile</string>
 
-    <!-- 🏠 books -->
+    <!-- 🏠 books tab -->
+    <string name="error_no_books">You don\'t have any books.</string>
     <string name="book_header_todo">Todo</string>
     <string name="book_header_done_first">Done in %s</string>
     <string name="book_header_done">%s</string>
     <string name="book_header_done_other">Other years</string>
 
-    <!-- edit book -->
+    <!-- book screen -->
+    <string name="book_add_title">Add book</string>
+    <string name="book_edit_title">Edit book</string>
     <string name="book_option_save">Save</string>
     <string name="book_option_save_failed">Cannot save book</string>
     <string name="book_hint_title">Title</string>
@@ -56,7 +62,8 @@
     <string name="cannot_delete_book">Cannot delete book</string>
     <string name="book_hint_notes">Notes</string>
 
-    <!-- 👨 Following -->
+    <!-- 👨 following tab -->
+    <string name="error_no_users">You don\'t have any subscriptions yet.</string>
     <string name="following.toast.subscribed">Successfully subscribed</string>
     <string name="following.toast.no_browser">No browser app found</string>
 
@@ -68,19 +75,10 @@
     <string name="add_book_todo">Todo</string>
     <string name="add_book_done">Done</string>
 
-    <!-- about -->
-    <string name="about_idea">API:\nhttp://knigopis.com</string>
-    <string name="about_developer">Development:\nvadik@sirekanyan.com</string>
-    <string name="about_designer">Design:\nanna@sirekanyan.com</string>
-
-    <!-- error -->
-    <string name="error_unauthorized">Please log in.</string>
-    <string name="error_loading_data">Check your network connection.</string>
-    <string name="error_no_books">You don\'t have any books.</string>
-    <string name="error_no_users">You don\'t have any subscriptions yet.</string>
+    <!-- 🖍 comments tab -->
     <string name="error_no_notes">No one is posted yet.</string>
 
-    <!-- permissions -->
+    <!-- read phone state permission -->
     <string name="no_access">Permission denied</string>
     <string name="no_access_message">This permission is necessary to authorize with ulogin, please try again</string>
     <string name="no_access_retry_button">Retry</string>

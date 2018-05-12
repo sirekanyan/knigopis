@@ -1,22 +1,24 @@
 <resources>
-    <!-- toolbar -->
+    <!-- common -->
     <string name="app_name">Книгопись</string>
-    <string name="book_add_title">Добавить книгу</string>
-    <string name="book_edit_title">Изменить книгу</string>
+    <string name="error_loading_data">Проверьте подключение к сети.</string>
 
-    <!-- navigation -->
+    <!-- main screen -->
     <string name="title_home">Мои книги</string>
     <string name="title_users">Подписки</string>
     <string name="title_notes">Комментарии</string>
+    <string name="error_unauthorized">Пожалуйста, авторизуйтесь.</string>
 
-    <!-- menu -->
+    <!-- main menu -->
     <string name="option_login">Войти</string>
     <string name="option_logout">Выйти</string>
     <string name="option_profile">Мой профиль</string>
-    <string name="option_share_title">Отправить ссылку на профиль</string>
     <string name="option_about">О приложении</string>
+    <string name="about_idea">Идея:\nhttp://knigopis.com</string>
+    <string name="about_developer">Разработка:\nvadik@sirekanyan.com</string>
+    <string name="about_designer">Дизайн:\nanna@sirekanyan.com</string>
 
-    <!-- profile -->
+    <!-- profile screen -->
     <string name="profile_caption_todo">%d\nв очереди</string>
     <string name="profile_caption_doing">%d\nв процессе</string>
     <string name="profile_caption_done">%d\nпрочитано</string>
@@ -29,14 +31,18 @@
     <string name="profile_option_save">Сохранить</string>
     <string name="profile_option_save_failed">Не удалось обновить имя</string>
     <string name="profile_option_share">Поделиться</string>
+    <string name="option_share_title">Отправить ссылку на профиль</string>
 
-    <!-- 🏠 books -->
+    <!-- 🏠 books tab -->
+    <string name="error_no_books">У вас пока нет книг.</string>
     <string name="book_header_todo">К прочтению</string>
     <string name="book_header_done_first">Прочитано в %s г.</string>
     <string name="book_header_done">%s г.</string>
     <string name="book_header_done_other">Прочие года</string>
 
-    <!-- edit book -->
+    <!-- book screen -->
+    <string name="book_add_title">Добавить книгу</string>
+    <string name="book_edit_title">Изменить книгу</string>
     <string name="book_option_save">Сохранить</string>
     <string name="book_option_save_failed">Не удалось сохранить книгу</string>
     <string name="book_hint_title">Название</string>
@@ -56,7 +62,8 @@
     <string name="cannot_delete_book">Не получилось удалить</string>
     <string name="book_hint_notes">Примечания</string>
 
-    <!-- 👨 following -->
+    <!-- 👨 following tab -->
+    <string name="error_no_users">Вы ещё ни на кого не подписаны.</string>
     <string name="following.toast.subscribed">Пользователь добавлен в избранное</string>
     <string name="following.toast.no_browser">Не найдено приложение для просмотра страницы</string>
 
@@ -68,19 +75,10 @@
     <string name="add_book_todo">К прочтению</string>
     <string name="add_book_done">Прочитано</string>
 
-    <!-- about -->
-    <string name="about_idea">Идея:\nhttp://knigopis.com</string>
-    <string name="about_developer">Разработка:\nvadik@sirekanyan.com</string>
-    <string name="about_designer">Дизайн:\nanna@sirekanyan.com</string>
-
-    <!-- error -->
-    <string name="error_unauthorized">Пожалуйста, авторизуйтесь.</string>
-    <string name="error_loading_data">Проверьте подключение к сети.</string>
-    <string name="error_no_books">У вас пока нет книг.</string>
-    <string name="error_no_users">Вы ещё ни на кого не подписаны.</string>
+    <!-- 🖍 comments tab -->
     <string name="error_no_notes">Нет новых комментариев.</string>
 
-    <!-- permissions -->
+    <!-- read phone state permission -->
     <string name="no_access">Нет доступа</string>
     <string name="no_access_message">Данное разрешение необходимо для авторизации через ulogin</string>
     <string name="no_access_retry_button">Повторить</string>
