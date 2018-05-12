@@ -7,8 +7,7 @@ class FinishedBook(
     val readDay: String,
     val readMonth: String,
     val readYear: String,
-    val notes: String,
-    val createdAt: String
+    val notes: String
 ) : Book {
     val order
         get() = arrayOf(readYear, readMonth, readDay)

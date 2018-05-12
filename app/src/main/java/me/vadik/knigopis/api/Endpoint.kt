@@ -2,7 +2,6 @@ package me.vadik.knigopis.api
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
@@ -71,7 +70,7 @@ interface Endpoint {
     ): Single<Credentials.UserFull>
 
     @GET("users/{id}/books")
-    fun getUserBooks(@Path("id") userId: String): Single<List<UserBook>>
+    fun getUserBooks(@Path("id") userId: String): Single<List<FinishedBook>>
 
     @PUT("users/{id}")
     fun updateProfile(

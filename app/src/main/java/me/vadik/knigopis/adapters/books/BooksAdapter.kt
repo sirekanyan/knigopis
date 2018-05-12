@@ -7,9 +7,10 @@ import me.vadik.knigopis.createNewBookIntent
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.dialog.createDialogItem
 import me.vadik.knigopis.inflate
+import me.vadik.knigopis.model.FinishedBook
 
 class BooksAdapter(
-    private val books: List<UserBook>,
+    private val books: List<FinishedBook>,
     private val dialogs: DialogFactory
 ) : RecyclerView.Adapter<BookViewHolder>() {
 

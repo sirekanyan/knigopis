@@ -2,10 +2,10 @@ package me.vadik.knigopis.user
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import me.vadik.knigopis.adapters.books.UserBook
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.io2main
+import me.vadik.knigopis.model.FinishedBook
 
 interface UserInteractor {
 
@@ -15,7 +15,7 @@ interface UserInteractor {
 
     fun isSubscribed(userId: String): Single<Boolean>
 
-    fun getBooks(userId: String): Single<List<UserBook>>
+    fun getBooks(userId: String): Single<List<FinishedBook>>
 
 }
 
