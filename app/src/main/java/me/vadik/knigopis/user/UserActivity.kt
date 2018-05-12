@@ -49,6 +49,7 @@ class UserActivity : AppCompatActivity() {
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
     private val booksAdapter = BooksAdapter(books, dialogs)
+    private lateinit var unsubscribeOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +102,8 @@ class UserActivity : AppCompatActivity() {
             .subscribe({ subscriptions ->
                 if (subscriptions.none { it.subUser.id == userId }) {
                     fab.show()
+                } else {
+                    unsubscribeOption.isVisible = true
                 }
             }, {
                 logError("Cannot update subscription", it)
@@ -109,6 +112,7 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.user_menu, menu)
+        unsubscribeOption = menu.findItem(R.id.option_unsubscribe)
         return true
     }
 
