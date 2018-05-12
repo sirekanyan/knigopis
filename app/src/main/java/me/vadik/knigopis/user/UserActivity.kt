@@ -13,8 +13,6 @@ import kotlinx.android.synthetic.main.user_activity.*
 import me.vadik.knigopis.*
 import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.adapters.books.UserBook
-import me.vadik.knigopis.api.Endpoint
-import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.utils.systemClipboardManager
@@ -32,8 +30,7 @@ fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent 
 
 class UserActivity : AppCompatActivity() {
 
-    private val api by inject<Endpoint>()
-    private val auth by inject<KAuth>()
+    private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<UserBook>()
@@ -49,8 +46,7 @@ class UserActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             fab.hideScale()
-            api.createSubscription(userId, auth.getAccessToken())
-                .io2main()
+            interactor.subscribe(userId)
                 .subscribe({
                     view.snackbar(R.string.users_info_subscribed)
                 }, {
@@ -69,7 +65,7 @@ class UserActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        api.getUserBooks(userId).io2main()
+        interactor.getBooks(userId)
             .doOnSubscribe {
                 userBooksProgressBar.show()
                 userBooksErrorPlaceholder.hide()
@@ -85,13 +81,12 @@ class UserActivity : AppCompatActivity() {
             }, {
                 logError("Cannot load user books", it)
             })
-        api.getSubscriptions(auth.getAccessToken())
-            .io2main()
-            .subscribe({ subscriptions ->
-                if (subscriptions.none { it.subUser.id == userId }) {
-                    fab.showScale()
-                } else {
+        interactor.isSubscribed(userId)
+            .subscribe({ isSubscribed ->
+                if (isSubscribed) {
                     unsubscribeOption.isVisible = true
+                } else {
+                    fab.showScale()
                 }
             }, {
                 logError("Cannot update subscription", it)
@@ -113,8 +108,7 @@ class UserActivity : AppCompatActivity() {
                 true
             }
             R.id.option_unsubscribe -> {
-                api.deleteSubscription(userId, auth.getAccessToken())
-                    .io2main()
+                interactor.unsubscribe(userId)
                     .subscribe({}, {
                         logError("Cannot unsubscribe", it)
                         toast(R.string.user_error_unsubscribe)

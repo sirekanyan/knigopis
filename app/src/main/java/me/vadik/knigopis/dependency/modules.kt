@@ -14,8 +14,13 @@ import me.vadik.knigopis.common.ResourceProviderImpl
 import me.vadik.knigopis.dialog.BottomSheetDialogFactory
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.ImageThumbnail
+import me.vadik.knigopis.user.UserInteractor
+import me.vadik.knigopis.user.UserInteractorImpl
+import me.vadik.knigopis.user.UserRepository
+import me.vadik.knigopis.user.UserRepositoryImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.context.Context
 import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -34,6 +39,12 @@ val appModule = applicationContext {
     bean { ConfigurationImpl(get()) as Configuration }
     bean { ResourceProviderImpl(get()) as ResourceProvider }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
+    userModule()
+}
+
+private fun Context.userModule() {
+    bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
+    bean { UserRepositoryImpl() as UserRepository }
 }
 
 private fun createMainEndpoint() =
