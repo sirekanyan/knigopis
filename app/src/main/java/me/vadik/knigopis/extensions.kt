@@ -2,7 +2,6 @@ package me.vadik.knigopis
 
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -19,7 +18,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.bumptech.glide.RequestBuilder
@@ -42,15 +40,6 @@ inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
         startActivity(intent)
     }
 }
-
-val Context.systemClipboardManager: ClipboardManager
-    get() = getAndroidSystemService(Context.CLIPBOARD_SERVICE)
-
-val Context.systemInputMethodManager: InputMethodManager
-    get() = getAndroidSystemService(Context.INPUT_METHOD_SERVICE)
-
-private inline fun <reified T> Context.getAndroidSystemService(name: String) =
-    getSystemService(name) as T
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
@@ -149,18 +138,6 @@ val View.isVisible get() = visibility == View.VISIBLE
 
 fun ProgressBar.setProgressSmoothly(progress: Int) {
     ObjectAnimator.ofInt(this, "progress", progress).start()
-}
-
-fun Activity.showKeyboard() {
-    currentFocus?.let { view ->
-        systemInputMethodManager.showSoftInput(view, 0)
-    }
-}
-
-fun Activity.hideKeyboard() {
-    currentFocus?.let { view ->
-        systemInputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-    }
 }
 
 fun String.toUriOrNull() =

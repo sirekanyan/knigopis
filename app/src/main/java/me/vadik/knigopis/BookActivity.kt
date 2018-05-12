@@ -14,6 +14,7 @@ import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.PlannedBookToSend
+import me.vadik.knigopis.utils.hideKeyboard
 import org.koin.android.ext.android.inject
 import java.util.*
 

@@ -18,6 +18,7 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.dialog.DialogFactory
+import me.vadik.knigopis.utils.systemClipboardManager
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
