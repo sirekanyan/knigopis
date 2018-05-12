@@ -54,7 +54,7 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)
-        toolbarImage.setCircleImage(intent.getStringExtra(EXTRA_USER_PHOTO), R.drawable.oval_dark_placeholder_background)
+        toolbarImage.setCircleImage(intent.getStringExtra(EXTRA_USER_PHOTO))
         toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
