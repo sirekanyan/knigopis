@@ -80,8 +80,15 @@ class UserActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        api.getUserBooks(userId)
-            .io2main()
+        api.getUserBooks(userId).io2main()
+            .doOnSubscribe {
+                userBooksProgressBar.show()
+                userBooksErrorPlaceholder.hide()
+                userBooksRecyclerView.hide()
+            }
+            .doFinally { userBooksProgressBar.hide() }
+            .doOnSuccess { userBooksRecyclerView.show() }
+            .doOnError { userBooksErrorPlaceholder.show() }
             .subscribe({
                 books.clear()
                 books.addAll(it)
