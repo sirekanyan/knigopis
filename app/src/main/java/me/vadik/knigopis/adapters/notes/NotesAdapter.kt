@@ -25,15 +25,17 @@ class NotesAdapter(
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
+        val user = note.user
+        val avatar = avatarCache.urls[user.id]
         holder.setTitle(note.title)
         holder.setAuthor(note.author)
         holder.setNotes(note.notes)
         holder.setTimestamp(note.fixedCreatedAt.time)
-        holder.setNickname(note.user.nickname)
+        holder.setNickname(user.name)
         holder.view.setOnClickListener {
-            router.openUserScreen(note.user)
+            router.openUserScreen(user.id, user.name, avatar)
         }
-        holder.setAvatarUrl(avatarCache.urls[note.user.id])
+        holder.setAvatarUrl(avatar)
     }
 
 }

@@ -36,7 +36,6 @@ import me.vadik.knigopis.model.CurrentTab
 import me.vadik.knigopis.model.CurrentTab.*
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.PlannedBook
-import me.vadik.knigopis.model.note.Identity
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
 import me.vadik.knigopis.profile.createProfileIntent
@@ -159,12 +158,8 @@ class MainActivity : AppCompatActivity(), Router {
         }
     }
 
-    override fun openUserScreen(user: Subscription) {
-        startActivity(createUserIntent(user))
-    }
-
-    override fun openUserScreen(user: Identity) {
-        startActivity(createUserIntent(user))
+    override fun openUserScreen(id: String, name: String, avatar: String?) {
+        startActivity(createUserIntent(id, name, avatar))
     }
 
     override fun openBrowser(uri: Uri) {

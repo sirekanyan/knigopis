@@ -2,6 +2,8 @@ package me.vadik.knigopis.model.note
 
 class Identity(
     val id: String,
-    val nickname: String,
-    val booksCount: Int
-)
+    private val nickname: String?,
+    private val booksCount: Int
+) {
+    val name get() = nickname ?: id
+}

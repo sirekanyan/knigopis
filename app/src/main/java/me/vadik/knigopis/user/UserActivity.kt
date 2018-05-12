@@ -3,7 +3,6 @@ package me.vadik.knigopis.user
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -19,27 +18,17 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.model.note.Identity
-import me.vadik.knigopis.model.subscription.Subscription
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
 private const val EXTRA_USER_NAME = "me.vadik.knigopis.extra_user_name"
 private const val EXTRA_USER_PHOTO = "me.vadik.knigopis.extra_user_photo"
-private const val EXTRA_USER_PROFILES = "me.vadik.knigopis.extra_user_profiles"
 
-fun Context.createUserIntent(user: Subscription): Intent =
+fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent =
     Intent(this, UserActivity::class.java)
-        .putExtra(EXTRA_USER_ID, user.subUser.id)
-        .putExtra(EXTRA_USER_NAME, user.subUser.name)
-        .putExtra(EXTRA_USER_PHOTO, user.subUser.avatar)
-        .putExtra(EXTRA_USER_PROFILES, user.subUser.profiles.toTypedArray())
-
-fun Context.createUserIntent(user: Identity): Intent =
-    Intent(this, UserActivity::class.java)
-        .putExtra(EXTRA_USER_ID, user.id)
-        .putExtra(EXTRA_USER_NAME, user.nickname)
-        .putExtra(EXTRA_USER_PROFILES, arrayOf<Uri>())
+        .putExtra(EXTRA_USER_ID, id)
+        .putExtra(EXTRA_USER_NAME, name)
+        .putExtra(EXTRA_USER_PHOTO, avatar)
 
 class UserActivity : AppCompatActivity() {
 

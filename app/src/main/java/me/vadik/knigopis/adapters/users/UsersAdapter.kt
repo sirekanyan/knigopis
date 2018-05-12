@@ -27,15 +27,16 @@ class UsersAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = users[position]
-        holder.setAvatarUrl(user.subUser.avatar)
-        holder.setNickname(user.subUser.name)
-        holder.setBooksCount(user.subUser.booksCount)
-        holder.setNewBooksCount(user.newBooksCount)
+        val subscription = users[position]
+        val user = subscription.subUser
+        holder.setAvatarUrl(user.avatar)
+        holder.setNickname(user.name)
+        holder.setBooksCount(user.booksCount)
+        holder.setNewBooksCount(subscription.newBooksCount)
         holder.view.setOnClickListener {
-            router.openUserScreen(user)
+            router.openUserScreen(user.id, user.name, user.avatar)
         }
-        val dialogItems = user.subUser.profiles
+        val dialogItems = user.profiles
             .map { UriItem(it, resources) }
             .distinctBy(UriItem::title)
             .map { uriItem ->
@@ -44,7 +45,7 @@ class UsersAdapter(
                 }
             }
         holder.view.setOnLongClickListener {
-            dialogs.showDialog(user.subUser.name, *dialogItems.toTypedArray())
+            dialogs.showDialog(user.name, *dialogItems.toTypedArray())
             true
         }
     }
