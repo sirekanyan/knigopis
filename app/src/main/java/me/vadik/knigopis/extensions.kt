@@ -11,6 +11,8 @@ import android.support.annotation.DimenRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.v4.view.ViewCompat
+import android.support.v4.view.animation.FastOutLinearInInterpolator
+import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
@@ -119,13 +121,28 @@ fun View.show(value: Boolean) {
 fun View.show() {
     animate().alpha(1f).setDuration(200)
         .withStartAction { visibility = View.VISIBLE }
-        .start()
 }
 
 fun View.hide() {
     animate().alpha(0f).setDuration(200)
         .withEndAction { visibility = View.GONE }
-        .start()
+}
+
+fun View.showScale() {
+    alpha = 0f
+    scaleX = 0f
+    scaleY = 0f
+    animate().alpha(1f).setDuration(200)
+        .scaleX(1f).scaleY(1f)
+        .setInterpolator(LinearOutSlowInInterpolator())
+        .withStartAction { visibility = View.VISIBLE }
+}
+
+fun View.hideScale() {
+    animate().alpha(0f).setDuration(200)
+        .scaleX(0f).scaleY(0f)
+        .setInterpolator(FastOutLinearInInterpolator())
+        .withEndAction { visibility = View.GONE }
 }
 
 val View.isVisible get() = visibility == View.VISIBLE

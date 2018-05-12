@@ -48,14 +48,14 @@ class UserActivity : AppCompatActivity() {
         toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
-            fab.hide()
+            fab.hideScale()
             api.createSubscription(userId, auth.getAccessToken())
                 .io2main()
                 .subscribe({
                     Snackbar.make(view, "Successfully subscribed", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
                 }, {
-                    fab.show()
+                    fab.showScale()
                     logError("Cannot update subscription", it)
                 })
         }
@@ -90,7 +90,7 @@ class UserActivity : AppCompatActivity() {
             .io2main()
             .subscribe({ subscriptions ->
                 if (subscriptions.none { it.subUser.id == userId }) {
-                    fab.show()
+                    fab.showScale()
                 } else {
                     unsubscribeOption.isVisible = true
                 }
