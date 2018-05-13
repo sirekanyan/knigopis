@@ -174,6 +174,7 @@
                 android:background="@drawable/text_area_background"
                 android:drawableEnd="@drawable/ic_comment_gray"
                 android:drawablePadding="16dp"
+                android:drawableRight="@drawable/ic_comment_gray"
                 android:hint="@string/book.hint.notes"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"

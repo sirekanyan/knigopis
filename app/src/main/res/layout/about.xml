@@ -42,17 +42,20 @@
 
         <TextView
             style="@style/AboutItem"
+            android:drawableLeft="@drawable/ic_about_api"
             android:drawableStart="@drawable/ic_about_api"
             android:text="@string/about.text.idea" />
 
         <TextView
             style="@style/AboutItem"
+            android:drawableLeft="@drawable/ic_about_developer"
             android:drawableStart="@drawable/ic_about_developer"
             android:text="@string/about.text.developer" />
 
         <TextView
             android:id="@+id/aboutDesignerText"
             style="@style/AboutItem"
+            android:drawableLeft="@drawable/ic_about_designer"
             android:drawableStart="@drawable/ic_about_designer"
             android:text="@string/about.text.designer" />
 

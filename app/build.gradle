@@ -7,7 +7,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId 'me.vadik.knigopis'
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 15
         versionName '0.1.14'
