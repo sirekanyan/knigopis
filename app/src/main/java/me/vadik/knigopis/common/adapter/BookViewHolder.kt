@@ -21,6 +21,10 @@ class BookHeaderViewHolder(private val view: View) : BookViewHolder(view) {
         view.book_title.text = context.getString(titleRes)
     }
 
+    fun showTopDivider(visible: Boolean) {
+        view.header_divider.showNow(visible)
+    }
+
 }
 
 class BookItemViewHolder(private val view: View) : BookViewHolder(view) {

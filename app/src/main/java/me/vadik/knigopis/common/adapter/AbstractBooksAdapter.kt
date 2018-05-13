@@ -17,7 +17,7 @@ abstract class AbstractBooksAdapter(
     @LayoutRes private val itemLayout: Int
 ) : RecyclerView.Adapter<BookViewHolder>() {
 
-    abstract fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader)
+    abstract fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader, i: Int)
 
     abstract fun bindItemViewHolder(holder: BookItemViewHolder, book: FinishedBook)
 
@@ -31,7 +31,7 @@ abstract class AbstractBooksAdapter(
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val element = elements[position]
         when (holder) {
-            is BookHeaderViewHolder -> bindHeaderViewHolder(holder, element as BookHeader)
+            is BookHeaderViewHolder -> bindHeaderViewHolder(holder, element as BookHeader, position)
             is BookItemViewHolder -> bindItemViewHolder(holder, element as FinishedBook)
         }
     }

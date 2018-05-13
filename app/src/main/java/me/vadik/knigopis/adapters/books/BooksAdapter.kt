@@ -16,12 +16,13 @@ class BooksAdapter(
     private val dialogs: DialogFactory
 ) : AbstractBooksAdapter(books, R.layout.header, R.layout.user_book) {
 
-    override fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader) {
+    override fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader, i: Int) {
         if (header.title.isEmpty()) {
             holder.setTitle(R.string.books_header_done_other)
         } else {
             holder.setTitle(header.title)
         }
+        holder.showTopDivider(i > 0)
     }
 
     override fun bindItemViewHolder(holder: BookItemViewHolder, book: FinishedBook) {

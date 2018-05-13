@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -57,9 +56,9 @@ class UserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val layoutManager = LinearLayoutManager(this)
         userBooksRecyclerView.layoutManager = layoutManager
-        userBooksRecyclerView.addItemDecoration(
-            DividerItemDecoration(this, layoutManager.orientation)
-        )
+//        userBooksRecyclerView.addItemDecoration(
+//            DividerItemDecoration(this, layoutManager.orientation)
+//        )
         userBooksRecyclerView.adapter = booksAdapter
     }
 
