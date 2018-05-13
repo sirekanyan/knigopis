@@ -27,19 +27,19 @@ import me.vadik.knigopis.adapters.users.UsersAdapter
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.common.HeaderItemDecoration
 import me.vadik.knigopis.common.ResourceProvider
+import me.vadik.knigopis.common.StickyHeaderInterface
 import me.vadik.knigopis.data.AvatarCache
 import me.vadik.knigopis.data.AvatarCacheImpl
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.model.Book
-import me.vadik.knigopis.model.CurrentTab
+import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
-import me.vadik.knigopis.model.FinishedBook
-import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
 import me.vadik.knigopis.profile.createProfileIntent
 import me.vadik.knigopis.user.createUserIntent
+import me.vadik.knigopis.utils.showNow
 import me.vadik.knigopis.utils.startActivityOrNull
 import me.vadik.knigopis.utils.toast
 import org.koin.android.ext.android.inject
@@ -59,13 +59,24 @@ class MainActivity : AppCompatActivity(), Router {
     private val auth by inject<KAuth>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val bookRepository by inject<BookRepository>()
-    private val resources by inject<ResourceProvider>()
+    private val resourceProvider by inject<ResourceProvider>()
     private val allBooks = mutableListOf<Book>()
+    private val allBookHeaders = mutableListOf<BookHeader>()
     private val allUsers = mutableListOf<Subscription>()
     private val allNotes = mutableListOf<Note>()
-    private val booksAdapter by lazy { BooksAdapter(bookCoverSearch, api, auth, this, dialogs) }
-    private val allBooksAdapter by lazy { booksAdapter.build(allBooks) }
-    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs, resources) }
+    private val booksAdapter by lazy {
+        BooksAdapter(
+            bookCoverSearch,
+            api,
+            auth,
+            this,
+            dialogs,
+            allBooks,
+            allBookHeaders
+        )
+    }
+    private val allBooksAdapter by lazy { booksAdapter.build() }
+    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs, resourceProvider) }
     private val avatarCache by lazy { AvatarCacheImpl() as AvatarCache }
     private val notesAdapter by lazy { NotesAdapter(allNotes, avatarCache, this) }
     private var userLoggedIn = false
@@ -81,6 +92,44 @@ class MainActivity : AppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRecyclerView(booksRecyclerView)
+        booksRecyclerView.addItemDecoration(
+            HeaderItemDecoration(
+                object : StickyHeaderInterface {
+                    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+                        return itemPosition
+                    }
+
+                    override fun getHeaderLayout(headerPosition: Int): Int {
+                        return R.layout.header
+                    }
+
+                    override fun bindHeaderData(header: View, headerPosition: Int) {
+                        val book = allBookHeaders[headerPosition]
+                        val title = book.title.let {
+                            if (it.isEmpty()) {
+                                getString(R.string.books_header_done_other)
+                            } else {
+                                it
+                            }
+                        }
+                        header.findViewById<TextView>(R.id.book_title).text = title
+                        header.findViewById<TextView>(R.id.books_count).text =
+                                resources.getQuantityString(
+                                    R.plurals.common_header_books,
+                                    book.count,
+                                    book.count
+                                )
+                        header.findViewById<TextView>(R.id.books_count).showNow()
+                        header.findViewById<View>(R.id.header_bottom_divider).showNow()
+                    }
+
+                    override fun isHeader(itemPosition: Int): Boolean {
+                        return allBooks[itemPosition] is BookHeader
+                    }
+                }
+            )
+        )
+
         initRecyclerView(usersRecyclerView)
         initRecyclerView(notesRecyclerView)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
@@ -334,7 +383,9 @@ class MainActivity : AppCompatActivity(), Router {
                 booksPlaceholder.show(books.isEmpty())
                 booksErrorPlaceholder.hide()
                 allBooks.clear()
-                allBooks.addAll(books)
+                allBooks.addAll(books.map { it.first })
+                allBookHeaders.clear()
+                allBookHeaders.addAll(books.map { it.second })
                 allBooksAdapter.notifyDataSetChanged()
             }, {
                 logError("cannot load books", it)

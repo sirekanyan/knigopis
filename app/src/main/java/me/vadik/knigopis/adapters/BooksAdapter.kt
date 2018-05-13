@@ -27,10 +27,12 @@ class BooksAdapter(
     private val api: Endpoint,
     private val auth: KAuth,
     private val router: Router,
-    private val dialogs: DialogFactory
+    private val dialogs: DialogFactory,
+    private val books: MutableList<Book>,
+    private val bookHeaders: MutableList<BookHeader>
 ) {
 
-    fun build(books: MutableList<Book>) = Adapter(books) {
+    fun build() = Adapter(books) {
         if (it is BookHeader) {
             R.layout.header
         } else {
@@ -52,6 +54,7 @@ class BooksAdapter(
                             logError("cannot delete finished book", it)
                         })
                     books.removeAt(index)
+                    bookHeaders.removeAt(index)
                     adapter.notifyItemRemoved(index)
                 }
             }
@@ -122,6 +125,15 @@ class BooksAdapter(
         }
         .bind<View>(R.id.header_divider) {
             visibility = if (it == 0) View.INVISIBLE else View.VISIBLE
+        }
+        .bind<TextView>(R.id.books_count) {
+            val count = (books[it] as? BookHeader)?.count ?: 0
+            text = resources.getQuantityString(
+                R.plurals.common_header_books,
+                count,
+                count
+            )
+            showNow(count > 0)
         }
         .bind<TextView>(R.id.book_author) {
             text = books[it].authorOrDefault

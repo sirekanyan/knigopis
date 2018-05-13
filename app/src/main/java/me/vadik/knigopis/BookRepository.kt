@@ -10,7 +10,7 @@ import me.vadik.knigopis.model.*
 
 interface BookRepository {
 
-    fun loadBooks(): Single<List<Book>>
+    fun loadBooks(): Single<List<Pair<Book, BookHeader>>>
 
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
@@ -24,19 +24,21 @@ class BookRepositoryImpl(
     private val resources: ResourceProvider
 ) : BookRepository {
 
-    override fun loadBooks(): Single<List<Book>> =
+    override fun loadBooks(): Single<List<Pair<Book, BookHeader>>> =
         Singles.zip(
             api.getPlannedBooks(auth.getAccessToken())
                 .map { it.sortedByDescending(PlannedBook::priority) },
             api.getFinishedBooks(auth.getAccessToken())
                 .map { it.sortedByDescending(FinishedBook::order) }
-                .map { it.groupFinishedBooks() }
+                .map { groupFinishedBooks(it) }
         ).map { (planned, finished) ->
-            mutableListOf<Book>().apply {
+            mutableListOf<Pair<Book, BookHeader>>().apply {
                 if (planned.isNotEmpty()) {
-                    add(BookHeader(resources.getString(R.string.books_header_todo), planned.size))
+                    val todoHeaderTitle = resources.getString(R.string.books_header_todo)
+                    val todoHeader = BookHeader(todoHeaderTitle, planned.size)
+                    add(todoHeader to todoHeader)
+                    addAll(planned.map { it to todoHeader })
                 }
-                addAll(planned)
                 addAll(finished)
             }
         }
@@ -63,29 +65,25 @@ class BookRepositoryImpl(
             }
         }
 
-    private fun List<FinishedBook>.groupFinishedBooks(): List<Book> {
-        val groupedBooks = mutableListOf<Book>()
-        var previousReadYear = Int.MAX_VALUE.toString()
-        forEachIndexed { index, book ->
-            val readYear = book.readYear
-            if (previousReadYear != readYear) {
-                groupedBooks.add(
-                    BookHeader(
-                        when {
-                            book.readYear.isEmpty() ->
-                                resources.getString(R.string.books_header_done_other)
-                            index == 0 ->
-                                resources.getString(R.string.books_header_done_first, readYear)
-                            else ->
-                                resources.getString(R.string.books_header_done, readYear)
-                        },
-                        count = 0 // todo
-                    )
-                )
+    private fun groupFinishedBooks(books: List<FinishedBook>): List<Pair<Book, BookHeader>> {
+        var first = true
+        return books.groupBy { it.readYear }
+            .toSortedMap(Comparator { year1, year2 ->
+                year2.compareTo(year1)
+            })
+            .flatMap { (year, books) ->
+                val headerTitle = when {
+                    year.isEmpty() -> resources.getString(R.string.books_header_done_other)
+                    first -> {
+                        first = false
+                        resources.getString(R.string.books_header_done_first, year)
+                    }
+                    else -> resources.getString(R.string.books_header_done, year)
+                }
+                val header = BookHeader(headerTitle, books.size)
+                val items = books.map { it to header }
+                listOf(header to header, *items.toTypedArray())
             }
-            groupedBooks.add(book)
-            previousReadYear = book.readYear
-        }
-        return groupedBooks
     }
+
 }
