@@ -2,7 +2,7 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:insetLeft="72dp">
     <shape>
-        <solid android:color="#1f000000" />
+        <solid android:color="@color/recycler_divider_color" />
         <size android:height="0.5dp" />
     </shape>
 </inset>

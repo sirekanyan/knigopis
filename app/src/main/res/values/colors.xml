@@ -17,4 +17,5 @@
     <color name="image_placeholder_color_light">@color/colorPrimary50</color>
     <color name="image_placeholder_color_dark">@color/colorPrimaryLight</color>
     <color name="ic_launcher_background">#512DA8</color>
+    <color name="recycler_divider_color">@color/black_12</color>
 </resources>
