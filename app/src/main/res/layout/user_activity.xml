@@ -61,8 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingTop="0.5dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/user_book" />
 

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="48dp"
+    android:background="@color/white">
 
     <View
         android:id="@+id/header_divider"
@@ -22,5 +23,13 @@
         android:textColor="@color/black_54"
         android:textSize="14sp"
         tools:text="К прочтению" />
+
+    <View
+        android:id="@+id/header_bottom_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:background="@color/recycler_divider_color"
+        android:visibility="invisible" />
 
 </FrameLayout>

@@ -8,15 +8,18 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import kotlinx.android.synthetic.main.user_activity.*
 import me.vadik.knigopis.*
 import me.vadik.knigopis.adapters.books.BooksAdapter
-import me.vadik.knigopis.utils.setCircleImage
+import me.vadik.knigopis.common.HeaderItemDecoration
+import me.vadik.knigopis.common.StickyHeaderInterface
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.Book
-import me.vadik.knigopis.utils.snackbar
-import me.vadik.knigopis.utils.systemClipboardManager
-import me.vadik.knigopis.utils.toast
+import me.vadik.knigopis.model.BookHeader
+import me.vadik.knigopis.model.FinishedBook
+import me.vadik.knigopis.utils.*
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"
@@ -58,6 +61,40 @@ class UserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val layoutManager = LinearLayoutManager(this)
         userBooksRecyclerView.layoutManager = layoutManager
+        userBooksRecyclerView.addItemDecoration(
+            HeaderItemDecoration(
+                object : StickyHeaderInterface {
+                    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+                        return itemPosition
+                    }
+
+                    override fun getHeaderLayout(headerPosition: Int): Int {
+                        return R.layout.header
+                    }
+
+                    override fun bindHeaderData(header: View, headerPosition: Int) {
+                        val book = books[headerPosition]
+                        val title = if (book is FinishedBook) {
+                            book.readYear
+                        } else {
+                            book.title
+                        }.let {
+                            if (it.isEmpty()) {
+                                getString(R.string.books_header_done_other)
+                            } else {
+                                it
+                            }
+                        }
+                        header.findViewById<TextView>(R.id.book_title).text = title
+                        header.findViewById<View>(R.id.header_bottom_divider).showNow()
+                    }
+
+                    override fun isHeader(itemPosition: Int): Boolean {
+                        return books[itemPosition] is BookHeader
+                    }
+                }
+            )
+        )
 //        userBooksRecyclerView.addItemDecoration(
 //            DividerItemDecoration(this, layoutManager.orientation)
 //        )
