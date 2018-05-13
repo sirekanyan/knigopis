@@ -217,6 +217,14 @@ class MainActivity : AppCompatActivity(), Router {
         startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: toast(R.string.users_info_no_browser)
     }
 
+    override fun onBackPressed() {
+        if (currentTab == HOME_TAB) {
+            super.onBackPressed()
+        } else {
+            refresh(HOME_TAB)
+        }
+    }
+
     private fun initNavigationView() {
         if (auth.isAuthorized()) {
             bottomNavigation.show()
