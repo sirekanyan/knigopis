@@ -1,32 +1,31 @@
 package me.vadik.knigopis.adapters.books
 
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
 import me.vadik.knigopis.R
+import me.vadik.knigopis.common.adapter.AbstractBooksAdapter
+import me.vadik.knigopis.common.adapter.BookHeaderViewHolder
+import me.vadik.knigopis.common.adapter.BookItemViewHolder
 import me.vadik.knigopis.createNewBookIntent
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.dialog.createDialogItem
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook
 
 class BooksAdapter(
-    private val books: List<FinishedBook>,
+    books: List<Book>,
     private val dialogs: DialogFactory
-) : RecyclerView.Adapter<BookViewHolder>() {
+) : AbstractBooksAdapter(books, R.layout.header, R.layout.user_book) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BookViewHolder(parent.inflate(R.layout.user_book))
+    override fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader) {
+        holder.setTitle(header.title)
+    }
 
-    override fun getItemCount() =
-        books.size
-
-    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = books[position]
-        holder.title = book.title
-        holder.author = book.author
-        holder.notes = book.notes
-        val context = holder.view.context
-        holder.view.setOnLongClickListener {
+    override fun bindItemViewHolder(holder: BookItemViewHolder, book: FinishedBook) {
+        holder.setTitle(book.title)
+        holder.setAuthor(book.author)
+        holder.setNotes(book.notes)
+        holder.setOnLongClick { view ->
+            val context = view.context
             dialogs.showDialog(
                 book.title + " — " + book.author,
                 createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
@@ -39,4 +38,5 @@ class BooksAdapter(
             true
         }
     }
+
 }

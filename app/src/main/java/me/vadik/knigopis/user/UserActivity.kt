@@ -14,7 +14,7 @@ import me.vadik.knigopis.*
 import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.common.setCircleImage
 import me.vadik.knigopis.dialog.DialogFactory
-import me.vadik.knigopis.model.FinishedBook
+import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.utils.systemClipboardManager
 import org.koin.android.ext.android.inject
 
@@ -33,7 +33,7 @@ class UserActivity : AppCompatActivity() {
     private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
-    private val books = mutableListOf<FinishedBook>()
+    private val books = mutableListOf<Book>()
     private val booksAdapter = BooksAdapter(books, dialogs)
     private lateinit var unsubscribeOption: MenuItem
 

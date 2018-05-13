@@ -5,7 +5,7 @@ import io.reactivex.Single
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.io2main
-import me.vadik.knigopis.model.FinishedBook
+import me.vadik.knigopis.model.Book
 
 interface UserInteractor {
 
@@ -15,7 +15,7 @@ interface UserInteractor {
 
     fun isSubscribed(userId: String): Single<Boolean>
 
-    fun getBooks(userId: String): Single<List<FinishedBook>>
+    fun getBooks(userId: String): Single<List<Book>>
 
 }
 
@@ -40,8 +40,9 @@ class UserInteractorImpl(
             .map { subscriptions -> subscriptions.any { it.subUser.id == userId } }
             .io2main()
 
-    override fun getBooks(userId: String) =
+    override fun getBooks(userId: String): Single<List<Book>> =
         api.getUserBooks(userId)
+            .map { it as List<Book> }
             .io2main()
 
 }
