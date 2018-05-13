@@ -1,5 +1,6 @@
 package me.vadik.knigopis.common.adapter
 
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.header.view.*
@@ -10,8 +11,14 @@ sealed class BookViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 class BookHeaderViewHolder(private val view: View) : BookViewHolder(view) {
 
+    private val context = view.context
+
     fun setTitle(title: String) {
         view.book_title.text = title
+    }
+
+    fun setTitle(@StringRes titleRes: Int) {
+        view.book_title.text = context.getString(titleRes)
     }
 
 }

@@ -17,7 +17,11 @@ class BooksAdapter(
 ) : AbstractBooksAdapter(books, R.layout.header, R.layout.user_book) {
 
     override fun bindHeaderViewHolder(holder: BookHeaderViewHolder, header: BookHeader) {
-        holder.setTitle(header.title)
+        if (header.title.isEmpty()) {
+            holder.setTitle(R.string.books_header_done_other)
+        } else {
+            holder.setTitle(header.title)
+        }
     }
 
     override fun bindItemViewHolder(holder: BookItemViewHolder, book: FinishedBook) {

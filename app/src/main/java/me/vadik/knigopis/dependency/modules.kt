@@ -16,8 +16,6 @@ import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.ImageThumbnail
 import me.vadik.knigopis.user.UserInteractor
 import me.vadik.knigopis.user.UserInteractorImpl
-import me.vadik.knigopis.user.UserRepository
-import me.vadik.knigopis.user.UserRepositoryImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.context.Context
@@ -43,8 +41,7 @@ val appModule = applicationContext {
 }
 
 private fun Context.userModule() {
-    bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
-    bean { UserRepositoryImpl() as UserRepository }
+    bean { UserInteractorImpl(get(), get()) as UserInteractor }
 }
 
 private fun createMainEndpoint() =

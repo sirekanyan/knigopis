@@ -6,6 +6,7 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.io2main
 import me.vadik.knigopis.model.Book
+import me.vadik.knigopis.model.BookHeader
 
 interface UserInteractor {
 
@@ -21,8 +22,7 @@ interface UserInteractor {
 
 class UserInteractorImpl(
     private val auth: KAuth,
-    private val api: Endpoint,
-    private val userRepository: UserRepository
+    private val api: Endpoint
 ) : UserInteractor {
 
     override fun subscribe(userId: String) =
@@ -42,7 +42,15 @@ class UserInteractorImpl(
 
     override fun getBooks(userId: String): Single<List<Book>> =
         api.getUserBooks(userId)
-            .map { it as List<Book> }
+            .map { books ->
+                books.groupBy { it.readYear }
+                    .toSortedMap(Comparator { year1, year2 ->
+                        year2.compareTo(year1)
+                    })
+                    .flatMap { (year, books) ->
+                        listOf(BookHeader(year), *books.toTypedArray())
+                    }
+            }
             .io2main()
 
 }
