@@ -34,13 +34,10 @@ import io.reactivex.schedulers.Schedulers
 private const val TAG = "Knigopis"
 private val HTTP_SCHEMES = setOf("http", "https")
 
-inline fun Context.startActivityOrElse(intent: Intent, onError: () -> Unit) {
-    if (packageManager.resolveActivity(intent, 0) == null) {
-        onError()
-    } else {
+fun Context.startActivityOrNull(intent: Intent): Unit? =
+    packageManager.resolveActivity(intent, 0)?.let {
         startActivity(intent)
     }
-}
 
 fun Context.toast(@StringRes messageId: Int, vararg args: Any) =
     Toast.makeText(this, getString(messageId, *args), Toast.LENGTH_SHORT).show()

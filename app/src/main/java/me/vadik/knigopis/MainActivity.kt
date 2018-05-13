@@ -163,9 +163,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     override fun openBrowser(uri: Uri) {
-        startActivityOrElse(Intent(ACTION_VIEW, uri)) {
-            toast(R.string.users_info_no_browser)
-        }
+        startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: toast(R.string.users_info_no_browser)
     }
 
     private fun initNavigationView() {
