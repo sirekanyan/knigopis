@@ -20,9 +20,23 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black_54"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         tools:text="К прочтению" />
+
+    <TextView
+        android:id="@+id/books_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        tools:text="12 книг"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/header_bottom_divider"

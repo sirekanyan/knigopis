@@ -16,7 +16,7 @@ interface UserInteractor {
 
     fun isSubscribed(userId: String): Single<Boolean>
 
-    fun getBooks(userId: String): Single<List<Book>>
+    fun getBooks(userId: String): Single<List<Pair<Book, BookHeader>>>
 
 }
 
@@ -40,7 +40,7 @@ class UserInteractorImpl(
             .map { subscriptions -> subscriptions.any { it.subUser.id == userId } }
             .io2main()
 
-    override fun getBooks(userId: String): Single<List<Book>> =
+    override fun getBooks(userId: String): Single<List<Pair<Book, BookHeader>>> =
         api.getUserBooks(userId)
             .map { books ->
                 books.groupBy { it.readYear }
@@ -48,7 +48,9 @@ class UserInteractorImpl(
                         year2.compareTo(year1)
                     })
                     .flatMap { (year, books) ->
-                        listOf(BookHeader(year), *books.toTypedArray())
+                        val header = BookHeader(year, books.size)
+                        val items = books.map { it to header }
+                        listOf(header to header, *items.toTypedArray())
                     }
             }
             .io2main()

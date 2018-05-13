@@ -18,7 +18,6 @@ import me.vadik.knigopis.common.StickyHeaderInterface
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader
-import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.utils.*
 import org.koin.android.ext.android.inject
 
@@ -38,6 +37,7 @@ class UserActivity : AppCompatActivity() {
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<Book>()
+    private val bookHeaders = mutableListOf<BookHeader>()
     private val booksAdapter = BooksAdapter(books, dialogs)
     private lateinit var unsubscribeOption: MenuItem
 
@@ -73,12 +73,8 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     override fun bindHeaderData(header: View, headerPosition: Int) {
-                        val book = books[headerPosition]
-                        val title = if (book is FinishedBook) {
-                            book.readYear
-                        } else {
-                            book.title
-                        }.let {
+                        val book = bookHeaders[headerPosition]
+                        val title = book.title.let {
                             if (it.isEmpty()) {
                                 getString(R.string.books_header_done_other)
                             } else {
@@ -86,6 +82,13 @@ class UserActivity : AppCompatActivity() {
                             }
                         }
                         header.findViewById<TextView>(R.id.book_title).text = title
+                        header.findViewById<TextView>(R.id.books_count).text =
+                                resources.getQuantityString(
+                                    R.plurals.common_header_books,
+                                    book.count,
+                                    book.count
+                                )
+                        header.findViewById<TextView>(R.id.books_count).showNow()
                         header.findViewById<View>(R.id.header_bottom_divider).showNow()
                     }
 
@@ -95,9 +98,6 @@ class UserActivity : AppCompatActivity() {
                 }
             )
         )
-//        userBooksRecyclerView.addItemDecoration(
-//            DividerItemDecoration(this, layoutManager.orientation)
-//        )
         userBooksRecyclerView.adapter = booksAdapter
     }
 
@@ -114,7 +114,9 @@ class UserActivity : AppCompatActivity() {
             .doOnError { userBooksErrorPlaceholder.show() }
             .subscribe({
                 books.clear()
-                books.addAll(it)
+                books.addAll(it.map { it.first })
+                bookHeaders.clear()
+                bookHeaders.addAll(it.map { it.second })
                 booksAdapter.notifyDataSetChanged()
             }, {
                 logError("Cannot load user books", it)

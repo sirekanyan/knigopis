@@ -34,7 +34,7 @@ class BookRepositoryImpl(
         ).map { (planned, finished) ->
             mutableListOf<Book>().apply {
                 if (planned.isNotEmpty()) {
-                    add(BookHeader(resources.getString(R.string.books_header_todo)))
+                    add(BookHeader(resources.getString(R.string.books_header_todo), planned.size))
                 }
                 addAll(planned)
                 addAll(finished)
@@ -78,7 +78,8 @@ class BookRepositoryImpl(
                                 resources.getString(R.string.books_header_done_first, readYear)
                             else ->
                                 resources.getString(R.string.books_header_done, readYear)
-                        }
+                        },
+                        count = 0 // todo
                     )
                 )
             }

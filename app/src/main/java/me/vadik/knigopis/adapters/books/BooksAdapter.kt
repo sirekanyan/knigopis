@@ -23,6 +23,7 @@ class BooksAdapter(
             holder.setTitle(header.title)
         }
         holder.showTopDivider(i > 0)
+        holder.setBooksCount(header.count)
     }
 
     override fun bindItemViewHolder(holder: BookItemViewHolder, book: FinishedBook) {

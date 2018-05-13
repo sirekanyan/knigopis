@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.header.view.*
 import kotlinx.android.synthetic.main.user_book.view.*
+import me.vadik.knigopis.R
 import me.vadik.knigopis.utils.showNow
 
 sealed class BookViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -19,6 +20,15 @@ class BookHeaderViewHolder(private val view: View) : BookViewHolder(view) {
 
     fun setTitle(@StringRes titleRes: Int) {
         view.book_title.text = context.getString(titleRes)
+    }
+
+    fun setBooksCount(count: Int) {
+        view.books_count.text = context.resources.getQuantityString(
+            R.plurals.common_header_books,
+            count,
+            count
+        )
+        view.books_count.showNow()
     }
 
     fun showTopDivider(visible: Boolean) {
