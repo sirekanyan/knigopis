@@ -5,6 +5,10 @@
     <string name="common.button.retry">Retry</string>
     <string name="common.button.cancel">Cancel</string>
     <string name="common.info.dev">We Present A SPECIAL PRESENTATION</string>
+    <plurals name="common.header.books">
+        <item quantity="one">%d book</item>
+        <item quantity="many">%d books</item>
+    </plurals>
 
     <!-- main screen -->
     <string name="main.navigation.home">Books</string>

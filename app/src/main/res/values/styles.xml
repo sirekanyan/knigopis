@@ -7,6 +7,9 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/image_placeholder_color_light</item>
+        <item name="android:textColorPrimary">@color/black_87</item>
+        <item name="android:textColorSecondary">@color/black_60</item>
+        <item name="android:textColorTertiary">@color/black_38</item>
     </style>
 
     <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
@@ -16,6 +19,9 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
+        <item name="android:textColorPrimary">@color/white_87</item>
+        <item name="android:textColorSecondary">@color/white_60</item>
+        <item name="android:textColorTertiary">@color/white_38</item>
     </style>
 
     <style name="DevTheme" parent="AppTheme">
@@ -52,7 +58,7 @@
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="TextInputLayoutStyle">
