@@ -1,4 +1,4 @@
-package me.vadik.knigopis.common
+package me.vadik.knigopis.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

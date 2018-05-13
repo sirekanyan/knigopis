@@ -4,7 +4,7 @@ import android.support.annotation.IdRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.utils.inflate
 
 class Adapter<T>(
     private val items: List<T>,

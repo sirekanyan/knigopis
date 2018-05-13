@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.header.view.*
 import kotlinx.android.synthetic.main.user_book.view.*
-import me.vadik.knigopis.showNow
+import me.vadik.knigopis.utils.showNow
 
 sealed class BookViewHolder(view: View) : RecyclerView.ViewHolder(view)
 

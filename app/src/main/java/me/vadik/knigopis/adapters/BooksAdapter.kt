@@ -18,6 +18,9 @@ import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.PlannedBook
+import me.vadik.knigopis.utils.hideNow
+import me.vadik.knigopis.utils.showNow
+import me.vadik.knigopis.utils.toast
 
 class BooksAdapter(
     private val coverSearch: BookCoverSearch,

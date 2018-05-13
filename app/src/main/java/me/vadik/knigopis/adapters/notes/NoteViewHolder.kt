@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.view.View
 import kotlinx.android.synthetic.main.note.view.*
-import me.vadik.knigopis.common.setCircleImage
+import me.vadik.knigopis.utils.setCircleImage
 
 class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

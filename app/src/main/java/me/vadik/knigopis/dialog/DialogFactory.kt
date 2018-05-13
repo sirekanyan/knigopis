@@ -5,7 +5,7 @@ import android.support.design.widget.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_item.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_view.*
 import me.vadik.knigopis.R
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.utils.inflate
 
 interface DialogFactory {
 

@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.user.view.*
 import me.vadik.knigopis.R
-import me.vadik.knigopis.common.setCircleImage
+import me.vadik.knigopis.utils.setCircleImage
 import me.vadik.knigopis.getHtmlString
-import me.vadik.knigopis.showNow
+import me.vadik.knigopis.utils.showNow
 
 class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

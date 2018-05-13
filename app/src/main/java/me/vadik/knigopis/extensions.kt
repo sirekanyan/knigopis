@@ -3,24 +3,17 @@ package me.vadik.knigopis
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.support.annotation.DimenRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -34,29 +27,12 @@ import io.reactivex.schedulers.Schedulers
 private const val TAG = "Knigopis"
 private val HTTP_SCHEMES = setOf("http", "https")
 
-fun Context.startActivityOrNull(intent: Intent): Unit? =
-    packageManager.resolveActivity(intent, 0)?.let {
-        startActivity(intent)
-    }
-
-fun Context.toast(@StringRes messageId: Int, vararg args: Any) =
-    Toast.makeText(this, getString(messageId, *args), Toast.LENGTH_SHORT).show()
-
-fun Context.toast(@StringRes messageId: Int) =
-    Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
-
-fun View.snackbar(@StringRes messageId: Int) =
-    Snackbar.make(this, messageId, Snackbar.LENGTH_LONG).show()
-
 fun Activity.app() = application as App
 
 @Suppress("unused")
 fun logWarn(message: String) = Log.w(TAG, message)
 
 fun logError(message: String, throwable: Throwable?) = Log.e(TAG, message, throwable)
-
-fun ViewGroup.inflate(@LayoutRes layout: Int): View =
-    LayoutInflater.from(context).inflate(layout, this, false)
 
 fun <T> Single<T>.io2main(): Single<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -91,18 +67,6 @@ fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> 
 
 fun View.setElevationRes(@DimenRes elevation: Int) {
     ViewCompat.setElevation(this, resources.getDimensionPixelSize(elevation).toFloat())
-}
-
-fun View.showNow() {
-    visibility = View.VISIBLE
-}
-
-fun View.showNow(value: Boolean) {
-    visibility = if (value) View.VISIBLE else View.GONE
-}
-
-fun View.hideNow() {
-    visibility = View.GONE
 }
 
 fun View.show(value: Boolean) {

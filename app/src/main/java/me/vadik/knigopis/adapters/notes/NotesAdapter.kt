@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
 import me.vadik.knigopis.data.AvatarCache
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.utils.inflate
 import me.vadik.knigopis.model.note.Note
 
 class NotesAdapter(

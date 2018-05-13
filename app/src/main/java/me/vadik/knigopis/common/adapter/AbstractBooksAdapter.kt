@@ -3,7 +3,7 @@ package me.vadik.knigopis.common.adapter
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.utils.inflate
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader
 import me.vadik.knigopis.model.FinishedBook

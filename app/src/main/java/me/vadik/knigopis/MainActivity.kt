@@ -40,6 +40,8 @@ import me.vadik.knigopis.model.note.Note
 import me.vadik.knigopis.model.subscription.Subscription
 import me.vadik.knigopis.profile.createProfileIntent
 import me.vadik.knigopis.user.createUserIntent
+import me.vadik.knigopis.utils.startActivityOrNull
+import me.vadik.knigopis.utils.toast
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 

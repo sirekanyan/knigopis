@@ -7,7 +7,7 @@ import me.vadik.knigopis.Router
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.dialog.createDialogItem
-import me.vadik.knigopis.inflate
+import me.vadik.knigopis.utils.inflate
 import me.vadik.knigopis.model.subscription.Subscription
 
 class UsersAdapter(

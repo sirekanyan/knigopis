@@ -15,10 +15,9 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.clearAndAddAll
 import me.vadik.knigopis.common.createTextShareIntent
 import me.vadik.knigopis.common.random
-import me.vadik.knigopis.common.setCircleImage
+import me.vadik.knigopis.utils.setCircleImage
 import me.vadik.knigopis.model.*
-import me.vadik.knigopis.utils.hideKeyboard
-import me.vadik.knigopis.utils.showKeyboard
+import me.vadik.knigopis.utils.*
 import org.koin.android.ext.android.inject
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
