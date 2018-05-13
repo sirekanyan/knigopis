@@ -146,7 +146,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initToolbar(toolbar: Toolbar) {
-        toolbar.setNavigationIcon(R.drawable.ic_close)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener { finish() }
         toolbar.inflateMenu(R.menu.profile_menu)
         toolbar.setOnMenuItemClickListener {
