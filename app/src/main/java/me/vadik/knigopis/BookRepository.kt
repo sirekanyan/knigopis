@@ -27,18 +27,14 @@ class BookRepositoryImpl(
     override fun loadBooks(): Single<List<Pair<Book, BookHeader>>> =
         Singles.zip(
             api.getPlannedBooks(auth.getAccessToken())
-                .map { it.sortedByDescending(PlannedBook::priority) },
+                .map { it.sortedByDescending(PlannedBook::priority) }
+                .map { groupPlannedBooks(it) },
             api.getFinishedBooks(auth.getAccessToken())
                 .map { it.sortedByDescending(FinishedBook::order) }
                 .map { groupFinishedBooks(it) }
         ).map { (planned, finished) ->
             mutableListOf<Pair<Book, BookHeader>>().apply {
-                if (planned.isNotEmpty()) {
-                    val todoHeaderTitle = resources.getString(R.string.books_header_todo)
-                    val todoHeader = BookHeader(todoHeaderTitle, planned.size)
-                    add(todoHeader to todoHeader)
-                    addAll(planned.map { it to todoHeader })
-                }
+                addAll(planned)
                 addAll(finished)
             }
         }
@@ -64,6 +60,25 @@ class BookRepositoryImpl(
                     .andThen(api.deleteFinishedBook(bookId, auth.getAccessToken()))
             }
         }
+
+    private fun groupPlannedBooks(books: List<PlannedBook>): List<Pair<Book, BookHeader>> {
+        val result = mutableListOf<Pair<Book, BookHeader>>()
+        val doingBooks = books.filterNot { it.priority == 0 }
+        if (doingBooks.isNotEmpty()) {
+            val todoHeaderTitle = resources.getString(R.string.books_header_doing)
+            val doingHeader = BookHeader(todoHeaderTitle, doingBooks.size)
+            result.add(doingHeader to doingHeader)
+            result.addAll(doingBooks.map { it to doingHeader })
+        }
+        val todoBooks = books.filter { it.priority == 0 }
+        if (todoBooks.isNotEmpty()) {
+            val todoHeaderTitle = resources.getString(R.string.books_header_todo)
+            val todoHeader = BookHeader(todoHeaderTitle, todoBooks.size)
+            result.add(todoHeader to todoHeader)
+            result.addAll(todoBooks.map { it to todoHeader })
+        }
+        return result
+    }
 
     private fun groupFinishedBooks(books: List<FinishedBook>): List<Pair<Book, BookHeader>> {
         var first = true

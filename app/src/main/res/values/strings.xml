@@ -7,7 +7,7 @@
     <string name="common.info.dev">We Present A SPECIAL PRESENTATION</string>
     <plurals name="common.header.books">
         <item quantity="one">%d book</item>
-        <item quantity="many">%d books</item>
+        <item quantity="other">%d books</item>
     </plurals>
 
     <!-- main screen -->
@@ -30,7 +30,7 @@
     <string name="profile.hint.nickname">nickname</string>
     <string name="profile.hint.homepage">homepage</string>
     <string name="profile.text.todo">%d\ntodo</string>
-    <string name="profile.text.doing">%d\ndoing</string>
+    <string name="profile.text.doing">%d\nreading</string>
     <string name="profile.text.done">%d\ndone</string>
     <string name="profile.text.random">%s — %d%%</string>
 
@@ -44,7 +44,8 @@
 
     <!-- 🏠 books tab -->
     <string name="books.error.empty">You don\'t have any books</string>
-    <string name="books.header.todo">Todo</string>
+    <string name="books.header.todo">Read later</string>
+    <string name="books.header.doing">Reading now</string>
     <string name="books.header.done_first">Done in %s</string>
     <string name="books.header.done">%s</string>
     <string name="books.header.done_other">Other years</string>

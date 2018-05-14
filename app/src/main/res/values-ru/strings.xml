@@ -45,7 +45,8 @@
 
     <!-- 🏠 books tab -->
     <string name="books.error.empty">У вас пока нет книг</string>
-    <string name="books.header.todo">К прочтению</string>
+    <string name="books.header.todo">Собираюсь читать</string>
+    <string name="books.header.doing">Читаю сейчас</string>
     <string name="books.header.done_first">Прочитано в %s г.</string>
     <string name="books.header.done">%s г.</string>
     <string name="books.header.done_other">Прочие года</string>
