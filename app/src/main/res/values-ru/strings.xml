@@ -23,7 +23,7 @@
     <string name="main.option.about">О приложении</string>
 
     <!-- about -->
-    <string name="about.text.idea">Идея:\nhttp://knigopis.com</string>
+    <string name="about.text.idea">API:\nhttp://knigopis.com</string>
     <string name="about.text.developer">Разработка:\nvadik@sirekanyan.com</string>
     <string name="about.text.designer">Дизайн:\nanna@sirekanyan.com</string>
 
@@ -36,7 +36,7 @@
     <string name="profile.text.random">%s — %d%%</string>
 
     <!-- profile menu -->
-    <string name="profile.option.edit">Редактировать</string>
+    <string name="profile.option.edit">Изменить</string>
     <string name="profile.option.save">Сохранить</string>
     <string name="profile.option.share">Поделиться</string>
     <string name="profile.option.logout">Выйти</string>
@@ -50,7 +50,7 @@
     <string name="books.header.done_first">Прочитано в %s г.</string>
     <string name="books.header.done">%s г.</string>
     <string name="books.header.done_other">Прочие года</string>
-    <string name="books.button.edit">Редактировать</string>
+    <string name="books.button.edit">Изменить</string>
     <string name="books.button.delete">Удалить</string>
     <string name="books.title.confirm_delete">Подтверждение</string>
     <string name="books.message.confirm_delete">Удалить книгу \"%s\"?</string>
