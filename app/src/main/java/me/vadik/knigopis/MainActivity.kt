@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), Router {
     private lateinit var currentTab: CurrentTab
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (config.isDevMode()) {
+        if (config.isDevMode) {
             setTheme(R.style.DevTheme)
         }
         super.onCreate(savedInstanceState)
@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), Router {
                     val designerView = dialogView.aboutDesignerText
                     versionView.text = BuildConfig.VERSION_NAME
                     var count = 0
-                    val enabled = config.isDevMode()
+                    val enabled = config.isDevMode
                     val max = if (enabled) {
                         VERSION_CLICK_COUNT_OFF
                     } else {
@@ -276,7 +276,7 @@ class MainActivity : AppCompatActivity(), Router {
                         if (++count == max) {
                             enabled.not().let {
                                 if (it) toast(R.string.common_info_dev)
-                                config.setDevMode(it)
+                                config.isDevMode = it
                                 recreate()
                             }
                         }
@@ -289,6 +289,12 @@ class MainActivity : AppCompatActivity(), Router {
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
         profileOption = toolbar.menu.findItem(R.id.option_profile)
+        toolbar.setOnClickListener {
+            if (currentTab == HOME_TAB) {
+                config.sortingMode = if (config.sortingMode == 0) 1 else 0
+                refresh(isForce = true)
+            }
+        }
     }
 
     private fun login() {
@@ -384,7 +390,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshHomeTab() {
-        bookRepository.loadBooks(PlannedBook::updatedAt)
+        bookRepository.loadBooks()
             .io2main()
             .showProgressBar()
             .subscribe({ books ->

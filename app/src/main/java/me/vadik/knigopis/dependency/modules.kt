@@ -29,7 +29,7 @@ private const val IMAGE_API_URL = "https://api.qwant.com/api/"
 private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 val appModule = applicationContext {
-    bean { BookRepositoryImpl(get(), get(), get()) as BookRepository }
+    bean { BookRepositoryImpl(get(), get(), get(), get()) as BookRepository }
     bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint() }

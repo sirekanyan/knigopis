@@ -4,19 +4,30 @@ import android.content.Context
 
 private const val PREFS_NAME = "knigopis-dev"
 private const val DEV_MODE_KEY = "dev-mode"
+private const val SORT_MODE_KEY = "sort-mode"
 
 interface Configuration {
-    fun isDevMode(): Boolean
-    fun setDevMode(enabled: Boolean)
+
+    var isDevMode: Boolean
+
+    var sortingMode: Int
+
 }
 
 class ConfigurationImpl(context: Context) : Configuration {
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    override fun isDevMode() =
-        prefs.getBoolean(DEV_MODE_KEY, false)
+    override var isDevMode: Boolean
+        get() = prefs.getBoolean(DEV_MODE_KEY, false)
+        set(enabled) {
+            prefs.edit().putBoolean(DEV_MODE_KEY, enabled).apply()
+        }
 
-    override fun setDevMode(enabled: Boolean) =
-        prefs.edit().putBoolean(DEV_MODE_KEY, enabled).apply()
+    override var sortingMode: Int
+        get() = prefs.getInt(SORT_MODE_KEY, 0)
+        set(mode) {
+            prefs.edit().putInt(SORT_MODE_KEY, mode).apply()
+        }
+
 }

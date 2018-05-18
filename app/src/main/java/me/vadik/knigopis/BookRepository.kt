@@ -11,7 +11,7 @@ import java.util.*
 
 interface BookRepository {
 
-    fun <T : Comparable<T>> loadBooks(sortSelector: (PlannedBook) -> T): Single<List<Pair<Book, BookHeader>>>
+    fun loadBooks(): Single<List<Pair<Book, BookHeader>>>
 
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
@@ -22,15 +22,20 @@ interface BookRepository {
 class BookRepositoryImpl(
     private val api: Endpoint,
     private val auth: KAuth,
-    private val resources: ResourceProvider
+    private val resources: ResourceProvider,
+    private val config: Configuration
 ) : BookRepository {
 
-    override fun <T : Comparable<T>> loadBooks(
-        sortSelector: (PlannedBook) -> T
-    ): Single<List<Pair<Book, BookHeader>>> =
+    override fun loadBooks(): Single<List<Pair<Book, BookHeader>>> =
         Singles.zip(
             api.getPlannedBooks(auth.getAccessToken())
-                .map { it.sortedByDescending(sortSelector) }
+                .map {
+                    if (config.sortingMode == 0) {
+                        it.sortedByDescending(PlannedBook::priority)
+                    } else {
+                        it.sortedByDescending(PlannedBook::updatedAt)
+                    }
+                }
                 .map { groupPlannedBooks(it) },
             api.getFinishedBooks(auth.getAccessToken())
                 .map { it.sortedByDescending(FinishedBook::order) }
