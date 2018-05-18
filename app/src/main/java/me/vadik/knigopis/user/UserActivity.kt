@@ -49,7 +49,9 @@ class UserActivity : AppCompatActivity() {
         toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
-            fab.hideScale()
+            fab.isSelected = true
+            fab.setImageResource(R.drawable.ic_done)
+            fab.setOnClickListener(null)
             interactor.subscribe(userId)
                 .subscribe({
                     view.snackbar(R.string.users_info_subscribed)

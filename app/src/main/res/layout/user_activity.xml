@@ -86,6 +86,7 @@
         android:layout_margin="16dp"
         android:tint="@color/white"
         android:visibility="gone"
+        app:backgroundTint="@drawable/subscribe_button_background"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_person_add" />
