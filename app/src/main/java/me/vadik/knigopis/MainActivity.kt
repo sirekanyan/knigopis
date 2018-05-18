@@ -384,7 +384,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshHomeTab() {
-        bookRepository.loadBooks()
+        bookRepository.loadBooks(PlannedBook::updatedAt)
             .io2main()
             .showProgressBar()
             .subscribe({ books ->

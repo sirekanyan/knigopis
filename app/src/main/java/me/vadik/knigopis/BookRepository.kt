@@ -7,10 +7,11 @@ import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.model.*
+import java.util.*
 
 interface BookRepository {
 
-    fun loadBooks(): Single<List<Pair<Book, BookHeader>>>
+    fun <T : Comparable<T>> loadBooks(sortSelector: (PlannedBook) -> T): Single<List<Pair<Book, BookHeader>>>
 
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
@@ -24,10 +25,12 @@ class BookRepositoryImpl(
     private val resources: ResourceProvider
 ) : BookRepository {
 
-    override fun loadBooks(): Single<List<Pair<Book, BookHeader>>> =
+    override fun <T : Comparable<T>> loadBooks(
+        sortSelector: (PlannedBook) -> T
+    ): Single<List<Pair<Book, BookHeader>>> =
         Singles.zip(
             api.getPlannedBooks(auth.getAccessToken())
-                .map { it.sortedByDescending(PlannedBook::priority) }
+                .map { it.sortedByDescending(sortSelector) }
                 .map { groupPlannedBooks(it) },
             api.getFinishedBooks(auth.getAccessToken())
                 .map { it.sortedByDescending(FinishedBook::order) }
