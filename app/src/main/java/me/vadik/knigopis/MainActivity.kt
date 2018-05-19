@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     override fun onBackPressed() {
-        if (currentTab == HOME_TAB) {
+        if (currentTab == HOME_TAB || !auth.isAuthorized()) {
             super.onBackPressed()
         } else {
             refresh(HOME_TAB)
