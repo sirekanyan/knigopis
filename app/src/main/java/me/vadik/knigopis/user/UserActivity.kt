@@ -107,9 +107,9 @@ class UserActivity : AppCompatActivity() {
         super.onStart()
         interactor.getBooks(userId)
             .doOnSubscribe {
-                userBooksProgressBar.show()
-                userBooksErrorPlaceholder.hide()
-                userBooksRecyclerView.hide()
+                userBooksProgressBar.showNow()
+                userBooksErrorPlaceholder.hideNow()
+                userBooksRecyclerView.hideNow()
             }
             .doFinally { userBooksProgressBar.hide() }
             .doOnSuccess { userBooksRecyclerView.show() }
