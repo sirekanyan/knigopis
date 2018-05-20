@@ -20,6 +20,7 @@
     <string name="main.option.login">Login</string>
     <string name="main.option.profile">Profile</string>
     <string name="main.option.about">About</string>
+    <string name="main.option.dark">Dark theme</string>
 
     <!-- about -->
     <string name="about.text.idea">API:\nhttp://knigopis.com</string>

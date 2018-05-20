@@ -21,6 +21,7 @@
     <string name="main.option.login">Войти</string>
     <string name="main.option.profile">Мой профиль</string>
     <string name="main.option.about">О приложении</string>
+    <string name="main.option.dark">Тёмная тема</string>
 
     <!-- about -->
     <string name="about.text.idea">API:\nhttp://knigopis.com</string>

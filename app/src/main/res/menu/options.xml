@@ -19,4 +19,10 @@
         android:title="@string/main.option.about"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/option_dark_theme"
+        android:checkable="true"
+        android:title="@string/main.option.dark"
+        app:showAsAction="never" />
+
 </menu>

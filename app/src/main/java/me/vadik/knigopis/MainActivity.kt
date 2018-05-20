@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity(), Router {
     private lateinit var currentTab: CurrentTab
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (config.isDevMode) {
-            setTheme(R.style.DevTheme)
+        if (config.isDarkTheme) {
+            setTheme(R.style.DarkAppTheme)
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -284,11 +284,20 @@ class MainActivity : AppCompatActivity(), Router {
                     AlertDialog.Builder(this).setView(dialogView).show()
                     true
                 }
+                R.id.option_dark_theme -> {
+                    item.isChecked = !item.isChecked
+                    config.isDarkTheme = item.isChecked
+                    recreate()
+                    true
+                }
                 else -> false
             }
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
         profileOption = toolbar.menu.findItem(R.id.option_profile)
+        val darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
+        darkThemeOption.isChecked = config.isDarkTheme
+        darkThemeOption.isVisible = BuildConfig.DEBUG // todo: remove before release
         toolbar.setOnClickListener {
             if (currentTab == HOME_TAB) {
                 config.sortingMode = if (config.sortingMode == 0) 1 else 0

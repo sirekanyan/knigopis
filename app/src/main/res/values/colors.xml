@@ -2,7 +2,6 @@
 <resources>
     <color name="colorPrimary">#673AB7</color>
     <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorPrimaryDark_97">#F7512DA8</color>
     <color name="colorPrimaryLight">#9575CD</color>
     <color name="colorPrimaryLightest">#B39DDB</color>
     <color name="colorPrimary100">#D1C4E9</color>
@@ -24,4 +23,15 @@
     <color name="image_placeholder_color_dark">@color/colorPrimaryLight</color>
     <color name="ic_launcher_background">#512DA8</color>
     <color name="recycler_divider_color">@color/black_12</color>
+
+    <!-- light theme -->
+    <color name="light.text_color_primary">@color/black_87</color>
+    <color name="light.text_color_secondary">@color/black_60</color>
+    <color name="light.text_color_tertiary">@color/black_38</color>
+
+    <!-- dark theme -->
+    <color name="dark.text_color_primary">@color/white_87</color>
+    <color name="dark.text_color_secondary">@color/white_60</color>
+    <color name="dark.text_color_tertiary">@color/white_38</color>
+
 </resources>
