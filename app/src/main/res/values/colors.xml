@@ -33,6 +33,7 @@
     <color name="light.color_primary_dark">@color/common_deep_purple_700</color>
     <color name="light.color_primary">@color/common_deep_purple_500</color>
     <color name="light.background_color">@color/common_white</color>
+    <color name="light.color_accent">@color/common_deep_orange_accent_400</color>
     <color name="light.text_color_primary">@color/black_87</color>
     <color name="light.text_color_secondary">@color/black_60</color>
     <color name="light.text_color_tertiary">@color/black_38</color>
@@ -42,6 +43,7 @@
     <color name="dark.color_primary_dark">@color/common_black</color>
     <color name="dark.color_primary">@color/common_grey_900</color>
     <color name="dark.background_color">@color/common_grey_850</color>
+    <color name="dark.color_accent">@color/common_deep_orange_accent_400</color>
     <color name="dark.text_color_primary">@color/white_87</color>
     <color name="dark.text_color_secondary">@color/white_60</color>
     <color name="dark.text_color_tertiary">@color/white_38</color>
