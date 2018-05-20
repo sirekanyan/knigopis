@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/light.color_primary</item>
         <item name="colorPrimaryDark">@color/light.color_primary_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/knigopis_splash_background</item>
+        <item name="android:windowBackground">@color/light.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/image_placeholder_color_light</item>
         <item name="android:textColorPrimary">@color/light.text_color_primary</item>
@@ -16,7 +16,7 @@
         <item name="colorPrimary">@color/dark.color_primary</item>
         <item name="colorPrimaryDark">@color/dark.color_primary_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/knigopis_splash_background</item>
+        <item name="android:windowBackground">@color/dark.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
         <item name="android:textColorPrimary">@color/dark.text_color_primary</item>

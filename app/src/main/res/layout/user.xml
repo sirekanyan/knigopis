@@ -25,7 +25,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         tools:text="Павел Дуров Павел Дуров Павел Дуров Павел Дуров" />
 
@@ -36,7 +36,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
-        android:textColor="@android:color/tertiary_text_light"
+        android:textColor="?android:attr/textColorTertiary"
         android:textSize="16sp"
         tools:text="40" />
 
