@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="?android:attr/textColorTertiary"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
             tools:text="Михаил Булгаков" />
 
