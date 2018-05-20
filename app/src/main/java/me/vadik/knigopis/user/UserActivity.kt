@@ -33,6 +33,7 @@ fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent 
 
 class UserActivity : AppCompatActivity() {
 
+    private val config by inject<Configuration>()
     private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
@@ -42,6 +43,9 @@ class UserActivity : AppCompatActivity() {
     private lateinit var unsubscribeOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (config.isDarkTheme) {
+            setTheme(R.style.DarkAppTheme)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)

@@ -63,12 +63,16 @@ fun Context.createEditBookIntent(book: FinishedBook): Intent =
 
 class BookActivity : AppCompatActivity() {
 
+    private val config by inject<Configuration>()
     private val repository by inject<BookRepository>()
     private val imageSearch by inject<BookCoverSearch>()
     private val today = Calendar.getInstance()
     private var bookId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (config.isDarkTheme) {
+            setTheme(R.style.DarkAppTheme)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
         bookId = intent.getStringExtra(EXTRA_BOOK_ID)
