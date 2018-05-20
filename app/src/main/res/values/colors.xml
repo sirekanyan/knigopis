@@ -2,16 +2,21 @@
 <resources>
     <color name="common_deep_purple_700">#512DA8</color>
     <color name="common_deep_purple_500">#673AB7</color>
+    <color name="common_deep_purple_300">#9575CD</color>
+    <color name="common_deep_purple_200">#B39DDB</color>
+    <color name="common_deep_purple_100">#D1C4E9</color>
+    <color name="common_deep_purple_50">#EDE7F6</color>
     <color name="common_deep_orange_accent_400">#FF3D00</color>
+    <color name="common_blue_gray_900">#263238</color>
+    <color name="common_blue_gray_700">#455A64</color>
+    <color name="common_blue_gray_500">#607D8B</color>
+    <color name="common_blue_gray_300">#90A4AE</color>
+    <color name="common_teal_accent_700">#00BFA5</color>
     <color name="common_black">#000000</color>
     <color name="common_grey_900">#212121</color>
     <color name="common_grey_850">#303030</color>
     <color name="common_grey_800">#424242</color>
     <color name="common_white">#ffffff</color>
-    <color name="colorPrimaryLight">#9575CD</color>
-    <color name="colorPrimaryLightest">#B39DDB</color>
-    <color name="colorPrimary100">#D1C4E9</color>
-    <color name="colorPrimary50">#EDE7F6</color>
     <color name="colorAccent">#FF3D00</color>
     <color name="colorSuccessAccent">#00E676</color>
     <color name="white">#FFFFFF</color>
@@ -37,16 +42,21 @@
     <color name="light.text_color_primary">@color/black_87</color>
     <color name="light.text_color_secondary">@color/black_60</color>
     <color name="light.text_color_tertiary">@color/black_38</color>
-    <color name="image_placeholder_color_light">@color/colorPrimary50</color>
+    <color name="light_image_placeholder_color">@color/common_deep_purple_50</color>
+    <color name="light_book_progress_color">@color/common_deep_purple_200</color>
 
     <!-- dark theme -->
-    <color name="dark.color_primary_dark">@color/common_black</color>
-    <color name="dark.color_primary">@color/common_grey_900</color>
+    <color name="dark.color_primary_dark">@color/common_blue_gray_700</color>
+    <color name="dark.color_primary">@color/common_blue_gray_500</color>
     <color name="dark.background_color">@color/common_grey_850</color>
-    <color name="dark.color_accent">@color/common_deep_orange_accent_400</color>
+    <color name="dark.color_accent">@color/common_teal_accent_700</color>
     <color name="dark.text_color_primary">@color/white_87</color>
     <color name="dark.text_color_secondary">@color/white_60</color>
     <color name="dark.text_color_tertiary">@color/white_38</color>
-    <color name="image_placeholder_color_dark">@color/colorPrimaryLight</color>
+    <color name="dark_image_placeholder_color">@color/common_blue_gray_700</color>
+    <color name="dark_book_progress_color">@color/common_blue_gray_700</color>
+
+    <!-- profile theme -->
+    <color name="image_placeholder_color_dark">@color/common_deep_purple_300</color>
 
 </resources>

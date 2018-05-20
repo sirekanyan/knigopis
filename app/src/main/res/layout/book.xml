@@ -14,7 +14,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
-        android:progressDrawable="@drawable/light_progress_bar_background"
+        android:progressDrawable="?attr/book_progress_drawable"
         tools:progress="80" />
 
     <ImageView

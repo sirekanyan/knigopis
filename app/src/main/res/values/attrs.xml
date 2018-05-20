@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="image_placeholder_color" format="reference|color" />
+    <attr name="book_progress_drawable" format="reference" />
     <declare-styleable name="ViewBehavior">
         <attr name="appBarLayout" format="reference" />
         <attr name="appBarMaxHeight" format="dimension" />

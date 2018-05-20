@@ -45,7 +45,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="56dp"
         android:src="@drawable/oval_placeholder_background"
-        android:theme="@style/DarkAppTheme"
+        android:theme="@style/ProfileAppTheme"
         app:appBarLayout="@+id/app_bar"
         app:appBarMaxHeight="@dimen/app_bar_height"
         app:appBarMinHeight="@dimen/toolbar_height"

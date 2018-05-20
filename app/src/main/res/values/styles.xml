@@ -6,7 +6,8 @@
         <item name="colorAccent">@color/light.color_accent</item>
         <item name="android:windowBackground">@color/light.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="image_placeholder_color">@color/image_placeholder_color_light</item>
+        <item name="image_placeholder_color">@color/light_image_placeholder_color</item>
+        <item name="book_progress_drawable">@drawable/progress_bar_background_light</item>
         <item name="android:textColorPrimary">@color/light.text_color_primary</item>
         <item name="android:textColorSecondary">@color/light.text_color_secondary</item>
         <item name="android:textColorTertiary">@color/light.text_color_tertiary</item>
@@ -18,7 +19,8 @@
         <item name="colorAccent">@color/dark.color_accent</item>
         <item name="android:windowBackground">@color/dark.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
+        <item name="image_placeholder_color">@color/dark_image_placeholder_color</item>
+        <item name="book_progress_drawable">@drawable/progress_bar_background_dark</item>
         <item name="android:textColorPrimary">@color/dark.text_color_primary</item>
         <item name="android:textColorSecondary">@color/dark.text_color_secondary</item>
         <item name="android:textColorTertiary">@color/dark.text_color_tertiary</item>
@@ -28,6 +30,7 @@
         <item name="colorPrimary">@color/knigopis_splash_background</item>
         <item name="colorPrimaryDark">@color/knigopis_splash_background</item>
         <item name="android:windowBackground">@color/knigopis_splash_background</item>
+        <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
     </style>
 
     <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
