@@ -23,6 +23,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"
         android:text="@string/common.title.app"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp" />
 
     <TextView
@@ -30,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="12sp"
         tools:text="1.0.0" />
 
@@ -44,20 +46,23 @@
             style="@style/AboutItem"
             android:drawableLeft="@drawable/ic_about_api"
             android:drawableStart="@drawable/ic_about_api"
-            android:text="@string/about.text.idea" />
+            android:text="@string/about.text.idea"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             style="@style/AboutItem"
             android:drawableLeft="@drawable/ic_about_developer"
             android:drawableStart="@drawable/ic_about_developer"
-            android:text="@string/about.text.developer" />
+            android:text="@string/about.text.developer"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/aboutDesignerText"
             style="@style/AboutItem"
             android:drawableLeft="@drawable/ic_about_designer"
             android:drawableStart="@drawable/ic_about_designer"
-            android:text="@string/about.text.designer" />
+            android:text="@string/about.text.designer"
+            android:textColor="?android:attr/textColorPrimary" />
 
     </LinearLayout>
 
