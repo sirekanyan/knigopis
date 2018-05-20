@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="common_deep_purple_700">#512DA8</color>
+    <color name="common_deep_purple_500">#673AB7</color>
+    <color name="common_black">#000000</color>
+    <color name="common_grey_900">#212121</color>
+    <color name="common_grey_850">#303030</color>
+    <color name="common_grey_800">#424242</color>
+    <color name="common_white">#ffffff</color>
     <color name="colorPrimaryLight">#9575CD</color>
     <color name="colorPrimaryLightest">#B39DDB</color>
     <color name="colorPrimary100">#D1C4E9</color>
@@ -19,19 +24,26 @@
     <color name="black_54">#8A000000</color>
     <color name="black_60">#99000000</color>
     <color name="black_87">#DE000000</color>
-    <color name="image_placeholder_color_light">@color/colorPrimary50</color>
-    <color name="image_placeholder_color_dark">@color/colorPrimaryLight</color>
     <color name="ic_launcher_background">#512DA8</color>
     <color name="recycler_divider_color">@color/black_12</color>
+    <color name="knigopis_splash_background">@color/common_deep_purple_700</color>
 
     <!-- light theme -->
+    <color name="light.color_primary_dark">@color/common_deep_purple_700</color>
+    <color name="light.color_primary">@color/common_deep_purple_500</color>
+    <color name="light.background_color">@color/common_white</color>
     <color name="light.text_color_primary">@color/black_87</color>
     <color name="light.text_color_secondary">@color/black_60</color>
     <color name="light.text_color_tertiary">@color/black_38</color>
+    <color name="image_placeholder_color_light">@color/colorPrimary50</color>
 
     <!-- dark theme -->
+    <color name="dark.color_primary_dark">@color/common_black</color>
+    <color name="dark.color_primary">@color/common_grey_900</color>
+    <color name="dark.background_color">@color/common_grey_850</color>
     <color name="dark.text_color_primary">@color/white_87</color>
     <color name="dark.text_color_secondary">@color/white_60</color>
     <color name="dark.text_color_tertiary">@color/white_38</color>
+    <color name="image_placeholder_color_dark">@color/colorPrimaryLight</color>
 
 </resources>

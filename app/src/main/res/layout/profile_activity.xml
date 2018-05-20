@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
-    tools:background="@color/colorPrimaryDark"
     tools:ignore="ContentDescription">
 
     <android.support.v7.widget.Toolbar

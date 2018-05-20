@@ -45,7 +45,7 @@
         <activity
             android:name=".profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/DarkAppTheme" />
+            android:theme="@style/ProfileAppTheme" />
 
         <activity
             android:name="ru.ulogin.sdk.UloginAuthActivity"
