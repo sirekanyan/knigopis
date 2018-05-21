@@ -11,9 +11,14 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.auth.KAuthImpl
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.common.ResourceProviderImpl
+import me.vadik.knigopis.data.BookOrganizer
+import me.vadik.knigopis.data.FinishedBookPrepareImpl
+import me.vadik.knigopis.data.PlannedBookOrganizerImpl
 import me.vadik.knigopis.dialog.BottomSheetDialogFactory
 import me.vadik.knigopis.dialog.DialogFactory
+import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.ImageThumbnail
+import me.vadik.knigopis.model.PlannedBook
 import me.vadik.knigopis.user.UserInteractor
 import me.vadik.knigopis.user.UserInteractorImpl
 import okhttp3.OkHttpClient
@@ -29,11 +34,13 @@ private const val IMAGE_API_URL = "https://api.qwant.com/api/"
 private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 val appModule = applicationContext {
-    bean { BookRepositoryImpl(get(), get(), get(), get()) as BookRepository }
+    bean { BookRepositoryImpl(get(), get(), get("planned"), get("finished")) as BookRepository }
     bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint() }
     bean { createImageEndpoint() }
+    bean("planned") { PlannedBookOrganizerImpl(get(), get()) as BookOrganizer<PlannedBook> }
+    bean("finished") { FinishedBookPrepareImpl(get()) as BookOrganizer<FinishedBook> }
     bean { ConfigurationImpl(get()) as Configuration }
     bean { ResourceProviderImpl(get()) as ResourceProvider }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
