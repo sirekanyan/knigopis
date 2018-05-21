@@ -42,6 +42,7 @@ val appModule = applicationContext {
             get()
         ) as BookRepository
     }
+    bean { SubscriptionRepositoryImpl(get(), get(), get(), get()) as SubscriptionRepository }
     bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint(get()) }
@@ -52,6 +53,7 @@ val appModule = applicationContext {
     bean { ResourceProviderImpl(get()) as ResourceProvider }
     bean { NetworkCheckerImpl(get()) as NetworkChecker }
     bean { BookCacheImpl(get()) as BookCache }
+    bean { SubscriptionCacheImpl(get()) as SubscriptionCache }
     bean { CommonCacheImpl(get(), get()) as CommonCache }
     bean { GsonBuilder().setDateFormat(DATE_FORMAT).create() }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }

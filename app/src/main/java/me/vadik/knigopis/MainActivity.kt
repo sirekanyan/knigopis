@@ -32,6 +32,7 @@ import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.common.StickyHeaderInterface
 import me.vadik.knigopis.data.AvatarCache
 import me.vadik.knigopis.data.AvatarCacheImpl
+import me.vadik.knigopis.data.SubscriptionRepository
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity(), Router {
     private val auth by inject<KAuth>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val bookRepository by inject<BookRepository>()
+    private val userRepository by inject<SubscriptionRepository>()
     private val resourceProvider by inject<ResourceProvider>()
     private val allBooks = mutableListOf<Book>()
     private val allBookHeaders = mutableListOf<BookHeader>()
@@ -410,7 +412,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshUsersTab() {
-        api.getSubscriptions(auth.getAccessToken())
+        userRepository.getSubscriptions()
             .io2main()
             .showProgressBar()
             .subscribe({ subscriptions ->

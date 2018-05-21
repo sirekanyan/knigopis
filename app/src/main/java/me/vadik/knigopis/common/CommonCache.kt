@@ -7,15 +7,15 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import java.lang.reflect.Type
 
-private const val PREFS_NAME = "cache1"
+private const val PREFS_NAME = "cached"
 
 inline fun <reified T> genericType(): Type = object : TypeToken<T>() {}.type
 
 interface CommonCache {
 
-    fun <T> saveToJson(key: String, books: List<T>): Completable
+    fun <T> saveToJson(key: CacheKey, books: List<T>): Completable
 
-    fun <T> getFromJson(key: String, type: Type): Maybe<T>
+    fun <T> getFromJson(key: CacheKey, type: Type): Maybe<T>
 
 }
 
@@ -26,17 +26,17 @@ class CommonCacheImpl(
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    override fun <T> getFromJson(key: String, type: Type): Maybe<T> =
+    override fun <T> getFromJson(key: CacheKey, type: Type): Maybe<T> =
         Maybe.fromCallable {
-            prefs.getString(key, null)?.let { json ->
+            prefs.getString(key.storeValue, null)?.let { json ->
                 gson.fromJson<T>(json, type)
             }
         }
 
-    override fun <T> saveToJson(key: String, books: List<T>): Completable =
+    override fun <T> saveToJson(key: CacheKey, books: List<T>): Completable =
         Completable.fromAction {
             prefs.edit()
-                .putString(key, gson.toJson(books))
+                .putString(key.storeValue, gson.toJson(books))
                 .apply()
         }
 
