@@ -1,7 +1,7 @@
 package me.vadik.knigopis.common
 
 import android.app.Application
-import me.vadik.knigopis.utils.systemConnectivityManager
+import me.vadik.knigopis.common.extensions.systemConnectivityManager
 
 interface NetworkChecker {
 

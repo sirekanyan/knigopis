@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.vadik.knigopis.user.UserActivity">
+    tools:context=".feature.user.UserActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -48,7 +48,7 @@
         app:appBarLayout="@+id/app_bar"
         app:appBarMaxHeight="@dimen/app_bar_height"
         app:appBarMinHeight="@dimen/toolbar_height"
-        app:layout_behavior="me.vadik.knigopis.view.SimpleBehavior"
+        app:layout_behavior="me.vadik.knigopis.feature.user.behavior.SimpleBehavior"
         app:toHeight="40dp"
         app:toWidth="40dp"
         app:toX="64dp"

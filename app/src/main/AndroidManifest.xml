@@ -20,7 +20,7 @@
         tools:replace="allowBackup,label">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.MainActivity"
             android:label="@string/common.title.app"
             android:launchMode="singleTop">
             <intent-filter>
@@ -37,14 +37,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BookActivity"/>
+        <activity android:name="me.vadik.knigopis.feature.book.BookActivity"/>
 
         <activity
-            android:name=".user.UserActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name="me.vadik.knigopis.feature.user.UserActivity"
+            android:parentActivityName=".feature.MainActivity"/>
 
         <activity
-            android:name=".profile.ProfileActivity"
+            android:name="me.vadik.knigopis.feature.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ProfileAppTheme" />
 
