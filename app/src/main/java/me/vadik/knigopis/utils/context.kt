@@ -3,6 +3,7 @@ package me.vadik.knigopis.utils
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.support.annotation.StringRes
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -12,6 +13,9 @@ val Context.systemClipboardManager: ClipboardManager
 
 val Context.systemInputMethodManager: InputMethodManager
     get() = getAndroidSystemService(Context.INPUT_METHOD_SERVICE)
+
+val Context.systemConnectivityManager: ConnectivityManager
+    get() = getAndroidSystemService(Context.CONNECTIVITY_SERVICE)
 
 fun Context.startActivityOrNull(intent: Intent): Unit? =
     packageManager.resolveActivity(intent, 0)?.let {
