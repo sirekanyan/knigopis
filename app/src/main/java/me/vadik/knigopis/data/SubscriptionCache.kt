@@ -11,7 +11,7 @@ interface SubscriptionCache {
 
     fun getSubscriptions(): Maybe<List<Subscription>>
 
-    fun saveSubscriptions(planned: List<Subscription>): Completable
+    fun saveSubscriptions(subscriptions: List<Subscription>): Completable
 
 }
 
@@ -20,7 +20,7 @@ class SubscriptionCacheImpl(private val commonCache: CommonCache) : Subscription
     override fun getSubscriptions(): Maybe<List<Subscription>> =
         commonCache.getFromJson(CacheKey.SUBSCRIPTIONS, genericType<List<Subscription>>())
 
-    override fun saveSubscriptions(planned: List<Subscription>): Completable =
-        commonCache.saveToJson(CacheKey.SUBSCRIPTIONS, planned)
+    override fun saveSubscriptions(subscriptions: List<Subscription>): Completable =
+        commonCache.saveToJson(CacheKey.SUBSCRIPTIONS, subscriptions)
 
 }

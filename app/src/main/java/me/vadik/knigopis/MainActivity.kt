@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(), Router {
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val bookRepository by inject<BookRepository>()
     private val userRepository by inject<SubscriptionRepository>()
+    private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
     private val allBooks = mutableListOf<Book>()
     private val allBookHeaders = mutableListOf<BookHeader>()
@@ -427,14 +428,14 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshNotesTab() {
-        api.getLatestBooksWithNotes()
+        noteRepository.getNotes()
             .io2main()
             .showProgressBar()
             .subscribe({ notes ->
                 notesPlaceholder.show(notes.isEmpty())
                 notesErrorPlaceholder.hide()
                 allNotes.clear()
-                allNotes.addAll(notes.values)
+                allNotes.addAll(notes)
                 notesAdapter.notifyDataSetChanged()
             }, {
                 logError("cannot load notes", it)

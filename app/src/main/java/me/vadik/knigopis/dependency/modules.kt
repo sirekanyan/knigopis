@@ -2,7 +2,7 @@ package me.vadik.knigopis.dependency
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import me.vadik.knigopis.*
+import me.vadik.knigopis.BuildConfig
 import me.vadik.knigopis.api.BookCoverSearch
 import me.vadik.knigopis.api.BookCoverSearchImpl
 import me.vadik.knigopis.api.Endpoint
@@ -43,6 +43,7 @@ val appModule = applicationContext {
         ) as BookRepository
     }
     bean { SubscriptionRepositoryImpl(get(), get(), get(), get()) as SubscriptionRepository }
+    bean { NoteRepositoryImpl(get(), get(), get()) as NoteRepository }
     bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint(get()) }
@@ -54,6 +55,7 @@ val appModule = applicationContext {
     bean { NetworkCheckerImpl(get()) as NetworkChecker }
     bean { BookCacheImpl(get()) as BookCache }
     bean { SubscriptionCacheImpl(get()) as SubscriptionCache }
+    bean { NoteCacheImpl(get()) as NoteCache }
     bean { CommonCacheImpl(get(), get()) as CommonCache }
     bean { GsonBuilder().setDateFormat(DATE_FORMAT).create() }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
