@@ -5,6 +5,8 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.Singles
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
+import me.vadik.knigopis.common.NetworkChecker
+import me.vadik.knigopis.data.BookCache
 import me.vadik.knigopis.data.BookOrganizer
 import me.vadik.knigopis.model.*
 
@@ -20,16 +22,25 @@ interface BookRepository {
 
 class BookRepositoryImpl(
     private val api: Endpoint,
+    private val cache: BookCache,
     private val auth: KAuth,
     private val plannedBookOrganizer: BookOrganizer<PlannedBook>,
-    private val finishedBookPrepare: BookOrganizer<FinishedBook>
+    private val finishedBookPrepare: BookOrganizer<FinishedBook>,
+    private val networkChecker: NetworkChecker
 ) : BookRepository {
 
     override fun loadBooks(): Single<List<Pair<Book, BookHeader>>> =
-        Singles.zip(
-            api.getPlannedBooks(auth.getAccessToken()),
-            api.getFinishedBooks(auth.getAccessToken())
-        ).map { (planned, finished) ->
+        if (networkChecker.isNetworkAvailable()) {
+            getFromNetwork()
+                .doOnSuccess { saveToCache(it).blockingAwait() }
+                .doOnError {
+                    logError("Cannot load books from network", it)
+                    logWarn("Getting cached books")
+                }
+                .onErrorResumeNext(findInCache())
+        } else {
+            findInCache()
+        }.map { (planned, finished) ->
             mutableListOf<Pair<Book, BookHeader>>().apply {
                 addAll(plannedBookOrganizer.organize(planned))
                 addAll(finishedBookPrepare.organize(finished))
@@ -56,6 +67,26 @@ class BookRepositoryImpl(
                 api.createPlannedBook(auth.getAccessToken(), book)
                     .andThen(api.deleteFinishedBook(bookId, auth.getAccessToken()))
             }
+        }
+
+    private fun getFromNetwork(): Single<Pair<List<PlannedBook>, List<FinishedBook>>> =
+        Singles.zip(
+            api.getPlannedBooks(auth.getAccessToken()),
+            api.getFinishedBooks(auth.getAccessToken())
+        )
+
+    private fun findInCache(): Single<Pair<List<PlannedBook>, List<FinishedBook>>> =
+        Singles.zip(
+            cache.getPlannedBooks().toSingle(),
+            cache.getFinishedBooks().toSingle()
+        )
+
+    private fun saveToCache(books: Pair<List<PlannedBook>, List<FinishedBook>>): Completable =
+        books.let { (planned, finished) ->
+            Completable.concatArray(
+                cache.savePlannedBooks(planned),
+                cache.saveFinishedBooks(finished)
+            )
         }
 
 }
