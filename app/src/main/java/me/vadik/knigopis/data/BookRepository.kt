@@ -1,4 +1,4 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.data
 
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -6,8 +6,8 @@ import io.reactivex.rxkotlin.Singles
 import me.vadik.knigopis.api.Endpoint
 import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.NetworkChecker
-import me.vadik.knigopis.data.BookCache
-import me.vadik.knigopis.data.BookOrganizer
+import me.vadik.knigopis.logError
+import me.vadik.knigopis.logWarn
 import me.vadik.knigopis.model.*
 
 interface BookRepository {

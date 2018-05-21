@@ -1,4 +1,4 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.adapters
 
 import android.support.v4.view.PagerAdapter
 import android.view.View
@@ -8,6 +8,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import me.vadik.knigopis.doOnSuccess
 
 class CoverPagerAdapter(
     private val urls: List<String>,

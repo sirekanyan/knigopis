@@ -15,6 +15,7 @@ import me.vadik.knigopis.*
 import me.vadik.knigopis.adapters.books.BooksAdapter
 import me.vadik.knigopis.common.HeaderItemDecoration
 import me.vadik.knigopis.common.StickyHeaderInterface
+import me.vadik.knigopis.data.Configuration
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.BookHeader

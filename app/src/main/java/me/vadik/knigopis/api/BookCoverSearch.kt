@@ -1,7 +1,7 @@
 package me.vadik.knigopis.api
 
 import io.reactivex.Single
-import me.vadik.knigopis.BookCoverCache
+import me.vadik.knigopis.data.BookCoverCache
 import me.vadik.knigopis.io2main
 import me.vadik.knigopis.model.Book
 import me.vadik.knigopis.model.ImageThumbnail

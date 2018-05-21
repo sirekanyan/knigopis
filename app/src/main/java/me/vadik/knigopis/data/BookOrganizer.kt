@@ -1,6 +1,5 @@
 package me.vadik.knigopis.data
 
-import me.vadik.knigopis.Configuration
 import me.vadik.knigopis.R
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.model.Book

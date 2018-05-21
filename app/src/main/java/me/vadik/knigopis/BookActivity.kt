@@ -9,7 +9,10 @@ import android.view.View.VISIBLE
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import kotlinx.android.synthetic.main.book_edit.*
+import me.vadik.knigopis.adapters.CoverPagerAdapter
 import me.vadik.knigopis.api.BookCoverSearch
+import me.vadik.knigopis.data.BookRepository
+import me.vadik.knigopis.data.Configuration
 import me.vadik.knigopis.model.FinishedBook
 import me.vadik.knigopis.model.FinishedBookToSend
 import me.vadik.knigopis.model.PlannedBook

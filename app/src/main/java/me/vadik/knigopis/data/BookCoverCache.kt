@@ -1,4 +1,4 @@
-package me.vadik.knigopis
+package me.vadik.knigopis.data
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

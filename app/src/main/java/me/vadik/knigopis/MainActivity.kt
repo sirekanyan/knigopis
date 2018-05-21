@@ -30,9 +30,7 @@ import me.vadik.knigopis.auth.KAuth
 import me.vadik.knigopis.common.HeaderItemDecoration
 import me.vadik.knigopis.common.ResourceProvider
 import me.vadik.knigopis.common.StickyHeaderInterface
-import me.vadik.knigopis.data.AvatarCache
-import me.vadik.knigopis.data.AvatarCacheImpl
-import me.vadik.knigopis.data.SubscriptionRepository
+import me.vadik.knigopis.data.*
 import me.vadik.knigopis.dialog.DialogFactory
 import me.vadik.knigopis.model.*
 import me.vadik.knigopis.model.CurrentTab.*
