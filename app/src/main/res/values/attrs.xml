@@ -2,6 +2,7 @@
 <resources>
     <attr name="image_placeholder_color" format="reference|color" />
     <attr name="image_dark_placeholder_color" format="reference|color" />
+    <attr name="recycler_divider_color" format="reference|color" />
     <attr name="book_progress_drawable" format="reference" />
     <declare-styleable name="ViewBehavior">
         <attr name="appBarLayout" format="reference" />

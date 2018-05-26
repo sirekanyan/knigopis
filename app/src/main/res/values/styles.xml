@@ -18,6 +18,7 @@
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/light_image_placeholder_color</item>
         <item name="image_dark_placeholder_color">@color/light_image_dark_placeholder_color</item>
+        <item name="recycler_divider_color">@color/black_12</item>
         <item name="book_progress_drawable">@drawable/progress_bar_background_light</item>
         <item name="android:textColorPrimary">@color/light.text_color_primary</item>
         <item name="android:textColorSecondary">@color/light.text_color_secondary</item>
@@ -32,6 +33,7 @@
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
         <item name="image_placeholder_color">@color/dark_image_placeholder_color</item>
         <item name="image_dark_placeholder_color">@color/dark_image_dark_placeholder_color</item>
+        <item name="recycler_divider_color">@color/white_12</item>
         <item name="book_progress_drawable">@drawable/progress_bar_background_dark</item>
         <item name="android:textColorPrimary">@color/dark.text_color_primary</item>
         <item name="android:textColorSecondary">@color/dark.text_color_secondary</item>

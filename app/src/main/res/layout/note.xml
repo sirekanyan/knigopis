@@ -96,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_gravity="bottom"
-        android:src="@color/recycler_divider_color"
+        android:src="?attr/recycler_divider_color"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>
