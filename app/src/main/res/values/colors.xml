@@ -43,6 +43,7 @@
     <color name="light.text_color_secondary">@color/black_60</color>
     <color name="light.text_color_tertiary">@color/black_38</color>
     <color name="light_image_placeholder_color">@color/common_deep_purple_50</color>
+    <color name="light_image_dark_placeholder_color">@color/common_deep_purple_300</color>
     <color name="light_book_progress_color">@color/common_deep_purple_200</color>
 
     <!-- dark theme -->
@@ -54,6 +55,7 @@
     <color name="dark.text_color_secondary">@color/white_60</color>
     <color name="dark.text_color_tertiary">@color/white_38</color>
     <color name="dark_image_placeholder_color">@color/common_blue_gray_700</color>
+    <color name="dark_image_dark_placeholder_color">@color/common_blue_gray_300</color>
     <color name="dark_book_progress_color">@color/common_blue_gray_700</color>
 
     <!-- profile theme -->
