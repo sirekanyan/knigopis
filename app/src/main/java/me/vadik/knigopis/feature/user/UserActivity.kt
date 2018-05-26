@@ -11,15 +11,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import kotlinx.android.synthetic.main.user_activity.*
-import me.vadik.knigopis.*
+import me.vadik.knigopis.R
 import me.vadik.knigopis.common.*
+import me.vadik.knigopis.common.extensions.*
+import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.common.view.header.HeaderItemDecoration
 import me.vadik.knigopis.common.view.header.StickyHeaderInterface
 import me.vadik.knigopis.repository.Configuration
-import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.repository.model.Book
 import me.vadik.knigopis.repository.model.BookHeader
-import me.vadik.knigopis.common.extensions.*
 import org.koin.android.ext.android.inject
 
 private const val EXTRA_USER_ID = "me.vadik.knigopis.extra_user_id"

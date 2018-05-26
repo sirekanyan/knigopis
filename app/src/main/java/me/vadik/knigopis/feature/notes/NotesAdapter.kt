@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
-import me.vadik.knigopis.repository.cache.AvatarCache
 import me.vadik.knigopis.common.extensions.inflate
+import me.vadik.knigopis.repository.cache.AvatarCache
 import me.vadik.knigopis.repository.model.note.Note
 
 class NotesAdapter(

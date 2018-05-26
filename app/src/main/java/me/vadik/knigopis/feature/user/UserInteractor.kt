@@ -2,9 +2,9 @@ package me.vadik.knigopis.feature.user
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import me.vadik.knigopis.repository.api.Endpoint
-import me.vadik.knigopis.repository.KAuth
 import me.vadik.knigopis.common.io2main
+import me.vadik.knigopis.repository.KAuth
+import me.vadik.knigopis.repository.api.Endpoint
 import me.vadik.knigopis.repository.model.Book
 import me.vadik.knigopis.repository.model.BookHeader
 

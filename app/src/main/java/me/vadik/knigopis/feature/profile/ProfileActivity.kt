@@ -9,13 +9,12 @@ import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.profile_activity.*
-import me.vadik.knigopis.*
+import me.vadik.knigopis.R
 import me.vadik.knigopis.common.*
-import me.vadik.knigopis.repository.api.Endpoint
-import me.vadik.knigopis.repository.KAuth
-import me.vadik.knigopis.common.extensions.setCircleImage
-import me.vadik.knigopis.repository.model.*
 import me.vadik.knigopis.common.extensions.*
+import me.vadik.knigopis.repository.KAuth
+import me.vadik.knigopis.repository.api.Endpoint
+import me.vadik.knigopis.repository.model.*
 import org.koin.android.ext.android.inject
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)

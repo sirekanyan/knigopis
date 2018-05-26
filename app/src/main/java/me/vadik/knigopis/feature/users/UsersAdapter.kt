@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
 import me.vadik.knigopis.common.ResourceProvider
+import me.vadik.knigopis.common.extensions.inflate
 import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.common.view.dialog.createDialogItem
-import me.vadik.knigopis.common.extensions.inflate
 import me.vadik.knigopis.repository.model.subscription.Subscription
 
 class UsersAdapter(

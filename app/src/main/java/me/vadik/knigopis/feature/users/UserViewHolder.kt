@@ -5,8 +5,8 @@ import android.view.View
 import kotlinx.android.synthetic.main.user.view.*
 import me.vadik.knigopis.R
 import me.vadik.knigopis.common.extensions.setCircleImage
-import me.vadik.knigopis.common.getHtmlString
 import me.vadik.knigopis.common.extensions.showNow
+import me.vadik.knigopis.common.getHtmlString
 
 class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

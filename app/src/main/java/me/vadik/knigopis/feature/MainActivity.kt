@@ -21,31 +21,32 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
-import me.vadik.knigopis.*
+import me.vadik.knigopis.BuildConfig
+import me.vadik.knigopis.R
+import me.vadik.knigopis.Router
 import me.vadik.knigopis.common.*
-import me.vadik.knigopis.feature.books.BooksAdapter
-import me.vadik.knigopis.feature.notes.NotesAdapter
-import me.vadik.knigopis.feature.users.UsersAdapter
-import me.vadik.knigopis.repository.api.BookCoverSearch
-import me.vadik.knigopis.repository.api.Endpoint
-import me.vadik.knigopis.repository.KAuth
-import me.vadik.knigopis.feature.book.createEditBookIntent
-import me.vadik.knigopis.feature.book.createNewBookIntent
-import me.vadik.knigopis.repository.cache.AvatarCache
-import me.vadik.knigopis.repository.cache.AvatarCacheImpl
+import me.vadik.knigopis.common.extensions.showNow
+import me.vadik.knigopis.common.extensions.startActivityOrNull
+import me.vadik.knigopis.common.extensions.toast
+import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.common.view.header.HeaderItemDecoration
 import me.vadik.knigopis.common.view.header.StickyHeaderInterface
+import me.vadik.knigopis.feature.book.createEditBookIntent
+import me.vadik.knigopis.feature.book.createNewBookIntent
+import me.vadik.knigopis.feature.books.BooksAdapter
+import me.vadik.knigopis.feature.notes.NotesAdapter
+import me.vadik.knigopis.feature.profile.createProfileIntent
+import me.vadik.knigopis.feature.user.createUserIntent
+import me.vadik.knigopis.feature.users.UsersAdapter
 import me.vadik.knigopis.repository.*
-import me.vadik.knigopis.common.view.dialog.DialogFactory
+import me.vadik.knigopis.repository.api.BookCoverSearch
+import me.vadik.knigopis.repository.api.Endpoint
+import me.vadik.knigopis.repository.cache.AvatarCache
+import me.vadik.knigopis.repository.cache.AvatarCacheImpl
 import me.vadik.knigopis.repository.model.*
 import me.vadik.knigopis.repository.model.CurrentTab.*
 import me.vadik.knigopis.repository.model.note.Note
 import me.vadik.knigopis.repository.model.subscription.Subscription
-import me.vadik.knigopis.feature.profile.createProfileIntent
-import me.vadik.knigopis.feature.user.createUserIntent
-import me.vadik.knigopis.common.extensions.showNow
-import me.vadik.knigopis.common.extensions.startActivityOrNull
-import me.vadik.knigopis.common.extensions.toast
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 
@@ -143,7 +144,8 @@ class MainActivity : AppCompatActivity(), Router {
         initNavigationView()
         initToolbar(toolbar)
         addBookButton.setOnClickListener {
-            startActivityForResult(createNewBookIntent(),
+            startActivityForResult(
+                createNewBookIntent(),
                 BOOK_REQUEST_CODE
             )
         }
@@ -209,12 +211,8 @@ class MainActivity : AppCompatActivity(), Router {
 
     override fun openBookScreen(book: Book) {
         when (book) {
-            is PlannedBook -> startActivityForResult(createEditBookIntent(book),
-                BOOK_REQUEST_CODE
-            )
-            is FinishedBook -> startActivityForResult(createEditBookIntent(book),
-                BOOK_REQUEST_CODE
-            )
+            is PlannedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
+            is FinishedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
             else -> throw UnsupportedOperationException()
         }
     }
@@ -318,9 +316,7 @@ class MainActivity : AppCompatActivity(), Router {
                         auth.logout()
                         refresh()
                     } else {
-                        startActivityForResult(auth.getTokenRequest(),
-                            ULOGIN_REQUEST_CODE
-                        )
+                        startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
                     }
                     refreshOptionsMenu()
                 }

@@ -2,9 +2,9 @@ package me.vadik.knigopis.repository
 
 import android.content.Context
 import android.content.Intent
-import me.vadik.knigopis.repository.api.Endpoint
 import me.vadik.knigopis.common.io2main
 import me.vadik.knigopis.common.logError
+import me.vadik.knigopis.repository.api.Endpoint
 import ru.ulogin.sdk.UloginAuthActivity
 import java.util.*
 

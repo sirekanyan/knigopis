@@ -1,8 +1,8 @@
 package me.vadik.knigopis.repository.api
 
 import io.reactivex.Single
-import me.vadik.knigopis.repository.cache.BookCoverCache
 import me.vadik.knigopis.common.io2main
+import me.vadik.knigopis.repository.cache.BookCoverCache
 import me.vadik.knigopis.repository.model.Book
 import me.vadik.knigopis.repository.model.ImageThumbnail
 import java.util.concurrent.TimeUnit

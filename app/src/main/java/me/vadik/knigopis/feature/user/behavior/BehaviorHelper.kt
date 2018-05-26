@@ -2,12 +2,13 @@ package me.vadik.knigopis.feature.user.behavior
 
 import android.view.View
 
-val View.simpleState get() = SimpleViewState(
-    x.toInt(),
-    y.toInt(),
-    width,
-    height
-)
+val View.simpleState
+    get() = SimpleViewState(
+        x.toInt(),
+        y.toInt(),
+        width,
+        height
+    )
 
 class BehaviorHelper(val start: SimpleViewState, val end: SimpleViewState) {
 

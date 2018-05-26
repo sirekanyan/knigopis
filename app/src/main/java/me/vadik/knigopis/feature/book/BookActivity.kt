@@ -9,19 +9,19 @@ import android.view.View.VISIBLE
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import kotlinx.android.synthetic.main.book_edit.*
-import me.vadik.knigopis.*
+import me.vadik.knigopis.R
 import me.vadik.knigopis.common.*
-import me.vadik.knigopis.repository.api.BookCoverSearch
-import me.vadik.knigopis.repository.BookRepository
-import me.vadik.knigopis.repository.Configuration
-import me.vadik.knigopis.repository.model.FinishedBook
-import me.vadik.knigopis.repository.model.FinishedBookToSend
-import me.vadik.knigopis.repository.model.PlannedBook
-import me.vadik.knigopis.repository.model.PlannedBookToSend
 import me.vadik.knigopis.common.extensions.hideKeyboard
 import me.vadik.knigopis.common.extensions.hideNow
 import me.vadik.knigopis.common.extensions.showNow
 import me.vadik.knigopis.common.extensions.toast
+import me.vadik.knigopis.repository.BookRepository
+import me.vadik.knigopis.repository.Configuration
+import me.vadik.knigopis.repository.api.BookCoverSearch
+import me.vadik.knigopis.repository.model.FinishedBook
+import me.vadik.knigopis.repository.model.FinishedBookToSend
+import me.vadik.knigopis.repository.model.PlannedBook
+import me.vadik.knigopis.repository.model.PlannedBookToSend
 import org.koin.android.ext.android.inject
 import java.util.*
 

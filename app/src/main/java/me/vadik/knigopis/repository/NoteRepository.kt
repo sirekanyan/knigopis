@@ -2,11 +2,11 @@ package me.vadik.knigopis.repository
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import me.vadik.knigopis.repository.api.Endpoint
-import me.vadik.knigopis.repository.cache.NoteCache
 import me.vadik.knigopis.common.NetworkChecker
 import me.vadik.knigopis.common.logError
 import me.vadik.knigopis.common.logWarn
+import me.vadik.knigopis.repository.api.Endpoint
+import me.vadik.knigopis.repository.cache.NoteCache
 import me.vadik.knigopis.repository.model.note.Note
 
 interface NoteRepository {
