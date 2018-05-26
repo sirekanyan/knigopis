@@ -1,5 +1,15 @@
 <resources>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTitleSize">?attr/actionBarSize</item>
+        <item name="android:windowTitleStyle">@style/SplashWindowTitle</item>
+        <item name="android:windowTitleBackgroundStyle">@style/SplashWindowTitleBackground</item>
+        <item name="android:windowBackground">@color/dark.background_color</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="colorPrimary">@color/dark.color_primary</item>
+        <item name="colorPrimaryDark">@color/dark.color_primary_dark</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/light.color_primary</item>
         <item name="colorPrimaryDark">@color/light.color_primary_dark</item>
@@ -92,4 +102,17 @@
     <style name="WhiteAccent">
         <item name="colorAccent">@color/white</item>
     </style>
+
+    <style name="SplashWindowTitleBackground">
+        <item name="android:background">@color/dark.color_primary</item>
+    </style>
+
+    <style name="SplashWindowTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
 </resources>

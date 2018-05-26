@@ -92,9 +92,7 @@ class MainActivity : AppCompatActivity(), Router {
     private lateinit var currentTab: CurrentTab
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (config.isDarkTheme) {
-            setTheme(R.style.DarkAppTheme)
-        }
+        setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRecyclerView(booksRecyclerView)
