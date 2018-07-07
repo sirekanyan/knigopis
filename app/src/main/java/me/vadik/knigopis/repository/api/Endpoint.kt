@@ -60,17 +60,16 @@ interface Endpoint {
     fun getLatestBooksWithNotes(): Single<Map<String, Note>>
 
     @GET("subscriptions")
-    fun getSubscriptions(
-        @Query("access-token") accessToken: String
-    ): Single<List<Subscription>>
+    fun getSubscriptions(@Query("access-token") accessToken: String): Single<List<Subscription>>
 
     @GET("users/current")
-    fun getProfile(
-        @Query("access-token") accessToken: String
-    ): Single<Credentials.UserFull>
+    fun getProfile(@Query("access-token") accessToken: String): Single<User>
 
     @GET("users/{id}/books")
     fun getUserBooks(@Path("id") userId: String): Single<List<FinishedBook>>
+
+    @GET("users/{id}")
+    fun getUser(@Path("id") userId: String): Single<User>
 
     @PUT("users/{id}")
     fun updateProfile(

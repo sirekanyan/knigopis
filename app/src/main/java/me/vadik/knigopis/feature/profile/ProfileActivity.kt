@@ -84,7 +84,7 @@ class ProfileActivity : AppCompatActivity() {
             })
     }
 
-    private fun onRefreshProfile(user: Credentials.UserFull) {
+    private fun onRefreshProfile(user: User) {
         userId = user.id
         profileUrl = user.fixedProfile
         profileNickname.text = user.nickname.orEmpty()
