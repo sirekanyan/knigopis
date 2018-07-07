@@ -148,6 +148,10 @@ class UserActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
             R.id.option_copy -> {
                 val link = "http://www.knigopis.com/#/user/books?u=$userId"
                 systemClipboardManager.primaryClip = ClipData.newPlainText(null, link)

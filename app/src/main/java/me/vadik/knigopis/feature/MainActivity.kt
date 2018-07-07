@@ -176,15 +176,16 @@ class MainActivity : AppCompatActivity(), Router {
             booksChanged = false
             refresh(isForce = true)
         }
-        intent.data?.also {
-            val normalizedUri = Uri.parse(it.toString().replaceFirst("/#/", "/"))
+        intent.data?.also { userUrl ->
+            intent.data = null
+            val normalizedUri = Uri.parse(userUrl.toString().replaceFirst("/#/", "/"))
             normalizedUri.getQueryParameter("u")?.let { userId ->
-                api.createSubscription(userId, auth.getAccessToken())
+                api.getUser(userId)
                     .io2main()
-                    .subscribe({
-                        toast(R.string.users_info_subscribed)
+                    .subscribe({ user ->
+                        openUserScreen(userId, user.name, user.photo)
                     }, {
-                        logError("Cannot create subscription", it)
+                        logError("Cannot get user", it)
                     })
             }
         }
