@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
 import me.vadik.knigopis.common.extensions.inflate
-import me.vadik.knigopis.repository.cache.AvatarCache
 import me.vadik.knigopis.repository.model.note.Note
 
 class NotesAdapter(
     private val notes: List<Note>,
-    private val avatarCache: AvatarCache,
     private val router: Router
 ) : RecyclerView.Adapter<NoteViewHolder>() {
 
@@ -26,7 +24,7 @@ class NotesAdapter(
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         val user = note.user
-        val avatar = avatarCache.urls[user.id]
+        val avatar = note.user.avatarUrl
         holder.setTitle(note.title)
         holder.setAuthor(note.author)
         holder.setNotes(note.notes)
