@@ -23,3 +23,15 @@ fun ImageView.setCircleImage(url: String?, isDark: Boolean = false) {
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)
 }
+
+fun ImageView.setSquareImage(url: String?) {
+    Glide.with(context)
+        .load(url)
+        .apply(
+            RequestOptions.centerCropTransform()
+                .placeholder(R.drawable.oval_placeholder_background)
+                .theme(context.theme)
+        )
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(this)
+}

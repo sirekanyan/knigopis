@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import android.view.View
 import kotlinx.android.synthetic.main.note.view.*
 import me.vadik.knigopis.common.extensions.setCircleImage
+import me.vadik.knigopis.common.extensions.setSquareImage
 
 class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -30,6 +31,10 @@ class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun setAvatarUrl(url: String?) {
         view.userSmallAvatar.setCircleImage(url)
+    }
+
+    fun setBookImageUrl(url: String?) {
+        view.bookImage.setSquareImage(url)
     }
 
 }
