@@ -30,6 +30,7 @@ class BooksAdapter(
         holder.setTitle(book.title)
         holder.setAuthor(book.author)
         holder.setNotes(book.notes)
+        holder.setBookImageUrl(book.bookImageUrl)
         holder.setOnLongClick { view ->
             val context = view.context
             dialogs.showDialog(
