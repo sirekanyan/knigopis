@@ -39,7 +39,6 @@ import me.vadik.knigopis.feature.profile.createProfileIntent
 import me.vadik.knigopis.feature.user.createUserIntent
 import me.vadik.knigopis.feature.users.UsersAdapter
 import me.vadik.knigopis.repository.*
-import me.vadik.knigopis.repository.api.BookCoverSearch
 import me.vadik.knigopis.repository.api.Endpoint
 import me.vadik.knigopis.repository.model.*
 import me.vadik.knigopis.repository.model.CurrentTab.*
@@ -57,7 +56,6 @@ private const val CURRENT_TAB_KEY = "me.vadik.knigopis.current_tab"
 class MainActivity : AppCompatActivity(), Router {
 
     private val api by inject<Endpoint>()
-    private val bookCoverSearch by inject<BookCoverSearch>()
     private val config by inject<Configuration>()
     private val auth by inject<KAuth>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
@@ -71,7 +69,6 @@ class MainActivity : AppCompatActivity(), Router {
     private val allNotes = mutableListOf<Note>()
     private val booksAdapter by lazy {
         BooksAdapter(
-            bookCoverSearch,
             api,
             auth,
             this,

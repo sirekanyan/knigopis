@@ -29,7 +29,7 @@ fun ImageView.setSquareImage(url: String?) {
         .load(url)
         .apply(
             RequestOptions.centerCropTransform()
-                .placeholder(R.drawable.oval_placeholder_background)
+                .placeholder(R.drawable.rectangle_placeholder_background)
                 .theme(context.theme)
         )
         .transition(DrawableTransitionOptions.withCrossFade())

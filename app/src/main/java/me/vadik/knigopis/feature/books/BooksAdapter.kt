@@ -5,13 +5,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import me.vadik.knigopis.R
 import me.vadik.knigopis.Router
 import me.vadik.knigopis.common.Adapter
 import me.vadik.knigopis.common.extensions.hideNow
+import me.vadik.knigopis.common.extensions.setSquareImage
 import me.vadik.knigopis.common.extensions.showNow
 import me.vadik.knigopis.common.extensions.toast
 import me.vadik.knigopis.common.io2main
@@ -20,7 +18,6 @@ import me.vadik.knigopis.common.setProgressSmoothly
 import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.common.view.dialog.createDialogItem
 import me.vadik.knigopis.repository.KAuth
-import me.vadik.knigopis.repository.api.BookCoverSearch
 import me.vadik.knigopis.repository.api.Endpoint
 import me.vadik.knigopis.repository.model.Book
 import me.vadik.knigopis.repository.model.BookHeader
@@ -28,7 +25,6 @@ import me.vadik.knigopis.repository.model.FinishedBook
 import me.vadik.knigopis.repository.model.PlannedBook
 
 class BooksAdapter(
-    private val coverSearch: BookCoverSearch,
     private val api: Endpoint,
     private val auth: KAuth,
     private val router: Router,
@@ -107,23 +103,7 @@ class BooksAdapter(
             }
         }
         .bind<ImageView>(R.id.book_image) {
-            coverSearch.search(books[it])
-                .subscribe({ coverUrl ->
-                    Glide.with(context)
-                        .load(coverUrl)
-                        .apply(
-                            RequestOptions.centerCropTransform()
-                                .placeholder(R.drawable.rectangle_placeholder_background)
-                        )
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(this)
-                }, {
-                    logError("cannot load thumbnail", it)
-                    Glide.with(context)
-                        .load(R.drawable.rectangle_placeholder_background)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(this)
-                })
+            setSquareImage(books[it].bookImageUrl)
         }
         .bind<TextView>(R.id.book_title) {
             text = books[it].titleOrDefault
