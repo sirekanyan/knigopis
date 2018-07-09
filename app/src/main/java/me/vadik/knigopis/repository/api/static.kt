@@ -3,7 +3,7 @@ package me.vadik.knigopis.repository.api
 import me.vadik.knigopis.BuildConfig.STATIC_SERVER
 
 fun createUserImageUrl(userId: String): String {
-    return "$STATIC_SERVER/user/$userId.jpg"
+    return "$STATIC_SERVER/user/$userId"
 }
 
 fun createBookImageUrl(bookTitle: String): String {
@@ -11,5 +11,5 @@ fun createBookImageUrl(bookTitle: String): String {
         .replace(Regex("\\W+"), "_")
         .replace(Regex("(^_|_$)"), "")
         .replace("ё", "е")
-    return "$STATIC_SERVER/book/$normalizedTitle.jpg"
+    return "$STATIC_SERVER/book/$normalizedTitle"
 }

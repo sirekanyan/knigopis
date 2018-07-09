@@ -47,7 +47,7 @@ val appModule = applicationContext {
     }
     bean { SubscriptionRepositoryImpl(get(), get(), get(), get()) as SubscriptionRepository }
     bean { NoteRepositoryImpl(get(), get(), get()) as NoteRepository }
-    bean { BookCoverSearchImpl(get(), BookCoverCacheImpl(get())) as BookCoverSearch }
+    bean { BookCoverSearchImpl(get()) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint(get()) }
     bean { createImageEndpoint() }
