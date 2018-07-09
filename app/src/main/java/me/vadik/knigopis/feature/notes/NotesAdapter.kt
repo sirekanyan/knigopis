@@ -34,6 +34,7 @@ class NotesAdapter(
             router.openUserScreen(user.id, user.name, avatar)
         }
         holder.setAvatarUrl(avatar)
+        holder.setBookImageUrl(note.bookImageUrl)
     }
 
 }

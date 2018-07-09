@@ -1,15 +1,16 @@
 package me.vadik.knigopis.repository.model.note
 
+import me.vadik.knigopis.repository.model.Book
 import java.util.*
 
 class Note(
-    val id: String,
-    val title: String,
-    val author: String,
+    override val id: String,
+    override val title: String,
+    override val author: String,
     val notes: String,
     private val createdAt: Date,
     val user: Identity
-) {
+) : Book {
     // TODO https://trello.com/c/UymHYoPK
     val fixedCreatedAt
         get() = Date(createdAt.time + TimeZone.getDefault().rawOffset)

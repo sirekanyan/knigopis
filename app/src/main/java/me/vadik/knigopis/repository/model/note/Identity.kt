@@ -1,6 +1,6 @@
 package me.vadik.knigopis.repository.model.note
 
-private const val STATIC_SERVER = "https://knigopis.tk/img"
+import me.vadik.knigopis.repository.api.createUserImageUrl
 
 class Identity(
     val id: String,
@@ -8,5 +8,5 @@ class Identity(
     private val booksCount: Int
 ) {
     val name get() = nickname ?: id
-    val avatarUrl get() = "$STATIC_SERVER/user/$id.jpg"
+    val avatarUrl get() = createUserImageUrl(id)
 }
