@@ -8,13 +8,13 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import kotlinx.android.synthetic.main.profile_activity.*
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.repository.KAuth
 import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.model.*
+import kotlinx.android.synthetic.main.profile_activity.*
 import org.koin.android.ext.android.inject
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)

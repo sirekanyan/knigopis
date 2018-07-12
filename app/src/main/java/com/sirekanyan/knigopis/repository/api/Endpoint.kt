@@ -1,10 +1,10 @@
 package com.sirekanyan.knigopis.repository.api
 
-import io.reactivex.Completable
-import io.reactivex.Single
 import com.sirekanyan.knigopis.repository.model.*
 import com.sirekanyan.knigopis.repository.model.note.Note
 import com.sirekanyan.knigopis.repository.model.subscription.Subscription
+import io.reactivex.Completable
+import io.reactivex.Single
 import retrofit2.http.*
 
 interface Endpoint {

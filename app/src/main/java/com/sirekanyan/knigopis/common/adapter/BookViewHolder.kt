@@ -3,11 +3,11 @@ package com.sirekanyan.knigopis.common.adapter
 import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.header.view.*
-import kotlinx.android.synthetic.main.user_book.view.*
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.setSquareImage
 import com.sirekanyan.knigopis.common.extensions.showNow
+import kotlinx.android.synthetic.main.header.view.*
+import kotlinx.android.synthetic.main.user_book.view.*
 
 sealed class BookViewHolder(view: View) : RecyclerView.ViewHolder(view)
 

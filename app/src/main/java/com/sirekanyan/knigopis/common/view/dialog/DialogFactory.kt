@@ -2,10 +2,10 @@ package com.sirekanyan.knigopis.common.view.dialog
 
 import android.content.Context
 import android.support.design.widget.BottomSheetDialog
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_item.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_view.*
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.inflate
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_item.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_view.*
 
 interface DialogFactory {
 

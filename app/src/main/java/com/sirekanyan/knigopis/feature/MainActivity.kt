@@ -14,13 +14,6 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Single
-import kotlinx.android.synthetic.main.about.view.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.books_page.*
-import kotlinx.android.synthetic.main.notes_page.*
-import kotlinx.android.synthetic.main.users_page.*
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
@@ -44,6 +37,13 @@ import com.sirekanyan.knigopis.repository.model.*
 import com.sirekanyan.knigopis.repository.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.model.note.Note
 import com.sirekanyan.knigopis.repository.model.subscription.Subscription
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Single
+import kotlinx.android.synthetic.main.about.view.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.books_page.*
+import kotlinx.android.synthetic.main.notes_page.*
+import kotlinx.android.synthetic.main.users_page.*
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 

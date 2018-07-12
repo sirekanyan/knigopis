@@ -2,11 +2,11 @@ package com.sirekanyan.knigopis.feature.users
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.user.view.*
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.setCircleImage
 import com.sirekanyan.knigopis.common.extensions.showNow
 import com.sirekanyan.knigopis.common.getHtmlString
+import kotlinx.android.synthetic.main.user.view.*
 
 class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

@@ -1,12 +1,12 @@
 package com.sirekanyan.knigopis.feature.user
 
-import io.reactivex.Completable
-import io.reactivex.Single
 import com.sirekanyan.knigopis.common.io2main
 import com.sirekanyan.knigopis.repository.KAuth
 import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.model.Book
 import com.sirekanyan.knigopis.repository.model.BookHeader
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface UserInteractor {
 

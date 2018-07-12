@@ -1,12 +1,12 @@
 package com.sirekanyan.knigopis.repository.cache
 
-import io.reactivex.Completable
-import io.reactivex.Maybe
 import com.sirekanyan.knigopis.repository.cache.common.CacheKey
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.genericType
 import com.sirekanyan.knigopis.repository.model.FinishedBook
 import com.sirekanyan.knigopis.repository.model.PlannedBook
+import io.reactivex.Completable
+import io.reactivex.Maybe
 
 interface BookCache {
 
