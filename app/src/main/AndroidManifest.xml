@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sirekanyan.knigopis">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -25,8 +24,8 @@
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -38,11 +37,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.book.BookActivity"/>
+        <activity android:name=".feature.book.BookActivity" />
 
         <activity
             android:name=".feature.user.UserActivity"
-            android:parentActivityName=".feature.MainActivity"/>
+            android:parentActivityName=".feature.MainActivity" />
 
         <activity
             android:name=".feature.profile.ProfileActivity"
@@ -51,7 +50,7 @@
 
         <activity
             android:name="ru.ulogin.sdk.UloginAuthActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize" />
 
     </application>
 
