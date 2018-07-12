@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="me.vadik.knigopis">
+    package="com.sirekanyan.knigopis">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -38,14 +38,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="me.vadik.knigopis.feature.book.BookActivity"/>
+        <activity android:name=".feature.book.BookActivity"/>
 
         <activity
-            android:name="me.vadik.knigopis.feature.user.UserActivity"
+            android:name=".feature.user.UserActivity"
             android:parentActivityName=".feature.MainActivity"/>
 
         <activity
-            android:name="me.vadik.knigopis.feature.profile.ProfileActivity"
+            android:name=".feature.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ProfileAppTheme" />
 
