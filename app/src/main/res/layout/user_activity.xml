@@ -47,7 +47,7 @@
         app:appBarLayout="@+id/app_bar"
         app:appBarMaxHeight="@dimen/app_bar_height"
         app:appBarMinHeight="@dimen/toolbar_height"
-        app:layout_behavior=".feature.user.behavior.SimpleBehavior"
+        app:layout_behavior="com.sirekanyan.knigopis.feature.user.behavior.SimpleBehavior"
         app:toHeight="40dp"
         app:toWidth="40dp"
         app:toX="64dp"
