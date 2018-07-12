@@ -11,16 +11,11 @@ import me.vadik.knigopis.common.view.dialog.DialogFactory
 import me.vadik.knigopis.feature.user.UserInteractor
 import me.vadik.knigopis.feature.user.UserInteractorImpl
 import me.vadik.knigopis.repository.*
-import me.vadik.knigopis.repository.api.BookCoverSearch
-import me.vadik.knigopis.repository.api.BookCoverSearchImpl
 import me.vadik.knigopis.repository.api.Endpoint
-import me.vadik.knigopis.repository.api.ImageEndpoint
-import me.vadik.knigopis.repository.api.gson.ImageThumbnailDeserializer
 import me.vadik.knigopis.repository.cache.*
 import me.vadik.knigopis.repository.cache.common.CommonCache
 import me.vadik.knigopis.repository.cache.common.CommonCacheImpl
 import me.vadik.knigopis.repository.model.FinishedBook
-import me.vadik.knigopis.repository.model.ImageThumbnail
 import me.vadik.knigopis.repository.model.PlannedBook
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,7 +26,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val MAIN_API_URL = "http://api.knigopis.com"
-private const val IMAGE_API_URL = "https://api.qwant.com/api/"
 private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
 val appModule = applicationContext {
@@ -47,10 +41,8 @@ val appModule = applicationContext {
     }
     bean { SubscriptionRepositoryImpl(get(), get(), get(), get()) as SubscriptionRepository }
     bean { NoteRepositoryImpl(get(), get(), get()) as NoteRepository }
-    bean { BookCoverSearchImpl(get()) as BookCoverSearch }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint(get()) }
-    bean { createImageEndpoint() }
     bean("planned") { PlannedBookOrganizerImpl(get(), get()) as BookOrganizer<PlannedBook> }
     bean("finished") { FinishedBookPrepareImpl(get()) as BookOrganizer<FinishedBook> }
     bean { ConfigurationImpl(get()) as Configuration }
@@ -83,21 +75,6 @@ private fun createMainEndpoint(gson: Gson) =
         )
         .build()
         .create(Endpoint::class.java)
-
-private fun createImageEndpoint() =
-    Retrofit.Builder()
-        .baseUrl(IMAGE_API_URL)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().registerTypeAdapter(
-                    ImageThumbnail::class.java,
-                    ImageThumbnailDeserializer()
-                ).create()
-            )
-        )
-        .build()
-        .create(ImageEndpoint::class.java)
 
 private fun OkHttpClient.Builder.setDebugEnabled(debugEnabled: Boolean) =
     apply {

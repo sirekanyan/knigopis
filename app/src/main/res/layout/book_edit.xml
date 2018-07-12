@@ -39,7 +39,7 @@
                 android:layout_marginTop="16dp"
                 android:hint="@string/book.hint.title"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/coverImageViews"
+                app:layout_constraintRight_toLeftOf="@id/bookImage"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
@@ -60,7 +60,7 @@
                 android:layout_marginTop="16dp"
                 android:hint="@string/book.hint.author"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/coverImageViews"
+                app:layout_constraintRight_toLeftOf="@id/bookImage"
                 app:layout_constraintTop_toBottomOf="@id/book_title_input">
 
                 <EditText
@@ -73,18 +73,19 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/coverImageViews"
+            <ImageView
+                android:id="@+id/bookImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:background="@drawable/rectangle_placeholder_background"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/book_author_input"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/book_title_input"
-                tools:background="@color/colorAccent"
+                tools:ignore="ContentDescription"
                 tools:visibility="visible" />
 
             <TextView

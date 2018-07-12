@@ -4,20 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import kotlinx.android.synthetic.main.book_edit.*
 import me.vadik.knigopis.R
 import me.vadik.knigopis.common.*
-import me.vadik.knigopis.common.extensions.hideKeyboard
-import me.vadik.knigopis.common.extensions.hideNow
-import me.vadik.knigopis.common.extensions.showNow
-import me.vadik.knigopis.common.extensions.toast
+import me.vadik.knigopis.common.extensions.*
 import me.vadik.knigopis.repository.BookRepository
 import me.vadik.knigopis.repository.Configuration
-import me.vadik.knigopis.repository.api.BookCoverSearch
+import me.vadik.knigopis.repository.api.createBookImageUrl
 import me.vadik.knigopis.repository.model.FinishedBook
 import me.vadik.knigopis.repository.model.FinishedBookToSend
 import me.vadik.knigopis.repository.model.PlannedBook
@@ -25,7 +20,6 @@ import me.vadik.knigopis.repository.model.PlannedBookToSend
 import org.koin.android.ext.android.inject
 import java.util.*
 
-private const val IMAGE_PRELOAD_COUNT = 3
 private const val EXTRA_BOOK_ID = "me.vadik.knigopis.extra_book_id"
 private const val EXTRA_BOOK_TITLE = "me.vadik.knigopis.extra_book_title"
 private const val EXTRA_BOOK_AUTHOR = "me.vadik.knigopis.extra_book_author"
@@ -69,7 +63,6 @@ class BookActivity : AppCompatActivity() {
 
     private val config by inject<Configuration>()
     private val repository by inject<BookRepository>()
-    private val imageSearch by inject<BookCoverSearch>()
     private val today = Calendar.getInstance()
     private var bookId: String? = null
 
@@ -141,23 +134,16 @@ class BookActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        coverImageViews.offscreenPageLimit = IMAGE_PRELOAD_COUNT
         titleEditText.setOnFocusChangeListener { _, focus ->
             val editable = titleEditText.editableText
-            if (!focus && !editable.isEmpty()) {
-                imageSearch.search(editable.toString())
-                    .subscribe({ urls ->
-                        coverImageViews.visibility = INVISIBLE
-                        coverImageViews.adapter = CoverPagerAdapter(urls,
-                            onClick = { position, last ->
-                                coverImageViews.currentItem = if (last) 0 else position + 1
-                            },
-                            onFirstLoaded = {
-                                coverImageViews.visibility = VISIBLE
-                            })
-                    }, {
-                        logError("cannot load thumbnail", it)
-                    })
+            if (!focus) {
+                val url = createBookImageUrl(editable.toString())
+                preloadImage(url, {
+                    bookImage.showNow()
+                    bookImage.setSquareImage(url)
+                }, {
+                    bookImage.hideNow()
+                })
             }
         }
         progressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -179,7 +165,11 @@ class BookActivity : AppCompatActivity() {
                 }
             }
         })
-        titleEditText.setText(intent.getStringExtra(EXTRA_BOOK_TITLE))
+        intent.getStringExtra(EXTRA_BOOK_TITLE)?.let { title ->
+            titleEditText.setText(title)
+            bookImage.showNow()
+            bookImage.setSquareImage(createBookImageUrl(title))
+        }
         authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
         progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
         if (bookId != null) {

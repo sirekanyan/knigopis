@@ -14,11 +14,6 @@ import android.text.Spanned
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,29 +37,6 @@ fun Completable.io2main(): Completable =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 fun String.orDefault(default: String) = if (isEmpty()) default else this
-
-fun <T> RequestBuilder<T>.doOnSuccess(onSuccess: () -> Unit): RequestBuilder<T> =
-    listener(object : RequestListener<T> {
-        override fun onResourceReady(
-            resource: T?,
-            model: Any?,
-            target: Target<T>?,
-            dataSource: DataSource?,
-            isFirstResource: Boolean
-        ): Boolean {
-            onSuccess()
-            return false
-        }
-
-        override fun onLoadFailed(
-            e: GlideException?,
-            model: Any?,
-            target: Target<T>?,
-            isFirstResource: Boolean
-        ): Boolean {
-            return false
-        }
-    })
 
 fun View.setElevationRes(@DimenRes elevation: Int) {
     ViewCompat.setElevation(this, resources.getDimensionPixelSize(elevation).toFloat())
