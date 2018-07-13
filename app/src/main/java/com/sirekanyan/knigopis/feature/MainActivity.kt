@@ -293,8 +293,6 @@ class MainActivity : AppCompatActivity(), Router {
         profileOption = toolbar.menu.findItem(R.id.option_profile)
         val darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
         darkThemeOption.isChecked = config.isDarkTheme
-        darkThemeOption.isVisible =
-                BuildConfig.DEBUG // todo: remove before release
         toolbar.setOnClickListener {
             if (currentTab == HOME_TAB) {
                 config.sortingMode = if (config.sortingMode == 0) 1 else 0
