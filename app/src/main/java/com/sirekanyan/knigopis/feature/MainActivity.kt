@@ -286,6 +286,11 @@ class MainActivity : AppCompatActivity(), Router {
                     recreate()
                     true
                 }
+                R.id.option_clear_cache -> {
+                    getSharedPreferences("cache", MODE_PRIVATE).edit().clear().apply()
+                    cacheDir.deleteRecursively()
+                    true
+                }
                 else -> false
             }
         }
@@ -293,6 +298,8 @@ class MainActivity : AppCompatActivity(), Router {
         profileOption = toolbar.menu.findItem(R.id.option_profile)
         val darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
         darkThemeOption.isChecked = config.isDarkTheme
+        val clearCacheOption = toolbar.menu.findItem(R.id.option_clear_cache)
+        clearCacheOption.isVisible = BuildConfig.DEBUG
         toolbar.setOnClickListener {
             if (currentTab == HOME_TAB) {
                 config.sortingMode = if (config.sortingMode == 0) 1 else 0

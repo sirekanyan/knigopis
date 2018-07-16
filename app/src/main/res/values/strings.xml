@@ -21,6 +21,7 @@
     <string name="main.option.profile">Profile</string>
     <string name="main.option.about">About</string>
     <string name="main.option.dark">Dark theme</string>
+    <string name="main.option.clear">Clear cache</string>
 
     <!-- about -->
     <string name="about.text.idea">API:\nhttp://knigopis.com</string>

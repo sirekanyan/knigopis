@@ -25,4 +25,10 @@
         android:title="@string/main.option.dark"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/option_clear_cache"
+        android:title="@string/main.option.clear"
+        android:visible="false"
+        app:showAsAction="never" />
+
 </menu>
