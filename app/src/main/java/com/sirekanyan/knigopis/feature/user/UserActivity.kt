@@ -176,7 +176,7 @@ class UserActivity : AppCompatActivity() {
                 startActivity(createNewBookIntent(book.title, book.author))
             },
             createDialogItem(R.string.user_button_done, R.drawable.ic_playlist_add_check) {
-                startActivity(createNewBookIntent(book.title, book.author, 100))
+                startActivity(createNewBookIntent(book.title, book.author, MAX_BOOK_PRIORITY))
             }
         )
     }

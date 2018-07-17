@@ -10,11 +10,11 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
+import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.api.createBookImageUrl
-import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
-import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import kotlinx.android.synthetic.main.book_edit.*
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -49,7 +49,7 @@ fun Context.createEditBookIntent(book: BookDataModel): Intent =
                 putExtra(EXTRA_BOOK_YEAR, book.date?.year)
                 putExtra(EXTRA_BOOK_MONTH, book.date?.month)
                 putExtra(EXTRA_BOOK_DAY, book.date?.day)
-                putExtra(EXTRA_BOOK_PROGRESS, 100)
+                putExtra(EXTRA_BOOK_PROGRESS, MAX_BOOK_PRIORITY)
             } else {
                 putExtra(EXTRA_BOOK_PROGRESS, book.priority)
             }
@@ -83,7 +83,7 @@ class BookActivity : AppCompatActivity() {
                     hideKeyboard()
                     val wasFinished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
                         .takeUnless { bookId == null }
-                    if (progressSeekBar.progress == 100) {
+                    if (progressSeekBar.progress == MAX_BOOK_PRIORITY) {
                         repository.saveBook(
                             bookId,
                             FinishedBookToSend(
@@ -103,7 +103,7 @@ class BookActivity : AppCompatActivity() {
                                 titleEditText.text.toString(),
                                 authorEditText.text.toString(),
                                 notesTextArea.text.toString(),
-                                progressSeekBar.progress.takeIf { it in (1..100) }
+                                progressSeekBar.progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
                             ),
                             wasFinished
                         )
@@ -147,7 +147,7 @@ class BookActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 progressText.text = "$progress%"
-                if (progress == 100) {
+                if (progress == MAX_BOOK_PRIORITY) {
                     bookDateInputGroup.showNow()
                     if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
                         yearEditText.setText(today.get(Calendar.YEAR).toString())

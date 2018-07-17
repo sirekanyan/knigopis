@@ -3,11 +3,12 @@ package com.sirekanyan.knigopis.model
 import android.text.SpannableString
 import android.text.format.DateUtils
 import android.text.style.SuperscriptSpan
-import com.sirekanyan.knigopis.repository.api.createBookImageUrl
+import com.sirekanyan.knigopis.common.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.model.dto.FinishedBook
-import com.sirekanyan.knigopis.model.dto.PlannedBook
 import com.sirekanyan.knigopis.model.dto.Note
+import com.sirekanyan.knigopis.model.dto.PlannedBook
 import com.sirekanyan.knigopis.model.dto.Subscription
+import com.sirekanyan.knigopis.repository.api.createBookImageUrl
 
 fun PlannedBook.toBookModel(group: BookGroupModel) =
     BookDataModel(
@@ -28,7 +29,7 @@ fun FinishedBook.toBookModel(group: BookGroupModel) =
         title,
         author,
         true,
-        100,
+        MAX_BOOK_PRIORITY,
         DateModel(readYear, readMonth, readDay),
         notes
     )

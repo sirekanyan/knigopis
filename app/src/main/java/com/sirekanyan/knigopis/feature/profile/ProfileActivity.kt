@@ -61,7 +61,7 @@ class ProfileActivity : AppCompatActivity() {
         val book = books.random() ?: return
         randomProfileBook.alpha = 1f
         val title = resources.getTitleString(book.title)
-        val priority = (book as? PlannedBook)?.priority ?: 100
+        val priority = (book as? PlannedBook)?.priority ?: MAX_BOOK_PRIORITY
         randomProfileBook.text = getString(R.string.profile_text_random, title, priority)
         randomProfileBook.animate()
             .setInterpolator(AccelerateInterpolator())
@@ -77,9 +77,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun refreshProfile() {
         api.getProfile(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshProfile, {
+            .subscribe(::onRefreshProfile) {
                 logError("cannot get profile", it)
-            })
+            }
     }
 
     private fun onRefreshProfile(user: User) {
@@ -92,13 +92,13 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun refreshCounters() {
         api.getFinishedBooks(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshFinishedBooks, {
+            .subscribe(::onRefreshFinishedBooks) {
                 logError("cannot check finished books count", it)
-            })
+            }
         api.getPlannedBooks(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshPlannedBooks, {
+            .subscribe(::onRefreshPlannedBooks) {
                 logError("cannot check planned books count", it)
-            })
+            }
     }
 
     @Suppress("USELESS_CAST")
