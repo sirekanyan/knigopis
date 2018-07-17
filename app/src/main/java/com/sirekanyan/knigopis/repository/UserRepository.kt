@@ -4,9 +4,9 @@ import com.sirekanyan.knigopis.common.NetworkChecker
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.model.toUserModel
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.cache.common.CacheKey
-import com.sirekanyan.knigopis.repository.cache.common.CommonCache
-import com.sirekanyan.knigopis.repository.cache.common.genericType
+import com.sirekanyan.knigopis.repository.cache.CacheKey
+import com.sirekanyan.knigopis.repository.cache.CommonCache
+import com.sirekanyan.knigopis.repository.cache.genericType
 import com.sirekanyan.knigopis.repository.common.CommonRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable

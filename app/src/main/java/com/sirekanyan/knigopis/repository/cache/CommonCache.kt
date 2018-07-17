@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.cache.common
+package com.sirekanyan.knigopis.repository.cache
 
 import android.content.Context
 import com.google.gson.Gson

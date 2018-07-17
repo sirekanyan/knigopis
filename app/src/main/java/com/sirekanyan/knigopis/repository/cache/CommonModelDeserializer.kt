@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.cache.common
+package com.sirekanyan.knigopis.repository.cache
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
