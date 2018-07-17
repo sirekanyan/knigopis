@@ -1,10 +1,11 @@
 package com.sirekanyan.knigopis.feature.user
 
 import com.sirekanyan.knigopis.common.io2main
+import com.sirekanyan.knigopis.model.BookHeaderModel
+import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.toBookModel
 import com.sirekanyan.knigopis.repository.KAuth
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.model.Book
-import com.sirekanyan.knigopis.repository.model.BookHeader
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -16,7 +17,7 @@ interface UserInteractor {
 
     fun isSubscribed(userId: String): Single<Boolean>
 
-    fun getBooks(userId: String): Single<List<Pair<Book, BookHeader>>>
+    fun getBooks(userId: String): Single<List<BookModel>>
 
 }
 
@@ -40,7 +41,7 @@ class UserInteractorImpl(
             .map { subscriptions -> subscriptions.any { it.subUser.id == userId } }
             .io2main()
 
-    override fun getBooks(userId: String): Single<List<Pair<Book, BookHeader>>> =
+    override fun getBooks(userId: String): Single<List<BookModel>> =
         api.getUserBooks(userId)
             .map { books ->
                 books.groupBy { it.readYear }
@@ -48,9 +49,9 @@ class UserInteractorImpl(
                         year2.compareTo(year1)
                     })
                     .flatMap { (year, books) ->
-                        val header = BookHeader(year, books.size)
-                        val items = books.map { it to header }
-                        listOf(header to header, *items.toTypedArray())
+                        val header = BookHeaderModel(year, books.size)
+                        val items = books.map { it.toBookModel(header.group) }
+                        listOf(header, *items.toTypedArray())
                     }
             }
             .io2main()

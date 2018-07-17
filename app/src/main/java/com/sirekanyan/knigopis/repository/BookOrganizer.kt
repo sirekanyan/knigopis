@@ -2,18 +2,19 @@ package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.repository.model.Book
-import com.sirekanyan.knigopis.repository.model.BookHeader
+import com.sirekanyan.knigopis.model.BookHeaderModel
+import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.toBookModel
 import com.sirekanyan.knigopis.repository.model.FinishedBook
 import com.sirekanyan.knigopis.repository.model.PlannedBook
 
-interface BookOrganizer<T : Book> {
+interface BookOrganizer<T> {
 
     fun sort(books: List<T>): List<T>
 
-    fun group(books: List<T>): List<Pair<Book, BookHeader>>
+    fun group(books: List<T>): List<BookModel>
 
-    fun organize(books: List<T>): List<Pair<Book, BookHeader>> =
+    fun organize(books: List<T>): List<BookModel> =
         group(sort(books))
 
 }
@@ -30,21 +31,21 @@ class PlannedBookOrganizerImpl(
             books.sortedByDescending(PlannedBook::updatedAt)
         }
 
-    override fun group(books: List<PlannedBook>): List<Pair<Book, BookHeader>> {
-        val result = mutableListOf<Pair<Book, BookHeader>>()
+    override fun group(books: List<PlannedBook>): List<BookModel> {
+        val result = mutableListOf<BookModel>()
         val doingBooks = books.filterNot { it.priority == 0 }
         if (doingBooks.isNotEmpty()) {
             val todoHeaderTitle = resources.getString(R.string.books_header_doing)
-            val doingHeader = BookHeader(todoHeaderTitle, doingBooks.size)
-            result.add(doingHeader to doingHeader)
-            result.addAll(doingBooks.map { it to doingHeader })
+            val header = BookHeaderModel(todoHeaderTitle, doingBooks.size)
+            result.add(header)
+            result.addAll(doingBooks.map { it.toBookModel(header.group) })
         }
         val todoBooks = books.filter { it.priority == 0 }
         if (todoBooks.isNotEmpty()) {
             val todoHeaderTitle = resources.getString(R.string.books_header_todo)
-            val todoHeader = BookHeader(todoHeaderTitle, todoBooks.size)
-            result.add(todoHeader to todoHeader)
-            result.addAll(todoBooks.map { it to todoHeader })
+            val header = BookHeaderModel(todoHeaderTitle, todoBooks.size)
+            result.add(header)
+            result.addAll(todoBooks.map { it.toBookModel(header.group) })
         }
         return result
     }
@@ -58,7 +59,7 @@ class FinishedBookPrepareImpl(
     override fun sort(books: List<FinishedBook>): List<FinishedBook> =
         books.sortedByDescending(FinishedBook::order)
 
-    override fun group(books: List<FinishedBook>): List<Pair<Book, BookHeader>> {
+    override fun group(books: List<FinishedBook>): List<BookModel> {
         var first = true
         return books.groupBy { it.readYear }
             .toSortedMap(Comparator { year1, year2 ->
@@ -73,9 +74,9 @@ class FinishedBookPrepareImpl(
                     }
                     else -> resources.getString(R.string.books_header_done, year)
                 }
-                val header = BookHeader(headerTitle, books.size)
-                val items = books.map { it to header }
-                listOf(header to header, *items.toTypedArray())
+                val header = BookHeaderModel(headerTitle, books.size)
+                val items = books.map { it.toBookModel(header.group) }
+                listOf(header, *items.toTypedArray())
             }
     }
 
