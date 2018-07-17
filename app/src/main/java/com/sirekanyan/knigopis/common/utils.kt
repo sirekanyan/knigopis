@@ -2,21 +2,18 @@ package com.sirekanyan.knigopis.common
 
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.support.annotation.DimenRes
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
-import android.text.Html
-import android.text.Spanned
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import com.sirekanyan.knigopis.App
 import com.sirekanyan.knigopis.BuildConfig.APPLICATION_ID
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,6 +31,9 @@ fun logWarn(message: String) = Log.w(TAG, message)
 fun logError(message: String, throwable: Throwable?) = Log.e(TAG, message, throwable)
 
 fun <T> Single<T>.io2main(): Single<T> =
+    subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+fun <T> Flowable<T>.io2main(): Flowable<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 fun Completable.io2main(): Completable =
@@ -84,17 +84,6 @@ fun ProgressBar.setProgressSmoothly(progress: Int) {
 
 fun String.toUriOrNull() =
     Uri.parse(this).takeIf(Uri::isValidHttpLink)
-
-fun Context.getHtmlString(resId: Int, vararg args: Any) =
-    getString(resId, *args).fromHtml()
-
-private fun String.fromHtml(): Spanned =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        @Suppress("DEPRECATION")
-        Html.fromHtml(this)
-    }
 
 private fun Uri.isValidHttpLink() =
     scheme in HTTP_SCHEMES && !host.isNullOrBlank()
