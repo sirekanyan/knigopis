@@ -9,6 +9,8 @@
         <item quantity="one">%d book</item>
         <item quantity="other">%d books</item>
     </plurals>
+    <string name="common.book.notitle">(no title)</string>
+    <string name="common.book.noauthor">(no author)</string>
 
     <!-- main screen -->
     <string name="main.navigation.home">Books</string>

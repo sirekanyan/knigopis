@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="user_new_books_count" translatable="false"><![CDATA[<sup><small>+%d</small><sup>]]></string>
     <string name="note_date_delimiter" translatable="false">/</string>
 </resources>

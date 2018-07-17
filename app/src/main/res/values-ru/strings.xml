@@ -10,6 +10,8 @@
         <item quantity="few">%d книги</item>
         <item quantity="many">%d книг</item>
     </plurals>
+    <string name="common.book.notitle">(без названия)</string>
+    <string name="common.book.noauthor">(автор не указан)</string>
 
     <!-- main screen -->
     <string name="main.navigation.home">Мои книги</string>

@@ -6,14 +6,14 @@
     android:background="?android:attr/windowBackground">
 
     <View
-        android:id="@+id/header_divider"
+        android:id="@+id/headerDivider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="?attr/recycler_divider_color"
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/book_title"
+        android:id="@+id/headerTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -25,7 +25,7 @@
         tools:text="К прочтению" />
 
     <TextView
-        android:id="@+id/books_count"
+        android:id="@+id/headerCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"

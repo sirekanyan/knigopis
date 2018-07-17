@@ -7,7 +7,7 @@
     android:foreground="?android:attr/selectableItemBackground">
 
     <ProgressBar
-        android:id="@+id/book_progress"
+        android:id="@+id/bookProgress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -18,7 +18,7 @@
         tools:progress="80" />
 
     <ImageView
-        android:id="@+id/book_image"
+        android:id="@+id/bookImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
@@ -38,7 +38,7 @@
         android:paddingStart="72dp">
 
         <TextView
-            android:id="@+id/book_title"
+            android:id="@+id/bookTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -48,7 +48,7 @@
             tools:text="Мастер и Маргарита" />
 
         <TextView
-            android:id="@+id/book_author"
+            android:id="@+id/bookAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
