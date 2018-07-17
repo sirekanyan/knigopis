@@ -1,8 +1,5 @@
 package com.sirekanyan.knigopis.repository.model
 
-import android.net.Uri
-import com.sirekanyan.knigopis.common.toUriOrNull
-
 private val defaultAvatars = setOf(
     "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=100",
     "https://lh6.googleusercontent.com/-cfU0I0DdeGE/AAAAAAAAAAI/AAAAAAAAANs/RoQmKyJjwLo/photo.jpg?sz=100",
@@ -25,10 +22,8 @@ class User(
 
     val name get() = nickname ?: id
 
-    val avatar: String? get() = photo.takeUnless { it in defaultAvatars }
+    val avatar get() = photo.takeUnless { it in defaultAvatars }
 
-    val profiles: List<Uri>
-        get() = listOfNotNull(profile, identity)
-            .mapNotNull(String::toUriOrNull)
+    val profiles get() = listOfNotNull(profile, identity)
 
 }
