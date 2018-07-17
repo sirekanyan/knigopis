@@ -12,7 +12,6 @@ import com.sirekanyan.knigopis.feature.user.UserInteractor
 import com.sirekanyan.knigopis.feature.user.UserInteractorImpl
 import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.cache.*
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.model.FinishedBook
@@ -48,9 +47,6 @@ val appModule = applicationContext {
     bean { ConfigurationImpl(get()) as Configuration }
     bean { ResourceProviderImpl(get()) as ResourceProvider }
     bean { NetworkCheckerImpl(get()) as NetworkChecker }
-    bean { BookCacheImpl(get()) as BookCache }
-    bean { SubscriptionCacheImpl(get()) as SubscriptionCache }
-    bean { NoteCacheImpl(get()) as NoteCache }
     bean { CommonCacheImpl(get(), get()) as CommonCache }
     bean { GsonBuilder().setDateFormat(DATE_FORMAT).create() }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
