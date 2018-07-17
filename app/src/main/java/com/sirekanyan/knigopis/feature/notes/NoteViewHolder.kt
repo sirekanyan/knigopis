@@ -1,40 +1,35 @@
 package com.sirekanyan.knigopis.feature.notes
 
-import android.support.v7.widget.RecyclerView
-import android.text.format.DateUtils
 import android.view.View
+import com.sirekanyan.knigopis.common.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.setCircleImage
 import com.sirekanyan.knigopis.common.extensions.setSquareImage
-import kotlinx.android.synthetic.main.note.view.*
+import com.sirekanyan.knigopis.model.NoteModel
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.note.*
 
-class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class NoteViewHolder(
+    override val containerView: View,
+    private val onClick: (NoteModel) -> Unit
+) : CommonViewHolder<NoteModel>(containerView),
+    LayoutContainer {
 
-    fun setTitle(title: String) {
-        view.bookTitle.text = title
+    init {
+        containerView.setOnClickListener {
+            model?.let {
+                onClick(it)
+            }
+        }
     }
 
-    fun setAuthor(author: String) {
-        view.bookAuthor.text = author
-    }
-
-    fun setNotes(notes: String) {
-        view.userNotes.text = notes
-    }
-
-    fun setTimestamp(timestamp: Long) {
-        view.userDate.text = DateUtils.getRelativeTimeSpanString(timestamp)
-    }
-
-    fun setNickname(nickname: String) {
-        view.userNickname.text = nickname
-    }
-
-    fun setAvatarUrl(url: String?) {
-        view.userSmallAvatar.setCircleImage(url)
-    }
-
-    fun setBookImageUrl(url: String?) {
-        view.bookImage.setSquareImage(url)
+    override fun onBind(position: Int, model: NoteModel) {
+        bookImage.setSquareImage(model.bookImage)
+        bookTitle.text = model.bookTitle
+        bookAuthor.text = model.bookAuthor
+        userNotes.text = model.noteContent
+        userDate.text = model.noteDate
+        userNickname.text = model.userName
+        userSmallAvatar.setCircleImage(model.userImage)
     }
 
 }

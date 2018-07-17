@@ -1,33 +1,38 @@
 package com.sirekanyan.knigopis.feature.users
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.setCircleImage
-import com.sirekanyan.knigopis.common.extensions.showNow
-import com.sirekanyan.knigopis.common.getHtmlString
-import kotlinx.android.synthetic.main.user.view.*
+import com.sirekanyan.knigopis.model.UserModel
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.user.*
 
-class UserViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class UserViewHolder(
+    override val containerView: View,
+    private val onClick: (UserModel) -> Unit,
+    private val onLongClick: (UserModel) -> Unit
+) : CommonViewHolder<UserModel>(containerView),
+    LayoutContainer {
 
-    private val context = view.context.applicationContext
-
-    fun setAvatarUrl(url: String?) {
-        view.userAvatar.setCircleImage(url)
+    init {
+        containerView.setOnClickListener {
+            model?.let {
+                onClick(it)
+            }
+        }
+        containerView.setOnLongClickListener {
+            model?.let {
+                onLongClick(it)
+            }
+            true
+        }
     }
 
-    fun setNickname(nickname: String) {
-        view.userNickname.text = nickname
-    }
-
-    fun setBooksCount(count: Int) {
-        view.totalBooksCount.showNow(count > 0)
-        view.totalBooksCount.text = count.toString()
-    }
-
-    fun setNewBooksCount(count: Int) {
-        view.newBooksCount.showNow(count > 0)
-        view.newBooksCount.text = context.getHtmlString(R.string.user_new_books_count, count)
+    override fun onBind(position: Int, model: UserModel) {
+        userAvatar.setCircleImage(model.image)
+        userNickname.text = model.name
+        totalBooksCount.text = model.booksCount
+        newBooksCount.text = model.newBooksCount
     }
 
 }

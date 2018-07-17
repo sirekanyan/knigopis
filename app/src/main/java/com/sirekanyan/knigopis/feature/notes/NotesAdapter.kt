@@ -15,7 +15,7 @@ class NotesAdapter(
         NoteViewHolder(parent.inflate(R.layout.note), onClick)
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.setNote(getItem(position))
+        holder.bind(position, getItem(position))
     }
 
 }
