@@ -13,21 +13,21 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
 
-interface SubscriptionRepository {
+interface UserRepository {
 
-    fun getSubscriptions(): Flowable<List<UserModel>>
+    fun observeUsers(): Flowable<List<UserModel>>
 
 }
 
-class SubscriptionRepositoryImpl(
+class UserRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
     private val auth: KAuth,
     networkChecker: NetworkChecker
 ) : CommonRepository<List<UserModel>>(networkChecker),
-    SubscriptionRepository {
+    UserRepository {
 
-    override fun getSubscriptions() = observe()
+    override fun observeUsers() = observe()
 
     override fun loadFromNetwork(): Single<List<UserModel>> =
         api.getSubscriptions(auth.getAccessToken()).map { it.map { it.toUserModel() } }

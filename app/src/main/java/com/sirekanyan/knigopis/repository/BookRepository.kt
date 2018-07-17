@@ -2,15 +2,15 @@ package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.NetworkChecker
 import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.dto.FinishedBook
+import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
+import com.sirekanyan.knigopis.model.dto.PlannedBook
+import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.cache.common.CacheKey
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.genericType
 import com.sirekanyan.knigopis.repository.common.CommonRepository
-import com.sirekanyan.knigopis.model.dto.FinishedBook
-import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
-import com.sirekanyan.knigopis.model.dto.PlannedBook
-import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -19,7 +19,7 @@ import io.reactivex.rxkotlin.Singles
 
 interface BookRepository {
 
-    fun loadBooks(): Flowable<List<BookModel>>
+    fun observeBooks(): Flowable<List<BookModel>>
 
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
@@ -37,7 +37,7 @@ class BookRepositoryImpl(
 ) : CommonRepository<List<BookModel>>(networkChecker),
     BookRepository {
 
-    override fun loadBooks() = observe()
+    override fun observeBooks() = observe()
 
     override fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable =
         when {

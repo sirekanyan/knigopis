@@ -42,7 +42,7 @@ val appModule = applicationContext {
             get()
         ) as BookRepository
     }
-    bean { SubscriptionRepositoryImpl(get(), get(), get(), get()) as SubscriptionRepository }
+    bean { UserRepositoryImpl(get(), get(), get(), get()) as UserRepository }
     bean { NoteRepositoryImpl(get(), get(), get()) as NoteRepository }
     bean { KAuthImpl(get(), get()) as KAuth }
     bean { createMainEndpoint(get()) }

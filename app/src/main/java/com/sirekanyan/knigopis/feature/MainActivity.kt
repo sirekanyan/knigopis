@@ -35,14 +35,10 @@ import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
-import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.BookModel
-import com.sirekanyan.knigopis.model.NoteModel
-import com.sirekanyan.knigopis.model.UserModel
+import com.sirekanyan.knigopis.model.*
+import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.model.CurrentTab
-import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.about.view.*
@@ -66,7 +62,7 @@ class MainActivity : AppCompatActivity(), Router {
     private val auth by inject<KAuth>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val bookRepository by inject<BookRepository>()
-    private val userRepository by inject<SubscriptionRepository>()
+    private val userRepository by inject<UserRepository>()
     private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
     private val allBooks = mutableListOf<BookModel>()
@@ -390,7 +386,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshHomeTab() {
-        bookRepository.loadBooks()
+        bookRepository.observeBooks()
             .io2main()
             .showProgressBar()
             .subscribe({ books ->
@@ -406,7 +402,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshUsersTab() {
-        userRepository.getSubscriptions()
+        userRepository.observeUsers()
             .io2main()
             .showProgressBar()
             .subscribe({ users ->
@@ -420,7 +416,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun refreshNotesTab() {
-        noteRepository.getNotes()
+        noteRepository.observeNotes()
             .io2main()
             .showProgressBar()
             .subscribe({ notes ->

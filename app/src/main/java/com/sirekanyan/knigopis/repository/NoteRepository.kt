@@ -15,7 +15,7 @@ import io.reactivex.Single
 
 interface NoteRepository {
 
-    fun getNotes(): Flowable<List<NoteModel>>
+    fun observeNotes(): Flowable<List<NoteModel>>
 
 }
 
@@ -26,7 +26,7 @@ class NoteRepositoryImpl(
 ) : CommonRepository<List<NoteModel>>(networkChecker),
     NoteRepository {
 
-    override fun getNotes() = observe()
+    override fun observeNotes() = observe()
 
     override fun loadFromNetwork(): Single<List<NoteModel>> =
         api.getLatestBooksWithNotes().map { it.values.map { it.toNoteModel() } }
