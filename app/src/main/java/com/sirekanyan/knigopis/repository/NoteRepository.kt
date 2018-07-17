@@ -1,46 +1,40 @@
 package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.NetworkChecker
-import com.sirekanyan.knigopis.common.logError
-import com.sirekanyan.knigopis.common.logWarn
+import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.toNoteModel
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.cache.NoteCache
-import com.sirekanyan.knigopis.repository.model.note.Note
+import com.sirekanyan.knigopis.repository.cache.common.CacheKey
+import com.sirekanyan.knigopis.repository.cache.common.CommonCache
+import com.sirekanyan.knigopis.repository.cache.common.genericType
+import com.sirekanyan.knigopis.repository.common.CommonRepository
 import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface NoteRepository {
 
-    fun getNotes(): Single<List<Note>>
+    fun getNotes(): Flowable<List<NoteModel>>
 
 }
 
 class NoteRepositoryImpl(
     private val api: Endpoint,
-    private val cache: NoteCache,
-    private val networkChecker: NetworkChecker
-) : NoteRepository {
+    private val cache: CommonCache,
+    networkChecker: NetworkChecker
+) : CommonRepository<List<NoteModel>>(networkChecker),
+    NoteRepository {
 
-    override fun getNotes(): Single<List<Note>> =
-        if (networkChecker.isNetworkAvailable()) {
-            getFromNetwork()
-                .doOnSuccess { saveToCache(it).blockingAwait() }
-                .doOnError {
-                    logError("Cannot load notes from network", it)
-                    logWarn("Getting cached notes")
-                }
-                .onErrorResumeNext(findInCache())
-        } else {
-            findInCache()
-        }
+    override fun getNotes() = observe()
 
-    private fun getFromNetwork(): Single<List<Note>> =
-        api.getLatestBooksWithNotes().map { it.values.toList() }
+    override fun loadFromNetwork(): Single<List<NoteModel>> =
+        api.getLatestBooksWithNotes().map { it.values.map { it.toNoteModel() } }
 
-    private fun findInCache(): Single<List<Note>> =
-        cache.getNotes().toSingle()
+    override fun findCached(): Maybe<List<NoteModel>> =
+        cache.getFromJson(CacheKey.NOTES, genericType<List<NoteModel>>())
 
-    private fun saveToCache(notes: List<Note>): Completable =
-        cache.saveNotes(notes)
+    override fun saveToCache(data: List<NoteModel>): Completable =
+        cache.saveToJson(CacheKey.NOTES, data)
 
 }
