@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.model.dto
+package com.sirekanyan.knigopis.model
 
 import android.support.annotation.IdRes
 import com.sirekanyan.knigopis.R
