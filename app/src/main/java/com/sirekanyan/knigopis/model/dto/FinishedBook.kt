@@ -1,9 +1,9 @@
 package com.sirekanyan.knigopis.model.dto
 
 class FinishedBook(
-    override val id: String,
+    val id: String,
     override val title: String,
-    override val author: String,
+    val author: String,
     val readDay: String,
     val readMonth: String,
     val readYear: String,
