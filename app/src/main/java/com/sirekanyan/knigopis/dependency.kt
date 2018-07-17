@@ -10,10 +10,14 @@ import com.sirekanyan.knigopis.common.view.dialog.BottomSheetDialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.feature.user.UserInteractor
 import com.sirekanyan.knigopis.feature.user.UserInteractorImpl
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.BookHeaderModel
+import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.CommonCacheImpl
+import com.sirekanyan.knigopis.repository.cache.common.CommonModelDeserializer
 import com.sirekanyan.knigopis.repository.model.FinishedBook
 import com.sirekanyan.knigopis.repository.model.PlannedBook
 import okhttp3.OkHttpClient
@@ -48,7 +52,17 @@ val appModule = applicationContext {
     bean { ResourceProviderImpl(get()) as ResourceProvider }
     bean { NetworkCheckerImpl(get()) as NetworkChecker }
     bean { CommonCacheImpl(get(), get()) as CommonCache }
-    bean { GsonBuilder().setDateFormat(DATE_FORMAT).create() }
+    bean {
+        GsonBuilder().registerTypeAdapter(
+            BookModel::class.java,
+            CommonModelDeserializer<BookModel>(
+                BookHeaderModel::class.java,
+                BookDataModel::class.java
+            )
+        )
+            .setDateFormat(DATE_FORMAT)
+            .create()
+    }
     factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
     userModule()
 }
