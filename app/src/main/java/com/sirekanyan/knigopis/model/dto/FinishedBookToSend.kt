@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.model
+package com.sirekanyan.knigopis.model.dto
 
 class FinishedBookToSend(
     val title: String,

@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.model
+package com.sirekanyan.knigopis.model.dto
 
 private val defaultAvatars = setOf(
     "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=100",

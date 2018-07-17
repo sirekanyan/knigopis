@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.model
+package com.sirekanyan.knigopis.model.dto
 
 import java.util.*
 

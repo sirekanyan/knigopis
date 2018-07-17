@@ -1,8 +1,6 @@
 package com.sirekanyan.knigopis.repository.api
 
-import com.sirekanyan.knigopis.repository.model.*
-import com.sirekanyan.knigopis.repository.model.note.Note
-import com.sirekanyan.knigopis.repository.model.subscription.Subscription
+import com.sirekanyan.knigopis.model.dto.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*

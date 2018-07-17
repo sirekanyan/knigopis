@@ -13,8 +13,8 @@ import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.api.createBookImageUrl
-import com.sirekanyan.knigopis.repository.model.FinishedBookToSend
-import com.sirekanyan.knigopis.repository.model.PlannedBookToSend
+import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
+import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import kotlinx.android.synthetic.main.book_edit.*
 import org.koin.android.ext.android.inject
 import java.util.*

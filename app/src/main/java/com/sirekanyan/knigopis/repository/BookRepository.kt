@@ -7,10 +7,10 @@ import com.sirekanyan.knigopis.repository.cache.common.CacheKey
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.genericType
 import com.sirekanyan.knigopis.repository.common.CommonRepository
-import com.sirekanyan.knigopis.repository.model.FinishedBook
-import com.sirekanyan.knigopis.repository.model.FinishedBookToSend
-import com.sirekanyan.knigopis.repository.model.PlannedBook
-import com.sirekanyan.knigopis.repository.model.PlannedBookToSend
+import com.sirekanyan.knigopis.model.dto.FinishedBook
+import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
+import com.sirekanyan.knigopis.model.dto.PlannedBook
+import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe

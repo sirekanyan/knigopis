@@ -18,8 +18,8 @@ import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.cache.common.CommonCache
 import com.sirekanyan.knigopis.repository.cache.common.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.cache.common.CommonModelDeserializer
-import com.sirekanyan.knigopis.repository.model.FinishedBook
-import com.sirekanyan.knigopis.repository.model.PlannedBook
+import com.sirekanyan.knigopis.model.dto.FinishedBook
+import com.sirekanyan.knigopis.model.dto.PlannedBook
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.context.Context

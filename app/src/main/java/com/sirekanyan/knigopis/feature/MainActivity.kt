@@ -41,8 +41,8 @@ import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.model.CurrentTab
-import com.sirekanyan.knigopis.repository.model.CurrentTab.*
+import com.sirekanyan.knigopis.model.dto.CurrentTab
+import com.sirekanyan.knigopis.model.dto.CurrentTab.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.about.view.*

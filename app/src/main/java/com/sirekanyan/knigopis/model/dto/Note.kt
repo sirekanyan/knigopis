@@ -1,6 +1,5 @@
-package com.sirekanyan.knigopis.repository.model.note
+package com.sirekanyan.knigopis.model.dto
 
-import com.sirekanyan.knigopis.repository.model.Book
 import java.util.*
 
 class Note(

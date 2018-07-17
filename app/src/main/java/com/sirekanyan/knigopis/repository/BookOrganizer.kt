@@ -5,8 +5,8 @@ import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.toBookModel
-import com.sirekanyan.knigopis.repository.model.FinishedBook
-import com.sirekanyan.knigopis.repository.model.PlannedBook
+import com.sirekanyan.knigopis.model.dto.FinishedBook
+import com.sirekanyan.knigopis.model.dto.PlannedBook
 
 interface BookOrganizer<T> {
 

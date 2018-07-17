@@ -1,6 +1,4 @@
-package com.sirekanyan.knigopis.repository.model.subscription
-
-import com.sirekanyan.knigopis.repository.model.User
+package com.sirekanyan.knigopis.model.dto
 
 class Subscription(
     val subUser: User,
