@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.feature.books
+package com.sirekanyan.knigopis.feature.user
 
 import android.view.ViewGroup
 import com.sirekanyan.knigopis.R
@@ -7,15 +7,14 @@ import com.sirekanyan.knigopis.common.extensions.inflate
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
 
-class BooksAdapter(
-    private val onClick: (BookDataModel) -> Unit,
+class UserBooksAdapter(
     private val onLongClick: (BookDataModel) -> Unit
 ) : CommonAdapter<BookModel>() {
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup) =
-        BookHeaderViewHolder(parent.inflate(R.layout.header))
+        UserBookHeaderViewHolder(parent.inflate(R.layout.header))
 
     override fun onCreateDataViewHolder(parent: ViewGroup) =
-        BookDataViewHolder(parent.inflate(R.layout.book), onClick, onLongClick)
+        UserBookDataViewHolder(parent.inflate(R.layout.user_book), onLongClick)
 
 }
