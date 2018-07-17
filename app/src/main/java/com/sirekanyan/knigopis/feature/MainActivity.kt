@@ -18,10 +18,13 @@ import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.*
+import com.sirekanyan.knigopis.common.extensions.getFullTitleString
 import com.sirekanyan.knigopis.common.extensions.showNow
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.view.dialog.DialogItem
+import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderInterface
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
@@ -30,15 +33,18 @@ import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
+import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
-import com.sirekanyan.knigopis.repository.model.*
+import com.sirekanyan.knigopis.repository.model.CurrentTab
 import com.sirekanyan.knigopis.repository.model.CurrentTab.*
-import com.sirekanyan.knigopis.repository.model.note.Note
-import com.sirekanyan.knigopis.repository.model.subscription.Subscription
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Single
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
@@ -63,23 +69,10 @@ class MainActivity : AppCompatActivity(), Router {
     private val userRepository by inject<SubscriptionRepository>()
     private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
-    private val allBooks = mutableListOf<Book>()
-    private val allBookHeaders = mutableListOf<BookHeader>()
-    private val allUsers = mutableListOf<Subscription>()
-    private val allNotes = mutableListOf<Note>()
-    private val booksAdapter by lazy {
-        BooksAdapter(
-            api,
-            auth,
-            this,
-            dialogs,
-            allBooks,
-            allBookHeaders
-        )
-    }
-    private val allBooksAdapter by lazy { booksAdapter.build() }
-    private val usersAdapter by lazy { UsersAdapter(allUsers, this, dialogs, resourceProvider) }
-    private val notesAdapter by lazy { NotesAdapter(allNotes, this) }
+    private val allBooks = mutableListOf<BookModel>()
+    private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
+    private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
+    private val notesAdapter by lazy { NotesAdapter(::onNoteClicked) }
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -103,27 +96,27 @@ class MainActivity : AppCompatActivity(), Router {
                     }
 
                     override fun bindHeaderData(header: View, headerPosition: Int) {
-                        val book = allBookHeaders[headerPosition]
-                        val title = book.title.let {
+                        val group = allBooks[headerPosition].group
+                        val title = group.title.let {
                             if (it.isEmpty()) {
                                 getString(R.string.books_header_done_other)
                             } else {
                                 it
                             }
                         }
-                        header.findViewById<TextView>(R.id.book_title).text = title
-                        header.findViewById<TextView>(R.id.books_count).text =
+                        header.findViewById<TextView>(R.id.headerTitle).text = title
+                        header.findViewById<TextView>(R.id.headerCount).text =
                                 resources.getQuantityString(
                                     R.plurals.common_header_books,
-                                    book.count,
-                                    book.count
+                                    group.count,
+                                    group.count
                                 )
-                        header.findViewById<TextView>(R.id.books_count).showNow()
+                        header.findViewById<TextView>(R.id.headerCount).showNow()
                         header.findViewById<View>(R.id.header_bottom_divider).showNow()
                     }
 
                     override fun isHeader(itemPosition: Int): Boolean {
-                        return allBooks[itemPosition] is BookHeader
+                        return allBooks[itemPosition].isHeader
                     }
                 }
             )
@@ -204,12 +197,8 @@ class MainActivity : AppCompatActivity(), Router {
         }
     }
 
-    override fun openBookScreen(book: Book) {
-        when (book) {
-            is PlannedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
-            is FinishedBook -> startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
-            else -> throw UnsupportedOperationException()
-        }
+    override fun openBookScreen(book: BookDataModel) {
+        startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
     }
 
     override fun openUserScreen(id: String, name: String, avatar: String?) {
@@ -287,7 +276,7 @@ class MainActivity : AppCompatActivity(), Router {
                     true
                 }
                 R.id.option_clear_cache -> {
-                    getSharedPreferences("cache", MODE_PRIVATE).edit().clear().apply()
+                    getSharedPreferences("cached", MODE_PRIVATE).edit().clear().apply()
                     cacheDir.deleteRecursively()
                     true
                 }
@@ -373,7 +362,7 @@ class MainActivity : AppCompatActivity(), Router {
         val isFirst = isFirstOpenTab(tab)
         if (isFirst) {
             when (tab) {
-                HOME_TAB -> booksRecyclerView.adapter = allBooksAdapter
+                HOME_TAB -> booksRecyclerView.adapter = booksAdapter
                 USERS_TAB -> usersRecyclerView.adapter = usersAdapter
                 NOTES_TAB -> notesRecyclerView.adapter = notesAdapter
             }
@@ -408,13 +397,11 @@ class MainActivity : AppCompatActivity(), Router {
                 booksPlaceholder.show(books.isEmpty())
                 booksErrorPlaceholder.hide()
                 allBooks.clear()
-                allBooks.addAll(books.map { it.first })
-                allBookHeaders.clear()
-                allBookHeaders.addAll(books.map { it.second })
-                allBooksAdapter.notifyDataSetChanged()
+                allBooks.addAll(books)
+                booksAdapter.submitList(books)
             }, {
                 logError("cannot load books", it)
-                handleError(it, booksPlaceholder, booksErrorPlaceholder, allBooksAdapter)
+                handleError(it, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
             })
     }
 
@@ -422,12 +409,10 @@ class MainActivity : AppCompatActivity(), Router {
         userRepository.getSubscriptions()
             .io2main()
             .showProgressBar()
-            .subscribe({ subscriptions ->
-                usersPlaceholder.show(subscriptions.isEmpty())
+            .subscribe({ users ->
+                usersPlaceholder.show(users.isEmpty())
                 usersErrorPlaceholder.hide()
-                allUsers.clear()
-                allUsers.addAll(subscriptions)
-                usersAdapter.notifyDataSetChanged()
+                usersAdapter.submitList(users)
             }, {
                 logError("cannot load users", it)
                 handleError(it, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
@@ -441,24 +426,28 @@ class MainActivity : AppCompatActivity(), Router {
             .subscribe({ notes ->
                 notesPlaceholder.show(notes.isEmpty())
                 notesErrorPlaceholder.hide()
-                allNotes.clear()
-                allNotes.addAll(notes)
-                notesAdapter.notifyDataSetChanged()
+                notesAdapter.submitList(notes)
             }, {
                 logError("cannot load notes", it)
                 handleError(it, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
             })
     }
 
-    private fun <T> Single<T>.showProgressBar() =
-        doOnSubscribe {
-            if (!swipeRefresh.isRefreshing) {
-                booksProgressBar.show()
-            }
-        }.doFinally {
+    private fun <T> Flowable<T>.showProgressBar(): Flowable<T> {
+        fun hideProgress() {
             booksProgressBar.hide()
             swipeRefresh.isRefreshing = false
         }
+        return doOnSubscribe {
+            if (!swipeRefresh.isRefreshing) {
+                booksProgressBar.show()
+            }
+        }.doOnNext {
+            hideProgress()
+        }.doFinally {
+            hideProgress()
+        }
+    }
 
     private fun handleError(
         th: Throwable,
@@ -480,5 +469,76 @@ class MainActivity : AppCompatActivity(), Router {
         } else {
             R.string.common_error_network
         }
+
+    private fun onBookClicked(book: BookDataModel) {
+        openBookScreen(book)
+    }
+
+    private fun onBookLongClicked(book: BookDataModel) {
+        val bookFullTitle = resources.getFullTitleString(book.title, book.author)
+        val onDeleteConfirmed = {
+            val index = allBooks.indexOfFirst { it.id == book.id }
+            if (index >= 0) {
+                if (book.isFinished) {
+                    api.deleteFinishedBook(book.id, auth.getAccessToken())
+                } else {
+                    api.deletePlannedBook(book.id, auth.getAccessToken())
+                }
+                    .io2main()
+                    .subscribe({}, {
+                        toast(R.string.books_error_delete)
+                        logError("cannot delete finished book", it)
+                    })
+                allBooks.removeAt(index)
+                booksAdapter.notifyItemRemoved(index)
+            }
+        }
+        val onDeleteClicked = {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.books_title_confirm_delete)
+                .setMessage(
+                    getString(
+                        R.string.books_message_confirm_delete,
+                        bookFullTitle
+                    )
+                )
+                .setNegativeButton(R.string.common_button_cancel) { d, _ -> d.dismiss() }
+                .setPositiveButton(R.string.books_button_confirm_delete) { d, _ ->
+                    onDeleteConfirmed()
+                    d.dismiss()
+                }
+                .show()
+        }
+        dialogs.showDialog(
+            bookFullTitle,
+            createDialogItem(R.string.books_button_edit, R.drawable.ic_edit) {
+                openBookScreen(book)
+            },
+            createDialogItem(R.string.books_button_delete, R.drawable.ic_delete) {
+                onDeleteClicked()
+            }
+        )
+    }
+
+    private fun onUserClicked(user: UserModel) {
+        openUserScreen(user.id, user.name, user.image)
+    }
+
+    private fun onUserLongClicked(user: UserModel) {
+        val dialogItems: List<DialogItem> = user.profiles
+            .mapNotNull(String::toUriOrNull)
+            .map { UriItem(it, resourceProvider) }
+            .distinctBy(UriItem::title)
+            .map { uriItem ->
+                createDialogItem(uriItem.title, uriItem.iconRes) {
+                    openWebPage(uriItem.uri)
+                }
+            }
+        dialogs.showDialog(user.name, *dialogItems.toTypedArray())
+    }
+
+    private fun onNoteClicked(note: NoteModel) {
+        openUserScreen(note.userId, note.userName, note.userImage)
+    }
 
 }

@@ -9,12 +9,11 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.api.createBookImageUrl
-import com.sirekanyan.knigopis.repository.model.FinishedBook
 import com.sirekanyan.knigopis.repository.model.FinishedBookToSend
-import com.sirekanyan.knigopis.repository.model.PlannedBook
 import com.sirekanyan.knigopis.repository.model.PlannedBookToSend
 import kotlinx.android.synthetic.main.book_edit.*
 import org.koin.android.ext.android.inject
@@ -38,26 +37,23 @@ fun Context.createNewBookIntent(title: String, author: String, progress: Int? = 
         .putExtra(EXTRA_BOOK_AUTHOR, author)
         .putExtra(EXTRA_BOOK_PROGRESS, progress)
 
-fun Context.createEditBookIntent(book: PlannedBook): Intent =
+fun Context.createEditBookIntent(book: BookDataModel): Intent =
     Intent(this, BookActivity::class.java)
         .putExtra(EXTRA_BOOK_ID, book.id)
         .putExtra(EXTRA_BOOK_TITLE, book.title)
         .putExtra(EXTRA_BOOK_AUTHOR, book.author)
+        .putExtra(EXTRA_BOOK_FINISHED, book.isFinished)
         .putExtra(EXTRA_BOOK_NOTES, book.notes)
-        .putExtra(EXTRA_BOOK_PROGRESS, book.priority)
-        .putExtra(EXTRA_BOOK_FINISHED, false)
-
-fun Context.createEditBookIntent(book: FinishedBook): Intent =
-    Intent(this, BookActivity::class.java)
-        .putExtra(EXTRA_BOOK_ID, book.id)
-        .putExtra(EXTRA_BOOK_TITLE, book.title)
-        .putExtra(EXTRA_BOOK_AUTHOR, book.author)
-        .putExtra(EXTRA_BOOK_YEAR, book.readYear)
-        .putExtra(EXTRA_BOOK_MONTH, book.readMonth)
-        .putExtra(EXTRA_BOOK_DAY, book.readDay)
-        .putExtra(EXTRA_BOOK_NOTES, book.notes)
-        .putExtra(EXTRA_BOOK_PROGRESS, 100)
-        .putExtra(EXTRA_BOOK_FINISHED, true)
+        .apply {
+            if (book.isFinished) {
+                putExtra(EXTRA_BOOK_YEAR, book.date?.year)
+                putExtra(EXTRA_BOOK_MONTH, book.date?.month)
+                putExtra(EXTRA_BOOK_DAY, book.date?.day)
+                putExtra(EXTRA_BOOK_PROGRESS, 100)
+            } else {
+                putExtra(EXTRA_BOOK_PROGRESS, book.priority)
+            }
+        }
 
 class BookActivity : AppCompatActivity() {
 

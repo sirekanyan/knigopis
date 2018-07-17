@@ -14,11 +14,13 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderInterface
+import com.sirekanyan.knigopis.feature.book.createNewBookIntent
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.model.Book
-import com.sirekanyan.knigopis.repository.model.BookHeader
 import kotlinx.android.synthetic.main.user_activity.*
 import org.koin.android.ext.android.inject
 
@@ -38,9 +40,8 @@ class UserActivity : AppCompatActivity() {
     private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
-    private val books = mutableListOf<Book>()
-    private val bookHeaders = mutableListOf<BookHeader>()
-    private val booksAdapter = BooksAdapter(books, dialogs)
+    private val books = mutableListOf<BookModel>()
+    private val booksAdapter = UserBooksAdapter(::onBookLongClicked)
     private lateinit var unsubscribeOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,27 +81,27 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     override fun bindHeaderData(header: View, headerPosition: Int) {
-                        val book = bookHeaders[headerPosition]
-                        val title = book.title.let {
+                        val group = books[headerPosition].group
+                        val title = group.title.let {
                             if (it.isEmpty()) {
                                 getString(R.string.books_header_done_other)
                             } else {
                                 it
                             }
                         }
-                        header.findViewById<TextView>(R.id.book_title).text = title
-                        header.findViewById<TextView>(R.id.books_count).text =
+                        header.findViewById<TextView>(R.id.headerTitle).text = title
+                        header.findViewById<TextView>(R.id.headerCount).text =
                                 resources.getQuantityString(
                                     R.plurals.common_header_books,
-                                    book.count,
-                                    book.count
+                                    group.count,
+                                    group.count
                                 )
-                        header.findViewById<TextView>(R.id.books_count).showNow()
+                        header.findViewById<TextView>(R.id.headerCount).showNow()
                         header.findViewById<View>(R.id.header_bottom_divider).showNow()
                     }
 
                     override fun isHeader(itemPosition: Int): Boolean {
-                        return books[itemPosition] is BookHeader
+                        return books[itemPosition].isHeader
                     }
                 }
             )
@@ -121,10 +122,8 @@ class UserActivity : AppCompatActivity() {
             .doOnError { userBooksErrorPlaceholder.show() }
             .subscribe({
                 books.clear()
-                books.addAll(it.map { it.first })
-                bookHeaders.clear()
-                bookHeaders.addAll(it.map { it.second })
-                booksAdapter.notifyDataSetChanged()
+                books.addAll(it)
+                booksAdapter.submitList(it)
             }, {
                 logError("Cannot load user books", it)
             })
@@ -169,4 +168,17 @@ class UserActivity : AppCompatActivity() {
             else -> false
         }
     }
+
+    private fun onBookLongClicked(book: BookDataModel) {
+        dialogs.showDialog(
+            resources.getFullTitleString(book.title, book.author),
+            createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
+                startActivity(createNewBookIntent(book.title, book.author))
+            },
+            createDialogItem(R.string.user_button_done, R.drawable.ic_playlist_add_check) {
+                startActivity(createNewBookIntent(book.title, book.author, 100))
+            }
+        )
+    }
+
 }

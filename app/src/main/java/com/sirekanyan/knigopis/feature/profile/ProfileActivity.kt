@@ -60,11 +60,9 @@ class ProfileActivity : AppCompatActivity() {
     private fun setRandomFooterBook(books: List<Book>) {
         val book = books.random() ?: return
         randomProfileBook.alpha = 1f
-        randomProfileBook.text = getString(
-            R.string.profile_text_random,
-            book.titleOrDefault,
-            (book as? PlannedBook)?.priority ?: 100
-        )
+        val title = resources.getTitleString(book.title)
+        val priority = (book as? PlannedBook)?.priority ?: 100
+        randomProfileBook.text = getString(R.string.profile_text_random, title, priority)
         randomProfileBook.animate()
             .setInterpolator(AccelerateInterpolator())
             .setDuration(1000)
