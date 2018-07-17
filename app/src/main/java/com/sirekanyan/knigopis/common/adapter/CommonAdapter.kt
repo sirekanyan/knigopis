@@ -3,17 +3,8 @@ package com.sirekanyan.knigopis.common.adapter
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.view.ViewGroup
 
-private fun <T : CommonModel> createItemCallback() =
-    SimpleItemCallback<T> { item ->
-        if (item.isHeader) {
-            item.header.id
-        } else {
-            item.data.id
-        }
-    }
-
 abstract class CommonAdapter<T : CommonModel> :
-    ListAdapter<T, CommonViewHolder<T>>(createItemCallback<T>()) {
+    ListAdapter<T, CommonViewHolder<T>>(SimpleItemCallback { it.id }) {
 
     private companion object {
         private const val HEADER_TYPE = 0
