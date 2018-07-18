@@ -146,7 +146,7 @@ class BookActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                progressText.text = "$progress%"
+                progressText.text = getString(R.string.book_progress, progress)
                 if (progress == MAX_BOOK_PRIORITY) {
                     bookDateInputGroup.showNow()
                     if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {

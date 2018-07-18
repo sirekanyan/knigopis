@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="note_date_delimiter" translatable="false">/</string>
+    <string name="book_progress" translatable="false">%d%%</string>
 </resources>

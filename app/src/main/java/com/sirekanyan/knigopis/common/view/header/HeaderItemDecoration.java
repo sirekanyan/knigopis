@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  */
 public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
 
-    private StickyHeaderInterface mListener;
+    private final StickyHeaderInterface mListener;
 
     public HeaderItemDecoration(@NonNull StickyHeaderInterface listener) {
         mListener = listener;
