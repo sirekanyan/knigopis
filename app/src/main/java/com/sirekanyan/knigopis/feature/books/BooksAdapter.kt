@@ -10,7 +10,7 @@ import com.sirekanyan.knigopis.model.BookModel
 class BooksAdapter(
     private val onClick: (BookDataModel) -> Unit,
     private val onLongClick: (BookDataModel) -> Unit
-) : CommonAdapter<BookModel>() {
+) : CommonAdapter<BookModel>(BookItemCallback()) {
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup) =
         BookHeaderViewHolder(parent.inflate(R.layout.header))

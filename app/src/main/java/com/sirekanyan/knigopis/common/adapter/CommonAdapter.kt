@@ -1,10 +1,12 @@
 package com.sirekanyan.knigopis.common.adapter
 
 import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.view.ViewGroup
 
-abstract class CommonAdapter<T : CommonModel> :
-    ListAdapter<T, CommonViewHolder<T>>(SimpleItemCallback { it.id }) {
+abstract class CommonAdapter<T : CommonModel>(
+    itemCallback: DiffUtil.ItemCallback<T>
+) : ListAdapter<T, CommonViewHolder<T>>(itemCallback) {
 
     private companion object {
         private const val HEADER_TYPE = 0
