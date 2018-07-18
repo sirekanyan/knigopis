@@ -78,7 +78,6 @@
 
     <!-- 👨 users tab -->
     <string name="users.error.empty">Вы ещё ни на кого не подписаны</string>
-    <string name="users.info.subscribed">Пользователь добавлен в избранное</string>
     <string name="users.info.no_browser">Не найдено приложение для просмотра страницы</string>
 
     <!-- user screen -->

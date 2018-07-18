@@ -59,21 +59,19 @@ fun View.hide() {
         .withEndAction { visibility = View.GONE }
 }
 
-fun View.showScale() {
+fun View.startExpandAnimation() {
     alpha = 0f
     scaleX = 0f
     scaleY = 0f
     animate().alpha(1f).setDuration(200)
-        .scaleX(1f).scaleY(1f)
         .setInterpolator(LinearOutSlowInInterpolator())
-        .withStartAction { visibility = View.VISIBLE }
+        .scaleX(1f).scaleY(1f)
 }
 
-fun View.hideScale() {
+fun View.startCollapseAnimation() {
     animate().alpha(0f).setDuration(200)
-        .scaleX(0f).scaleY(0f)
         .setInterpolator(FastOutLinearInInterpolator())
-        .withEndAction { visibility = View.GONE }
+        .scaleX(0f).scaleY(0f)
 }
 
 val View.isVisible get() = visibility == View.VISIBLE

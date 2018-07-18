@@ -77,7 +77,6 @@
 
     <!-- 👨 users tab -->
     <string name="users.error.empty">You don\'t have any subscriptions yet</string>
-    <string name="users.info.subscribed">Successfully subscribed</string>
     <string name="users.info.no_browser">No browser app found</string>
 
     <!-- user screen -->

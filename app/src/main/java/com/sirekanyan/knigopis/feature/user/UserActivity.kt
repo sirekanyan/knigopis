@@ -55,15 +55,18 @@ class UserActivity : AppCompatActivity() {
         toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
-            fab.isSelected = true
-            fab.setImageResource(R.drawable.ic_done)
-            fab.setOnClickListener(null)
             interactor.subscribe(userId)
+                .doOnSubscribe { fab.startCollapseAnimation() }
+                .doFinally { fab.startExpandAnimation() }
                 .subscribe({
-                    view.snackbar(R.string.users_info_subscribed)
+                    fab.setOnClickListener(null)
+                    fab.isSelected = true
+                    fab.setImageResource(R.drawable.ic_done)
                 }, {
-                    fab.showScale()
                     logError("Cannot update subscription", it)
+                    view.snackbar(R.string.common_error_network)
+                    fab.isSelected = false
+                    fab.setImageResource(R.drawable.ic_person_add)
                 })
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -124,18 +127,9 @@ class UserActivity : AppCompatActivity() {
                 books.clear()
                 books.addAll(it)
                 booksAdapter.submitList(it)
+                onBooksLoaded()
             }, {
                 logError("Cannot load user books", it)
-            })
-        interactor.isSubscribed(userId)
-            .subscribe({ isSubscribed ->
-                if (isSubscribed) {
-                    unsubscribeOption.isVisible = true
-                } else {
-                    fab.showScale()
-                }
-            }, {
-                logError("Cannot update subscription", it)
             })
     }
 
@@ -167,6 +161,20 @@ class UserActivity : AppCompatActivity() {
             }
             else -> false
         }
+    }
+
+    private fun onBooksLoaded() {
+        interactor.isSubscribed(userId)
+            .subscribe({ isSubscribed ->
+                if (isSubscribed) {
+                    unsubscribeOption.isVisible = true
+                } else {
+                    fab.showNow()
+                    fab.startExpandAnimation()
+                }
+            }, {
+                logError("Cannot check subscription", it)
+            })
     }
 
     private fun onBookLongClicked(book: BookDataModel) {
