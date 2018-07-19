@@ -21,7 +21,7 @@ sealed class BookModel(
 class BookHeaderModel(
     val title: String,
     val count: String
-) : BookModel("header-id-$title-$count", true, BookGroupModel(title, count))
+) : BookModel("header-id-$title", true, BookGroupModel(title, count))
 
 class BookDataModel(
     id: String,

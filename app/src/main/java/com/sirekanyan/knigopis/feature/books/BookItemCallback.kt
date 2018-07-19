@@ -13,7 +13,8 @@ class BookItemCallback : DiffUtil.ItemCallback<BookModel>() {
     override fun areContentsTheSame(oldItem: BookModel, newItem: BookModel) =
         when {
             oldItem is BookHeaderModel && newItem is BookHeaderModel -> {
-                areItemsTheSame(oldItem, newItem)
+                oldItem.title == newItem.count
+                        && oldItem.count == newItem.count
             }
             oldItem is BookDataModel && newItem is BookDataModel -> {
                 oldItem.title == newItem.title
