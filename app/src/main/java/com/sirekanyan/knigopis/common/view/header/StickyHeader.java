@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.common.view.header;
 
 import android.view.View;
 
-public interface StickyHeaderInterface {
+public interface StickyHeader {
 
     /**
      * This method gets called by {@link HeaderItemDecoration} to fetch the position of the header item in the adapter

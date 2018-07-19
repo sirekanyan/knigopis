@@ -19,14 +19,13 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.getFullTitleString
-import com.sirekanyan.knigopis.common.extensions.showNow
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.DialogItem
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
-import com.sirekanyan.knigopis.common.view.header.StickyHeaderInterface
+import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
@@ -81,43 +80,8 @@ class MainActivity : AppCompatActivity(), Router {
         setContentView(R.layout.activity_main)
         initRecyclerView(booksRecyclerView)
         booksRecyclerView.addItemDecoration(
-            HeaderItemDecoration(
-                object : StickyHeaderInterface {
-                    override fun getHeaderPositionForItem(itemPosition: Int): Int {
-                        return itemPosition
-                    }
-
-                    override fun getHeaderLayout(headerPosition: Int): Int {
-                        return R.layout.header
-                    }
-
-                    override fun bindHeaderData(header: View, headerPosition: Int) {
-                        val group = allBooks[headerPosition].group
-                        val title = group.title.let {
-                            if (it.isEmpty()) {
-                                getString(R.string.books_header_done_other)
-                            } else {
-                                it
-                            }
-                        }
-                        header.findViewById<TextView>(R.id.headerTitle).text = title
-                        header.findViewById<TextView>(R.id.headerCount).text =
-                                resources.getQuantityString(
-                                    R.plurals.common_header_books,
-                                    group.count,
-                                    group.count
-                                )
-                        header.findViewById<TextView>(R.id.headerCount).showNow()
-                        header.findViewById<View>(R.id.header_bottom_divider).showNow()
-                    }
-
-                    override fun isHeader(itemPosition: Int): Boolean {
-                        return allBooks[itemPosition].isHeader
-                    }
-                }
-            )
+            HeaderItemDecoration(StickyHeaderImpl(application, allBooks))
         )
-
         initRecyclerView(usersRecyclerView)
         initRecyclerView(notesRecyclerView)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)

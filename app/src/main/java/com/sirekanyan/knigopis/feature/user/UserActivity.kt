@@ -8,15 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
-import com.sirekanyan.knigopis.common.view.header.StickyHeaderInterface
+import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
@@ -73,41 +71,7 @@ class UserActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         userBooksRecyclerView.layoutManager = layoutManager
         userBooksRecyclerView.addItemDecoration(
-            HeaderItemDecoration(
-                object : StickyHeaderInterface {
-                    override fun getHeaderPositionForItem(itemPosition: Int): Int {
-                        return itemPosition
-                    }
-
-                    override fun getHeaderLayout(headerPosition: Int): Int {
-                        return R.layout.header
-                    }
-
-                    override fun bindHeaderData(header: View, headerPosition: Int) {
-                        val group = books[headerPosition].group
-                        val title = group.title.let {
-                            if (it.isEmpty()) {
-                                getString(R.string.books_header_done_other)
-                            } else {
-                                it
-                            }
-                        }
-                        header.findViewById<TextView>(R.id.headerTitle).text = title
-                        header.findViewById<TextView>(R.id.headerCount).text =
-                                resources.getQuantityString(
-                                    R.plurals.common_header_books,
-                                    group.count,
-                                    group.count
-                                )
-                        header.findViewById<TextView>(R.id.headerCount).showNow()
-                        header.findViewById<View>(R.id.header_bottom_divider).showNow()
-                    }
-
-                    override fun isHeader(itemPosition: Int): Boolean {
-                        return books[itemPosition].isHeader
-                    }
-                }
-            )
+            HeaderItemDecoration(StickyHeaderImpl(application, books))
         )
         userBooksRecyclerView.adapter = booksAdapter
     }
