@@ -443,12 +443,12 @@ class MainActivity : AppCompatActivity(), Router {
                     api.deletePlannedBook(book.id, auth.getAccessToken())
                 }
                     .io2main()
-                    .subscribe({}, {
+                    .subscribe({
+                        refresh(isForce = true)
+                    }, {
                         toast(R.string.books_error_delete)
                         logError("cannot delete finished book", it)
                     })
-                allBooks.removeAt(index)
-                booksAdapter.notifyItemRemoved(index)
             }
         }
         val onDeleteClicked = {
