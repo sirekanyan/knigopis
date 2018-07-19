@@ -68,7 +68,7 @@ val appModule = applicationContext {
 }
 
 private fun Context.userModule() {
-    bean { UserInteractorImpl(get(), get()) as UserInteractor }
+    bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
 }
 
 private fun createMainEndpoint(gson: Gson) =

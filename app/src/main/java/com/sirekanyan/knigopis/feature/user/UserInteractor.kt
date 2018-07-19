@@ -1,8 +1,9 @@
 package com.sirekanyan.knigopis.feature.user
 
+import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.io2main
-import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.createBookHeaderModel
 import com.sirekanyan.knigopis.model.toBookModel
 import com.sirekanyan.knigopis.repository.KAuth
 import com.sirekanyan.knigopis.repository.api.Endpoint
@@ -23,7 +24,8 @@ interface UserInteractor {
 
 class UserInteractorImpl(
     private val auth: KAuth,
-    private val api: Endpoint
+    private val api: Endpoint,
+    private val resources: ResourceProvider
 ) : UserInteractor {
 
     override fun subscribe(userId: String) =
@@ -49,7 +51,7 @@ class UserInteractorImpl(
                         year2.compareTo(year1)
                     })
                     .flatMap { (year, books) ->
-                        val header = BookHeaderModel(year, books.size)
+                        val header = createBookHeaderModel(resources, year, books.size)
                         val items = books.map { it.toBookModel(header.group) }
                         listOf(header, *items.toTypedArray())
                     }

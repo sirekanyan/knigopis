@@ -34,9 +34,7 @@
         android:fontFamily="sans-serif"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="14sp"
-        android:visibility="invisible"
-        tools:text="12 книг"
-        tools:visibility="visible" />
+        tools:text="12 книг" />
 
     <View
         android:id="@+id/headerBottomDivider"

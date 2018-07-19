@@ -1,7 +1,16 @@
 package com.sirekanyan.knigopis.model
 
+import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.adapter.CommonModel
+import com.sirekanyan.knigopis.common.orDefault
 import com.sirekanyan.knigopis.repository.api.createBookImageUrl
+
+fun createBookHeaderModel(resources: ResourceProvider, title: String, count: Int): BookHeaderModel {
+    val titleOrDefault = title.orDefault(resources.getString(R.string.books_header_done_other))
+    val countText = resources.getQuantityString(R.plurals.common_header_books, count, count)
+    return BookHeaderModel(titleOrDefault, countText)
+}
 
 sealed class BookModel(
     override val id: String,
@@ -11,7 +20,7 @@ sealed class BookModel(
 
 class BookHeaderModel(
     val title: String,
-    val count: Int
+    val count: String
 ) : BookModel("header-id-$title-$count", true, BookGroupModel(title, count))
 
 class BookDataModel(

@@ -2,11 +2,11 @@ package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel
-import com.sirekanyan.knigopis.model.toBookModel
+import com.sirekanyan.knigopis.model.createBookHeaderModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook
 import com.sirekanyan.knigopis.model.dto.PlannedBook
+import com.sirekanyan.knigopis.model.toBookModel
 
 interface BookOrganizer<T> {
 
@@ -36,14 +36,14 @@ class PlannedBookOrganizerImpl(
         val doingBooks = books.filterNot { it.priority == 0 }
         if (doingBooks.isNotEmpty()) {
             val todoHeaderTitle = resources.getString(R.string.books_header_doing)
-            val header = BookHeaderModel(todoHeaderTitle, doingBooks.size)
+            val header = createBookHeaderModel(resources, todoHeaderTitle, doingBooks.size)
             result.add(header)
             result.addAll(doingBooks.map { it.toBookModel(header.group) })
         }
         val todoBooks = books.filter { it.priority == 0 }
         if (todoBooks.isNotEmpty()) {
             val todoHeaderTitle = resources.getString(R.string.books_header_todo)
-            val header = BookHeaderModel(todoHeaderTitle, todoBooks.size)
+            val header = createBookHeaderModel(resources, todoHeaderTitle, todoBooks.size)
             result.add(header)
             result.addAll(todoBooks.map { it.toBookModel(header.group) })
         }
@@ -74,7 +74,7 @@ class FinishedBookPrepareImpl(
                     }
                     else -> resources.getString(R.string.books_header_done, year)
                 }
-                val header = BookHeaderModel(headerTitle, books.size)
+                val header = createBookHeaderModel(resources, headerTitle, books.size)
                 val items = books.map { it.toBookModel(header.group) }
                 listOf(header, *items.toTypedArray())
             }

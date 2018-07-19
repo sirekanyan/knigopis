@@ -79,9 +79,7 @@ class MainActivity : AppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRecyclerView(booksRecyclerView)
-        booksRecyclerView.addItemDecoration(
-            HeaderItemDecoration(StickyHeaderImpl(application, allBooks))
-        )
+        booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(allBooks)))
         initRecyclerView(usersRecyclerView)
         initRecyclerView(notesRecyclerView)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)

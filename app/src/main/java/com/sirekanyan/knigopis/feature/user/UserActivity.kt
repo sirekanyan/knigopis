@@ -70,9 +70,7 @@ class UserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val layoutManager = LinearLayoutManager(this)
         userBooksRecyclerView.layoutManager = layoutManager
-        userBooksRecyclerView.addItemDecoration(
-            HeaderItemDecoration(StickyHeaderImpl(application, books))
-        )
+        userBooksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(books)))
         userBooksRecyclerView.adapter = booksAdapter
     }
 
