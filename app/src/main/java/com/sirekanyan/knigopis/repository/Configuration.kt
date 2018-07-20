@@ -2,6 +2,8 @@ package com.sirekanyan.knigopis.repository
 
 import android.content.Context
 
+var isDarkConfiguration = false
+
 private const val PREFS_NAME = "knigopis-dev"
 private const val DEV_MODE_KEY = "dev-mode"
 private const val DARK_THEME_KEY = "dark-theme"
@@ -21,6 +23,10 @@ class ConfigurationImpl(context: Context) : Configuration {
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
+    init {
+        isDarkConfiguration = isDarkTheme
+    }
+
     override var isDevMode: Boolean
         get() = prefs.getBoolean(DEV_MODE_KEY, false)
         set(enabled) {
@@ -30,6 +36,7 @@ class ConfigurationImpl(context: Context) : Configuration {
     override var isDarkTheme: Boolean
         get() = prefs.getBoolean(DARK_THEME_KEY, false)
         set(enabled) {
+            isDarkConfiguration = enabled
             prefs.edit().putBoolean(DARK_THEME_KEY, enabled).apply()
         }
 

@@ -1,6 +1,8 @@
 package com.sirekanyan.knigopis.common.extensions
 
 import android.content.Context
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -11,35 +13,36 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.repository.isDarkConfiguration
 
-fun ImageView.setCircleImage(url: String?, isDark: Boolean = false) {
+private const val DARK_SATURATION = 0.33f
+
+private fun ImageView.setImage(url: String?, requestOptions: RequestOptions, placeholder: Int) {
+    if (isDarkConfiguration) {
+        val colorMatrix = ColorMatrix().apply { setSaturation(DARK_SATURATION) }
+        colorFilter = ColorMatrixColorFilter(colorMatrix)
+    }
     Glide.with(context)
         .load(url)
-        .apply(
-            RequestOptions.circleCropTransform()
-                .placeholder(
-                    if (isDark) {
-                        R.drawable.oval_dark_placeholder_background
-                    } else {
-                        R.drawable.oval_placeholder_background
-                    }
-                )
-                .theme(context.theme)
-        )
+        .apply(requestOptions.placeholder(placeholder).theme(context.theme))
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)
 }
 
+fun ImageView.setCircleImage(url: String?, placeholder: Int? = null) {
+    setImage(
+        url,
+        RequestOptions.circleCropTransform(),
+        placeholder ?: R.drawable.oval_placeholder_background
+    )
+}
+
 fun ImageView.setSquareImage(url: String?) {
-    Glide.with(context)
-        .load(url)
-        .apply(
-            RequestOptions.centerCropTransform()
-                .placeholder(R.drawable.rectangle_placeholder_background)
-                .theme(context.theme)
-        )
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(this)
+    setImage(
+        url,
+        RequestOptions.centerCropTransform(),
+        R.drawable.rectangle_placeholder_background
+    )
 }
 
 fun Context.preloadImage(url: String?, onSuccess: () -> Unit, onError: () -> Unit) {
