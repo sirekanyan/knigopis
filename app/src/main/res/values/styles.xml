@@ -38,6 +38,7 @@
         <item name="android:textColorPrimary">@color/dark.text_color_primary</item>
         <item name="android:textColorSecondary">@color/dark.text_color_secondary</item>
         <item name="android:textColorTertiary">@color/dark.text_color_tertiary</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
     </style>
 
     <style name="ProfileAppTheme" parent="DarkAppTheme">
