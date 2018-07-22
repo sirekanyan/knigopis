@@ -67,6 +67,7 @@ class MainActivity : BaseActivity(), Router {
     private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
     private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
     private val notesAdapter by lazy { NotesAdapter(::onNoteClicked) }
+    private val loadedTabs = mutableSetOf<CurrentTab>()
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -77,10 +78,10 @@ class MainActivity : BaseActivity(), Router {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initRecyclerView(booksRecyclerView)
+        initRecyclerView(booksRecyclerView, booksAdapter)
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(allBooks)))
-        initRecyclerView(usersRecyclerView)
-        initRecyclerView(notesRecyclerView)
+        initRecyclerView(usersRecyclerView, usersAdapter)
+        initRecyclerView(notesRecyclerView, notesAdapter)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
@@ -187,8 +188,12 @@ class MainActivity : BaseActivity(), Router {
         }
     }
 
-    private fun initRecyclerView(recyclerView: RecyclerView): RecyclerView {
+    private fun initRecyclerView(
+        recyclerView: RecyclerView,
+        adapter: RecyclerView.Adapter<*>
+    ): RecyclerView {
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
         return recyclerView
     }
 
@@ -315,38 +320,20 @@ class MainActivity : BaseActivity(), Router {
 
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
         currentTab = tab
-        togglePage(tab)
-        val isFirst = isFirstOpenTab(tab)
-        if (isFirst) {
-            when (tab) {
-                HOME_TAB -> booksRecyclerView.adapter = booksAdapter
-                USERS_TAB -> usersRecyclerView.adapter = usersAdapter
-                NOTES_TAB -> notesRecyclerView.adapter = notesAdapter
-            }
-        }
-        if (isFirst || isForce) {
-            when (tab) {
-                HOME_TAB -> refreshHomeTab()
-                USERS_TAB -> refreshUsersTab()
-                NOTES_TAB -> refreshNotesTab()
-            }
-        }
-    }
-
-    private fun isFirstOpenTab(tab: CurrentTab) =
-        when (tab) {
-            HOME_TAB -> booksRecyclerView.adapter == null || booksErrorPlaceholder.isVisible
-            USERS_TAB -> usersRecyclerView.adapter == null || usersErrorPlaceholder.isVisible
-            NOTES_TAB -> notesRecyclerView.adapter == null || notesErrorPlaceholder.isVisible
-        }
-
-    private fun togglePage(tab: CurrentTab) {
         booksPage.show(tab == HOME_TAB)
         usersPage.show(tab == USERS_TAB)
         notesPage.show(tab == NOTES_TAB)
+        val isFirst = !loadedTabs.contains(tab)
+        if (isFirst || isForce) {
+            when (tab) {
+                HOME_TAB -> refreshHomeTab(tab)
+                USERS_TAB -> refreshUsersTab(tab)
+                NOTES_TAB -> refreshNotesTab(tab)
+            }
+        }
     }
 
-    private fun refreshHomeTab() {
+    private fun refreshHomeTab(tab: CurrentTab) {
         bookRepository.observeBooks()
             .io2main()
             .showProgressBar()
@@ -356,13 +343,14 @@ class MainActivity : BaseActivity(), Router {
                 allBooks.clear()
                 allBooks.addAll(books)
                 booksAdapter.submitList(books)
+                loadedTabs.add(tab)
             }, {
                 logError("cannot load books", it)
                 handleError(it, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
             })
     }
 
-    private fun refreshUsersTab() {
+    private fun refreshUsersTab(tab: CurrentTab) {
         userRepository.observeUsers()
             .io2main()
             .showProgressBar()
@@ -370,13 +358,14 @@ class MainActivity : BaseActivity(), Router {
                 usersPlaceholder.show(users.isEmpty())
                 usersErrorPlaceholder.hide()
                 usersAdapter.submitList(users)
+                loadedTabs.add(tab)
             }, {
                 logError("cannot load users", it)
                 handleError(it, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
             })
     }
 
-    private fun refreshNotesTab() {
+    private fun refreshNotesTab(tab: CurrentTab) {
         noteRepository.observeNotes()
             .io2main()
             .showProgressBar()
@@ -384,6 +373,7 @@ class MainActivity : BaseActivity(), Router {
                 notesPlaceholder.show(notes.isEmpty())
                 notesErrorPlaceholder.hide()
                 notesAdapter.submitList(notes)
+                loadedTabs.add(tab)
             }, {
                 logError("cannot load notes", it)
                 handleError(it, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
