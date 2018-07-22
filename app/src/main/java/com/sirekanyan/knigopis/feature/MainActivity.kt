@@ -108,13 +108,15 @@ class MainActivity : BaseActivity(), Router {
     override fun onStart() {
         super.onStart()
         refreshOptionsMenu()
-        auth.requestAccessToken {
+        auth.requestAccessToken().bind({
             refreshOptionsMenu()
             if (userLoggedIn) {
                 userLoggedIn = false
                 refresh()
             }
-        }
+        }, {
+            logError("cannot check credentials", it)
+        })
         if (booksChanged) {
             booksChanged = false
             refresh(isForce = true)

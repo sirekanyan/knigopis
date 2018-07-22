@@ -3,7 +3,7 @@ package com.sirekanyan.knigopis.repository
 import android.content.Context
 import android.content.Intent
 import com.sirekanyan.knigopis.common.extensions.io2main
-import com.sirekanyan.knigopis.common.functions.logError
+import io.reactivex.Completable
 import ru.ulogin.sdk.UloginAuthActivity
 import java.util.*
 
@@ -18,7 +18,7 @@ interface KAuth {
     fun getTokenRequest(): Intent
     fun getUserProfile(): String?
     fun saveTokenResponse(data: Intent)
-    fun requestAccessToken(onSuccess: () -> Unit)
+    fun requestAccessToken(): Completable
     fun logout()
 }
 
@@ -44,20 +44,20 @@ class KAuthImpl(
         preferences.edit().putString(TOKEN_KEY, userData[TOKEN_KEY].toString()).apply()
     }
 
-    override fun requestAccessToken(onSuccess: () -> Unit) {
+    override fun requestAccessToken(): Completable {
         val token = preferences.getString(TOKEN_KEY, null)
-        if (token != null && !isAuthorized()) {
+        return if (token != null && !isAuthorized()) {
             api.getCredentials(token)
                 .io2main()
-                .subscribe({
+                .doOnSuccess {
                     preferences.edit()
                         .putString(ACCESS_TOKEN_KEY, it.accessToken)
                         .putString(USER_PROFILE, it.user.fixedProfile)
                         .apply()
-                    onSuccess()
-                }, {
-                    logError("cannot get credentials", it)
-                })
+                }
+                .toCompletable()
+        } else {
+            Completable.complete()
         }
     }
 
