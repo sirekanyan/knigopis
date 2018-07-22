@@ -63,7 +63,6 @@ class BookActivity : BaseActivity() {
     private val config by inject<Configuration>()
     private val repository by inject<BookRepository>()
     private val today = Calendar.getInstance()
-    private var bookId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (config.isDarkTheme) {
@@ -71,10 +70,12 @@ class BookActivity : BaseActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
-        bookId = intent.getStringExtra(EXTRA_BOOK_ID)
+        val bookId = intent.getStringExtra(EXTRA_BOOK_ID)
+        val wasFinished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
+        val isNewBook = bookId == null
         toolbar.inflateMenu(R.menu.book_menu)
-        if (bookId == null) titleEditText.requestFocus()
-        toolbar.setTitle(if (bookId == null) R.string.book_title_add else R.string.book_title_edit)
+        if (isNewBook) titleEditText.requestFocus()
+        toolbar.setTitle(if (isNewBook) R.string.book_title_add else R.string.book_title_edit)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener {
             finish()
@@ -84,8 +85,6 @@ class BookActivity : BaseActivity() {
             when (saveMenuItem.itemId) {
                 R.id.option_save_book -> {
                     hideKeyboard()
-                    val wasFinished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
-                        .takeUnless { bookId == null }
                     if (progressSeekBar.progress == MAX_BOOK_PRIORITY) {
                         repository.saveBook(
                             bookId,
@@ -97,7 +96,7 @@ class BookActivity : BaseActivity() {
                                 yearEditText.text.toString(),
                                 notesTextArea.text.toString()
                             ),
-                            wasFinished
+                            wasFinished.takeUnless { isNewBook }
                         )
                     } else {
                         repository.saveBook(
@@ -108,7 +107,7 @@ class BookActivity : BaseActivity() {
                                 notesTextArea.text.toString(),
                                 progressSeekBar.progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
                             ),
-                            wasFinished
+                            wasFinished.takeUnless { isNewBook }
                         )
                     }.io2main()
                         .doOnSubscribe {
@@ -152,9 +151,9 @@ class BookActivity : BaseActivity() {
                 progressText.text = getString(R.string.book_progress, progress)
                 if (progress == MAX_BOOK_PRIORITY) {
                     bookDateInputGroup.showNow()
-                    if (yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
+                    if (!wasFinished && yearEditText.text.isEmpty() && monthEditText.text.isEmpty() && dayEditText.text.isEmpty()) {
                         yearEditText.setText(today.get(Calendar.YEAR).toString())
-                        if (bookId != null) {
+                        if (!isNewBook) {
                             monthEditText.setText(today.get(Calendar.MONTH).inc().toString())
                             dayEditText.setText(today.get(Calendar.DAY_OF_MONTH).toString())
                         }
@@ -171,9 +170,9 @@ class BookActivity : BaseActivity() {
         }
         authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
         progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
-        if (bookId != null) {
+        if (!isNewBook) {
             notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
-            if (intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)) {
+            if (wasFinished) {
                 yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))
                 monthEditText.setText(intent.getStringExtra(EXTRA_BOOK_MONTH))
                 dayEditText.setText(intent.getStringExtra(EXTRA_BOOK_DAY))
