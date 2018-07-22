@@ -12,11 +12,11 @@ import io.reactivex.Single
 
 interface UserInteractor {
 
-    fun subscribe(userId: String): Completable
+    fun addFriend(userId: String): Completable
 
-    fun unsubscribe(userId: String): Completable
+    fun removeFriend(userId: String): Completable
 
-    fun isSubscribed(userId: String): Single<Boolean>
+    fun isFriend(userId: String): Single<Boolean>
 
     fun getBooks(userId: String): Single<List<BookModel>>
 
@@ -28,17 +28,17 @@ class UserInteractorImpl(
     private val resources: ResourceProvider
 ) : UserInteractor {
 
-    override fun subscribe(userId: String) =
+    override fun addFriend(userId: String) =
         api.createSubscription(userId, auth.getAccessToken())
             .toCompletable()
             .io2main()
 
-    override fun unsubscribe(userId: String) =
+    override fun removeFriend(userId: String) =
         api.deleteSubscription(userId, auth.getAccessToken())
             .toCompletable()
             .io2main()
 
-    override fun isSubscribed(userId: String) =
+    override fun isFriend(userId: String) =
         api.getSubscriptions(auth.getAccessToken())
             .map { subscriptions -> subscriptions.any { it.subUser.id == userId } }
             .io2main()

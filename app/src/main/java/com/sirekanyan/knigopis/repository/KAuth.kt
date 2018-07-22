@@ -52,10 +52,7 @@ class KAuthImpl(
                 .subscribe({
                     preferences.edit()
                         .putString(ACCESS_TOKEN_KEY, it.accessToken)
-                        .putString(
-                            USER_PROFILE,
-                            it.user.fixedProfile
-                        )
+                        .putString(USER_PROFILE, it.user.fixedProfile)
                         .apply()
                     onSuccess()
                 }, {

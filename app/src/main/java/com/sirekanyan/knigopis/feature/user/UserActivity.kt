@@ -58,7 +58,7 @@ class UserActivity : BaseActivity() {
         toolbarImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
-            interactor.subscribe(userId)
+            interactor.addFriend(userId)
                 .doOnSubscribe { fab.startCollapseAnimation() }
                 .doFinally { fab.startExpandAnimation() }
                 .bind({
@@ -119,7 +119,7 @@ class UserActivity : BaseActivity() {
                 true
             }
             R.id.option_unsubscribe -> {
-                interactor.unsubscribe(userId)
+                interactor.removeFriend(userId)
                     .bind({}, {
                         logError("Cannot unsubscribe", it)
                         toast(R.string.user_error_unsubscribe)
@@ -131,7 +131,7 @@ class UserActivity : BaseActivity() {
     }
 
     private fun onBooksLoaded() {
-        interactor.isSubscribed(userId)
+        interactor.isFriend(userId)
             .bind({ isSubscribed ->
                 if (isSubscribed) {
                     unsubscribeOption.isVisible = true
