@@ -380,21 +380,17 @@ class MainActivity : BaseActivity(), Router {
             })
     }
 
-    private fun <T> Flowable<T>.showProgressBar(): Flowable<T> {
-        fun hideProgress() {
-            booksProgressBar.hide()
-            swipeRefresh.isRefreshing = false
-        }
-        return doOnSubscribe {
+    private fun <T> Flowable<T>.showProgressBar(): Flowable<T> =
+        doOnSubscribe {
             if (!swipeRefresh.isRefreshing) {
                 booksProgressBar.show()
             }
         }.doOnNext {
-            hideProgress()
+            booksProgressBar.hide()
         }.doFinally {
-            hideProgress()
+            booksProgressBar.hide()
+            swipeRefresh.isRefreshing = false
         }
-    }
 
     private fun handleError(
         th: Throwable,
