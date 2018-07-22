@@ -194,7 +194,7 @@ class ProfileActivity : BaseActivity() {
         editOption.setTitle(R.string.profile_option_save)
         topProfileSpace.hideNow()
         profileNicknameSwitcher.displayedChild = 1
-        showKeyboard()
+        showKeyboard(profileNicknameEditText)
     }
 
     private fun quitEditMode() {
