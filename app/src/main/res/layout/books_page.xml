@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="0.1dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:listitem="@layout/book" />
 
     <TextView

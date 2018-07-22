@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -77,10 +76,10 @@ class MainActivity : BaseActivity(), Router {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initRecyclerView(booksRecyclerView, booksAdapter)
+        booksRecyclerView.adapter = booksAdapter
+        usersRecyclerView.adapter = usersAdapter
+        notesRecyclerView.adapter = notesAdapter
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(allBooks)))
-        initRecyclerView(usersRecyclerView, usersAdapter)
-        initRecyclerView(notesRecyclerView, notesAdapter)
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
@@ -185,15 +184,6 @@ class MainActivity : BaseActivity(), Router {
             bottomNavigation.hide()
             bottomNavigation.setOnNavigationItemSelectedListener(null)
         }
-    }
-
-    private fun initRecyclerView(
-        recyclerView: RecyclerView,
-        adapter: RecyclerView.Adapter<*>
-    ): RecyclerView {
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-        return recyclerView
     }
 
     private fun initToolbar(toolbar: Toolbar) {
