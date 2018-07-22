@@ -8,8 +8,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.*
+import com.sirekanyan.knigopis.common.BaseActivity
+import com.sirekanyan.knigopis.common.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.functions.extra
+import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration

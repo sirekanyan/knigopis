@@ -8,11 +8,14 @@ import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.*
+import com.sirekanyan.knigopis.common.BaseActivity
+import com.sirekanyan.knigopis.common.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.functions.createTextShareIntent
+import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.dto.*
+import com.sirekanyan.knigopis.repository.Endpoint
 import com.sirekanyan.knigopis.repository.KAuth
-import com.sirekanyan.knigopis.repository.api.Endpoint
 import kotlinx.android.synthetic.main.profile_activity.*
 import org.koin.android.ext.android.inject
 

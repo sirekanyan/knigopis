@@ -1,6 +1,5 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.extensions
 
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.net.Uri
 import android.support.annotation.DimenRes
@@ -9,7 +8,6 @@ import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import com.sirekanyan.knigopis.App
 import com.sirekanyan.knigopis.BuildConfig.APPLICATION_ID
 import io.reactivex.Completable
@@ -18,17 +16,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-private const val TAG = "Knigopis"
 private val HTTP_SCHEMES = setOf("http", "https")
 
-fun extra(name: String) = "$APPLICATION_ID.extra_$name"
-
 fun Activity.app() = application as App
-
-@Suppress("unused")
-fun logWarn(message: String) = Log.w(TAG, message)
-
-fun logError(message: String, throwable: Throwable?) = Log.e(TAG, message, throwable)
 
 fun <T> Single<T>.io2main(): Single<T> =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -75,10 +65,6 @@ fun View.startCollapseAnimation() {
 }
 
 val View.isVisible get() = visibility == View.VISIBLE
-
-fun ProgressBar.setProgressSmoothly(progress: Int) {
-    ObjectAnimator.ofInt(this, "progress", progress).start()
-}
 
 fun String.toUriOrNull() =
     Uri.parse(this).takeIf(Uri::isValidHttpLink)

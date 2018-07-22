@@ -2,9 +2,8 @@ package com.sirekanyan.knigopis.repository
 
 import android.content.Context
 import android.content.Intent
-import com.sirekanyan.knigopis.common.io2main
-import com.sirekanyan.knigopis.common.logError
-import com.sirekanyan.knigopis.repository.api.Endpoint
+import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.functions.logError
 import ru.ulogin.sdk.UloginAuthActivity
 import java.util.*
 

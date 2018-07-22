@@ -16,7 +16,7 @@ import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook
 import com.sirekanyan.knigopis.model.dto.PlannedBook
 import com.sirekanyan.knigopis.repository.*
-import com.sirekanyan.knigopis.repository.api.Endpoint
+import com.sirekanyan.knigopis.repository.Endpoint
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.cache.HeadedModelDeserializer

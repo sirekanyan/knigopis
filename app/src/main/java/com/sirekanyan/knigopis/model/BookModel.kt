@@ -3,8 +3,8 @@ package com.sirekanyan.knigopis.model
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.adapter.HeadedModel
-import com.sirekanyan.knigopis.common.orDefault
-import com.sirekanyan.knigopis.repository.api.createBookImageUrl
+import com.sirekanyan.knigopis.common.extensions.orDefault
+import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 
 fun createBookHeaderModel(resources: ResourceProvider, title: String, count: Int): BookHeaderModel {
     val titleOrDefault = title.orDefault(resources.getString(R.string.books_header_done_other))

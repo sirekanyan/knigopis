@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.api
+package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.model.dto.*
 import io.reactivex.Completable

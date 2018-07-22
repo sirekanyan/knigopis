@@ -16,10 +16,10 @@ import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
-import com.sirekanyan.knigopis.common.*
-import com.sirekanyan.knigopis.common.extensions.getFullTitleString
-import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
-import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.BaseActivity
+import com.sirekanyan.knigopis.common.ResourceProvider
+import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.DialogItem
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
@@ -36,7 +36,6 @@ import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.*
-import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.about.view.*

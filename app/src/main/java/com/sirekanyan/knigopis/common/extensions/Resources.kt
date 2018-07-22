@@ -2,7 +2,6 @@ package com.sirekanyan.knigopis.common.extensions
 
 import android.content.res.Resources
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.orDefault
 
 fun Resources.getTitleString(title: String): String {
     return title.orDefault(getString(R.string.common_book_notitle))

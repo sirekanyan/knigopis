@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.functions
 
 import android.content.Intent
 

@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.repository.common
+package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.NetworkChecker
 import io.reactivex.Completable

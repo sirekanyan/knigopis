@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.model.dto
 
-import com.sirekanyan.knigopis.repository.api.createUserImageUrl
+import com.sirekanyan.knigopis.common.functions.createUserImageUrl
 
 class Identity(
     val id: String,
