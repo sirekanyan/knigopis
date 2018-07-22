@@ -3,7 +3,6 @@ package com.sirekanyan.knigopis.feature.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
@@ -19,7 +18,7 @@ import org.koin.android.ext.android.inject
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
 
     private val api by inject<Endpoint>()
     private val auth by inject<KAuth>()
@@ -77,7 +76,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun refreshProfile() {
         api.getProfile(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshProfile) {
+            .bind(::onRefreshProfile) {
                 logError("cannot get profile", it)
             }
     }
@@ -92,11 +91,11 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun refreshCounters() {
         api.getFinishedBooks(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshFinishedBooks) {
+            .bind(::onRefreshFinishedBooks) {
                 logError("cannot check finished books count", it)
             }
         api.getPlannedBooks(auth.getAccessToken()).io2main()
-            .subscribe(::onRefreshPlannedBooks) {
+            .bind(::onRefreshPlannedBooks) {
                 logError("cannot check planned books count", it)
             }
     }
@@ -133,7 +132,7 @@ class ProfileActivity : AppCompatActivity() {
                 profileUrl.orEmpty()
             )
         ).io2main()
-            .subscribe({
+            .bind({
                 profileNickname.text = profileNicknameEditText.text
                 quitEditMode()
                 refreshProfile()

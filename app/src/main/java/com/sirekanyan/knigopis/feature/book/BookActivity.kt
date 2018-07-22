@@ -3,7 +3,6 @@ package com.sirekanyan.knigopis.feature.book
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.sirekanyan.knigopis.R
@@ -55,7 +54,7 @@ fun Context.createEditBookIntent(book: BookDataModel): Intent =
             }
         }
 
-class BookActivity : AppCompatActivity() {
+class BookActivity : BaseActivity() {
 
     private val config by inject<Configuration>()
     private val repository by inject<BookRepository>()
@@ -118,7 +117,7 @@ class BookActivity : AppCompatActivity() {
                             progressMenuItem.actionView.hide()
                             saveMenuItem.isVisible = true
                         }
-                        .subscribe({
+                        .bind({
                             setResult(RESULT_OK)
                             finish()
                         }, {

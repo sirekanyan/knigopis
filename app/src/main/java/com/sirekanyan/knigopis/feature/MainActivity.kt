@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -54,7 +53,7 @@ private const val VERSION_CLICK_COUNT_OFF = 1
 private const val VERSION_CLICK_COUNT_ON = 12
 private const val CURRENT_TAB_KEY = "current_tab"
 
-class MainActivity : AppCompatActivity(), Router {
+class MainActivity : BaseActivity(), Router {
 
     private val api by inject<Endpoint>()
     private val config by inject<Configuration>()
@@ -127,7 +126,7 @@ class MainActivity : AppCompatActivity(), Router {
             normalizedUri.getQueryParameter("u")?.let { userId ->
                 api.getUser(userId)
                     .io2main()
-                    .subscribe({ user ->
+                    .bind({ user ->
                         openUserScreen(userId, user.name, user.photo)
                     }, {
                         logError("Cannot get user", it)
@@ -256,7 +255,7 @@ class MainActivity : AppCompatActivity(), Router {
     }
 
     private fun login() {
-        RxPermissions(this).requestEach(READ_PHONE_STATE).subscribe({
+        RxPermissions(this).requestEach(READ_PHONE_STATE).bind({
             when {
                 it.granted -> {
                     if (auth.isAuthorized()) {
@@ -351,7 +350,7 @@ class MainActivity : AppCompatActivity(), Router {
         bookRepository.observeBooks()
             .io2main()
             .showProgressBar()
-            .subscribe({ books ->
+            .bind({ books ->
                 booksPlaceholder.show(books.isEmpty())
                 booksErrorPlaceholder.hide()
                 allBooks.clear()
@@ -367,7 +366,7 @@ class MainActivity : AppCompatActivity(), Router {
         userRepository.observeUsers()
             .io2main()
             .showProgressBar()
-            .subscribe({ users ->
+            .bind({ users ->
                 usersPlaceholder.show(users.isEmpty())
                 usersErrorPlaceholder.hide()
                 usersAdapter.submitList(users)
@@ -381,7 +380,7 @@ class MainActivity : AppCompatActivity(), Router {
         noteRepository.observeNotes()
             .io2main()
             .showProgressBar()
-            .subscribe({ notes ->
+            .bind({ notes ->
                 notesPlaceholder.show(notes.isEmpty())
                 notesErrorPlaceholder.hide()
                 notesAdapter.submitList(notes)
@@ -443,7 +442,7 @@ class MainActivity : AppCompatActivity(), Router {
                     api.deletePlannedBook(book.id, auth.getAccessToken())
                 }
                     .io2main()
-                    .subscribe({
+                    .bind({
                         refresh(isForce = true)
                     }, {
                         toast(R.string.books_error_delete)

@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -32,7 +31,7 @@ fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent 
         .putExtra(EXTRA_USER_NAME, name)
         .putExtra(EXTRA_USER_PHOTO, avatar)
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : BaseActivity() {
 
     private val config by inject<Configuration>()
     private val interactor by inject<UserInteractor>()
@@ -59,7 +58,7 @@ class UserActivity : AppCompatActivity() {
             interactor.subscribe(userId)
                 .doOnSubscribe { fab.startCollapseAnimation() }
                 .doFinally { fab.startExpandAnimation() }
-                .subscribe({
+                .bind({
                     fab.setOnClickListener(null)
                     fab.isSelected = true
                     fab.setImageResource(R.drawable.ic_done)
@@ -88,7 +87,7 @@ class UserActivity : AppCompatActivity() {
             .doFinally { userBooksProgressBar.hide() }
             .doOnSuccess { userBooksRecyclerView.show() }
             .doOnError { userBooksErrorPlaceholder.show() }
-            .subscribe({
+            .bind({
                 books.clear()
                 books.addAll(it)
                 booksAdapter.submitList(it)
@@ -118,7 +117,7 @@ class UserActivity : AppCompatActivity() {
             }
             R.id.option_unsubscribe -> {
                 interactor.unsubscribe(userId)
-                    .subscribe({}, {
+                    .bind({}, {
                         logError("Cannot unsubscribe", it)
                         toast(R.string.user_error_unsubscribe)
                     })
@@ -130,7 +129,7 @@ class UserActivity : AppCompatActivity() {
 
     private fun onBooksLoaded() {
         interactor.isSubscribed(userId)
-            .subscribe({ isSubscribed ->
+            .bind({ isSubscribed ->
                 if (isSubscribed) {
                     unsubscribeOption.isVisible = true
                 } else {
