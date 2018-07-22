@@ -19,7 +19,7 @@ import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.api.Endpoint
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.CommonCacheImpl
-import com.sirekanyan.knigopis.repository.cache.CommonModelDeserializer
+import com.sirekanyan.knigopis.repository.cache.HeadedModelDeserializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.context.Context
@@ -55,7 +55,7 @@ val appModule = applicationContext {
     bean {
         GsonBuilder().registerTypeAdapter(
             BookModel::class.java,
-            CommonModelDeserializer<BookModel>(
+            HeadedModelDeserializer<BookModel>(
                 BookHeaderModel::class.java,
                 BookDataModel::class.java
             )

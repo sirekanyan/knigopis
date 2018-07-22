@@ -4,10 +4,10 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.sirekanyan.knigopis.common.adapter.CommonModel
+import com.sirekanyan.knigopis.common.adapter.HeadedModel
 import java.lang.reflect.Type
 
-class CommonModelDeserializer<T : CommonModel>(
+class HeadedModelDeserializer<T : HeadedModel>(
     private val headerType: Type,
     private val dataType: Type
 ) : JsonDeserializer<T> {

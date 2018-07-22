@@ -1,6 +1,5 @@
 package com.sirekanyan.knigopis.common.adapter
 
-interface CommonModel {
-    val id: String
+interface HeadedModel {
     val isHeader: Boolean
 }

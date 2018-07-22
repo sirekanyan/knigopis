@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.feature.books
 
 import android.view.ViewGroup
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.adapter.CommonAdapter
+import com.sirekanyan.knigopis.common.adapter.HeadedAdapter
 import com.sirekanyan.knigopis.common.extensions.inflate
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
@@ -10,7 +10,7 @@ import com.sirekanyan.knigopis.model.BookModel
 class BooksAdapter(
     private val onClick: (BookDataModel) -> Unit,
     private val onLongClick: (BookDataModel) -> Unit
-) : CommonAdapter<BookModel>(BookItemCallback()) {
+) : HeadedAdapter<BookModel>(BookItemCallback()) {
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup) =
         BookHeaderViewHolder(parent.inflate(R.layout.header))

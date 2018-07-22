@@ -4,7 +4,7 @@ import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.ViewGroup
 
-abstract class CommonAdapter<T : CommonModel>(
+abstract class HeadedAdapter<T : HeadedModel>(
     itemCallback: DiffUtil.ItemCallback<T>
 ) : ListAdapter<T, CommonViewHolder<T>>(itemCallback) {
 

@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.model
 
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.common.adapter.CommonModel
+import com.sirekanyan.knigopis.common.adapter.HeadedModel
 import com.sirekanyan.knigopis.common.orDefault
 import com.sirekanyan.knigopis.repository.api.createBookImageUrl
 
@@ -13,10 +13,10 @@ fun createBookHeaderModel(resources: ResourceProvider, title: String, count: Int
 }
 
 sealed class BookModel(
-    override val id: String,
+    val id: String,
     override val isHeader: Boolean,
     val group: BookGroupModel
-) : CommonModel
+) : HeadedModel
 
 class BookHeaderModel(
     val title: String,
