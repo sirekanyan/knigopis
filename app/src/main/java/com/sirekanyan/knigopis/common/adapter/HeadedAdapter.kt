@@ -31,4 +31,7 @@ abstract class HeadedAdapter<T : HeadedModel>(
     override fun getItemViewType(position: Int): Int =
         if (getItem(position).isHeader) HEADER_TYPE else DATA_TYPE
 
+    fun getModelByPosition(position: Int): T =
+        getItem(position)
+
 }

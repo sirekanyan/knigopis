@@ -20,7 +20,6 @@ import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.repository.Configuration
 import kotlinx.android.synthetic.main.user_activity.*
 import org.koin.android.ext.android.inject
@@ -41,7 +40,6 @@ class UserActivity : BaseActivity() {
     private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory>(parameters = createParameters())
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
-    private val books = mutableListOf<BookModel>()
     private val booksAdapter = UserBooksAdapter(::onBookLongClicked)
     private lateinit var unsubscribeOption: MenuItem
 
@@ -76,7 +74,7 @@ class UserActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val layoutManager = LinearLayoutManager(this)
         userBooksRecyclerView.layoutManager = layoutManager
-        userBooksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(books)))
+        userBooksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         userBooksRecyclerView.adapter = booksAdapter
     }
 
@@ -92,8 +90,6 @@ class UserActivity : BaseActivity() {
             .doOnSuccess { userBooksRecyclerView.show() }
             .doOnError { userBooksErrorPlaceholder.show() }
             .bind({
-                books.clear()
-                books.addAll(it)
                 booksAdapter.submitList(it)
                 onBooksLoaded()
             }, {

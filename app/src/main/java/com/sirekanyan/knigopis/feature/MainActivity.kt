@@ -33,8 +33,11 @@ import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
-import com.sirekanyan.knigopis.model.*
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
@@ -59,7 +62,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val userRepository by inject<UserRepository>()
     private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
-    private val allBooks = mutableListOf<BookModel>()
     private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
     private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
     private val notesAdapter by lazy { NotesAdapter(::onNoteClicked) }
@@ -76,7 +78,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         setContentView(R.layout.activity_main)
         val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter, notesAdapter)
         MainPresenterImpl(view, this, config).apply { view.callbacks = this }
-        booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(allBooks)))
+        booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
@@ -287,8 +289,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
             .bind({ books ->
                 booksPlaceholder.show(books.isEmpty())
                 booksErrorPlaceholder.hide()
-                allBooks.clear()
-                allBooks.addAll(books)
                 booksAdapter.submitList(books)
                 loadedTabs.add(tab)
             }, {
@@ -367,21 +367,18 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private fun onBookLongClicked(book: BookDataModel) {
         val bookFullTitle = resources.getFullTitleString(book.title, book.author)
         val onDeleteConfirmed = {
-            val index = allBooks.indexOfFirst { it.id == book.id }
-            if (index >= 0) {
-                if (book.isFinished) {
-                    api.deleteFinishedBook(book.id, auth.getAccessToken())
-                } else {
-                    api.deletePlannedBook(book.id, auth.getAccessToken())
-                }
-                    .io2main()
-                    .bind({
-                        refresh(isForce = true)
-                    }, {
-                        toast(R.string.books_error_delete)
-                        logError("cannot delete finished book", it)
-                    })
+            if (book.isFinished) {
+                api.deleteFinishedBook(book.id, auth.getAccessToken())
+            } else {
+                api.deletePlannedBook(book.id, auth.getAccessToken())
             }
+                .io2main()
+                .bind({
+                    refresh(isForce = true)
+                }, {
+                    toast(R.string.books_error_delete)
+                    logError("cannot delete finished book", it)
+                })
         }
         val onDeleteClicked = {
             AlertDialog.Builder(this)
