@@ -48,6 +48,7 @@ interface MainView {
         fun onAboutOptionClicked()
         fun onDarkThemeOptionClicked(isChecked: Boolean)
         fun onAddBookClicked()
+        fun onNoteClicked(note: NoteModel)
     }
 
 }
@@ -55,12 +56,12 @@ interface MainView {
 class MainViewImpl(
     override val containerView: View,
     private val booksAdapter: BooksAdapter,
-    private val usersAdapter: UsersAdapter,
-    private val notesAdapter: NotesAdapter
+    private val usersAdapter: UsersAdapter
 ) : MainView, LayoutContainer {
 
     lateinit var callbacks: MainView.Callbacks
     private val context = containerView.context
+    private val notesAdapter = NotesAdapter { callbacks.onNoteClicked(it) }
 
     init {
         toolbar.inflateMenu(R.menu.options)

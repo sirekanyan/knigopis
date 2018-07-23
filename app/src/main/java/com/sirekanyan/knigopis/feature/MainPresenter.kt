@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.NoteRepository
@@ -21,6 +22,7 @@ interface MainPresenter : Presenter {
         fun openProfileScreen()
         fun reopenScreen()
         fun openNewBookScreen()
+        fun openUserScreen(id: String, name: String, image: String?)
     }
 
 }
@@ -67,6 +69,10 @@ class MainPresenterImpl(
 
     override fun onAddBookClicked() {
         router.openNewBookScreen()
+    }
+
+    override fun onNoteClicked(note: NoteModel) {
+        router.openUserScreen(note.userId, note.userName, note.userImage)
     }
 
     private fun refreshHomeTab(tab: CurrentTab) {

@@ -26,7 +26,6 @@ import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
-import com.sirekanyan.knigopis.feature.notes.NotesAdapter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.UriItem
@@ -35,7 +34,6 @@ import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
 import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
-import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -59,7 +57,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val resourceProvider by inject<ResourceProvider>()
     private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
     private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
-    private val notesAdapter by lazy { NotesAdapter(::onNoteClicked) }
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -71,7 +68,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter, notesAdapter)
+        val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter)
         presenter = MainPresenterImpl(
             view,
             this,
@@ -161,8 +158,8 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
     }
 
-    override fun openUserScreen(id: String, name: String, avatar: String?) {
-        startActivity(createUserIntent(id, name, avatar))
+    override fun openUserScreen(id: String, name: String, image: String?) {
+        startActivity(createUserIntent(id, name, image))
     }
 
     override fun openWebPage(uri: Uri) {
@@ -343,10 +340,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                 }
             }
         dialogs.showDialog(user.name, *dialogItems.toTypedArray())
-    }
-
-    private fun onNoteClicked(note: NoteModel) {
-        openUserScreen(note.userId, note.userName, note.userImage)
     }
 
 }
