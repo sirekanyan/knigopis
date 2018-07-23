@@ -17,6 +17,7 @@ import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
@@ -38,7 +39,7 @@ class UserActivity : BaseActivity() {
 
     private val config by inject<Configuration>()
     private val interactor by inject<UserInteractor>()
-    private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
+    private val dialogs by inject<DialogFactory>(parameters = createParameters())
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val books = mutableListOf<BookModel>()
     private val booksAdapter = UserBooksAdapter(::onBookLongClicked)

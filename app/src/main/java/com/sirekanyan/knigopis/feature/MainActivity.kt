@@ -24,6 +24,7 @@ import com.sirekanyan.knigopis.common.view.dialog.DialogItem
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
@@ -54,7 +55,7 @@ class MainActivity : BaseActivity(), Router {
     private val api by inject<Endpoint>()
     private val config by inject<Configuration>()
     private val auth by inject<KAuth>()
-    private val dialogs by inject<DialogFactory> { mapOf("activity" to this) }
+    private val dialogs by inject<DialogFactory>(parameters = createParameters())
     private val bookRepository by inject<BookRepository>()
     private val userRepository by inject<UserRepository>()
     private val noteRepository by inject<NoteRepository>()

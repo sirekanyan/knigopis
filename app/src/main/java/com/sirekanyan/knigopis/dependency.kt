@@ -1,5 +1,6 @@
 package com.sirekanyan.knigopis
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sirekanyan.knigopis.common.NetworkChecker
@@ -16,20 +17,22 @@ import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook
 import com.sirekanyan.knigopis.model.dto.PlannedBook
 import com.sirekanyan.knigopis.repository.*
-import com.sirekanyan.knigopis.repository.Endpoint
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.cache.HeadedModelDeserializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.context.Context
+import org.koin.core.parameter.Parameters
+import org.koin.dsl.context.ParameterProvider
 import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import org.koin.dsl.context.Context as KoinContext
 
 private const val MAIN_API_URL = "http://api.knigopis.com"
 private const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
+private const val CONTEXT_KEY = "context_key"
 
 val appModule = applicationContext {
     bean {
@@ -63,11 +66,17 @@ val appModule = applicationContext {
             .setDateFormat(DATE_FORMAT)
             .create()
     }
-    factory { BottomSheetDialogFactory(it["activity"]) as DialogFactory }
+    factory { BottomSheetDialogFactory(it.getContext()) as DialogFactory }
     userModule()
 }
 
-private fun Context.userModule() {
+fun Context.createParameters(): Parameters =
+    { mapOf(CONTEXT_KEY to this) }
+
+private fun ParameterProvider.getContext(): Context =
+    this[CONTEXT_KEY]
+
+private fun KoinContext.userModule() {
     bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
 }
 
