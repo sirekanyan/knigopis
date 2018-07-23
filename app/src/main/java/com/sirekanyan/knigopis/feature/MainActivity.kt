@@ -38,7 +38,6 @@ import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Flowable
-import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
 import kotlinx.android.synthetic.main.notes_page.*
@@ -50,7 +49,7 @@ private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 private const val CURRENT_TAB_KEY = "current_tab"
 
-class MainActivity : BaseActivity(), Router {
+class MainActivity : BaseActivity(), Router, MainPresenter.Router {
 
     private val api by inject<Endpoint>()
     private val config by inject<Configuration>()
@@ -75,9 +74,8 @@ class MainActivity : BaseActivity(), Router {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        booksRecyclerView.adapter = booksAdapter
-        usersRecyclerView.adapter = usersAdapter
-        notesRecyclerView.adapter = notesAdapter
+        val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter, notesAdapter)
+        MainPresenterImpl(view, this, config).apply { view.callbacks = this }
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(allBooks)))
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
@@ -85,12 +83,6 @@ class MainActivity : BaseActivity(), Router {
         refresh(currentTab ?: defaultTab)
         initNavigationView()
         initToolbar(toolbar)
-        addBookButton.setOnClickListener {
-            startActivityForResult(
-                createNewBookIntent(),
-                BOOK_REQUEST_CODE
-            )
-        }
         booksRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 when {
@@ -174,6 +166,18 @@ class MainActivity : BaseActivity(), Router {
         }
     }
 
+    override fun openProfileScreen() {
+        startActivity(createProfileIntent())
+    }
+
+    override fun reopenScreen() {
+        recreate()
+    }
+
+    override fun openNewBookScreen() {
+        startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
+    }
+
     private fun initNavigationView() {
         if (auth.isAuthorized()) {
             bottomNavigation.show()
@@ -188,37 +192,6 @@ class MainActivity : BaseActivity(), Router {
     }
 
     private fun initToolbar(toolbar: Toolbar) {
-        toolbar.inflateMenu(R.menu.options)
-        toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.option_login -> {
-                    login()
-                    true
-                }
-                R.id.option_profile -> {
-                    startActivity(createProfileIntent())
-                    true
-                }
-                R.id.option_about -> {
-                    val dialogView = View.inflate(this, R.layout.about, null)
-                    dialogView.aboutAppVersion.text = BuildConfig.VERSION_NAME
-                    AlertDialog.Builder(this).setView(dialogView).show()
-                    true
-                }
-                R.id.option_dark_theme -> {
-                    item.isChecked = !item.isChecked
-                    config.isDarkTheme = item.isChecked
-                    recreate()
-                    true
-                }
-                R.id.option_clear_cache -> {
-                    getSharedPreferences("cached", MODE_PRIVATE).edit().clear().apply()
-                    cacheDir.deleteRecursively()
-                    true
-                }
-                else -> false
-            }
-        }
         loginOption = toolbar.menu.findItem(R.id.option_login)
         profileOption = toolbar.menu.findItem(R.id.option_profile)
         val darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
@@ -233,7 +206,7 @@ class MainActivity : BaseActivity(), Router {
         }
     }
 
-    private fun login() {
+    override fun login() {
         RxPermissions(this).requestEach(READ_PHONE_STATE).bind({
             when {
                 it.granted -> {

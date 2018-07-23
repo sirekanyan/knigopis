@@ -1,13 +1,14 @@
 package com.sirekanyan.knigopis.repository.cache
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import java.lang.reflect.Type
 
-private const val PREFS_NAME = "cached"
+const val COMMON_PREFS_NAME = "cached"
 
 inline fun <reified T> genericType(): Type = object : TypeToken<T>() {}.type
 
@@ -24,7 +25,7 @@ class CommonCacheImpl(
     private val gson: Gson
 ) : CommonCache {
 
-    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(COMMON_PREFS_NAME, MODE_PRIVATE)
 
     override fun <T> getFromJson(key: CacheKey, type: Type): Maybe<T> =
         Maybe.fromCallable {
