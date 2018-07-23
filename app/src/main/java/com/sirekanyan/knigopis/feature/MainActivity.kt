@@ -10,8 +10,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
@@ -35,18 +33,15 @@ import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
-import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
+import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
-import kotlinx.android.synthetic.main.notes_page.*
-import kotlinx.android.synthetic.main.users_page.*
 import org.koin.android.ext.android.inject
-import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
@@ -65,19 +60,28 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
     private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
     private val notesAdapter by lazy { NotesAdapter(::onNoteClicked) }
-    private val loadedTabs = mutableSetOf<CurrentTab>()
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
     private lateinit var profileOption: MenuItem
     private lateinit var currentTab: CurrentTab
+    private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter, notesAdapter)
-        MainPresenterImpl(view, this, config).apply { view.callbacks = this }
+        presenter = MainPresenterImpl(
+            view,
+            this,
+            config,
+            bookRepository,
+            userRepository,
+            noteRepository
+        ).apply {
+            view.callbacks = this
+        }
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
@@ -127,6 +131,11 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                     })
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.stop()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -269,96 +278,8 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
 
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
         currentTab = tab
-        booksPage.show(tab == HOME_TAB)
-        usersPage.show(tab == USERS_TAB)
-        notesPage.show(tab == NOTES_TAB)
-        val isFirst = !loadedTabs.contains(tab)
-        if (isFirst || isForce) {
-            when (tab) {
-                HOME_TAB -> refreshHomeTab(tab)
-                USERS_TAB -> refreshUsersTab(tab)
-                NOTES_TAB -> refreshNotesTab(tab)
-            }
-        }
+        presenter.showPage(tab, isForce)
     }
-
-    private fun refreshHomeTab(tab: CurrentTab) {
-        bookRepository.observeBooks()
-            .io2main()
-            .showProgressBar()
-            .bind({ books ->
-                booksPlaceholder.show(books.isEmpty())
-                booksErrorPlaceholder.hide()
-                booksAdapter.submitList(books)
-                loadedTabs.add(tab)
-            }, {
-                logError("cannot load books", it)
-                handleError(it, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
-            })
-    }
-
-    private fun refreshUsersTab(tab: CurrentTab) {
-        userRepository.observeUsers()
-            .io2main()
-            .showProgressBar()
-            .bind({ users ->
-                usersPlaceholder.show(users.isEmpty())
-                usersErrorPlaceholder.hide()
-                usersAdapter.submitList(users)
-                loadedTabs.add(tab)
-            }, {
-                logError("cannot load users", it)
-                handleError(it, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
-            })
-    }
-
-    private fun refreshNotesTab(tab: CurrentTab) {
-        noteRepository.observeNotes()
-            .io2main()
-            .showProgressBar()
-            .bind({ notes ->
-                notesPlaceholder.show(notes.isEmpty())
-                notesErrorPlaceholder.hide()
-                notesAdapter.submitList(notes)
-                loadedTabs.add(tab)
-            }, {
-                logError("cannot load notes", it)
-                handleError(it, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
-            })
-    }
-
-    private fun <T> Flowable<T>.showProgressBar(): Flowable<T> =
-        doOnSubscribe {
-            if (!swipeRefresh.isRefreshing) {
-                booksProgressBar.show()
-            }
-        }.doOnNext {
-            booksProgressBar.hide()
-        }.doFinally {
-            booksProgressBar.hide()
-            swipeRefresh.isRefreshing = false
-        }
-
-    private fun handleError(
-        th: Throwable,
-        placeholder: View,
-        errPlaceholder: TextView,
-        adapter: RecyclerView.Adapter<*>
-    ) {
-        if (placeholder.isVisible || adapter.itemCount > 0) {
-            toast(th.messageRes)
-        } else {
-            errPlaceholder.setText(th.messageRes)
-            errPlaceholder.show()
-        }
-    }
-
-    private val Throwable.messageRes
-        get() = if (this is HttpException && code() == 401) {
-            R.string.main_error_unauthorized
-        } else {
-            R.string.common_error_network
-        }
 
     private fun onBookClicked(book: BookDataModel) {
         openBookScreen(book)
