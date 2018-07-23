@@ -5,13 +5,10 @@ import android.content.Context
 var isDarkConfiguration = false
 
 private const val PREFS_NAME = "knigopis-dev"
-private const val DEV_MODE_KEY = "dev-mode"
 private const val DARK_THEME_KEY = "dark-theme"
 private const val SORT_MODE_KEY = "sort-mode"
 
 interface Configuration {
-
-    var isDevMode: Boolean
 
     var isDarkTheme: Boolean
 
@@ -26,12 +23,6 @@ class ConfigurationImpl(context: Context) : Configuration {
     init {
         isDarkConfiguration = isDarkTheme
     }
-
-    override var isDevMode: Boolean
-        get() = prefs.getBoolean(DEV_MODE_KEY, false)
-        set(enabled) {
-            prefs.edit().putBoolean(DEV_MODE_KEY, enabled).apply()
-        }
 
     override var isDarkTheme: Boolean
         get() = prefs.getBoolean(DARK_THEME_KEY, false)

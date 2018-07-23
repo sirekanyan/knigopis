@@ -47,8 +47,6 @@ import retrofit2.HttpException
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
-private const val VERSION_CLICK_COUNT_OFF = 1
-private const val VERSION_CLICK_COUNT_ON = 12
 private const val CURRENT_TAB_KEY = "current_tab"
 
 class MainActivity : BaseActivity(), Router {
@@ -202,23 +200,7 @@ class MainActivity : BaseActivity(), Router {
                 }
                 R.id.option_about -> {
                     val dialogView = View.inflate(this, R.layout.about, null)
-                    val versionView = dialogView.aboutAppVersion
-                    versionView.text = BuildConfig.VERSION_NAME
-                    var count = 0
-                    val enabled = config.isDevMode
-                    val max = if (enabled) {
-                        VERSION_CLICK_COUNT_OFF
-                    } else {
-                        VERSION_CLICK_COUNT_ON
-                    }
-                    versionView.setOnClickListener {
-                        if (++count == max) {
-                            enabled.not().let {
-                                if (it) toast(R.string.common_info_dev)
-                                config.isDevMode = it
-                            }
-                        }
-                    }
+                    dialogView.aboutAppVersion.text = BuildConfig.VERSION_NAME
                     AlertDialog.Builder(this).setView(dialogView).show()
                     true
                 }
