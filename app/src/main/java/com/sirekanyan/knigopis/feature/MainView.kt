@@ -38,6 +38,7 @@ interface MainView : BooksView, UsersView, NotesView {
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
+    fun setNavigation(itemId: Int)
 
     interface Callbacks : BooksView.Callbacks, UsersView.Callbacks, NotesView.Callbacks {
         fun onLoginOptionClicked()
@@ -164,6 +165,10 @@ class MainViewImpl(
 
     override fun hideSwipeRefresh() {
         swipeRefresh.isRefreshing = false
+    }
+
+    override fun setNavigation(itemId: Int) {
+        bottomNavigation.selectedItemId = itemId
     }
 
     override fun showBookActions(book: BookDataModel) {

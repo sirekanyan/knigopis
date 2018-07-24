@@ -13,21 +13,17 @@ import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.model.UserModel
-import com.sirekanyan.knigopis.repository.BookRepository
-import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.NoteRepository
-import com.sirekanyan.knigopis.repository.UserRepository
+import com.sirekanyan.knigopis.repository.*
 import io.reactivex.Flowable
 
 interface MainPresenter : Presenter {
 
     var currentTab: CurrentTab
-
+    fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
     interface Router {
         fun login()
-        fun forceRefresh()
         fun openProfileScreen()
         fun reopenScreen()
         fun openNewBookScreen()
@@ -40,6 +36,7 @@ interface MainPresenter : Presenter {
 class MainPresenterImpl(
     private val router: MainPresenter.Router,
     private val config: Configuration,
+    private val auth: KAuth,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
     private val noteRepository: NoteRepository,
@@ -48,6 +45,16 @@ class MainPresenterImpl(
 
     override lateinit var currentTab: CurrentTab
     private val loadedTabs = mutableSetOf<CurrentTab>()
+
+    override fun refresh(tab: CurrentTab?, isForce: Boolean) {
+        if (!auth.isAuthorized()) {
+            currentTab = NOTES_TAB
+        } else if (tab != null) {
+            currentTab = tab
+        }
+        showPage(currentTab, isForce)
+        view.setNavigation(currentTab.itemId)
+    }
 
     override fun showPage(tab: CurrentTab, isForce: Boolean) {
         view.showPage(tab)
@@ -83,7 +90,7 @@ class MainPresenterImpl(
     }
 
     override fun onRefreshSwiped() {
-        router.forceRefresh()
+        refresh(isForce = true)
     }
 
     override fun onBookClicked(book: BookDataModel) {
@@ -106,7 +113,7 @@ class MainPresenterImpl(
         bookRepository.deleteBook(book)
             .io2main()
             .bind({
-                router.forceRefresh()
+                refresh(isForce = true)
             }, {
                 view.showBookDeleteError()
                 logError("cannot delete finished book", it)

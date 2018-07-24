@@ -58,6 +58,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         presenter = MainPresenterImpl(
             this,
             config,
+            auth,
             bookRepository,
             userRepository,
             noteRepository,
@@ -68,7 +69,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
-        refresh(currentTab ?: defaultTab)
+        presenter.refresh(currentTab ?: defaultTab)
         initNavigationView()
         initToolbar(toolbar)
     }
@@ -80,14 +81,14 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
             refreshOptionsMenu()
             if (userLoggedIn) {
                 userLoggedIn = false
-                refresh()
+                presenter.refresh()
             }
         }, {
             logError("cannot check credentials", it)
         })
         if (booksChanged) {
             booksChanged = false
-            refresh(isForce = true)
+            presenter.refresh(isForce = true)
         }
         intent.data?.also { userUrl ->
             intent.data = null
@@ -144,7 +145,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         if (presenter.currentTab == HOME_TAB || !auth.isAuthorized()) {
             super.onBackPressed()
         } else {
-            refresh(HOME_TAB)
+            presenter.refresh(HOME_TAB)
         }
     }
 
@@ -185,7 +186,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         toolbar.setOnClickListener {
             if (presenter.currentTab == HOME_TAB) {
                 config.sortingMode = if (config.sortingMode == 0) 1 else 0
-                refresh(isForce = true)
+                presenter.refresh(isForce = true)
             }
         }
     }
@@ -196,7 +197,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                 it.granted -> {
                     if (auth.isAuthorized()) {
                         auth.logout()
-                        refresh()
+                        presenter.refresh()
                     } else {
                         startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
                     }
@@ -235,23 +236,12 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         })
     }
 
-    override fun forceRefresh() {
-        refresh(isForce = true)
-    }
-
     private fun refreshOptionsMenu() {
         initNavigationView()
         auth.isAuthorized().let { authorized ->
             loginOption.isVisible = !authorized
             profileOption.isVisible = authorized
         }
-    }
-
-    private fun refresh(tab: CurrentTab? = null, isForce: Boolean = false) {
-        val t = if (auth.isAuthorized()) (tab ?: presenter.currentTab) else NOTES_TAB
-        presenter.currentTab = t
-        presenter.showPage(t, isForce)
-        bottomNavigation.selectedItemId = t.itemId
     }
 
 }
