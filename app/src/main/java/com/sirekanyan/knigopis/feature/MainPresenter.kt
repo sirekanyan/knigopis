@@ -28,13 +28,13 @@ interface MainPresenter : Presenter {
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
     interface Router {
-        fun login()
         fun openProfileScreen()
-        fun reopenScreen()
         fun openNewBookScreen()
         fun openBookScreen(book: BookDataModel)
         fun openUserScreen(id: String, name: String, image: String?)
         fun openWebPage(uri: Uri)
+        fun reopenScreen()
+        fun login()
     }
 }
 

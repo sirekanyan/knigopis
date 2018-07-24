@@ -101,6 +101,20 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
         }
     }
 
+    override fun onBackPressed() {
+        if (!presenter.back()) {
+            super.onBackPressed()
+        }
+    }
+
+    override fun openProfileScreen() {
+        startActivity(createProfileIntent())
+    }
+
+    override fun openNewBookScreen() {
+        startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
+    }
+
     override fun openBookScreen(book: BookDataModel) {
         startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
     }
@@ -113,22 +127,8 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
         startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: toast(R.string.users_info_no_browser)
     }
 
-    override fun onBackPressed() {
-        if (!presenter.back()) {
-            super.onBackPressed()
-        }
-    }
-
-    override fun openProfileScreen() {
-        startActivity(createProfileIntent())
-    }
-
     override fun reopenScreen() {
         recreate()
-    }
-
-    override fun openNewBookScreen() {
-        startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
     }
 
     override fun login() {
