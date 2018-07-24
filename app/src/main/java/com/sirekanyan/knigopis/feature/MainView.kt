@@ -44,6 +44,7 @@ interface MainView : BooksView, UsersView, NotesView {
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
     fun showProfileOption(isVisible: Boolean)
+    fun setDarkThemeOptionChecked(isChecked: Boolean)
 
     interface Callbacks : BooksView.Callbacks, UsersView.Callbacks, NotesView.Callbacks {
         fun onNavigationClicked(itemId: Int)
@@ -71,6 +72,7 @@ class MainViewImpl(
     private val notesAdapter = NotesAdapter(callbacks::onNoteClicked)
     private val loginOption: MenuItem
     private val profileOption: MenuItem
+    private val darkThemeOption: MenuItem
 
     init {
         toolbar.inflateMenu(R.menu.options)
@@ -107,6 +109,8 @@ class MainViewImpl(
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
         profileOption = toolbar.menu.findItem(R.id.option_profile)
+        darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
+        toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
         booksRecyclerView.adapter = booksAdapter
         usersRecyclerView.adapter = usersAdapter
         notesRecyclerView.adapter = notesAdapter
@@ -204,6 +208,10 @@ class MainViewImpl(
 
     override fun showProfileOption(isVisible: Boolean) {
         profileOption.isVisible = isVisible
+    }
+
+    override fun setDarkThemeOptionChecked(isChecked: Boolean) {
+        darkThemeOption.isChecked = isChecked
     }
 
     override fun showBookActions(book: BookDataModel) {

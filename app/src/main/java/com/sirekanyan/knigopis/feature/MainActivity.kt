@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.BaseActivity
@@ -27,7 +26,6 @@ import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 private const val ULOGIN_REQUEST_CODE = 0
@@ -69,8 +67,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
             )
         }
         presenter.refreshNavigation()
-        toolbar.menu.findItem(R.id.option_dark_theme).isChecked = config.isDarkTheme
-        toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
     }
 
     override fun onStart() {

@@ -57,6 +57,7 @@ class MainPresenterImpl(
         val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
         refresh(currentTab ?: defaultTab)
+        view.setDarkThemeOptionChecked(config.isDarkTheme)
     }
 
     override fun start() {
