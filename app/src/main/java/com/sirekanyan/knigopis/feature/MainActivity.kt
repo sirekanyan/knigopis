@@ -18,7 +18,6 @@ import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
-import com.sirekanyan.knigopis.common.view.dialog.DialogItem
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
@@ -28,13 +27,10 @@ import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
-import com.sirekanyan.knigopis.feature.users.UriItem
-import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
 import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
-import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,7 +52,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
     private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
-    private val usersAdapter by lazy { UsersAdapter(::onUserClicked, ::onUserLongClicked) }
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -68,16 +63,15 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val view = MainViewImpl(getRootView(), booksAdapter, usersAdapter)
         presenter = MainPresenterImpl(
-            view,
             this,
             config,
             bookRepository,
             userRepository,
-            noteRepository
+            noteRepository,
+            resourceProvider
         ).apply {
-            view.callbacks = this
+            view = MainViewImpl(getRootView(), this, booksAdapter, dialogs)
         }
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
@@ -323,23 +317,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                 onDeleteClicked()
             }
         )
-    }
-
-    private fun onUserClicked(user: UserModel) {
-        openUserScreen(user.id, user.name, user.image)
-    }
-
-    private fun onUserLongClicked(user: UserModel) {
-        val dialogItems: List<DialogItem> = user.profiles
-            .mapNotNull(String::toUriOrNull)
-            .map { UriItem(it, resourceProvider) }
-            .distinctBy(UriItem::title)
-            .map { uriItem ->
-                createDialogItem(uriItem.title, uriItem.iconRes) {
-                    openWebPage(uriItem.uri)
-                }
-            }
-        dialogs.showDialog(user.name, *dialogItems.toTypedArray())
     }
 
 }

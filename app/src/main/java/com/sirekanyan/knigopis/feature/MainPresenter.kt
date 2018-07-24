@@ -1,12 +1,17 @@
 package com.sirekanyan.knigopis.feature
 
+import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
+import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.NoteRepository
@@ -23,18 +28,18 @@ interface MainPresenter : Presenter {
         fun reopenScreen()
         fun openNewBookScreen()
         fun openUserScreen(id: String, name: String, image: String?)
+        fun openWebPage(uri: Uri)
     }
-
 }
 
 class MainPresenterImpl(
-    private val view: MainView,
     private val router: MainPresenter.Router,
     private val config: Configuration,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
-    private val noteRepository: NoteRepository
-) : BasePresenter(), MainPresenter, MainView.Callbacks {
+    private val noteRepository: NoteRepository,
+    private val resources: ResourceProvider
+) : BasePresenter<MainView>(), MainPresenter, MainView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
 
@@ -69,6 +74,22 @@ class MainPresenterImpl(
 
     override fun onAddBookClicked() {
         router.openNewBookScreen()
+    }
+
+    override fun onUserClicked(user: UserModel) {
+        router.openUserScreen(user.id, user.name, user.image)
+    }
+
+    override fun onUserLongClicked(user: UserModel) {
+        val uriItems = user.profiles
+            .mapNotNull(String::toUriOrNull)
+            .map { UriItem(it, resources) }
+            .distinctBy(UriItem::title)
+        view.showUserProfiles(user.name, uriItems)
+    }
+
+    override fun onUserProfileClicked(uri: UriItem) {
+        router.openWebPage(uri.uri)
     }
 
     override fun onNoteClicked(note: NoteModel) {

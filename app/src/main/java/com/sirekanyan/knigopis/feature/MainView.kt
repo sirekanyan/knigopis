@@ -11,8 +11,12 @@ import com.sirekanyan.knigopis.common.extensions.hide
 import com.sirekanyan.knigopis.common.extensions.isVisible
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.view.dialog.DialogItem
+import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
+import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.CurrentTab
@@ -41,6 +45,7 @@ interface MainView {
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
+    fun showUserProfiles(title: String, items: List<UriItem>)
 
     interface Callbacks {
         fun onLoginOptionClicked()
@@ -48,6 +53,9 @@ interface MainView {
         fun onAboutOptionClicked()
         fun onDarkThemeOptionClicked(isChecked: Boolean)
         fun onAddBookClicked()
+        fun onUserClicked(user: UserModel)
+        fun onUserLongClicked(user: UserModel)
+        fun onUserProfileClicked(uri: UriItem)
         fun onNoteClicked(note: NoteModel)
     }
 
@@ -55,13 +63,14 @@ interface MainView {
 
 class MainViewImpl(
     override val containerView: View,
+    private val callbacks: MainView.Callbacks,
     private val booksAdapter: BooksAdapter,
-    private val usersAdapter: UsersAdapter
+    private val dialogs: DialogFactory
 ) : MainView, LayoutContainer {
 
-    lateinit var callbacks: MainView.Callbacks
     private val context = containerView.context
-    private val notesAdapter = NotesAdapter { callbacks.onNoteClicked(it) }
+    private val usersAdapter = UsersAdapter(callbacks::onUserClicked, callbacks::onUserLongClicked)
+    private val notesAdapter = NotesAdapter(callbacks::onNoteClicked)
 
     init {
         toolbar.inflateMenu(R.menu.options)
@@ -155,6 +164,15 @@ class MainViewImpl(
 
     override fun hideSwipeRefresh() {
         swipeRefresh.isRefreshing = false
+    }
+
+    override fun showUserProfiles(title: String, items: List<UriItem>) {
+        val dialogItems: List<DialogItem> = items.map { uriItem ->
+            createDialogItem(uriItem.title, uriItem.iconRes) {
+                callbacks.onUserProfileClicked(uriItem)
+            }
+        }
+        dialogs.showDialog(title, *dialogItems.toTypedArray())
     }
 
     private fun handleError(

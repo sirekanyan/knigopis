@@ -6,8 +6,9 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BasePresenter {
+abstract class BasePresenter<V : Any> {
 
+    lateinit var view: V
     private val disposables = CompositeDisposable()
 
     fun <T> Flowable<T>.bind(onSuccess: (T) -> Unit, onError: (Throwable) -> Unit) {
