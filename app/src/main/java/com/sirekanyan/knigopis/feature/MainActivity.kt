@@ -51,7 +51,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
     private lateinit var profileOption: MenuItem
-    private lateinit var currentTab: CurrentTab
     private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,7 +124,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putInt(CURRENT_TAB_KEY, currentTab.itemId)
+        outState?.putInt(CURRENT_TAB_KEY, presenter.currentTab.itemId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -155,7 +154,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     }
 
     override fun onBackPressed() {
-        if (currentTab == HOME_TAB || !auth.isAuthorized()) {
+        if (presenter.currentTab == HOME_TAB || !auth.isAuthorized()) {
             super.onBackPressed()
         } else {
             refresh(HOME_TAB)
@@ -195,7 +194,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         val clearCacheOption = toolbar.menu.findItem(R.id.option_clear_cache)
         clearCacheOption.isVisible = BuildConfig.DEBUG
         toolbar.setOnClickListener {
-            if (currentTab == HOME_TAB) {
+            if (presenter.currentTab == HOME_TAB) {
                 config.sortingMode = if (config.sortingMode == 0) 1 else 0
                 refresh(isForce = true)
             }
@@ -259,14 +258,14 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         }
     }
 
-    private fun refresh(tab: CurrentTab = currentTab, isForce: Boolean = false) {
+    private fun refresh(tab: CurrentTab = presenter.currentTab, isForce: Boolean = false) {
         val t = if (auth.isAuthorized()) tab else NOTES_TAB
         setCurrentTab(t, isForce)
         bottomNavigation.selectedItemId = t.itemId
     }
 
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
-        currentTab = tab
+        presenter.currentTab = tab
         presenter.showPage(tab, isForce)
     }
 

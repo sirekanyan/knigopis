@@ -21,6 +21,8 @@ import io.reactivex.Flowable
 
 interface MainPresenter : Presenter {
 
+    var currentTab: CurrentTab
+
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
     interface Router {
@@ -44,6 +46,7 @@ class MainPresenterImpl(
     private val resources: ResourceProvider
 ) : BasePresenter<MainView>(), MainPresenter, MainView.Callbacks {
 
+    override lateinit var currentTab: CurrentTab
     private val loadedTabs = mutableSetOf<CurrentTab>()
 
     override fun showPage(tab: CurrentTab, isForce: Boolean) {
