@@ -14,9 +14,12 @@ import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
+import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
+import com.sirekanyan.knigopis.feature.notes.NotesView
 import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
+import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
@@ -28,39 +31,20 @@ import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 import retrofit2.HttpException
 
-interface MainView {
+interface MainView : BooksView, UsersView, NotesView {
 
     fun showAboutDialog()
     fun showPage(tab: CurrentTab)
-    fun updateBooks(books: List<BookModel>)
-    fun updateUsers(users: List<UserModel>)
-    fun updateNotes(notes: List<NoteModel>)
-    fun showBooksError(it: Throwable)
-    fun showUsersError(it: Throwable)
-    fun showNotesError(it: Throwable)
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
-    fun showBookActions(book: BookDataModel)
-    fun showBookDeleteDialog(book: BookDataModel)
-    fun showBookDeleteError()
-    fun showUserProfiles(title: String, items: List<UriItem>)
 
-    interface Callbacks {
+    interface Callbacks : BooksView.Callbacks, UsersView.Callbacks, NotesView.Callbacks {
         fun onLoginOptionClicked()
         fun onProfileOptionClicked()
         fun onAboutOptionClicked()
         fun onDarkThemeOptionClicked(isChecked: Boolean)
         fun onAddBookClicked()
-        fun onEditBookClicked(book: BookDataModel)
-        fun onDeleteBookClicked(book: BookDataModel)
-        fun onDeleteBookConfirmed(book: BookDataModel)
-        fun onBookClicked(book: BookDataModel)
-        fun onBookLongClicked(book: BookDataModel)
-        fun onUserClicked(user: UserModel)
-        fun onUserLongClicked(user: UserModel)
-        fun onUserProfileClicked(uri: UriItem)
-        fun onNoteClicked(note: NoteModel)
     }
 
 }
@@ -146,16 +130,16 @@ class MainViewImpl(
         notesAdapter.submitList(notes)
     }
 
-    override fun showBooksError(it: Throwable) {
-        handleError(it, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
+    override fun showBooksError(throwable: Throwable) {
+        handleError(throwable, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
     }
 
-    override fun showUsersError(it: Throwable) {
-        handleError(it, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
+    override fun showUsersError(throwable: Throwable) {
+        handleError(throwable, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
     }
 
-    override fun showNotesError(it: Throwable) {
-        handleError(it, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
+    override fun showNotesError(throwable: Throwable) {
+        handleError(throwable, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
     }
 
     override fun showProgress() {
