@@ -45,6 +45,7 @@ interface MainView : BooksView, UsersView, NotesView {
         fun onAboutOptionClicked()
         fun onDarkThemeOptionClicked(isChecked: Boolean)
         fun onAddBookClicked()
+        fun onRefreshSwiped()
     }
 
 }
@@ -98,6 +99,15 @@ class MainViewImpl(
         addBookButton.setOnClickListener {
             callbacks.onAddBookClicked()
         }
+        booksRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                when {
+                    dy > 0 -> addBookButton.hide()
+                    dy < 0 -> addBookButton.show()
+                }
+            }
+        })
+        swipeRefresh.setOnRefreshListener(callbacks::onRefreshSwiped)
     }
 
     override fun showAboutDialog() {

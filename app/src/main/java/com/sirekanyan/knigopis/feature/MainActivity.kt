@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.sirekanyan.knigopis.BuildConfig
@@ -30,7 +29,6 @@ import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.books_page.*
 import org.koin.android.ext.android.inject
 
 private const val ULOGIN_REQUEST_CODE = 0
@@ -73,17 +71,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         refresh(currentTab ?: defaultTab)
         initNavigationView()
         initToolbar(toolbar)
-        booksRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                when {
-                    dy > 0 -> addBookButton.hide()
-                    dy < 0 -> addBookButton.show()
-                }
-            }
-        })
-        swipeRefresh.setOnRefreshListener {
-            refresh(isForce = true)
-        }
     }
 
     override fun onStart() {

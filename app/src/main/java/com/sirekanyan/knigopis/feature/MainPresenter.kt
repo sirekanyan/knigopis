@@ -82,6 +82,10 @@ class MainPresenterImpl(
         router.openNewBookScreen()
     }
 
+    override fun onRefreshSwiped() {
+        router.forceRefresh()
+    }
+
     override fun onBookClicked(book: BookDataModel) {
         router.openBookScreen(book)
     }
