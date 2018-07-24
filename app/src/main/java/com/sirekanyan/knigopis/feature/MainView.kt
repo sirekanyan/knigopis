@@ -41,6 +41,7 @@ interface MainView : BooksView, UsersView, NotesView {
     fun setNavigation(itemId: Int)
 
     interface Callbacks : BooksView.Callbacks, UsersView.Callbacks, NotesView.Callbacks {
+        fun onToolbarClicked()
         fun onLoginOptionClicked()
         fun onProfileOptionClicked()
         fun onAboutOptionClicked()
@@ -65,6 +66,9 @@ class MainViewImpl(
 
     init {
         toolbar.inflateMenu(R.menu.options)
+        toolbar.setOnClickListener {
+            callbacks.onToolbarClicked()
+        }
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.option_login -> {

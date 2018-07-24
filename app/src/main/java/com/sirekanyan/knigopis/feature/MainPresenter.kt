@@ -7,6 +7,7 @@ import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
@@ -19,6 +20,8 @@ import io.reactivex.Flowable
 interface MainPresenter : Presenter {
 
     var currentTab: CurrentTab
+    fun init(state: MainPresenterState?)
+    fun start()
     fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
@@ -46,6 +49,15 @@ class MainPresenterImpl(
     override lateinit var currentTab: CurrentTab
     private val loadedTabs = mutableSetOf<CurrentTab>()
 
+    override fun init(state: MainPresenterState?) {
+        val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
+        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
+        refresh(currentTab ?: defaultTab)
+    }
+
+    override fun start() {
+    }
+
     override fun refresh(tab: CurrentTab?, isForce: Boolean) {
         if (!auth.isAuthorized()) {
             currentTab = NOTES_TAB
@@ -65,6 +77,13 @@ class MainPresenterImpl(
                 USERS_TAB -> refreshUsersTab(tab)
                 NOTES_TAB -> refreshNotesTab(tab)
             }
+        }
+    }
+
+    override fun onToolbarClicked() {
+        if (currentTab == HOME_TAB) {
+            config.sortingMode = if (config.sortingMode == 0) 1 else 0
+            refresh(isForce = true)
         }
     }
 

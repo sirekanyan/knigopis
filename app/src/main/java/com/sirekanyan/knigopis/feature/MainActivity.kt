@@ -22,10 +22,10 @@ import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
+import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
-import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -63,13 +63,14 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
             userRepository,
             noteRepository,
             resourceProvider
-        ).apply {
-            view = MainViewImpl(getRootView(), this, dialogs)
+        ).also { presenter ->
+            presenter.view = MainViewImpl(getRootView(), presenter, dialogs)
+            presenter.init(
+                savedInstanceState?.let {
+                    MainPresenterState(it.getInt(CURRENT_TAB_KEY))
+                }
+            )
         }
-        val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
-        val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
-        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
-        presenter.refresh(currentTab ?: defaultTab)
         initNavigationView()
         initToolbar(toolbar)
     }
@@ -177,17 +178,11 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     }
 
     private fun initToolbar(toolbar: Toolbar) {
-        loginOption = toolbar.menu.findItem(R.id.option_login)
-        profileOption = toolbar.menu.findItem(R.id.option_profile)
-        val darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
-        darkThemeOption.isChecked = config.isDarkTheme
-        val clearCacheOption = toolbar.menu.findItem(R.id.option_clear_cache)
-        clearCacheOption.isVisible = BuildConfig.DEBUG
-        toolbar.setOnClickListener {
-            if (presenter.currentTab == HOME_TAB) {
-                config.sortingMode = if (config.sortingMode == 0) 1 else 0
-                presenter.refresh(isForce = true)
-            }
+        toolbar.menu.let { menu ->
+            loginOption = menu.findItem(R.id.option_login)
+            profileOption = menu.findItem(R.id.option_profile)
+            menu.findItem(R.id.option_dark_theme).isChecked = config.isDarkTheme
+            menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
         }
     }
 
