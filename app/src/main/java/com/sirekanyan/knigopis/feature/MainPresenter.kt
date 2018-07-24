@@ -19,9 +19,10 @@ import io.reactivex.Flowable
 
 interface MainPresenter : Presenter {
 
-    var currentTab: CurrentTab
+    val state: MainPresenterState?
     fun init(state: MainPresenterState?)
     fun start()
+    fun back(): Boolean
     fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
     fun refreshNavigation()
     fun refreshOptionsMenu()
@@ -48,8 +49,9 @@ class MainPresenterImpl(
     private val resources: ResourceProvider
 ) : BasePresenter<MainView>(), MainPresenter, MainView.Callbacks {
 
-    override lateinit var currentTab: CurrentTab
     private val loadedTabs = mutableSetOf<CurrentTab>()
+    private var currentTab: CurrentTab? = null
+    override val state get() = currentTab?.let { MainPresenterState(it.itemId) }
 
     override fun init(state: MainPresenterState?) {
         val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
@@ -60,14 +62,24 @@ class MainPresenterImpl(
     override fun start() {
     }
 
+    override fun back(): Boolean =
+        if (currentTab == HOME_TAB || !auth.isAuthorized()) {
+            false
+        } else {
+            refresh(HOME_TAB)
+            true
+        }
+
     override fun refresh(tab: CurrentTab?, isForce: Boolean) {
         if (!auth.isAuthorized()) {
             currentTab = NOTES_TAB
         } else if (tab != null) {
             currentTab = tab
         }
-        showPage(currentTab, isForce)
-        view.setNavigation(currentTab.itemId)
+        currentTab?.let {
+            showPage(it, isForce)
+            view.setNavigation(it.itemId)
+        }
     }
 
     override fun refreshNavigation() {
@@ -99,8 +111,10 @@ class MainPresenterImpl(
     }
 
     override fun onNavigationClicked(itemId: Int) {
-        currentTab = CurrentTab.getByItemId(itemId)
-        showPage(currentTab, false)
+        CurrentTab.getByItemId(itemId).let { tab ->
+            currentTab = tab
+            showPage(tab, false)
+        }
     }
 
     override fun onToolbarClicked() {

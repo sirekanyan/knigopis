@@ -25,7 +25,6 @@ import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -112,7 +111,9 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putInt(CURRENT_TAB_KEY, presenter.currentTab.itemId)
+        presenter.state?.let { state ->
+            outState?.putInt(CURRENT_TAB_KEY, state.currentTab)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -142,10 +143,8 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     }
 
     override fun onBackPressed() {
-        if (presenter.currentTab == HOME_TAB || !auth.isAuthorized()) {
+        if (!presenter.back()) {
             super.onBackPressed()
-        } else {
-            presenter.refresh(HOME_TAB)
         }
     }
 
