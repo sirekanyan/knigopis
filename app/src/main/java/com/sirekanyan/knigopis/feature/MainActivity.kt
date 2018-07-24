@@ -7,14 +7,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.Toolbar
-import android.view.MenuItem
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.extensions.getRootView
+import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
+import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.createParameters
@@ -24,7 +25,6 @@ import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.HOME_TAB
 import com.sirekanyan.knigopis.repository.*
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -47,8 +47,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val resourceProvider by inject<ResourceProvider>()
     private var userLoggedIn = false
     private var booksChanged = false
-    private lateinit var loginOption: MenuItem
-    private lateinit var profileOption: MenuItem
     private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,15 +69,16 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                 }
             )
         }
-        initNavigationView()
-        initToolbar(toolbar)
+        presenter.refreshNavigation()
+        toolbar.menu.findItem(R.id.option_dark_theme).isChecked = config.isDarkTheme
+        toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
     }
 
     override fun onStart() {
         super.onStart()
-        refreshOptionsMenu()
+        presenter.refreshOptionsMenu()
         auth.requestAccessToken().bind({
-            refreshOptionsMenu()
+            presenter.refreshOptionsMenu()
             if (userLoggedIn) {
                 userLoggedIn = false
                 presenter.refresh()
@@ -162,30 +161,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
     }
 
-    private fun initNavigationView() {
-        if (auth.isAuthorized()) {
-            bottomNavigation.show()
-            bottomNavigation.setOnNavigationItemSelectedListener { item ->
-                val t = CurrentTab.getByItemId(item.itemId)
-                presenter.currentTab = t
-                presenter.showPage(t, false)
-                true
-            }
-        } else {
-            bottomNavigation.hide()
-            bottomNavigation.setOnNavigationItemSelectedListener(null)
-        }
-    }
-
-    private fun initToolbar(toolbar: Toolbar) {
-        toolbar.menu.let { menu ->
-            loginOption = menu.findItem(R.id.option_login)
-            profileOption = menu.findItem(R.id.option_profile)
-            menu.findItem(R.id.option_dark_theme).isChecked = config.isDarkTheme
-            menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
-        }
-    }
-
     override fun login() {
         RxPermissions(this).requestEach(READ_PHONE_STATE).bind({
             when {
@@ -196,7 +171,7 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
                     } else {
                         startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
                     }
-                    refreshOptionsMenu()
+                    presenter.refreshOptionsMenu()
                 }
                 it.shouldShowRequestPermissionRationale -> {
                     AlertDialog.Builder(this)
@@ -229,14 +204,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         }, {
             logError("cannot request permission", it)
         })
-    }
-
-    private fun refreshOptionsMenu() {
-        initNavigationView()
-        auth.isAuthorized().let { authorized ->
-            loginOption.isVisible = !authorized
-            profileOption.isVisible = authorized
-        }
     }
 
 }

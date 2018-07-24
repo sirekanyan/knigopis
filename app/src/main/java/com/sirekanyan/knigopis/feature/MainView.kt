@@ -3,6 +3,7 @@ package com.sirekanyan.knigopis.feature
 import android.content.Context.MODE_PRIVATE
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
@@ -38,9 +39,14 @@ interface MainView : BooksView, UsersView, NotesView {
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
+    fun showNavigation()
+    fun hideNavigation()
     fun setNavigation(itemId: Int)
+    fun showLoginOption(isVisible: Boolean)
+    fun showProfileOption(isVisible: Boolean)
 
     interface Callbacks : BooksView.Callbacks, UsersView.Callbacks, NotesView.Callbacks {
+        fun onNavigationClicked(itemId: Int)
         fun onToolbarClicked()
         fun onLoginOptionClicked()
         fun onProfileOptionClicked()
@@ -63,6 +69,8 @@ class MainViewImpl(
     private val booksAdapter = BooksAdapter(callbacks::onBookClicked, callbacks::onBookLongClicked)
     private val usersAdapter = UsersAdapter(callbacks::onUserClicked, callbacks::onUserLongClicked)
     private val notesAdapter = NotesAdapter(callbacks::onNoteClicked)
+    private val loginOption: MenuItem
+    private val profileOption: MenuItem
 
     init {
         toolbar.inflateMenu(R.menu.options)
@@ -97,6 +105,8 @@ class MainViewImpl(
                 else -> false
             }
         }
+        loginOption = toolbar.menu.findItem(R.id.option_login)
+        profileOption = toolbar.menu.findItem(R.id.option_profile)
         booksRecyclerView.adapter = booksAdapter
         usersRecyclerView.adapter = usersAdapter
         notesRecyclerView.adapter = notesAdapter
@@ -171,8 +181,29 @@ class MainViewImpl(
         swipeRefresh.isRefreshing = false
     }
 
+    override fun showNavigation() {
+        bottomNavigation.show()
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            callbacks.onNavigationClicked(item.itemId)
+            true
+        }
+    }
+
+    override fun hideNavigation() {
+        bottomNavigation.hide()
+        bottomNavigation.setOnNavigationItemSelectedListener(null)
+    }
+
     override fun setNavigation(itemId: Int) {
         bottomNavigation.selectedItemId = itemId
+    }
+
+    override fun showLoginOption(isVisible: Boolean) {
+        loginOption.isVisible = isVisible
+    }
+
+    override fun showProfileOption(isVisible: Boolean) {
+        profileOption.isVisible = isVisible
     }
 
     override fun showBookActions(book: BookDataModel) {

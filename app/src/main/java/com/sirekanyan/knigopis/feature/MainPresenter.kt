@@ -23,6 +23,8 @@ interface MainPresenter : Presenter {
     fun init(state: MainPresenterState?)
     fun start()
     fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
+    fun refreshNavigation()
+    fun refreshOptionsMenu()
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
     interface Router {
@@ -68,6 +70,22 @@ class MainPresenterImpl(
         view.setNavigation(currentTab.itemId)
     }
 
+    override fun refreshNavigation() {
+        if (auth.isAuthorized()) {
+            view.showNavigation()
+        } else {
+            view.hideNavigation()
+        }
+    }
+
+    override fun refreshOptionsMenu() {
+        refreshNavigation()
+        auth.isAuthorized().let { authorized ->
+            view.showLoginOption(!authorized)
+            view.showProfileOption(authorized)
+        }
+    }
+
     override fun showPage(tab: CurrentTab, isForce: Boolean) {
         view.showPage(tab)
         val isFirst = !loadedTabs.contains(tab)
@@ -78,6 +96,11 @@ class MainPresenterImpl(
                 NOTES_TAB -> refreshNotesTab(tab)
             }
         }
+    }
+
+    override fun onNavigationClicked(itemId: Int) {
+        currentTab = CurrentTab.getByItemId(itemId)
+        showPage(currentTab, false)
     }
 
     override fun onToolbarClicked() {
