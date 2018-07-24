@@ -24,7 +24,6 @@ interface MainPresenter : Presenter {
     fun start()
     fun back(): Boolean
     fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
-    fun refreshNavigation()
     fun refreshOptionsMenu()
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
@@ -59,6 +58,7 @@ class MainPresenterImpl(
         val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
         refresh(currentTab ?: defaultTab)
+        refreshNavigation()
         view.setDarkThemeOptionChecked(config.isDarkTheme)
     }
 
@@ -82,14 +82,6 @@ class MainPresenterImpl(
         currentTab?.let {
             showPage(it, isForce)
             view.setNavigation(it.itemId)
-        }
-    }
-
-    override fun refreshNavigation() {
-        if (auth.isAuthorized()) {
-            view.showNavigation()
-        } else {
-            view.hideNavigation()
         }
     }
 
@@ -197,6 +189,14 @@ class MainPresenterImpl(
 
     override fun onNoteClicked(note: NoteModel) {
         router.openUserScreen(note.userId, note.userName, note.userImage)
+    }
+
+    private fun refreshNavigation() {
+        if (auth.isAuthorized()) {
+            view.showNavigation()
+        } else {
+            view.hideNavigation()
+        }
     }
 
     private fun refreshHomeTab(tab: CurrentTab) {
