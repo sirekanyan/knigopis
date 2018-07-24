@@ -177,7 +177,9 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         if (auth.isAuthorized()) {
             bottomNavigation.show()
             bottomNavigation.setOnNavigationItemSelectedListener { item ->
-                setCurrentTab(CurrentTab.getByItemId(item.itemId))
+                val t = CurrentTab.getByItemId(item.itemId)
+                presenter.currentTab = t
+                presenter.showPage(t, false)
                 true
             }
         } else {
@@ -258,15 +260,11 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         }
     }
 
-    private fun refresh(tab: CurrentTab = presenter.currentTab, isForce: Boolean = false) {
-        val t = if (auth.isAuthorized()) tab else NOTES_TAB
-        setCurrentTab(t, isForce)
+    private fun refresh(tab: CurrentTab? = null, isForce: Boolean = false) {
+        val t = if (auth.isAuthorized()) (tab ?: presenter.currentTab) else NOTES_TAB
+        presenter.currentTab = t
+        presenter.showPage(t, isForce)
         bottomNavigation.selectedItemId = t.itemId
-    }
-
-    private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
-        presenter.currentTab = tab
-        presenter.showPage(tab, isForce)
     }
 
 }
