@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
@@ -31,7 +30,7 @@ import org.koin.android.ext.android.inject
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 
-class MainActivity : BaseActivity(), Router, MainPresenter.Router {
+class MainActivity : BaseActivity(), MainPresenter.Router {
 
     private val presenter by inject<MainPresenter>(parameters = createParameters(this))
     private val api by inject<Endpoint>()
