@@ -7,22 +7,18 @@ import android.view.View
 import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.extensions.hide
-import com.sirekanyan.knigopis.common.extensions.isVisible
-import com.sirekanyan.knigopis.common.extensions.show
-import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.DialogItem
 import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
+import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
+import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
 import com.sirekanyan.knigopis.feature.users.UriItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
-import com.sirekanyan.knigopis.model.BookModel
-import com.sirekanyan.knigopis.model.CurrentTab
+import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
-import com.sirekanyan.knigopis.model.NoteModel
-import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.about.view.*
@@ -45,6 +41,9 @@ interface MainView {
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
+    fun showBookActions(book: BookDataModel)
+    fun showBookDeleteDialog(book: BookDataModel)
+    fun showBookDeleteError()
     fun showUserProfiles(title: String, items: List<UriItem>)
 
     interface Callbacks {
@@ -53,6 +52,11 @@ interface MainView {
         fun onAboutOptionClicked()
         fun onDarkThemeOptionClicked(isChecked: Boolean)
         fun onAddBookClicked()
+        fun onEditBookClicked(book: BookDataModel)
+        fun onDeleteBookClicked(book: BookDataModel)
+        fun onDeleteBookConfirmed(book: BookDataModel)
+        fun onBookClicked(book: BookDataModel)
+        fun onBookLongClicked(book: BookDataModel)
         fun onUserClicked(user: UserModel)
         fun onUserLongClicked(user: UserModel)
         fun onUserProfileClicked(uri: UriItem)
@@ -64,11 +68,12 @@ interface MainView {
 class MainViewImpl(
     override val containerView: View,
     private val callbacks: MainView.Callbacks,
-    private val booksAdapter: BooksAdapter,
     private val dialogs: DialogFactory
 ) : MainView, LayoutContainer {
 
     private val context = containerView.context
+    private val resources = context.resources
+    private val booksAdapter = BooksAdapter(callbacks::onBookClicked, callbacks::onBookLongClicked)
     private val usersAdapter = UsersAdapter(callbacks::onUserClicked, callbacks::onUserLongClicked)
     private val notesAdapter = NotesAdapter(callbacks::onNoteClicked)
 
@@ -105,6 +110,7 @@ class MainViewImpl(
         booksRecyclerView.adapter = booksAdapter
         usersRecyclerView.adapter = usersAdapter
         notesRecyclerView.adapter = notesAdapter
+        booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         addBookButton.setOnClickListener {
             callbacks.onAddBookClicked()
         }
@@ -164,6 +170,36 @@ class MainViewImpl(
 
     override fun hideSwipeRefresh() {
         swipeRefresh.isRefreshing = false
+    }
+
+    override fun showBookActions(book: BookDataModel) {
+        val bookFullTitle = resources.getFullTitleString(book.title, book.author)
+        dialogs.showDialog(
+            bookFullTitle,
+            createDialogItem(R.string.books_button_edit, R.drawable.ic_edit) {
+                callbacks.onEditBookClicked(book)
+            },
+            createDialogItem(R.string.books_button_delete, R.drawable.ic_delete) {
+                callbacks.onDeleteBookClicked(book)
+            }
+        )
+    }
+
+    override fun showBookDeleteDialog(book: BookDataModel) {
+        val bookFullTitle = resources.getFullTitleString(book.title, book.author)
+        AlertDialog.Builder(context)
+            .setTitle(R.string.books_title_confirm_delete)
+            .setMessage(context.getString(R.string.books_message_confirm_delete, bookFullTitle))
+            .setNegativeButton(R.string.common_button_cancel) { d, _ -> d.dismiss() }
+            .setPositiveButton(R.string.books_button_confirm_delete) { d, _ ->
+                callbacks.onDeleteBookConfirmed(book)
+                d.dismiss()
+            }
+            .show()
+    }
+
+    override fun showBookDeleteError() {
+        context.toast(R.string.books_error_delete)
     }
 
     override fun showUserProfiles(title: String, items: List<UriItem>) {

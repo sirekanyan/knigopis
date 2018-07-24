@@ -1,6 +1,7 @@
 package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.NetworkChecker
+import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook
 import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
@@ -22,6 +23,8 @@ interface BookRepository {
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
     fun saveBook(bookId: String?, book: PlannedBookToSend, done: Boolean?): Completable
+
+    fun deleteBook(book: BookDataModel): Completable
 
 }
 
@@ -57,6 +60,13 @@ class BookRepositoryImpl(
                 api.createPlannedBook(auth.getAccessToken(), book)
                     .andThen(api.deleteFinishedBook(bookId, auth.getAccessToken()))
             }
+        }
+
+    override fun deleteBook(book: BookDataModel): Completable =
+        if (book.isFinished) {
+            api.deleteFinishedBook(book.id, auth.getAccessToken())
+        } else {
+            api.deletePlannedBook(book.id, auth.getAccessToken())
         }
 
     override fun loadFromNetwork(): Single<List<BookModel>> =

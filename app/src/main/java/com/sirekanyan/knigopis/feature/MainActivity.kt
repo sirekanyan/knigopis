@@ -18,13 +18,9 @@ import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
-import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
-import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
-import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
-import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -51,7 +47,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private val userRepository by inject<UserRepository>()
     private val noteRepository by inject<NoteRepository>()
     private val resourceProvider by inject<ResourceProvider>()
-    private val booksAdapter by lazy { BooksAdapter(::onBookClicked, ::onBookLongClicked) }
     private var userLoggedIn = false
     private var booksChanged = false
     private lateinit var loginOption: MenuItem
@@ -71,9 +66,8 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
             noteRepository,
             resourceProvider
         ).apply {
-            view = MainViewImpl(getRootView(), this, booksAdapter, dialogs)
+            view = MainViewImpl(getRootView(), this, dialogs)
         }
-        booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         val currentTabId = savedInstanceState?.getInt(CURRENT_TAB_KEY)
         val currentTab = currentTabId?.let { CurrentTab.getByItemId(it) }
         val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
@@ -253,6 +247,10 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         })
     }
 
+    override fun forceRefresh() {
+        refresh(isForce = true)
+    }
+
     private fun refreshOptionsMenu() {
         initNavigationView()
         auth.isAuthorized().let { authorized ->
@@ -270,53 +268,6 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
     private fun setCurrentTab(tab: CurrentTab, isForce: Boolean = false) {
         currentTab = tab
         presenter.showPage(tab, isForce)
-    }
-
-    private fun onBookClicked(book: BookDataModel) {
-        openBookScreen(book)
-    }
-
-    private fun onBookLongClicked(book: BookDataModel) {
-        val bookFullTitle = resources.getFullTitleString(book.title, book.author)
-        val onDeleteConfirmed = {
-            if (book.isFinished) {
-                api.deleteFinishedBook(book.id, auth.getAccessToken())
-            } else {
-                api.deletePlannedBook(book.id, auth.getAccessToken())
-            }
-                .io2main()
-                .bind({
-                    refresh(isForce = true)
-                }, {
-                    toast(R.string.books_error_delete)
-                    logError("cannot delete finished book", it)
-                })
-        }
-        val onDeleteClicked = {
-            AlertDialog.Builder(this)
-                .setTitle(R.string.books_title_confirm_delete)
-                .setMessage(
-                    getString(
-                        R.string.books_message_confirm_delete,
-                        bookFullTitle
-                    )
-                )
-                .setNegativeButton(R.string.common_button_cancel) { d, _ -> d.dismiss() }
-                .setPositiveButton(R.string.books_button_confirm_delete) { d, _ ->
-                    onDeleteConfirmed()
-                    d.dismiss()
-                }
-                .show()
-        }
-        dialogs.showDialog(
-            bookFullTitle,
-            createDialogItem(R.string.books_button_edit, R.drawable.ic_edit) {
-                openBookScreen(book)
-            },
-            createDialogItem(R.string.books_button_delete, R.drawable.ic_delete) {
-                onDeleteClicked()
-            }
-        )
     }
 
 }

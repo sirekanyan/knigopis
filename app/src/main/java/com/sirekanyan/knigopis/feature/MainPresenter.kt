@@ -8,6 +8,7 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.users.UriItem
+import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.model.NoteModel
@@ -24,9 +25,11 @@ interface MainPresenter : Presenter {
 
     interface Router {
         fun login()
+        fun forceRefresh()
         fun openProfileScreen()
         fun reopenScreen()
         fun openNewBookScreen()
+        fun openBookScreen(book: BookDataModel)
         fun openUserScreen(id: String, name: String, image: String?)
         fun openWebPage(uri: Uri)
     }
@@ -74,6 +77,33 @@ class MainPresenterImpl(
 
     override fun onAddBookClicked() {
         router.openNewBookScreen()
+    }
+
+    override fun onBookClicked(book: BookDataModel) {
+        router.openBookScreen(book)
+    }
+
+    override fun onBookLongClicked(book: BookDataModel) {
+        view.showBookActions(book)
+    }
+
+    override fun onEditBookClicked(book: BookDataModel) {
+        router.openBookScreen(book)
+    }
+
+    override fun onDeleteBookClicked(book: BookDataModel) {
+        view.showBookDeleteDialog(book)
+    }
+
+    override fun onDeleteBookConfirmed(book: BookDataModel) {
+        bookRepository.deleteBook(book)
+            .io2main()
+            .bind({
+                router.forceRefresh()
+            }, {
+                view.showBookDeleteError()
+                logError("cannot delete finished book", it)
+            })
     }
 
     override fun onUserClicked(user: UserModel) {
