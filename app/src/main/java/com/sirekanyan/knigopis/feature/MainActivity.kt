@@ -10,62 +10,41 @@ import android.support.v7.app.AlertDialog
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.Router
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
-import com.sirekanyan.knigopis.feature.users.MainPresenterState
+import com.sirekanyan.knigopis.feature.users.getMainState
+import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.repository.*
+import com.sirekanyan.knigopis.repository.Configuration
+import com.sirekanyan.knigopis.repository.Endpoint
+import com.sirekanyan.knigopis.repository.KAuth
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.koin.android.ext.android.inject
 
 private const val ULOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
-private const val CURRENT_TAB_KEY = "current_tab"
 
 class MainActivity : BaseActivity(), Router, MainPresenter.Router {
 
+    private val presenter by inject<MainPresenter>(parameters = createParameters(this))
     private val api by inject<Endpoint>()
     private val config by inject<Configuration>()
     private val auth by inject<KAuth>()
-    private val dialogs by inject<DialogFactory>(parameters = createParameters())
-    private val bookRepository by inject<BookRepository>()
-    private val userRepository by inject<UserRepository>()
-    private val noteRepository by inject<NoteRepository>()
-    private val resourceProvider by inject<ResourceProvider>()
     private var userLoggedIn = false
     private var booksChanged = false
-    private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainPresenterImpl(
-            this,
-            config,
-            auth,
-            bookRepository,
-            userRepository,
-            noteRepository,
-            resourceProvider
-        ).also { presenter ->
-            presenter.view = MainViewImpl(getRootView(), presenter, dialogs)
-            presenter.init(
-                savedInstanceState?.let {
-                    MainPresenterState(it.getInt(CURRENT_TAB_KEY))
-                }
-            )
-        }
+        presenter.init(savedInstanceState?.getMainState())
         presenter.refreshNavigation()
     }
 
@@ -105,11 +84,9 @@ class MainActivity : BaseActivity(), Router, MainPresenter.Router {
         presenter.stop()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.state?.let { state ->
-            outState?.putInt(CURRENT_TAB_KEY, state.currentTab)
-        }
+        presenter.state?.let { outState.saveMainState(it) }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

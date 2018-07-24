@@ -51,7 +51,9 @@ class MainPresenterImpl(
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
-    override val state get() = currentTab?.let { MainPresenterState(it.itemId) }
+
+    override val state
+        get() = currentTab?.let { MainPresenterState(it.itemId) }
 
     override fun init(state: MainPresenterState?) {
         val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
