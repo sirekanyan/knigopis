@@ -9,7 +9,7 @@ private const val TOKEN_KEY = "token"
 private const val ACCESS_TOKEN_KEY = "access_token"
 private const val USER_PROFILE = "user_profile"
 
-interface KAuth {
+interface AuthRepository {
     fun isAuthorized(): Boolean
     fun loadAccessToken(): Completable
     fun getAccessToken(): String
@@ -18,10 +18,10 @@ interface KAuth {
     fun logout()
 }
 
-class KAuthImpl(
+class AuthRepositoryImpl(
     context: Context,
     private val api: Endpoint
-) : KAuth {
+) : AuthRepository {
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
@@ -58,4 +58,5 @@ class KAuthImpl(
     override fun logout() {
         preferences.edit().remove(TOKEN_KEY).remove(ACCESS_TOKEN_KEY).apply()
     }
+
 }

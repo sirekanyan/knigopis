@@ -5,7 +5,7 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.createBookHeaderModel
 import com.sirekanyan.knigopis.model.toBookModel
-import com.sirekanyan.knigopis.repository.KAuth
+import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Endpoint
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -23,7 +23,7 @@ interface UserInteractor {
 }
 
 class UserInteractorImpl(
-    private val auth: KAuth,
+    private val auth: AuthRepository,
     private val api: Endpoint,
     private val resources: ResourceProvider
 ) : UserInteractor {

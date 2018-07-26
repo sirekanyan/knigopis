@@ -31,7 +31,7 @@ interface BookRepository {
 class BookRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
-    private val auth: KAuth,
+    private val auth: AuthRepository,
     private val plannedBookOrganizer: BookOrganizer<PlannedBook>,
     private val finishedBookPrepare: BookOrganizer<FinishedBook>,
     networkChecker: NetworkChecker

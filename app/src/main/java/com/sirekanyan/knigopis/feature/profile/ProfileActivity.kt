@@ -15,7 +15,7 @@ import com.sirekanyan.knigopis.common.functions.createTextShareIntent
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.dto.*
 import com.sirekanyan.knigopis.repository.Endpoint
-import com.sirekanyan.knigopis.repository.KAuth
+import com.sirekanyan.knigopis.repository.AuthRepository
 import kotlinx.android.synthetic.main.profile_activity.*
 import org.koin.android.ext.android.inject
 
@@ -24,7 +24,7 @@ fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 class ProfileActivity : BaseActivity() {
 
     private val api by inject<Endpoint>()
-    private val auth by inject<KAuth>()
+    private val auth by inject<AuthRepository>()
     private val todoList = mutableListOf<Book>()
     private val doingList = mutableListOf<Book>()
     private val doneList = mutableListOf<Book>()

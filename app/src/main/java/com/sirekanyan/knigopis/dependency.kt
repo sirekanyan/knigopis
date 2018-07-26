@@ -52,7 +52,7 @@ val appModule = applicationContext {
     }
     bean { UserRepositoryImpl(get(), get(), get(), get()) as UserRepository }
     bean { NoteRepositoryImpl(get(), get(), get()) as NoteRepository }
-    bean { KAuthImpl(get(), get()) as KAuth }
+    bean { AuthRepositoryImpl(get(), get()) as AuthRepository }
     bean { createMainEndpoint(get()) }
     bean("planned") { PlannedBookOrganizerImpl(get(), get()) as BookOrganizer<PlannedBook> }
     bean("finished") { FinishedBookPrepareImpl(get()) as BookOrganizer<FinishedBook> }

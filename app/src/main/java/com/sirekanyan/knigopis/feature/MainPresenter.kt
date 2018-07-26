@@ -43,7 +43,7 @@ interface MainPresenter : Presenter {
 class MainPresenterImpl(
     private val router: MainPresenter.Router,
     private val config: Configuration,
-    private val auth: KAuth,
+    private val auth: AuthRepository,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
     private val noteRepository: NoteRepository,

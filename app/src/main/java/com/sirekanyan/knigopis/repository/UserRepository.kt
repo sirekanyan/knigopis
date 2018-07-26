@@ -20,7 +20,7 @@ interface UserRepository {
 class UserRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
-    private val auth: KAuth,
+    private val auth: AuthRepository,
     networkChecker: NetworkChecker
 ) : CommonRepository<List<UserModel>>(networkChecker),
     UserRepository {
