@@ -2,6 +2,9 @@ package com.sirekanyan.knigopis.common.extensions
 
 import android.app.Activity
 import android.view.View
+import com.sirekanyan.knigopis.App
+
+fun Activity.app() = application as App
 
 fun Activity.getRootView(): View =
     findViewById(android.R.id.content)
