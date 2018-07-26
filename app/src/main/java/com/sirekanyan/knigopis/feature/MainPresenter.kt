@@ -9,7 +9,7 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
-import com.sirekanyan.knigopis.feature.users.UriItem
+import com.sirekanyan.knigopis.model.ProfileItem
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
@@ -216,12 +216,12 @@ class MainPresenterImpl(
     override fun onUserLongClicked(user: UserModel) {
         val uriItems = user.profiles
             .mapNotNull(String::toUriOrNull)
-            .map { UriItem(it, resources) }
-            .distinctBy(UriItem::title)
+            .map { ProfileItem(it, resources) }
+            .distinctBy(ProfileItem::title)
         view.showUserProfiles(user.name, uriItems)
     }
 
-    override fun onUserProfileClicked(uri: UriItem) {
+    override fun onUserProfileClicked(uri: ProfileItem) {
         router.openWebPage(uri.uri)
     }
 

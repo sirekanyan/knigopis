@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.feature.users
+package com.sirekanyan.knigopis.model
 
 import android.net.Uri
 import android.support.annotation.DrawableRes

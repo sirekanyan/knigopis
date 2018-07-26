@@ -19,7 +19,7 @@ import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.login.LoginView
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
 import com.sirekanyan.knigopis.feature.notes.NotesView
-import com.sirekanyan.knigopis.feature.users.UriItem
+import com.sirekanyan.knigopis.model.ProfileItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
@@ -273,7 +273,7 @@ class MainViewImpl(
         context.toast(R.string.books_error_delete)
     }
 
-    override fun showUserProfiles(title: String, items: List<UriItem>) {
+    override fun showUserProfiles(title: String, items: List<ProfileItem>) {
         val dialogItems: List<DialogItem> = items.map { uriItem ->
             createDialogItem(uriItem.title, uriItem.iconRes) {
                 callbacks.onUserProfileClicked(uriItem)
