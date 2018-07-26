@@ -57,30 +57,29 @@ class MainPresenterImpl(
     private var userLoggedIn = false
 
     override val state
-        get() = currentTab?.let { MainPresenterState(it.itemId) }
+        get() = currentTab?.let { MainPresenterState(it) }
 
     override fun init(state: MainPresenterState?) {
-        val currentTab = state?.currentTab?.let { CurrentTab.getByItemId(it) }
-        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
-        refresh(currentTab ?: defaultTab)
-        refreshNavigation()
         view.setDarkThemeOptionChecked(config.isDarkTheme)
+        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
+        this.currentTab = state?.currentTab ?: defaultTab
     }
 
     override fun start() {
-        refreshOptionsMenu()
+        refreshButtons()
+        refresh(currentTab)
+    }
+
+    override fun resume() {
         auth.loadAccessToken().bind({
-            refreshOptionsMenu()
+            refreshButtons()
             if (userLoggedIn) {
                 userLoggedIn = false
-                refresh()
+                refresh(HOME_TAB)
             }
         }, {
             logError("cannot check credentials", it)
         })
-    }
-
-    override fun resume() {
         if (booksChanged) {
             booksChanged = false
             refresh(isForce = true)
@@ -107,11 +106,11 @@ class MainPresenterImpl(
         }
     }
 
-    private fun refreshOptionsMenu() {
-        refreshNavigation()
+    private fun refreshButtons() {
         auth.isAuthorized().let { authorized ->
             view.showLoginOption(!authorized)
             view.showProfileOption(authorized)
+            view.showNavigation(authorized)
         }
     }
 
@@ -230,14 +229,6 @@ class MainPresenterImpl(
         router.openUserScreen(note.userId, note.userName, note.userImage)
     }
 
-    private fun refreshNavigation() {
-        if (auth.isAuthorized()) {
-            view.showNavigation()
-        } else {
-            view.hideNavigation()
-        }
-    }
-
     private fun refreshHomeTab(tab: CurrentTab) {
         bookRepository.observeBooks()
             .io2main()
@@ -297,7 +288,7 @@ class MainPresenterImpl(
                     } else {
                         router.openLoginScreen()
                     }
-                    refreshOptionsMenu()
+                    refreshButtons()
                 }
                 it.shouldShowRequestPermissionRationale -> {
                     view.showPermissionsRetryDialog()

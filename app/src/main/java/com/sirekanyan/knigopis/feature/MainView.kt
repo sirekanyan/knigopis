@@ -40,8 +40,7 @@ interface MainView : LoginView, BooksView, UsersView, NotesView {
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
-    fun showNavigation()
-    fun hideNavigation()
+    fun showNavigation(isVisible: Boolean)
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
     fun showProfileOption(isVisible: Boolean)
@@ -215,17 +214,17 @@ class MainViewImpl(
         swipeRefresh.isRefreshing = false
     }
 
-    override fun showNavigation() {
-        bottomNavigation.show()
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            callbacks.onNavigationClicked(item.itemId)
-            true
+    override fun showNavigation(isVisible: Boolean) {
+        if (isVisible) {
+            bottomNavigation.show()
+            bottomNavigation.setOnNavigationItemSelectedListener { item ->
+                callbacks.onNavigationClicked(item.itemId)
+                true
+            }
+        } else {
+            bottomNavigation.hide()
+            bottomNavigation.setOnNavigationItemSelectedListener(null)
         }
-    }
-
-    override fun hideNavigation() {
-        bottomNavigation.hide()
-        bottomNavigation.setOnNavigationItemSelectedListener(null)
     }
 
     override fun setNavigation(itemId: Int) {
