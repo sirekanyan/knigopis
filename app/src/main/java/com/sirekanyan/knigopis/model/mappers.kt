@@ -38,7 +38,7 @@ fun Subscription.toUserModel() =
     UserModel(
         subUser.id,
         subUser.name,
-        subUser.avatar,
+        subUser.photo,
         subUser.booksCount.takeIf { it > 0 }?.toString(),
         newBooksCount.takeIf { it > 0 }?.let { count ->
             val str = "+$count"
