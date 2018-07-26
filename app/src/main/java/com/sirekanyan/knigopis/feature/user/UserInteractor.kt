@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.feature.user
 
-import com.sirekanyan.knigopis.common.ResourceProvider
+import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.createBookHeaderModel

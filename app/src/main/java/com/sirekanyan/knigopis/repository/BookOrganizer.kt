@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.ResourceProvider
+import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.createBookHeaderModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook

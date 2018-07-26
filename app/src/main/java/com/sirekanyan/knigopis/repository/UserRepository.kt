@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.repository
 
-import com.sirekanyan.knigopis.common.NetworkChecker
+import com.sirekanyan.knigopis.common.android.NetworkChecker
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.model.toUserModel
 import com.sirekanyan.knigopis.repository.cache.CacheKey

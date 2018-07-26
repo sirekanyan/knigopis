@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.android
 
 import android.app.Application
 
@@ -10,7 +10,8 @@ interface ResourceProvider {
 
 }
 
-class ResourceProviderImpl(private val app: Application) : ResourceProvider {
+class ResourceProviderImpl(private val app: Application) :
+    ResourceProvider {
 
     override fun getString(id: Int, vararg args: Any): String =
         app.getString(id, *args)

@@ -9,11 +9,11 @@ import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
-import com.sirekanyan.knigopis.common.view.dialog.DialogItem
-import com.sirekanyan.knigopis.common.view.dialog.createDialogItem
-import com.sirekanyan.knigopis.common.view.header.HeaderItemDecoration
-import com.sirekanyan.knigopis.common.view.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.android.dialog.DialogItem
+import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
+import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
+import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.login.LoginView

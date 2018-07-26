@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.feature.users
 
 import android.net.Uri
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.ResourceProvider
+import com.sirekanyan.knigopis.common.android.ResourceProvider
 
 class UriItem(val uri: Uri, resource: ResourceProvider) {
     private val social = uri.toSocialNetwork()

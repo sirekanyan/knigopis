@@ -2,9 +2,9 @@ package com.sirekanyan.knigopis.feature
 
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
-import com.sirekanyan.knigopis.common.Permissions
+import com.sirekanyan.knigopis.common.android.Permissions
 import com.sirekanyan.knigopis.common.Presenter
-import com.sirekanyan.knigopis.common.ResourceProvider
+import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError

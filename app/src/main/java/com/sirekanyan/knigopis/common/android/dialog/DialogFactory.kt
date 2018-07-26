@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common.view.dialog
+package com.sirekanyan.knigopis.common.android.dialog
 
 import android.content.Context
 import android.support.design.widget.BottomSheetDialog

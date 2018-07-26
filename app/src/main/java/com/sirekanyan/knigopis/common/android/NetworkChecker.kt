@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.android
 
 import android.app.Application
 import com.sirekanyan.knigopis.common.extensions.systemConnectivityManager

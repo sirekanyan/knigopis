@@ -1,7 +1,7 @@
-package com.sirekanyan.knigopis.common.view.dialog
+package com.sirekanyan.knigopis.common.android.dialog
 
 import android.support.annotation.DrawableRes
-import com.sirekanyan.knigopis.common.StringResource
+import com.sirekanyan.knigopis.common.android.StringResource
 
 class DialogItem(
     val title: StringResource,

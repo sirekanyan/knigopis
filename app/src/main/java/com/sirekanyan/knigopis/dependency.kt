@@ -5,10 +5,10 @@ import android.content.Context
 import android.view.View
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.sirekanyan.knigopis.common.*
+import com.sirekanyan.knigopis.common.android.*
 import com.sirekanyan.knigopis.common.extensions.getRootView
-import com.sirekanyan.knigopis.common.view.dialog.BottomSheetDialogFactory
-import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.android.dialog.BottomSheetDialogFactory
+import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.feature.MainPresenter
 import com.sirekanyan.knigopis.feature.MainPresenterImpl
 import com.sirekanyan.knigopis.feature.MainViewImpl

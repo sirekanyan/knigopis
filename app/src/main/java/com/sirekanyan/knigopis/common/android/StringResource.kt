@@ -1,10 +1,10 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.android
 
 import android.support.annotation.StringRes
 import android.widget.TextView
 
-interface StringResource : CommonResource<TextView> {
-    override fun setValueTo(view: TextView)
+interface StringResource {
+    fun setValueTo(view: TextView)
 }
 
 class PlainStringResource(private val text: String) : StringResource {
@@ -13,7 +13,7 @@ class PlainStringResource(private val text: String) : StringResource {
     }
 }
 
-class IntegerStringResource(@StringRes private val textRes: Int) : StringResource {
+class IdStringResource(@StringRes private val textRes: Int) : StringResource {
     override fun setValueTo(view: TextView) {
         view.setText(textRes)
     }

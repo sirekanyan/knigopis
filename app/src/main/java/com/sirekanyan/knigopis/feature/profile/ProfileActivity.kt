@@ -9,7 +9,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.MAX_BOOK_PRIORITY
+import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createTextShareIntent
 import com.sirekanyan.knigopis.common.functions.logError

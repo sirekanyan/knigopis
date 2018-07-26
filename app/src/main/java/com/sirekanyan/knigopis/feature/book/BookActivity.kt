@@ -7,8 +7,8 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.MAX_BOOK_PRIORITY
-import com.sirekanyan.knigopis.common.MIN_BOOK_PRIORITY
+import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
+import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.common.functions.extra

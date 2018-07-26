@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common
+package com.sirekanyan.knigopis.common.android
 
 import android.Manifest.permission.READ_PHONE_STATE
 import android.app.Activity
@@ -12,7 +12,8 @@ interface Permissions {
 
 }
 
-class PermissionsImpl(private val activity: Activity) : Permissions {
+class PermissionsImpl(private val activity: Activity) :
+    Permissions {
 
     override fun requestReadPhoneState(): Single<Permission> =
         RxPermissions(activity).requestEach(READ_PHONE_STATE).firstOrError()

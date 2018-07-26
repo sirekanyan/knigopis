@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common.view.header;
+package com.sirekanyan.knigopis.common.android.header;
 
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;

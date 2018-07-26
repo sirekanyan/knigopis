@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.repository
 
-import com.sirekanyan.knigopis.common.NetworkChecker
+import com.sirekanyan.knigopis.common.android.NetworkChecker
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.dto.FinishedBook
