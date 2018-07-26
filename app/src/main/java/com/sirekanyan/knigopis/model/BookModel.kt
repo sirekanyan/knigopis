@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.model
 
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.ResourceProvider
-import com.sirekanyan.knigopis.common.adapter.HeadedModel
+import com.sirekanyan.knigopis.common.android.adapter.HeadedModel
 import com.sirekanyan.knigopis.common.extensions.orDefault
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 

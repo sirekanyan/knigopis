@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common.adapter
+package com.sirekanyan.knigopis.common.android.adapter
 
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil

@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.common.android.header
 
 import android.view.View
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.adapter.HeadedAdapter
+import com.sirekanyan.knigopis.common.android.adapter.HeadedAdapter
 import com.sirekanyan.knigopis.common.extensions.showNow
 import com.sirekanyan.knigopis.model.BookModel
 import kotlinx.android.synthetic.main.header.view.*

@@ -3,7 +3,7 @@ package com.sirekanyan.knigopis.feature.notes
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.view.ViewGroup
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.adapter.SimpleItemCallback
+import com.sirekanyan.knigopis.common.android.adapter.SimpleItemCallback
 import com.sirekanyan.knigopis.common.extensions.inflate
 import com.sirekanyan.knigopis.model.NoteModel
 

@@ -1,4 +1,4 @@
-package com.sirekanyan.knigopis.common.adapter
+package com.sirekanyan.knigopis.common.android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

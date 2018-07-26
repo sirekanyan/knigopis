@@ -2,7 +2,7 @@ package com.sirekanyan.knigopis.feature.books
 
 import android.view.ViewGroup
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.adapter.HeadedAdapter
+import com.sirekanyan.knigopis.common.android.adapter.HeadedAdapter
 import com.sirekanyan.knigopis.common.extensions.inflate
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel

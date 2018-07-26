@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.feature.books
 
 import android.view.View
-import com.sirekanyan.knigopis.common.adapter.CommonViewHolder
+import com.sirekanyan.knigopis.common.android.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.extensions.setProgressSmoothly
 import com.sirekanyan.knigopis.model.BookDataModel

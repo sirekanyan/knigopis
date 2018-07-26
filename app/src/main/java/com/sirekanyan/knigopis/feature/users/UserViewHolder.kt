@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.feature.users
 
 import android.view.View
-import com.sirekanyan.knigopis.common.adapter.CommonViewHolder
+import com.sirekanyan.knigopis.common.android.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.setCircleImage
 import com.sirekanyan.knigopis.model.UserModel
 import kotlinx.android.extensions.LayoutContainer

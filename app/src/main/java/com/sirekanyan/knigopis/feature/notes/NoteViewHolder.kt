@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.feature.notes
 
 import android.view.View
-import com.sirekanyan.knigopis.common.adapter.CommonViewHolder
+import com.sirekanyan.knigopis.common.android.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.setCircleImage
 import com.sirekanyan.knigopis.common.extensions.setSquareImage
 import com.sirekanyan.knigopis.model.NoteModel
