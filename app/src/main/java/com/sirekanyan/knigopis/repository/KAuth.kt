@@ -1,11 +1,8 @@
 package com.sirekanyan.knigopis.repository
 
 import android.content.Context
-import android.content.Intent
 import com.sirekanyan.knigopis.common.extensions.io2main
 import io.reactivex.Completable
-import ru.ulogin.sdk.UloginAuthActivity
-import java.util.*
 
 private const val PREFS_NAME = "knigopis"
 private const val TOKEN_KEY = "token"
@@ -14,37 +11,34 @@ private const val USER_PROFILE = "user_profile"
 
 interface KAuth {
     fun isAuthorized(): Boolean
+    fun loadAccessToken(): Completable
     fun getAccessToken(): String
-    fun getTokenRequest(): Intent
     fun getUserProfile(): String?
-    fun saveTokenResponse(data: Intent)
-    fun requestAccessToken(): Completable
+    fun saveToken(token: String)
     fun logout()
 }
 
 class KAuthImpl(
-    private val context: Context,
+    context: Context,
     private val api: Endpoint
 ) : KAuth {
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    override fun isAuthorized() = preferences.contains(ACCESS_TOKEN_KEY)
+    override fun isAuthorized(): Boolean =
+        preferences.contains(ACCESS_TOKEN_KEY)
 
-    override fun getAccessToken(): String = preferences.getString(ACCESS_TOKEN_KEY, "")
+    override fun getAccessToken(): String =
+        preferences.getString(ACCESS_TOKEN_KEY, "")
 
-    override fun getTokenRequest() = Intent(context, UloginAuthActivity::class.java)
+    override fun getUserProfile(): String? =
+        preferences.getString(USER_PROFILE, null)
 
-    override fun getUserProfile(): String? {
-        return preferences.getString(USER_PROFILE, null)
+    override fun saveToken(token: String) {
+        preferences.edit().putString(TOKEN_KEY, token).apply()
     }
 
-    override fun saveTokenResponse(data: Intent) {
-        val userData = data.getSerializableExtra(UloginAuthActivity.USERDATA) as HashMap<*, *>
-        preferences.edit().putString(TOKEN_KEY, userData[TOKEN_KEY].toString()).apply()
-    }
-
-    override fun requestAccessToken(): Completable {
+    override fun loadAccessToken(): Completable {
         val token = preferences.getString(TOKEN_KEY, null)
         return if (token != null && !isAuthorized()) {
             api.getCredentials(token)

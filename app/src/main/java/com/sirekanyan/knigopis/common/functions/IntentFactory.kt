@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import ru.ulogin.sdk.UloginAuthActivity
 
 private const val TEXT_MIME_TYPE = "text/plain"
 private const val PACKAGE_SCHEME = "package"
@@ -20,3 +21,6 @@ fun Context.createAppSettingsIntent(): Intent =
         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         Uri.fromParts(PACKAGE_SCHEME, packageName, null)
     )
+
+fun Context.createLoginIntent() =
+    Intent(this, UloginAuthActivity::class.java)

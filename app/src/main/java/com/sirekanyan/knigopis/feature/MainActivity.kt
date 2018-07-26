@@ -10,6 +10,7 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
+import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
@@ -21,10 +22,10 @@ import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.Endpoint
-import com.sirekanyan.knigopis.repository.KAuth
 import org.koin.android.ext.android.inject
+import ru.ulogin.sdk.UloginAuthActivity
 
-private const val ULOGIN_REQUEST_CODE = 0
+private const val LOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 
 class MainActivity : BaseActivity(), MainPresenter.Router {
@@ -32,9 +33,6 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
     private val presenter by inject<MainPresenter>(parameters = createParameters(this))
     private val api by inject<Endpoint>()
     private val config by inject<Configuration>()
-    private val auth by inject<KAuth>()
-    private var userLoggedIn = false
-    private var booksChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
@@ -45,20 +43,7 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
 
     override fun onStart() {
         super.onStart()
-        presenter.refreshOptionsMenu()
-        auth.requestAccessToken().bind({
-            presenter.refreshOptionsMenu()
-            if (userLoggedIn) {
-                userLoggedIn = false
-                presenter.refresh()
-            }
-        }, {
-            logError("cannot check credentials", it)
-        })
-        if (booksChanged) {
-            booksChanged = false
-            presenter.refresh(isForce = true)
-        }
+        presenter.start()
         intent.data?.also { userUrl ->
             intent.data = null
             val normalizedUri = Uri.parse(userUrl.toString().replaceFirst("/#/", "/"))
@@ -74,6 +59,11 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.resume()
+    }
+
     override fun onStop() {
         super.onStop()
         presenter.stop()
@@ -86,14 +76,17 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            ULOGIN_REQUEST_CODE -> {
+            LOGIN_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK && data != null) {
-                    auth.saveTokenResponse(data)
-                    userLoggedIn = true
+                    val userData = data.getSerializableExtra(UloginAuthActivity.USERDATA)
+                    val token = (userData as HashMap<*, *>)["token"].toString()
+                    presenter.onLoginScreenResult(token)
                 }
             }
             BOOK_REQUEST_CODE -> {
-                booksChanged = resultCode == RESULT_OK
+                if (resultCode == RESULT_OK) {
+                    presenter.onBookScreenResult()
+                }
             }
         }
     }
@@ -105,7 +98,7 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
     }
 
     override fun openLoginScreen() {
-        startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
+        startActivityForResult(createLoginIntent(), LOGIN_REQUEST_CODE)
     }
 
     override fun openSettingsScreen() {

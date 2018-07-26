@@ -23,10 +23,13 @@ interface MainPresenter : Presenter {
     val state: MainPresenterState?
     fun init(state: MainPresenterState?)
     fun start()
+    fun resume()
     fun back(): Boolean
     fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
     fun refreshOptionsMenu()
     fun showPage(tab: CurrentTab, isForce: Boolean)
+    fun onLoginScreenResult(token: String)
+    fun onBookScreenResult()
 
     interface Router {
         fun openLoginScreen()
@@ -53,6 +56,8 @@ class MainPresenterImpl(
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
+    private var booksChanged = false
+    private var userLoggedIn = false
 
     override val state
         get() = currentTab?.let { MainPresenterState(it.itemId) }
@@ -66,6 +71,23 @@ class MainPresenterImpl(
     }
 
     override fun start() {
+        refreshOptionsMenu()
+        auth.loadAccessToken().bind({
+            refreshOptionsMenu()
+            if (userLoggedIn) {
+                userLoggedIn = false
+                refresh()
+            }
+        }, {
+            logError("cannot check credentials", it)
+        })
+    }
+
+    override fun resume() {
+        if (booksChanged) {
+            booksChanged = false
+            refresh(isForce = true)
+        }
     }
 
     override fun back(): Boolean =
@@ -106,6 +128,15 @@ class MainPresenterImpl(
                 NOTES_TAB -> refreshNotesTab(tab)
             }
         }
+    }
+
+    override fun onLoginScreenResult(token: String) {
+        auth.saveToken(token)
+        userLoggedIn = true
+    }
+
+    override fun onBookScreenResult() {
+        booksChanged = true
     }
 
     override fun onRetryLoginClicked() {
