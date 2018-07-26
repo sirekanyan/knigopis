@@ -5,10 +5,7 @@ import android.content.Context
 import android.view.View
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.sirekanyan.knigopis.common.NetworkChecker
-import com.sirekanyan.knigopis.common.NetworkCheckerImpl
-import com.sirekanyan.knigopis.common.ResourceProvider
-import com.sirekanyan.knigopis.common.ResourceProviderImpl
+import com.sirekanyan.knigopis.common.*
 import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.common.view.dialog.BottomSheetDialogFactory
 import com.sirekanyan.knigopis.common.view.dialog.DialogFactory
@@ -75,9 +72,20 @@ val appModule = applicationContext {
             .create()
     }
     factory { BottomSheetDialogFactory(it.getContext()) as DialogFactory }
+    factory { PermissionsImpl(it.getContext() as Activity) as Permissions }
     factory {
-        MainPresenterImpl(it.getRouter(), get(), get(), get(), get(), get(), get()).also { p ->
-            p.view = MainViewImpl(it.getRootView(), p, get(it.getContext().createParameters()))
+        val params = it.getContext().createParameters()
+        MainPresenterImpl(
+            it.getRouter(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(params)
+        ).also { p ->
+            p.view = MainViewImpl(it.getRootView(), p, get(params))
         } as MainPresenter
     }
     userModule()

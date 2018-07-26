@@ -93,10 +93,9 @@
     <string name="notes.error.empty">No one is posted yet</string>
 
     <!-- permissions -->
-    <string name="permissions.title.no_access">Permission denied</string>
-    <string name="permissions.message.no_access">This permission is necessary to authorize with ulogin, please try again</string>
-    <string name="permissions.title.request">Permissions</string>
-    <string name="permissions.message.request">Please allow permissions in order to login</string>
+    <string name="permissions.title">Permissions</string>
+    <string name="permissions.message.retry">The permission is necessary to authorize you by using uLogin library, please allow in order to continue</string>
+    <string name="permissions.message.settings">Please allow permission in settings to authorize with uLogin</string>
     <string name="permissions.button.settings">Goto settings</string>
 
     <!-- social networks -->

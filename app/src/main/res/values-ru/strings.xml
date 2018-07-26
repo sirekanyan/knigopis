@@ -94,10 +94,9 @@
     <string name="notes.error.empty">Нет новых комментариев</string>
 
     <!-- permissions -->
-    <string name="permissions.title.no_access">Нет доступа</string>
-    <string name="permissions.message.no_access">Данное разрешение необходимо для авторизации через ulogin</string>
-    <string name="permissions.title.request">Разрешения</string>
-    <string name="permissions.message.request">Подтвердите разрешения в настройках, чтобы войти в приложение</string>
+    <string name="permissions.title">Разрешения</string>
+    <string name="permissions.message.retry">Данное разрешение необходимо для авторизации через uLogin</string>
+    <string name="permissions.message.settings">Включите разрешение в настройках, чтобы авторизоваться с помощью uLogin</string>
     <string name="permissions.button.settings">В настройки</string>
 
     <!-- social networks -->

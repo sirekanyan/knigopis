@@ -2,6 +2,7 @@ package com.sirekanyan.knigopis.feature
 
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
+import com.sirekanyan.knigopis.common.Permissions
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
@@ -28,13 +29,14 @@ interface MainPresenter : Presenter {
     fun showPage(tab: CurrentTab, isForce: Boolean)
 
     interface Router {
+        fun openLoginScreen()
+        fun openSettingsScreen()
         fun openProfileScreen()
         fun openNewBookScreen()
         fun openBookScreen(book: BookDataModel)
         fun openUserScreen(id: String, name: String, image: String?)
         fun openWebPage(uri: Uri)
         fun reopenScreen()
-        fun login()
     }
 }
 
@@ -45,7 +47,8 @@ class MainPresenterImpl(
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
     private val noteRepository: NoteRepository,
-    private val resources: ResourceProvider
+    private val resources: ResourceProvider,
+    private val permissions: Permissions
 ) : BasePresenter<MainView>(), MainPresenter, MainView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
@@ -105,6 +108,14 @@ class MainPresenterImpl(
         }
     }
 
+    override fun onRetryLoginClicked() {
+        login()
+    }
+
+    override fun onGotoSettingsClicked() {
+        router.openSettingsScreen()
+    }
+
     override fun onNavigationClicked(itemId: Int) {
         CurrentTab.getByItemId(itemId).let { tab ->
             currentTab = tab
@@ -120,7 +131,7 @@ class MainPresenterImpl(
     }
 
     override fun onLoginOptionClicked() {
-        router.login()
+        login()
     }
 
     override fun onProfileOptionClicked() {
@@ -247,5 +258,29 @@ class MainPresenterImpl(
             view.hideProgress()
             view.hideSwipeRefresh()
         }
+
+    private fun login() {
+        permissions.requestReadPhoneState().bind({
+            when {
+                it.granted -> {
+                    if (auth.isAuthorized()) {
+                        auth.logout()
+                        refresh()
+                    } else {
+                        router.openLoginScreen()
+                    }
+                    refreshOptionsMenu()
+                }
+                it.shouldShowRequestPermissionRationale -> {
+                    view.showPermissionsRetryDialog()
+                }
+                else -> {
+                    view.showPermissionsSettingsDialog()
+                }
+            }
+        }, {
+            logError("cannot request permission", it)
+        })
+    }
 
 }

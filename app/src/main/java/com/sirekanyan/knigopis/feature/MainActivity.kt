@@ -1,17 +1,15 @@
 package com.sirekanyan.knigopis.feature
 
-import android.Manifest.permission.READ_PHONE_STATE
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
-import android.support.v7.app.AlertDialog
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
@@ -24,7 +22,6 @@ import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.Endpoint
 import com.sirekanyan.knigopis.repository.KAuth
-import com.tbruyelle.rxpermissions2.RxPermissions
 import org.koin.android.ext.android.inject
 
 private const val ULOGIN_REQUEST_CODE = 0
@@ -107,6 +104,14 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
         }
     }
 
+    override fun openLoginScreen() {
+        startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
+    }
+
+    override fun openSettingsScreen() {
+        startActivity(createAppSettingsIntent())
+    }
+
     override fun openProfileScreen() {
         startActivity(createProfileIntent())
     }
@@ -129,51 +134,6 @@ class MainActivity : BaseActivity(), MainPresenter.Router {
 
     override fun reopenScreen() {
         recreate()
-    }
-
-    override fun login() {
-        RxPermissions(this).requestEach(READ_PHONE_STATE).bind({
-            when {
-                it.granted -> {
-                    if (auth.isAuthorized()) {
-                        auth.logout()
-                        presenter.refresh()
-                    } else {
-                        startActivityForResult(auth.getTokenRequest(), ULOGIN_REQUEST_CODE)
-                    }
-                    presenter.refreshOptionsMenu()
-                }
-                it.shouldShowRequestPermissionRationale -> {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.permissions_title_no_access)
-                        .setMessage(R.string.permissions_message_no_access)
-                        .setPositiveButton(R.string.common_button_retry) { _, _ ->
-                            login()
-                        }
-                        .setNegativeButton(R.string.common_button_cancel, null)
-                        .setCancelable(false)
-                        .show()
-                }
-                else -> {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.permissions_title_request)
-                        .setMessage(R.string.permissions_message_request)
-                        .setPositiveButton(R.string.permissions_button_settings) { _, _ ->
-                            startActivity(
-                                Intent(
-                                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                    Uri.fromParts("package", packageName, null)
-                                )
-                            )
-                        }
-                        .setNegativeButton(R.string.common_button_cancel, null)
-                        .setCancelable(false)
-                        .show()
-                }
-            }
-        }, {
-            logError("cannot request permission", it)
-        })
     }
 
 }
