@@ -25,9 +25,6 @@ interface MainPresenter : Presenter {
     fun start()
     fun resume()
     fun back(): Boolean
-    fun refresh(tab: CurrentTab? = null, isForce: Boolean = false)
-    fun refreshOptionsMenu()
-    fun showPage(tab: CurrentTab, isForce: Boolean)
     fun onLoginScreenResult(token: String)
     fun onBookScreenResult()
 
@@ -98,7 +95,7 @@ class MainPresenterImpl(
             true
         }
 
-    override fun refresh(tab: CurrentTab?, isForce: Boolean) {
+    private fun refresh(tab: CurrentTab? = null, isForce: Boolean = false) {
         if (!auth.isAuthorized()) {
             currentTab = NOTES_TAB
         } else if (tab != null) {
@@ -110,7 +107,7 @@ class MainPresenterImpl(
         }
     }
 
-    override fun refreshOptionsMenu() {
+    private fun refreshOptionsMenu() {
         refreshNavigation()
         auth.isAuthorized().let { authorized ->
             view.showLoginOption(!authorized)
@@ -118,7 +115,7 @@ class MainPresenterImpl(
         }
     }
 
-    override fun showPage(tab: CurrentTab, isForce: Boolean) {
+    private fun showPage(tab: CurrentTab, isForce: Boolean) {
         view.showPage(tab)
         val isFirst = !loadedTabs.contains(tab)
         if (isFirst || isForce) {
