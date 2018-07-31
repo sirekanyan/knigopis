@@ -10,7 +10,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId 'me.vadik.knigopis' // todo: remove in beta release
+        applicationId 'com.sirekanyan.knigopis'
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 21
