@@ -13,8 +13,8 @@ android {
         applicationId 'me.vadik.knigopis' // todo: remove in beta release
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 20
-        versionName '0.1.18'
+        versionCode 21
+        versionName '0.1.19'
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STATIC_SERVER", '"https://knigopis.tk/img"'
