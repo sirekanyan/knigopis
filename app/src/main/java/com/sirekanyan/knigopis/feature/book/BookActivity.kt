@@ -77,10 +77,12 @@ class BookActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
         val bookId = intent.getStringExtra(EXTRA_BOOK_ID)
+        val title = intent.getStringExtra(EXTRA_BOOK_TITLE)
+        val author = intent.getStringExtra(EXTRA_BOOK_AUTHOR)
         val wasFinished = intent.getBooleanExtra(EXTRA_BOOK_FINISHED, false)
         val isNewBook = bookId == null
         toolbar.inflateMenu(R.menu.book_menu)
-        if (isNewBook) titleEditText.requestFocus()
+        if (title.isNullOrEmpty() && author.isNullOrEmpty()) titleEditText.requestFocus()
         toolbar.setTitle(if (isNewBook) R.string.book_title_add else R.string.book_title_edit)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener {
@@ -169,12 +171,12 @@ class BookActivity : BaseActivity() {
                 }
             }
         })
-        intent.getStringExtra(EXTRA_BOOK_TITLE)?.let { title ->
-            titleEditText.setText(title)
+        title?.let {
             bookImage.showNow()
-            bookImage.setSquareImage(createBookImageUrl(title))
+            bookImage.setSquareImage(createBookImageUrl(it))
         }
-        authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
+        titleEditText.setText(title)
+        authorEditText.setText(author)
         progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
         notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
         if (!isNewBook) {
