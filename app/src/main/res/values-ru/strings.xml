@@ -71,6 +71,7 @@
     <string name="book.hint.day">День</string>
     <string name="book.hint.notes">Примечания</string>
     <string name="book.checkbox.done">Прочитана</string>
+    <string name="book.notes.copied">Найдено у %s</string>
 
     <!-- book menu -->
     <string name="book.option.save">Сохранить</string>

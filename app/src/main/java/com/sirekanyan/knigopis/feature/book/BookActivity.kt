@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
+import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.common.functions.extra
@@ -34,11 +34,17 @@ private val EXTRA_BOOK_FINISHED = extra("book_finished")
 
 fun Context.createNewBookIntent() = Intent(this, BookActivity::class.java)
 
-fun Context.createNewBookIntent(title: String, author: String, progress: Int? = null): Intent =
+fun Context.createTodoBookIntent(title: String, author: String, userName: String): Intent =
     Intent(this, BookActivity::class.java)
         .putExtra(EXTRA_BOOK_TITLE, title)
         .putExtra(EXTRA_BOOK_AUTHOR, author)
-        .putExtra(EXTRA_BOOK_PROGRESS, progress)
+        .putExtra(EXTRA_BOOK_NOTES, getString(R.string.book_notes_copied, userName))
+
+fun Context.createDoneBookIntent(title: String, author: String): Intent =
+    Intent(this, BookActivity::class.java)
+        .putExtra(EXTRA_BOOK_TITLE, title)
+        .putExtra(EXTRA_BOOK_AUTHOR, author)
+        .putExtra(EXTRA_BOOK_PROGRESS, MAX_BOOK_PRIORITY)
 
 fun Context.createEditBookIntent(book: BookDataModel): Intent =
     Intent(this, BookActivity::class.java)
@@ -170,8 +176,8 @@ class BookActivity : BaseActivity() {
         }
         authorEditText.setText(intent.getStringExtra(EXTRA_BOOK_AUTHOR))
         progressSeekBar.setProgressSmoothly(intent.getIntExtra(EXTRA_BOOK_PROGRESS, 0))
+        notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
         if (!isNewBook) {
-            notesTextArea.setText(intent.getStringExtra(EXTRA_BOOK_NOTES))
             if (wasFinished) {
                 yearEditText.setText(intent.getStringExtra(EXTRA_BOOK_YEAR))
                 monthEditText.setText(intent.getStringExtra(EXTRA_BOOK_MONTH))

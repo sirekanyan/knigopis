@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.functions.extra
-import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.functions.extra
+import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.createParameters
-import com.sirekanyan.knigopis.feature.book.createNewBookIntent
+import com.sirekanyan.knigopis.feature.book.createDoneBookIntent
+import com.sirekanyan.knigopis.feature.book.createTodoBookIntent
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.repository.Configuration
 import kotlinx.android.synthetic.main.user_activity.*
@@ -40,6 +40,7 @@ class UserActivity : BaseActivity() {
     private val interactor by inject<UserInteractor>()
     private val dialogs by inject<DialogFactory>(parameters = createParameters())
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
+    private val userName by lazy { intent.getStringExtra(EXTRA_USER_NAME) }
     private val booksAdapter = UserBooksAdapter(::onBookLongClicked)
     private lateinit var unsubscribeOption: MenuItem
 
@@ -49,7 +50,7 @@ class UserActivity : BaseActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
-        toolbar.title = intent.getStringExtra(EXTRA_USER_NAME)
+        toolbar.title = userName
         toolbarImage.setCircleImage(
             intent.getStringExtra(EXTRA_USER_PHOTO),
             R.drawable.oval_dark_placeholder_background
@@ -145,10 +146,10 @@ class UserActivity : BaseActivity() {
         dialogs.showDialog(
             resources.getFullTitleString(book.title, book.author),
             createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
-                startActivity(createNewBookIntent(book.title, book.author))
+                startActivity(createTodoBookIntent(book.title, book.author, userName))
             },
             createDialogItem(R.string.user_button_done, R.drawable.ic_playlist_add_check) {
-                startActivity(createNewBookIntent(book.title, book.author, MAX_BOOK_PRIORITY))
+                startActivity(createDoneBookIntent(book.title, book.author))
             }
         )
     }
