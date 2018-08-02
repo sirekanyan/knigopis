@@ -6,12 +6,14 @@ import android.view.View
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sirekanyan.knigopis.common.android.*
-import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.common.android.dialog.BottomSheetDialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.feature.MainPresenter
 import com.sirekanyan.knigopis.feature.MainPresenterImpl
 import com.sirekanyan.knigopis.feature.MainViewImpl
+import com.sirekanyan.knigopis.feature.login.LoginPresenterImpl
+import com.sirekanyan.knigopis.feature.login.LoginViewImpl
 import com.sirekanyan.knigopis.feature.user.UserInteractor
 import com.sirekanyan.knigopis.feature.user.UserInteractorImpl
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -73,22 +75,33 @@ val appModule = applicationContext {
     }
     factory { BottomSheetDialogFactory(it.getContext()) as DialogFactory }
     factory { PermissionsImpl(it.getContext() as Activity) as Permissions }
+    mainModule()
+    userModule()
+}
+
+private fun KoinContext.mainModule() {
     factory {
         val params = it.getContext().createParameters()
+        val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params)).also { p ->
+            p.view = LoginViewImpl(it.getRootView(), p)
+        }
         MainPresenterImpl(
+            loginPresenter,
             it.getRouter(),
             get(),
             get(),
             get(),
             get(),
             get(),
-            get(),
-            get(params)
+            get()
         ).also { p ->
             p.view = MainViewImpl(it.getRootView(), p, get(params))
         } as MainPresenter
     }
-    userModule()
+}
+
+private fun KoinContext.userModule() {
+    bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
 }
 
 fun Context.createParameters(): Parameters =
@@ -109,12 +122,8 @@ private fun ParameterProvider.getContext(): Context =
 private fun ParameterProvider.getRootView(): View =
     this[ROOT_VIEW_KEY]
 
-private fun ParameterProvider.getRouter(): MainPresenter.Router =
+private fun <T> ParameterProvider.getRouter(): T =
     this[ROUTER_KEY]
-
-private fun KoinContext.userModule() {
-    bean { UserInteractorImpl(get(), get(), get()) as UserInteractor }
-}
 
 private fun createMainEndpoint(gson: Gson) =
     Retrofit.Builder()

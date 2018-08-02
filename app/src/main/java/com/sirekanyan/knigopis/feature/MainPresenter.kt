@@ -2,19 +2,15 @@ package com.sirekanyan.knigopis.feature
 
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
-import com.sirekanyan.knigopis.common.android.Permissions
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
-import com.sirekanyan.knigopis.model.ProfileItem
-import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.CurrentTab
+import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
-import com.sirekanyan.knigopis.model.NoteModel
-import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.*
 import io.reactivex.Flowable
 
@@ -29,8 +25,6 @@ interface MainPresenter : Presenter {
     fun onBookScreenResult()
 
     interface Router {
-        fun openLoginScreen()
-        fun openSettingsScreen()
         fun openProfileScreen()
         fun openNewBookScreen()
         fun openBookScreen(book: BookDataModel)
@@ -41,15 +35,17 @@ interface MainPresenter : Presenter {
 }
 
 class MainPresenterImpl(
+    private val loginPresenter: LoginPresenter,
     private val router: MainPresenter.Router,
     private val config: Configuration,
     private val auth: AuthRepository,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
     private val noteRepository: NoteRepository,
-    private val resources: ResourceProvider,
-    private val permissions: Permissions
-) : BasePresenter<MainView>(), MainPresenter, MainView.Callbacks {
+    private val resources: ResourceProvider
+) : BasePresenter<MainView>(loginPresenter),
+    MainPresenter,
+    MainView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
@@ -135,14 +131,6 @@ class MainPresenterImpl(
         booksChanged = true
     }
 
-    override fun onRetryLoginClicked() {
-        login()
-    }
-
-    override fun onGotoSettingsClicked() {
-        router.openSettingsScreen()
-    }
-
     override fun onNavigationClicked(itemId: Int) {
         CurrentTab.getByItemId(itemId).let { tab ->
             currentTab = tab
@@ -158,7 +146,7 @@ class MainPresenterImpl(
     }
 
     override fun onLoginOptionClicked() {
-        login()
+        loginPresenter.login()
     }
 
     override fun onProfileOptionClicked() {
@@ -277,29 +265,5 @@ class MainPresenterImpl(
             view.hideProgress()
             view.hideSwipeRefresh()
         }
-
-    private fun login() {
-        permissions.requestReadPhoneState().bind({
-            when {
-                it.granted -> {
-                    if (auth.isAuthorized()) {
-                        auth.logout()
-                        refresh()
-                    } else {
-                        router.openLoginScreen()
-                    }
-                    refreshButtons()
-                }
-                it.shouldShowRequestPermissionRationale -> {
-                    view.showPermissionsRetryDialog()
-                }
-                else -> {
-                    view.showPermissionsSettingsDialog()
-                }
-            }
-        }, {
-            logError("cannot request permission", it)
-        })
-    }
 
 }

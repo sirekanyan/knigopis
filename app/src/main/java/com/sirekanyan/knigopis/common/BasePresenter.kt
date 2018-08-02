@@ -6,7 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BasePresenter<V : Any> {
+abstract class BasePresenter<V : Any>(private vararg val nestedPresenters: Presenter) {
 
     lateinit var view: V
     private val disposables = CompositeDisposable()
@@ -28,6 +28,7 @@ abstract class BasePresenter<V : Any> {
     }
 
     fun stop() {
+        nestedPresenters.forEach(Presenter::stop)
         disposables.clear()
     }
 

@@ -8,18 +8,16 @@ import android.view.View
 import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.DialogItem
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.books.BooksView
-import com.sirekanyan.knigopis.feature.login.LoginView
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
 import com.sirekanyan.knigopis.feature.notes.NotesView
-import com.sirekanyan.knigopis.model.ProfileItem
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
@@ -33,7 +31,7 @@ import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 import retrofit2.HttpException
 
-interface MainView : LoginView, BooksView, UsersView, NotesView {
+interface MainView : BooksView, UsersView, NotesView {
 
     fun showAboutDialog()
     fun showPage(tab: CurrentTab)
@@ -47,7 +45,6 @@ interface MainView : LoginView, BooksView, UsersView, NotesView {
     fun setDarkThemeOptionChecked(isChecked: Boolean)
 
     interface Callbacks :
-        LoginView.Callbacks,
         BooksView.Callbacks,
         UsersView.Callbacks,
         NotesView.Callbacks {
@@ -132,30 +129,6 @@ class MainViewImpl(
             }
         })
         swipeRefresh.setOnRefreshListener(callbacks::onRefreshSwiped)
-    }
-
-    override fun showPermissionsRetryDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.permissions_title)
-            .setMessage(R.string.permissions_message_retry)
-            .setPositiveButton(R.string.common_button_retry) { _, _ ->
-                callbacks.onRetryLoginClicked()
-            }
-            .setNegativeButton(R.string.common_button_cancel, null)
-            .setCancelable(false)
-            .show()
-    }
-
-    override fun showPermissionsSettingsDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.permissions_title)
-            .setMessage(R.string.permissions_message_settings)
-            .setPositiveButton(R.string.permissions_button_settings) { _, _ ->
-                callbacks.onGotoSettingsClicked()
-            }
-            .setNegativeButton(R.string.common_button_cancel, null)
-            .setCancelable(false)
-            .show()
     }
 
     override fun showAboutDialog() {
