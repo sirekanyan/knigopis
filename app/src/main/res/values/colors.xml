@@ -14,8 +14,10 @@
     <color name="common_teal_accent_700">#00BFA5</color>
     <color name="common_black">#000000</color>
     <color name="common_grey_900">#212121</color>
+    <color name="common_grey_875">#292929</color>
     <color name="common_grey_850">#303030</color>
     <color name="common_grey_800">#424242</color>
+    <color name="common_grey_50">#FAFAFA</color>
     <color name="common_white">#ffffff</color>
     <color name="colorAccent">#FF3D00</color>
     <color name="colorSuccessAccent">#00E676</color>
@@ -36,6 +38,7 @@
     <color name="light.color_primary_dark">@color/common_deep_purple_700</color>
     <color name="light.color_primary">@color/common_deep_purple_500</color>
     <color name="light.background_color">@color/common_white</color>
+    <color name="light.bottom_navigation">@color/common_grey_50</color>
     <color name="light.color_accent">@color/common_deep_orange_accent_400</color>
     <color name="light.text_color_primary">@color/black_87</color>
     <color name="light.text_color_secondary">@color/black_60</color>
@@ -48,6 +51,7 @@
     <color name="dark.color_primary_dark">@color/common_blue_gray_700</color>
     <color name="dark.color_primary">@color/common_blue_gray_500</color>
     <color name="dark.background_color">@color/common_grey_850</color>
+    <color name="dark.bottom_navigation">@color/common_grey_875</color>
     <color name="dark.color_accent">@color/common_teal_accent_700</color>
     <color name="dark.text_color_primary">@color/white_87</color>
     <color name="dark.text_color_secondary">@color/white_60</color>

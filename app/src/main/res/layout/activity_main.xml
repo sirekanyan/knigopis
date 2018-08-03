@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="?attr/bottom_navigation_color"
         android:visibility="gone"
         app:menu="@menu/navigation" />
 

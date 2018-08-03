@@ -23,6 +23,7 @@
         <item name="android:textColorPrimary">@color/light.text_color_primary</item>
         <item name="android:textColorSecondary">@color/light.text_color_secondary</item>
         <item name="android:textColorTertiary">@color/light.text_color_tertiary</item>
+        <item name="bottom_navigation_color">@color/light.bottom_navigation</item>
     </style>
 
     <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
@@ -39,6 +40,7 @@
         <item name="android:textColorSecondary">@color/dark.text_color_secondary</item>
         <item name="android:textColorTertiary">@color/dark.text_color_tertiary</item>
         <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
+        <item name="bottom_navigation_color">@color/dark.bottom_navigation</item>
     </style>
 
     <style name="ProfileAppTheme" parent="DarkAppTheme">
