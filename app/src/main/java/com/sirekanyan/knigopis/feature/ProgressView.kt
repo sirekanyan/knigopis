@@ -7,15 +7,26 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_main.*
 
 interface ProgressView {
+
     fun showProgress()
     fun hideProgress()
     fun hideSwipeRefresh()
+
+    interface Callbacks {
+        fun onRefreshSwiped()
+    }
+
 }
 
 class ProgressViewImpl(
-    override val containerView: View
+    override val containerView: View,
+    callbacks: ProgressView.Callbacks
 ) : ProgressView,
     LayoutContainer {
+
+    init {
+        swipeRefresh.setOnRefreshListener(callbacks::onRefreshSwiped)
+    }
 
     override fun showProgress() {
         if (!swipeRefresh.isRefreshing) {

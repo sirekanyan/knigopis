@@ -13,6 +13,8 @@ import com.sirekanyan.knigopis.feature.MainPresenter
 import com.sirekanyan.knigopis.feature.MainPresenterImpl
 import com.sirekanyan.knigopis.feature.MainViewImpl
 import com.sirekanyan.knigopis.feature.ProgressViewImpl
+import com.sirekanyan.knigopis.feature.books.BooksPresenterImpl
+import com.sirekanyan.knigopis.feature.books.BooksViewImpl
 import com.sirekanyan.knigopis.feature.login.LoginPresenterImpl
 import com.sirekanyan.knigopis.feature.login.LoginViewImpl
 import com.sirekanyan.knigopis.feature.notes.NotesPresenterImpl
@@ -30,6 +32,10 @@ import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.cache.HeadedModelDeserializer
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.books_page.view.*
+import kotlinx.android.synthetic.main.notes_page.view.*
+import kotlinx.android.synthetic.main.users_page.view.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.parameter.Parameters
@@ -87,25 +93,27 @@ val appModule = applicationContext {
 private fun KoinContext.mainModule() {
     factory {
         val params = it.getContext().createParameters()
-        val progressView = ProgressViewImpl(it.getRootView(R.id.swipeRefresh))
         val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params))
+        val booksPresenter = BooksPresenterImpl(get())
         val usersPresenter = UsersPresenterImpl(get(), get())
         val notesPresenter = NotesPresenterImpl(get())
         MainPresenterImpl(
             loginPresenter,
+            booksPresenter,
             usersPresenter,
             notesPresenter,
             it.getRouter(),
             get(),
-            get(),
-            get(),
-            progressView // TODO: remove
+            get()
         ).also { p ->
+            val rootView = it.getRootView()
+            val progressView = ProgressViewImpl(rootView.swipeRefresh, p)
             val dialogs: DialogFactory = get(params)
-            loginPresenter.view = LoginViewImpl(it.getRootView(), loginPresenter)
-            usersPresenter.view = UsersViewImpl(it.getRootView(R.id.usersPage), p, progressView, dialogs)
-            notesPresenter.view = NotesViewImpl(it.getRootView(R.id.notesPage), p, progressView)
-            p.view = MainViewImpl(it.getRootView(), p, dialogs)
+            loginPresenter.view = LoginViewImpl(rootView, loginPresenter)
+            booksPresenter.view = BooksViewImpl(rootView.booksPage, p, progressView, dialogs)
+            usersPresenter.view = UsersViewImpl(rootView.usersPage, p, progressView, dialogs)
+            notesPresenter.view = NotesViewImpl(rootView.notesPage, p, progressView)
+            p.view = MainViewImpl(rootView, p)
         } as MainPresenter
     }
 }
@@ -131,9 +139,6 @@ private fun ParameterProvider.getContext(): Context =
 
 private fun ParameterProvider.getRootView(): View =
     this[ROOT_VIEW_KEY]
-
-private fun ParameterProvider.getRootView(id: Int): View =
-    getRootView().findViewById(id)
 
 private fun <T> ParameterProvider.getRouter(): T =
     this[ROUTER_KEY]

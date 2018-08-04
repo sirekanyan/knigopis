@@ -1,6 +1,7 @@
 package com.sirekanyan.knigopis.feature.users
 
 import com.sirekanyan.knigopis.common.BasePresenter
+import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
@@ -10,7 +11,7 @@ import com.sirekanyan.knigopis.model.ProfileItem
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.UserRepository
 
-interface UsersPresenter {
+interface UsersPresenter : Presenter {
     fun refresh()
     fun showUserProfiles(user: UserModel)
 }

@@ -3,9 +3,9 @@ package com.sirekanyan.knigopis.feature
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
-import com.sirekanyan.knigopis.common.extensions.io2main
-import com.sirekanyan.knigopis.common.extensions.showProgressBar
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.books.BooksPresenter
+import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesView
@@ -15,7 +15,6 @@ import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.AuthRepository
-import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
 
 interface MainPresenter : Presenter {
@@ -36,22 +35,24 @@ interface MainPresenter : Presenter {
         fun openWebPage(uri: Uri)
         fun reopenScreen()
     }
+
 }
 
 class MainPresenterImpl(
     private val loginPresenter: LoginPresenter,
+    private val booksPresenter: BooksPresenter,
     private val usersPresenter: UsersPresenter,
     private val notesPresenter: NotesPresenter,
     private val router: MainPresenter.Router,
     private val config: Configuration,
-    private val auth: AuthRepository,
-    private val bookRepository: BookRepository,
-    private val progressView: ProgressView
-) : BasePresenter<MainView>(loginPresenter, notesPresenter),
+    private val auth: AuthRepository
+) : BasePresenter<MainView>(loginPresenter, booksPresenter, usersPresenter, notesPresenter),
     MainPresenter,
     MainView.Callbacks,
+    BooksView.Callbacks,
     UsersView.Callbacks,
-    NotesView.Callbacks {
+    NotesView.Callbacks,
+    ProgressView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
@@ -121,7 +122,7 @@ class MainPresenterImpl(
         val isFirst = !loadedTabs.contains(tab)
         if (isFirst || isForce) {
             when (tab) {
-                HOME_TAB -> refreshHomeTab()
+                HOME_TAB -> booksPresenter.refresh()
                 USERS_TAB -> usersPresenter.refresh()
                 NOTES_TAB -> notesPresenter.refresh()
             }
@@ -181,7 +182,7 @@ class MainPresenterImpl(
     }
 
     override fun onBookLongClicked(book: BookDataModel) {
-        view.showBookActions(book)
+        booksPresenter.showBookActions(book)
     }
 
     override fun onEditBookClicked(book: BookDataModel) {
@@ -189,18 +190,11 @@ class MainPresenterImpl(
     }
 
     override fun onDeleteBookClicked(book: BookDataModel) {
-        view.showBookDeleteDialog(book)
+        booksPresenter.showBookDeleteDialog(book)
     }
 
     override fun onDeleteBookConfirmed(book: BookDataModel) {
-        bookRepository.deleteBook(book)
-            .io2main()
-            .bind({
-                refresh(isForce = true)
-            }, {
-                view.showBookDeleteError()
-                logError("cannot delete finished book", it)
-            })
+        booksPresenter.deleteBook(book)
     }
 
     override fun onUserClicked(user: UserModel) {
@@ -229,18 +223,6 @@ class MainPresenterImpl(
 
     override fun onNotesUpdated() {
         loadedTabs.add(NOTES_TAB)
-    }
-
-    private fun refreshHomeTab() {
-        bookRepository.observeBooks()
-            .io2main()
-            .showProgressBar(progressView)
-            .bind({ books ->
-                view.updateBooks(books)
-            }, {
-                logError("cannot load books", it)
-                view.showBooksError(it)
-            })
     }
 
 }
