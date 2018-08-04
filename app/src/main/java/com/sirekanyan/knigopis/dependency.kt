@@ -94,9 +94,9 @@ private fun KoinContext.mainModule() {
     factory {
         val params = it.getContext().createParameters()
         val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params))
-        val booksPresenter = BooksPresenterImpl(get())
-        val usersPresenter = UsersPresenterImpl(get(), get())
-        val notesPresenter = NotesPresenterImpl(get())
+        val booksPresenter = BooksPresenterImpl(it.getRouter(), get())
+        val usersPresenter = UsersPresenterImpl(it.getRouter(), get(), get())
+        val notesPresenter = NotesPresenterImpl(it.getRouter(), get())
         MainPresenterImpl(
             loginPresenter,
             booksPresenter,
@@ -105,15 +105,24 @@ private fun KoinContext.mainModule() {
             it.getRouter(),
             get(),
             get()
-        ).also { p ->
+        ).also { mainPresenter ->
             val rootView = it.getRootView()
-            val progressView = ProgressViewImpl(rootView.swipeRefresh, p)
+            val progressView = ProgressViewImpl(rootView.swipeRefresh, mainPresenter)
             val dialogs: DialogFactory = get(params)
             loginPresenter.view = LoginViewImpl(rootView, loginPresenter)
-            booksPresenter.view = BooksViewImpl(rootView.booksPage, p, progressView, dialogs)
-            usersPresenter.view = UsersViewImpl(rootView.usersPage, p, progressView, dialogs)
-            notesPresenter.view = NotesViewImpl(rootView.notesPage, p, progressView)
-            p.view = MainViewImpl(rootView, p)
+            booksPresenter.also { p ->
+                p.view = BooksViewImpl(rootView.booksPage, booksPresenter, progressView, dialogs)
+                p.parent = mainPresenter
+            }
+            usersPresenter.also { p ->
+                p.view = UsersViewImpl(rootView.usersPage, usersPresenter, progressView, dialogs)
+                p.parent = mainPresenter
+            }
+            notesPresenter.also { p ->
+                p.view = NotesViewImpl(rootView.notesPage, notesPresenter, progressView)
+                p.parent = mainPresenter
+            }
+            mainPresenter.view = MainViewImpl(rootView, mainPresenter)
         } as MainPresenter
     }
 }

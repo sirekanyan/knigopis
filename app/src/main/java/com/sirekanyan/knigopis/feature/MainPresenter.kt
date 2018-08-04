@@ -1,18 +1,14 @@
 package com.sirekanyan.knigopis.feature
 
-import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
-import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
-import com.sirekanyan.knigopis.feature.notes.NotesView
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.feature.users.UsersPresenter
-import com.sirekanyan.knigopis.feature.users.UsersView
-import com.sirekanyan.knigopis.model.*
+import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Configuration
@@ -29,10 +25,6 @@ interface MainPresenter : Presenter {
 
     interface Router {
         fun openProfileScreen()
-        fun openNewBookScreen()
-        fun openBookScreen(book: BookDataModel)
-        fun openUserScreen(id: String, name: String, image: String?)
-        fun openWebPage(uri: Uri)
         fun reopenScreen()
     }
 
@@ -49,9 +41,7 @@ class MainPresenterImpl(
 ) : BasePresenter<MainView>(loginPresenter, booksPresenter, usersPresenter, notesPresenter),
     MainPresenter,
     MainView.Callbacks,
-    BooksView.Callbacks,
-    UsersView.Callbacks,
-    NotesView.Callbacks,
+    PagesPresenter,
     ProgressView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
@@ -169,60 +159,12 @@ class MainPresenterImpl(
         router.reopenScreen()
     }
 
-    override fun onAddBookClicked() {
-        router.openNewBookScreen()
-    }
-
     override fun onRefreshSwiped() {
         refresh(isForce = true)
     }
 
-    override fun onBookClicked(book: BookDataModel) {
-        router.openBookScreen(book)
-    }
-
-    override fun onBookLongClicked(book: BookDataModel) {
-        booksPresenter.showBookActions(book)
-    }
-
-    override fun onEditBookClicked(book: BookDataModel) {
-        router.openBookScreen(book)
-    }
-
-    override fun onDeleteBookClicked(book: BookDataModel) {
-        booksPresenter.showBookDeleteDialog(book)
-    }
-
-    override fun onDeleteBookConfirmed(book: BookDataModel) {
-        booksPresenter.deleteBook(book)
-    }
-
-    override fun onUserClicked(user: UserModel) {
-        router.openUserScreen(user.id, user.name, user.image)
-    }
-
-    override fun onUserLongClicked(user: UserModel) {
-        usersPresenter.showUserProfiles(user)
-    }
-
-    override fun onUserProfileClicked(uri: ProfileItem) {
-        router.openWebPage(uri.uri)
-    }
-
-    override fun onNoteClicked(note: NoteModel) {
-        router.openUserScreen(note.userId, note.userName, note.userImage)
-    }
-
-    override fun onBooksUpdated() {
-        loadedTabs.add(HOME_TAB)
-    }
-
-    override fun onUsersUpdated() {
-        loadedTabs.add(USERS_TAB)
-    }
-
-    override fun onNotesUpdated() {
-        loadedTabs.add(NOTES_TAB)
+    override fun onPageUpdated(tab: CurrentTab) {
+        loadedTabs.add(tab)
     }
 
 }

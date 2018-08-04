@@ -15,9 +15,12 @@ import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
+import com.sirekanyan.knigopis.feature.books.BooksPresenter
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
+import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
+import com.sirekanyan.knigopis.feature.users.UsersPresenter
 import com.sirekanyan.knigopis.feature.users.getMainState
 import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -29,7 +32,12 @@ import ru.ulogin.sdk.UloginAuthActivity
 private const val LOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 
-class MainActivity : BaseActivity(), MainPresenter.Router, LoginPresenter.Router {
+class MainActivity : BaseActivity(),
+    MainPresenter.Router,
+    LoginPresenter.Router,
+    BooksPresenter.Router,
+    UsersPresenter.Router,
+    NotesPresenter.Router {
 
     private val presenter by inject<MainPresenter>(parameters = createParameters(this))
     private val api by inject<Endpoint>()

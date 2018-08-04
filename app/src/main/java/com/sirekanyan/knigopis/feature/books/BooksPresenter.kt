@@ -5,20 +5,30 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.PagesPresenter
 import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.repository.BookRepository
 
 interface BooksPresenter : Presenter {
+
     fun refresh()
-    fun deleteBook(book: BookDataModel)
-    fun showBookActions(book: BookDataModel)
-    fun showBookDeleteDialog(book: BookDataModel)
+
+    interface Router {
+        fun openNewBookScreen()
+        fun openBookScreen(book: BookDataModel)
+    }
+
 }
 
 class BooksPresenterImpl(
+    private val router: BooksPresenter.Router,
     private val bookRepository: BookRepository
 ) : BasePresenter<BooksView>(),
-    BooksPresenter {
+    BooksPresenter,
+    BooksView.Callbacks {
+
+    lateinit var parent: PagesPresenter
 
     override fun refresh() {
         bookRepository.observeBooks()
@@ -32,7 +42,27 @@ class BooksPresenterImpl(
             })
     }
 
-    override fun deleteBook(book: BookDataModel) {
+    override fun onAddBookClicked() {
+        router.openNewBookScreen()
+    }
+
+    override fun onBookClicked(book: BookDataModel) {
+        router.openBookScreen(book)
+    }
+
+    override fun onBookLongClicked(book: BookDataModel) {
+        view.showBookActions(book)
+    }
+
+    override fun onEditBookClicked(book: BookDataModel) {
+        router.openBookScreen(book)
+    }
+
+    override fun onDeleteBookClicked(book: BookDataModel) {
+        view.showBookDeleteDialog(book)
+    }
+
+    override fun onDeleteBookConfirmed(book: BookDataModel) {
         bookRepository.deleteBook(book)
             .io2main()
             .bind({
@@ -43,12 +73,8 @@ class BooksPresenterImpl(
             })
     }
 
-    override fun showBookActions(book: BookDataModel) {
-        view.showBookActions(book)
-    }
-
-    override fun showBookDeleteDialog(book: BookDataModel) {
-        view.showBookDeleteDialog(book)
+    override fun onBooksUpdated() {
+        parent.onPageUpdated(CurrentTab.HOME_TAB)
     }
 
 }
