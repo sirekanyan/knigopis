@@ -95,7 +95,14 @@ class MainViewImpl(
     }
 
     override fun showPage(tab: CurrentTab) {
-        booksPage.show(tab == HOME_TAB)
+        if (tab == BOOKS_TAB) {
+            addBookButton.translationX = 0f
+            addBookButton.translationY = 0f
+        }
+        booksRecyclerView.stopScroll()
+        usersRecyclerView.stopScroll()
+        notesRecyclerView.stopScroll()
+        booksPage.show(tab == BOOKS_TAB)
         usersPage.show(tab == USERS_TAB)
         notesPage.show(tab == NOTES_TAB)
     }

@@ -2,21 +2,19 @@ package com.sirekanyan.knigopis.feature.users
 
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
-import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.PagePresenter
 import com.sirekanyan.knigopis.feature.PagesPresenter
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.ProfileItem
 import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.UserRepository
 
-interface UsersPresenter : Presenter {
-
-    fun refresh()
+interface UsersPresenter : PagePresenter {
 
     interface Router {
         fun openUserScreen(id: String, name: String, image: String?)

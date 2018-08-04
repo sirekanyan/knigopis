@@ -3,13 +3,11 @@ package com.sirekanyan.knigopis.feature
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.feature.books.BooksPresenter
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
-import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
-import com.sirekanyan.knigopis.feature.users.UsersPresenter
 import com.sirekanyan.knigopis.model.CurrentTab
-import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
+import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Configuration
 
@@ -32,13 +30,11 @@ interface MainPresenter : Presenter {
 
 class MainPresenterImpl(
     private val loginPresenter: LoginPresenter,
-    private val booksPresenter: BooksPresenter,
-    private val usersPresenter: UsersPresenter,
-    private val notesPresenter: NotesPresenter,
+    private val pagePresenters: Map<CurrentTab, PagePresenter>,
     private val router: MainPresenter.Router,
     private val config: Configuration,
     private val auth: AuthRepository
-) : BasePresenter<MainView>(loginPresenter, booksPresenter, usersPresenter, notesPresenter),
+) : BasePresenter<MainView>(loginPresenter, *pagePresenters.values.toTypedArray()),
     MainPresenter,
     MainView.Callbacks,
     PagesPresenter,
@@ -54,13 +50,13 @@ class MainPresenterImpl(
 
     override fun init(state: MainPresenterState?) {
         view.setDarkThemeOptionChecked(config.isDarkTheme)
-        val defaultTab = if (auth.isAuthorized()) HOME_TAB else NOTES_TAB
+        val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
         this.currentTab = state?.currentTab ?: defaultTab
     }
 
     override fun start() {
         refreshButtons()
-        refresh(currentTab)
+        refresh()
     }
 
     override fun resume() {
@@ -68,7 +64,8 @@ class MainPresenterImpl(
             refreshButtons()
             if (userLoggedIn) {
                 userLoggedIn = false
-                refresh(HOME_TAB)
+                currentTab = BOOKS_TAB
+                refresh()
             }
         }, {
             logError("cannot check credentials", it)
@@ -80,18 +77,17 @@ class MainPresenterImpl(
     }
 
     override fun back(): Boolean =
-        if (currentTab == HOME_TAB || !auth.isAuthorized()) {
+        if (currentTab == BOOKS_TAB || !auth.isAuthorized()) {
             false
         } else {
-            refresh(HOME_TAB)
+            currentTab = BOOKS_TAB
+            refresh()
             true
         }
 
-    private fun refresh(tab: CurrentTab? = null, isForce: Boolean = false) {
+    private fun refresh(isForce: Boolean = false) {
         if (!auth.isAuthorized()) {
             currentTab = NOTES_TAB
-        } else if (tab != null) {
-            currentTab = tab
         }
         currentTab?.let {
             showPage(it, isForce)
@@ -111,11 +107,7 @@ class MainPresenterImpl(
         view.showPage(tab)
         val isFirst = !loadedTabs.contains(tab)
         if (isFirst || isForce) {
-            when (tab) {
-                HOME_TAB -> booksPresenter.refresh()
-                USERS_TAB -> usersPresenter.refresh()
-                NOTES_TAB -> notesPresenter.refresh()
-            }
+            pagePresenters[tab]?.refresh()
         }
     }
 
@@ -136,7 +128,7 @@ class MainPresenterImpl(
     }
 
     override fun onToolbarClicked() {
-        if (currentTab == HOME_TAB) {
+        if (currentTab == BOOKS_TAB) {
             config.sortingMode = if (config.sortingMode == 0) 1 else 0
             refresh(isForce = true)
         }

@@ -5,7 +5,7 @@ import com.sirekanyan.knigopis.R
 
 enum class CurrentTab(@IdRes val itemId: Int) {
 
-    HOME_TAB(R.id.navigation_home),
+    BOOKS_TAB(R.id.navigation_home),
     USERS_TAB(R.id.navigation_users),
     NOTES_TAB(R.id.navigation_notes);
 

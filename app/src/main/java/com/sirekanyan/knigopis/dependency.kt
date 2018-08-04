@@ -26,6 +26,7 @@ import com.sirekanyan.knigopis.feature.users.UsersViewImpl
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.model.dto.FinishedBook
 import com.sirekanyan.knigopis.model.dto.PlannedBook
 import com.sirekanyan.knigopis.repository.*
@@ -99,9 +100,11 @@ private fun KoinContext.mainModule() {
         val notesPresenter = NotesPresenterImpl(it.getRouter(), get())
         MainPresenterImpl(
             loginPresenter,
-            booksPresenter,
-            usersPresenter,
-            notesPresenter,
+            mapOf(
+                BOOKS_TAB to booksPresenter,
+                USERS_TAB to usersPresenter,
+                NOTES_TAB to notesPresenter
+            ),
             it.getRouter(),
             get(),
             get()

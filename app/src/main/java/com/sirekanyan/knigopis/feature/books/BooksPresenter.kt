@@ -1,18 +1,16 @@
 package com.sirekanyan.knigopis.feature.books
 
 import com.sirekanyan.knigopis.common.BasePresenter
-import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.feature.PagePresenter
 import com.sirekanyan.knigopis.feature.PagesPresenter
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.repository.BookRepository
 
-interface BooksPresenter : Presenter {
-
-    fun refresh()
+interface BooksPresenter : PagePresenter {
 
     interface Router {
         fun openNewBookScreen()
@@ -74,7 +72,7 @@ class BooksPresenterImpl(
     }
 
     override fun onBooksUpdated() {
-        parent.onPageUpdated(CurrentTab.HOME_TAB)
+        parent.onPageUpdated(CurrentTab.BOOKS_TAB)
     }
 
 }
