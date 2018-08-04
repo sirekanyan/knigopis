@@ -11,6 +11,7 @@ import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
 import com.sirekanyan.knigopis.common.functions.createLoginIntent
+import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.createParameters
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
@@ -24,6 +25,7 @@ import com.sirekanyan.knigopis.feature.users.UsersPresenter
 import com.sirekanyan.knigopis.feature.users.getMainState
 import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.Endpoint
 import org.koin.android.ext.android.inject
@@ -31,6 +33,7 @@ import ru.ulogin.sdk.UloginAuthActivity
 
 private const val LOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
+private val CURRENT_TAB_EXTRA = extra("current_tab")
 
 class MainActivity : BaseActivity(),
     MainPresenter.Router,
@@ -47,7 +50,11 @@ class MainActivity : BaseActivity(),
         setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.init(savedInstanceState?.getMainState())
+        val restoredCurrentTab = savedInstanceState?.getMainState()?.currentTab
+        val currentTab = intent.getIntExtra(CURRENT_TAB_EXTRA, 0)
+            .takeUnless { it == 0 }
+            ?.let { CurrentTab.getByItemId(it) }
+        presenter.init(restoredCurrentTab ?: currentTab)
     }
 
     override fun onStart() {
@@ -135,7 +142,13 @@ class MainActivity : BaseActivity(),
     }
 
     override fun reopenScreen() {
-        recreate()
+        finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        startActivity(intent.also { intent ->
+            presenter.state?.let { state ->
+                intent.putExtra(CURRENT_TAB_EXTRA, state.currentTab.itemId)
+            }
+        })
     }
 
 }

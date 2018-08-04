@@ -22,6 +22,7 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.profile_activity.*
 import org.koin.android.ext.android.inject
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
@@ -31,9 +32,9 @@ class ProfileActivity : BaseActivity() {
     private val api by inject<Endpoint>()
     private val bookRepository by inject<BookRepository>()
     private val auth by inject<AuthRepository>()
-    private val todoList = mutableListOf<BookDataModel>()
-    private val doingList = mutableListOf<BookDataModel>()
-    private val doneList = mutableListOf<BookDataModel>()
+    private val todoList = Stack<BookDataModel>()
+    private val doingList = Stack<BookDataModel>()
+    private val doneList = Stack<BookDataModel>()
     private var userId: String? = null
     private var profileUrl: String? = null
     private lateinit var editOption: MenuItem
@@ -45,14 +46,16 @@ class ProfileActivity : BaseActivity() {
         profileTodoCount.text = getString(R.string.profile_text_todo, 0)
         profileDoingCount.text = getString(R.string.profile_text_doing, 0)
         profileDoneCount.text = getString(R.string.profile_text_done, 0)
-        profileTodoCount.setOnClickListener {
-            setRandomFooterBook(todoList)
-        }
-        profileDoingCount.setOnClickListener {
-            setRandomFooterBook(doingList)
-        }
-        profileDoneCount.setOnClickListener {
-            setRandomFooterBook(doneList)
+        mapOf(
+            profileTodoCount to todoList,
+            profileDoingCount to doingList,
+            profileDoneCount to doneList
+        ).forEach { view, list ->
+            view.setOnClickListener {
+                if (!list.isEmpty()) {
+                    showFooterBook(list.pop())
+                }
+            }
         }
         profileNicknameEditText.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
@@ -65,11 +68,13 @@ class ProfileActivity : BaseActivity() {
         }
     }
 
-    private fun setRandomFooterBook(books: List<BookDataModel>) {
-        val book = books.random() ?: return
+    private fun showFooterBook(book: BookDataModel) {
         randomProfileBook.alpha = 1f
-        val title = resources.getTitleString(book.title)
-        randomProfileBook.text = getString(R.string.profile_text_random, title, book.priority)
+        randomProfileBook.text = getString(
+            R.string.profile_text_random,
+            resources.getTitleString(book.title),
+            book.priority
+        )
         randomProfileBook.animate()
             .setInterpolator(AccelerateInterpolator())
             .setDuration(1000)
@@ -105,7 +110,7 @@ class ProfileActivity : BaseActivity() {
             .flatMapObservable {
                 Observables.zip(
                     Observable.fromIterable(it),
-                    Observable.interval(10, TimeUnit.MILLISECONDS)
+                    Observable.interval(5, TimeUnit.MILLISECONDS)
                 )
             }
             .io2main()
@@ -125,17 +130,17 @@ class ProfileActivity : BaseActivity() {
     private fun addBookToList(book: BookDataModel) {
         when {
             book.isFinished -> {
-                doneList.add(book)
+                doneList.push(book)
                 profileDoneCount.text =
                         getString(R.string.profile_text_done, doneList.size as Int)
             }
             book.priority > 0 -> {
-                doingList.add(book)
+                doingList.push(book)
                 profileDoingCount.text =
                         getString(R.string.profile_text_doing, doingList.size as Int)
             }
             else -> {
-                todoList.add(book)
+                todoList.push(book)
                 profileTodoCount.text =
                         getString(R.string.profile_text_todo, todoList.size as Int)
             }

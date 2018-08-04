@@ -14,7 +14,7 @@ import com.sirekanyan.knigopis.repository.Configuration
 interface MainPresenter : Presenter {
 
     val state: MainPresenterState?
-    fun init(state: MainPresenterState?)
+    fun init(tab: CurrentTab?)
     fun start()
     fun resume()
     fun back(): Boolean
@@ -48,10 +48,10 @@ class MainPresenterImpl(
     override val state
         get() = currentTab?.let { MainPresenterState(it) }
 
-    override fun init(state: MainPresenterState?) {
+    override fun init(tab: CurrentTab?) {
         view.setDarkThemeOptionChecked(config.isDarkTheme)
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
-        this.currentTab = state?.currentTab ?: defaultTab
+        this.currentTab = tab ?: defaultTab
     }
 
     override fun start() {
