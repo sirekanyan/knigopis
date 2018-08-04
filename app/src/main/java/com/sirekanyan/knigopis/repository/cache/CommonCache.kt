@@ -14,9 +14,9 @@ inline fun <reified T> genericType(): Type = object : TypeToken<T>() {}.type
 
 interface CommonCache {
 
-    fun <T> saveToJson(key: CacheKey, books: List<T>): Completable
+    fun <T> save(key: CacheKey, books: List<T>): Completable
 
-    fun <T> getFromJson(key: CacheKey, type: Type): Maybe<T>
+    fun <T> find(key: CacheKey, type: Type): Maybe<T>
 
 }
 
@@ -27,14 +27,14 @@ class CommonCacheImpl(
 
     private val prefs = context.getSharedPreferences(COMMON_PREFS_NAME, MODE_PRIVATE)
 
-    override fun <T> getFromJson(key: CacheKey, type: Type): Maybe<T> =
+    override fun <T> find(key: CacheKey, type: Type): Maybe<T> =
         Maybe.fromCallable {
             prefs.getString(key.storeValue, null)?.let { json ->
                 gson.fromJson<T>(json, type)
             }
         }
 
-    override fun <T> saveToJson(key: CacheKey, books: List<T>): Completable =
+    override fun <T> save(key: CacheKey, books: List<T>): Completable =
         Completable.fromAction {
             prefs.edit()
                 .putString(key.storeValue, gson.toJson(books))

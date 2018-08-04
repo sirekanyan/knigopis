@@ -82,9 +82,9 @@ class BookRepositoryImpl(
             }
 
     override fun findCached(): Maybe<List<BookModel>> =
-        cache.getFromJson(CacheKey.BOOKS, genericType<List<BookModel>>())
+        cache.find(CacheKey.BOOKS, genericType<List<BookModel>>())
 
     override fun saveToCache(data: List<BookModel>): Completable =
-        cache.saveToJson(CacheKey.BOOKS, data)
+        cache.save(CacheKey.BOOKS, data)
 
 }

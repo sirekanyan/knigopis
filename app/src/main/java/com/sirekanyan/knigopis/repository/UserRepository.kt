@@ -31,9 +31,9 @@ class UserRepositoryImpl(
         api.getSubscriptions(auth.getAccessToken()).map { it.map { it.toUserModel() } }
 
     override fun findCached(): Maybe<List<UserModel>> =
-        cache.getFromJson(CacheKey.USERS, genericType<List<UserModel>>())
+        cache.find(CacheKey.USERS, genericType<List<UserModel>>())
 
     override fun saveToCache(data: List<UserModel>): Completable =
-        cache.saveToJson(CacheKey.USERS, data)
+        cache.save(CacheKey.USERS, data)
 
 }

@@ -30,9 +30,9 @@ class NoteRepositoryImpl(
         api.getLatestBooksWithNotes().map { it.values.map { it.toNoteModel() } }
 
     override fun findCached(): Maybe<List<NoteModel>> =
-        cache.getFromJson(CacheKey.NOTES, genericType<List<NoteModel>>())
+        cache.find(CacheKey.NOTES, genericType<List<NoteModel>>())
 
     override fun saveToCache(data: List<NoteModel>): Completable =
-        cache.saveToJson(CacheKey.NOTES, data)
+        cache.save(CacheKey.NOTES, data)
 
 }
