@@ -8,7 +8,6 @@ import android.view.View
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
-import com.sirekanyan.knigopis.common.android.dialog.DialogItem
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
@@ -19,9 +18,9 @@ import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.books.BooksView
-import com.sirekanyan.knigopis.feature.users.UsersAdapter
-import com.sirekanyan.knigopis.feature.users.UsersView
-import com.sirekanyan.knigopis.model.*
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.BookModel
+import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
 import kotlinx.android.extensions.LayoutContainer
@@ -31,7 +30,7 @@ import kotlinx.android.synthetic.main.books_page.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 
-interface MainView : BooksView, UsersView {
+interface MainView : BooksView {
 
     fun showAboutDialog()
     fun showPage(tab: CurrentTab)
@@ -41,10 +40,7 @@ interface MainView : BooksView, UsersView {
     fun showProfileOption(isVisible: Boolean)
     fun setDarkThemeOptionChecked(isChecked: Boolean)
 
-    interface Callbacks :
-        BooksView.Callbacks,
-        UsersView.Callbacks {
-
+    interface Callbacks : BooksView.Callbacks {
         fun onNavigationClicked(itemId: Int)
         fun onToolbarClicked()
         fun onLoginOptionClicked()
@@ -66,7 +62,6 @@ class MainViewImpl(
     private val context = containerView.context
     private val resources = context.resources
     private val booksAdapter = BooksAdapter(callbacks::onBookClicked, callbacks::onBookLongClicked)
-    private val usersAdapter = UsersAdapter(callbacks::onUserClicked, callbacks::onUserLongClicked)
     private val loginOption: MenuItem
     private val profileOption: MenuItem
     private val darkThemeOption: MenuItem
@@ -109,7 +104,6 @@ class MainViewImpl(
         darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
         toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
         booksRecyclerView.adapter = booksAdapter
-        usersRecyclerView.adapter = usersAdapter
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         addBookButton.setOnClickListener {
             callbacks.onAddBookClicked()
@@ -144,19 +138,8 @@ class MainViewImpl(
         callbacks.onBooksUpdated()
     }
 
-    override fun updateUsers(users: List<UserModel>) {
-        usersPlaceholder.show(users.isEmpty())
-        usersErrorPlaceholder.hide()
-        usersAdapter.submitList(users)
-        callbacks.onUsersUpdated()
-    }
-
     override fun showBooksError(throwable: Throwable) {
         handleError(throwable, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
-    }
-
-    override fun showUsersError(throwable: Throwable) {
-        handleError(throwable, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
     }
 
     override fun showNavigation(isVisible: Boolean) {
@@ -216,15 +199,6 @@ class MainViewImpl(
 
     override fun showBookDeleteError() {
         context.toast(R.string.books_error_delete)
-    }
-
-    override fun showUserProfiles(title: String, items: List<ProfileItem>) {
-        val dialogItems: List<DialogItem> = items.map { uriItem ->
-            createDialogItem(uriItem.title, uriItem.iconRes) {
-                callbacks.onUserProfileClicked(uriItem)
-            }
-        }
-        dialogs.showDialog(title, *dialogItems.toTypedArray())
     }
 
 }

@@ -3,21 +3,20 @@ package com.sirekanyan.knigopis.feature
 import android.net.Uri
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
-import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
-import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesView
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
+import com.sirekanyan.knigopis.feature.users.UsersPresenter
+import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.UserRepository
 
 interface MainPresenter : Presenter {
 
@@ -41,17 +40,17 @@ interface MainPresenter : Presenter {
 
 class MainPresenterImpl(
     private val loginPresenter: LoginPresenter,
+    private val usersPresenter: UsersPresenter,
     private val notesPresenter: NotesPresenter,
     private val router: MainPresenter.Router,
     private val config: Configuration,
     private val auth: AuthRepository,
     private val bookRepository: BookRepository,
-    private val userRepository: UserRepository,
-    private val resources: ResourceProvider,
     private val progressView: ProgressView
 ) : BasePresenter<MainView>(loginPresenter, notesPresenter),
     MainPresenter,
     MainView.Callbacks,
+    UsersView.Callbacks,
     NotesView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
@@ -123,7 +122,7 @@ class MainPresenterImpl(
         if (isFirst || isForce) {
             when (tab) {
                 HOME_TAB -> refreshHomeTab()
-                USERS_TAB -> refreshUsersTab()
+                USERS_TAB -> usersPresenter.refresh()
                 NOTES_TAB -> notesPresenter.refresh()
             }
         }
@@ -209,11 +208,7 @@ class MainPresenterImpl(
     }
 
     override fun onUserLongClicked(user: UserModel) {
-        val uriItems = user.profiles
-            .mapNotNull(String::toUriOrNull)
-            .map { ProfileItem(it, resources) }
-            .distinctBy(ProfileItem::title)
-        view.showUserProfiles(user.name, uriItems)
+        usersPresenter.showUserProfiles(user)
     }
 
     override fun onUserProfileClicked(uri: ProfileItem) {
@@ -245,18 +240,6 @@ class MainPresenterImpl(
             }, {
                 logError("cannot load books", it)
                 view.showBooksError(it)
-            })
-    }
-
-    private fun refreshUsersTab() {
-        userRepository.observeUsers()
-            .io2main()
-            .showProgressBar(progressView)
-            .bind({ users ->
-                view.updateUsers(users)
-            }, {
-                logError("cannot load users", it)
-                view.showUsersError(it)
             })
     }
 

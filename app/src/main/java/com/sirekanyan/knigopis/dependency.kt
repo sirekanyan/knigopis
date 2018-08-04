@@ -19,6 +19,8 @@ import com.sirekanyan.knigopis.feature.notes.NotesPresenterImpl
 import com.sirekanyan.knigopis.feature.notes.NotesViewImpl
 import com.sirekanyan.knigopis.feature.user.UserInteractor
 import com.sirekanyan.knigopis.feature.user.UserInteractorImpl
+import com.sirekanyan.knigopis.feature.users.UsersPresenterImpl
+import com.sirekanyan.knigopis.feature.users.UsersViewImpl
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel
@@ -87,21 +89,23 @@ private fun KoinContext.mainModule() {
         val params = it.getContext().createParameters()
         val progressView = ProgressViewImpl(it.getRootView(R.id.swipeRefresh))
         val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params))
+        val usersPresenter = UsersPresenterImpl(get(), get())
         val notesPresenter = NotesPresenterImpl(get())
         MainPresenterImpl(
             loginPresenter,
+            usersPresenter,
             notesPresenter,
             it.getRouter(),
             get(),
             get(),
             get(),
-            get(),
-            get(),
             progressView // TODO: remove
         ).also { p ->
+            val dialogs: DialogFactory = get(params)
             loginPresenter.view = LoginViewImpl(it.getRootView(), loginPresenter)
+            usersPresenter.view = UsersViewImpl(it.getRootView(R.id.usersPage), p, progressView, dialogs)
             notesPresenter.view = NotesViewImpl(it.getRootView(R.id.notesPage), p, progressView)
-            p.view = MainViewImpl(it.getRootView(), p, get(params))
+            p.view = MainViewImpl(it.getRootView(), p, dialogs)
         } as MainPresenter
     }
 }
