@@ -5,7 +5,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
@@ -13,7 +12,11 @@ import com.sirekanyan.knigopis.common.android.dialog.DialogItem
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
-import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.extensions.getFullTitleString
+import com.sirekanyan.knigopis.common.extensions.hide
+import com.sirekanyan.knigopis.common.extensions.show
+import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.books.BooksView
 import com.sirekanyan.knigopis.feature.notes.NotesAdapter
@@ -29,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
-import retrofit2.HttpException
 
 interface MainView : BooksView, UsersView, NotesView {
 
@@ -257,26 +259,5 @@ class MainViewImpl(
         }
         dialogs.showDialog(title, *dialogItems.toTypedArray())
     }
-
-    private fun handleError(
-        throwable: Throwable,
-        placeholder: View,
-        errorPlaceholder: TextView,
-        adapter: RecyclerView.Adapter<*>
-    ) {
-        if (placeholder.isVisible || adapter.itemCount > 0) {
-            context.toast(throwable.messageRes)
-        } else {
-            errorPlaceholder.setText(throwable.messageRes)
-            errorPlaceholder.show()
-        }
-    }
-
-    private val Throwable.messageRes
-        get() = if (this is HttpException && code() == 401) {
-            R.string.main_error_unauthorized
-        } else {
-            R.string.common_error_network
-        }
 
 }
