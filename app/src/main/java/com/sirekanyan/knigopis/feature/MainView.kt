@@ -147,18 +147,21 @@ class MainViewImpl(
         booksPlaceholder.show(books.isEmpty())
         booksErrorPlaceholder.hide()
         booksAdapter.submitList(books)
+        callbacks.onBooksUpdated()
     }
 
     override fun updateUsers(users: List<UserModel>) {
         usersPlaceholder.show(users.isEmpty())
         usersErrorPlaceholder.hide()
         usersAdapter.submitList(users)
+        callbacks.onUsersUpdated()
     }
 
     override fun updateNotes(notes: List<NoteModel>) {
         notesPlaceholder.show(notes.isEmpty())
         notesErrorPlaceholder.hide()
         notesAdapter.submitList(notes)
+        callbacks.onNotesUpdated()
     }
 
     override fun showBooksError(throwable: Throwable) {

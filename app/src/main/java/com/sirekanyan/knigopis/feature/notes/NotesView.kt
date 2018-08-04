@@ -9,6 +9,7 @@ interface NotesView {
 
     interface Callbacks {
         fun onNoteClicked(note: NoteModel)
+        fun onNotesUpdated()
     }
 
 }

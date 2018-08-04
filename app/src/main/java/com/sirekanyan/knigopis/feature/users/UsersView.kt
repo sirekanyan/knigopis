@@ -13,6 +13,7 @@ interface UsersView {
         fun onUserClicked(user: UserModel)
         fun onUserLongClicked(user: UserModel)
         fun onUserProfileClicked(uri: ProfileItem)
+        fun onUsersUpdated()
     }
 
 }

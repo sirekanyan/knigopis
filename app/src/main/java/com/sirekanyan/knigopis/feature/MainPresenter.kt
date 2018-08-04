@@ -115,9 +115,9 @@ class MainPresenterImpl(
         val isFirst = !loadedTabs.contains(tab)
         if (isFirst || isForce) {
             when (tab) {
-                HOME_TAB -> refreshHomeTab(tab)
-                USERS_TAB -> refreshUsersTab(tab)
-                NOTES_TAB -> refreshNotesTab(tab)
+                HOME_TAB -> refreshHomeTab()
+                USERS_TAB -> refreshUsersTab()
+                NOTES_TAB -> refreshNotesTab()
             }
         }
     }
@@ -217,39 +217,48 @@ class MainPresenterImpl(
         router.openUserScreen(note.userId, note.userName, note.userImage)
     }
 
-    private fun refreshHomeTab(tab: CurrentTab) {
+    override fun onBooksUpdated() {
+        loadedTabs.add(HOME_TAB)
+    }
+
+    override fun onUsersUpdated() {
+        loadedTabs.add(USERS_TAB)
+    }
+
+    override fun onNotesUpdated() {
+        loadedTabs.add(NOTES_TAB)
+    }
+
+    private fun refreshHomeTab() {
         bookRepository.observeBooks()
             .io2main()
             .showProgressBar()
             .bind({ books ->
                 view.updateBooks(books)
-                loadedTabs.add(tab)
             }, {
                 logError("cannot load books", it)
                 view.showBooksError(it)
             })
     }
 
-    private fun refreshUsersTab(tab: CurrentTab) {
+    private fun refreshUsersTab() {
         userRepository.observeUsers()
             .io2main()
             .showProgressBar()
             .bind({ users ->
                 view.updateUsers(users)
-                loadedTabs.add(tab)
             }, {
                 logError("cannot load users", it)
                 view.showUsersError(it)
             })
     }
 
-    private fun refreshNotesTab(tab: CurrentTab) {
+    private fun refreshNotesTab() {
         noteRepository.observeNotes()
             .io2main()
             .showProgressBar()
             .bind({ notes ->
                 view.updateNotes(notes)
-                loadedTabs.add(tab)
             }, {
                 logError("cannot load notes", it)
                 view.showNotesError(it)

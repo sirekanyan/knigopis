@@ -17,6 +17,7 @@ interface BooksView {
         fun onDeleteBookConfirmed(book: BookDataModel)
         fun onBookClicked(book: BookDataModel)
         fun onBookLongClicked(book: BookDataModel)
+        fun onBooksUpdated()
     }
 
 }
