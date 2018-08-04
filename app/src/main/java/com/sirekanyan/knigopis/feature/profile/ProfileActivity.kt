@@ -9,25 +9,31 @@ import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createTextShareIntent
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.model.dto.*
-import com.sirekanyan.knigopis.repository.Endpoint
+import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.dto.Profile
+import com.sirekanyan.knigopis.model.dto.User
 import com.sirekanyan.knigopis.repository.AuthRepository
+import com.sirekanyan.knigopis.repository.BookRepository
+import com.sirekanyan.knigopis.repository.Endpoint
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.profile_activity.*
 import org.koin.android.ext.android.inject
+import java.util.concurrent.TimeUnit
 
 fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 
 class ProfileActivity : BaseActivity() {
 
     private val api by inject<Endpoint>()
+    private val bookRepository by inject<BookRepository>()
     private val auth by inject<AuthRepository>()
-    private val todoList = mutableListOf<Book>()
-    private val doingList = mutableListOf<Book>()
-    private val doneList = mutableListOf<Book>()
+    private val todoList = mutableListOf<BookDataModel>()
+    private val doingList = mutableListOf<BookDataModel>()
+    private val doneList = mutableListOf<BookDataModel>()
     private var userId: String? = null
     private var profileUrl: String? = null
     private lateinit var editOption: MenuItem
@@ -59,12 +65,11 @@ class ProfileActivity : BaseActivity() {
         }
     }
 
-    private fun setRandomFooterBook(books: List<Book>) {
+    private fun setRandomFooterBook(books: List<BookDataModel>) {
         val book = books.random() ?: return
         randomProfileBook.alpha = 1f
         val title = resources.getTitleString(book.title)
-        val priority = (book as? PlannedBook)?.priority ?: MAX_BOOK_PRIORITY
-        randomProfileBook.text = getString(R.string.profile_text_random, title, priority)
+        randomProfileBook.text = getString(R.string.profile_text_random, title, book.priority)
         randomProfileBook.animate()
             .setInterpolator(AccelerateInterpolator())
             .setDuration(1000)
@@ -93,28 +98,48 @@ class ProfileActivity : BaseActivity() {
     }
 
     private fun refreshCounters() {
-        api.getFinishedBooks(auth.getAccessToken()).io2main()
-            .bind(::onRefreshFinishedBooks) {
-                logError("cannot check finished books count", it)
+        bookRepository.findCached()
+            .toSingle(listOf())
+            .map { it.filterIsInstance<BookDataModel>() }
+            .map { it.shuffled() }
+            .flatMapObservable {
+                Observables.zip(
+                    Observable.fromIterable(it),
+                    Observable.interval(10, TimeUnit.MILLISECONDS)
+                )
             }
-        api.getPlannedBooks(auth.getAccessToken()).io2main()
-            .bind(::onRefreshPlannedBooks) {
-                logError("cannot check planned books count", it)
+            .io2main()
+            .doOnSubscribe {
+                doneList.clear()
+                doingList.clear()
+                todoList.clear()
             }
+            .bind({ (book) ->
+                addBookToList(book)
+            }, {
+                logError("cannot get cached books", it)
+            })
     }
 
     @Suppress("USELESS_CAST")
-    private fun onRefreshFinishedBooks(finishedBooks: List<FinishedBook>) {
-        doneList.clearAndAddAll(finishedBooks)
-        profileDoneCount.text = getString(R.string.profile_text_done, doneList.size as Int)
-    }
-
-    @Suppress("USELESS_CAST")
-    private fun onRefreshPlannedBooks(plannedBooks: List<PlannedBook>) {
-        doingList.clearAndAddAll(plannedBooks.filter { it.priority > 0 })
-        profileDoingCount.text = getString(R.string.profile_text_doing, doingList.size as Int)
-        todoList.clearAndAddAll(plannedBooks.filter { it.priority == 0 })
-        profileTodoCount.text = getString(R.string.profile_text_todo, todoList.size as Int)
+    private fun addBookToList(book: BookDataModel) {
+        when {
+            book.isFinished -> {
+                doneList.add(book)
+                profileDoneCount.text =
+                        getString(R.string.profile_text_done, doneList.size as Int)
+            }
+            book.priority > 0 -> {
+                doingList.add(book)
+                profileDoingCount.text =
+                        getString(R.string.profile_text_doing, doingList.size as Int)
+            }
+            else -> {
+                todoList.add(book)
+                profileTodoCount.text =
+                        getString(R.string.profile_text_todo, todoList.size as Int)
+            }
+        }
     }
 
     private fun updateNicknameOrExitEditMode() {

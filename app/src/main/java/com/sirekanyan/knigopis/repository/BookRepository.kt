@@ -20,6 +20,8 @@ interface BookRepository {
 
     fun observeBooks(): Flowable<List<BookModel>>
 
+    fun findCached(): Maybe<List<BookModel>>
+
     fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
 
     fun saveBook(bookId: String?, book: PlannedBookToSend, done: Boolean?): Completable
