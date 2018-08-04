@@ -1,7 +1,6 @@
 package com.sirekanyan.knigopis.feature.books
 
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
@@ -53,17 +52,8 @@ class BooksViewImpl(
     init {
         booksRecyclerView.adapter = booksAdapter
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
-        addBookButton.setOnClickListener {
-            callbacks.onAddBookClicked()
-        }
-        booksRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                when {
-                    dy > 0 -> addBookButton.hide()
-                    dy < 0 -> addBookButton.show()
-                }
-            }
-        })
+        booksRecyclerView.addOnScrollListener(FabOnScrollListener(resources, addBookButton))
+        addBookButton.setOnClickListener { callbacks.onAddBookClicked() }
     }
 
     override fun updateBooks(books: List<BookModel>) {
