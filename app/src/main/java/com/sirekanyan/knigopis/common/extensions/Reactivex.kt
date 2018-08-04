@@ -1,5 +1,6 @@
 package com.sirekanyan.knigopis.common.extensions
 
+import com.sirekanyan.knigopis.feature.ProgressView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -14,3 +15,13 @@ fun <T> Flowable<T>.io2main(): Flowable<T> =
 
 fun Completable.io2main(): Completable =
     subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+fun <T> Flowable<T>.showProgressBar(progress: ProgressView): Flowable<T> =
+    doOnSubscribe {
+        progress.showProgress()
+    }.doOnNext {
+        progress.hideProgress()
+    }.doFinally {
+        progress.hideProgress()
+        progress.hideSwipeRefresh()
+    }

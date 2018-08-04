@@ -19,8 +19,6 @@ import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.books.BooksAdapter
 import com.sirekanyan.knigopis.feature.books.BooksView
-import com.sirekanyan.knigopis.feature.notes.NotesAdapter
-import com.sirekanyan.knigopis.feature.notes.NotesView
 import com.sirekanyan.knigopis.feature.users.UsersAdapter
 import com.sirekanyan.knigopis.feature.users.UsersView
 import com.sirekanyan.knigopis.model.*
@@ -33,13 +31,10 @@ import kotlinx.android.synthetic.main.books_page.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 
-interface MainView : BooksView, UsersView, NotesView {
+interface MainView : BooksView, UsersView {
 
     fun showAboutDialog()
     fun showPage(tab: CurrentTab)
-    fun showProgress()
-    fun hideProgress()
-    fun hideSwipeRefresh()
     fun showNavigation(isVisible: Boolean)
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
@@ -48,8 +43,7 @@ interface MainView : BooksView, UsersView, NotesView {
 
     interface Callbacks :
         BooksView.Callbacks,
-        UsersView.Callbacks,
-        NotesView.Callbacks {
+        UsersView.Callbacks {
 
         fun onNavigationClicked(itemId: Int)
         fun onToolbarClicked()
@@ -73,7 +67,6 @@ class MainViewImpl(
     private val resources = context.resources
     private val booksAdapter = BooksAdapter(callbacks::onBookClicked, callbacks::onBookLongClicked)
     private val usersAdapter = UsersAdapter(callbacks::onUserClicked, callbacks::onUserLongClicked)
-    private val notesAdapter = NotesAdapter(callbacks::onNoteClicked)
     private val loginOption: MenuItem
     private val profileOption: MenuItem
     private val darkThemeOption: MenuItem
@@ -117,7 +110,6 @@ class MainViewImpl(
         toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
         booksRecyclerView.adapter = booksAdapter
         usersRecyclerView.adapter = usersAdapter
-        notesRecyclerView.adapter = notesAdapter
         booksRecyclerView.addItemDecoration(HeaderItemDecoration(StickyHeaderImpl(booksAdapter)))
         addBookButton.setOnClickListener {
             callbacks.onAddBookClicked()
@@ -159,37 +151,12 @@ class MainViewImpl(
         callbacks.onUsersUpdated()
     }
 
-    override fun updateNotes(notes: List<NoteModel>) {
-        notesPlaceholder.show(notes.isEmpty())
-        notesErrorPlaceholder.hide()
-        notesAdapter.submitList(notes)
-        callbacks.onNotesUpdated()
-    }
-
     override fun showBooksError(throwable: Throwable) {
         handleError(throwable, booksPlaceholder, booksErrorPlaceholder, booksAdapter)
     }
 
     override fun showUsersError(throwable: Throwable) {
         handleError(throwable, usersPlaceholder, usersErrorPlaceholder, usersAdapter)
-    }
-
-    override fun showNotesError(throwable: Throwable) {
-        handleError(throwable, notesPlaceholder, notesErrorPlaceholder, notesAdapter)
-    }
-
-    override fun showProgress() {
-        if (!swipeRefresh.isRefreshing) {
-            booksProgressBar.show()
-        }
-    }
-
-    override fun hideProgress() {
-        booksProgressBar.hide()
-    }
-
-    override fun hideSwipeRefresh() {
-        swipeRefresh.isRefreshing = false
     }
 
     override fun showNavigation(isVisible: Boolean) {

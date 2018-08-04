@@ -12,8 +12,11 @@ import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.feature.MainPresenter
 import com.sirekanyan.knigopis.feature.MainPresenterImpl
 import com.sirekanyan.knigopis.feature.MainViewImpl
+import com.sirekanyan.knigopis.feature.ProgressViewImpl
 import com.sirekanyan.knigopis.feature.login.LoginPresenterImpl
 import com.sirekanyan.knigopis.feature.login.LoginViewImpl
+import com.sirekanyan.knigopis.feature.notes.NotesPresenterImpl
+import com.sirekanyan.knigopis.feature.notes.NotesViewImpl
 import com.sirekanyan.knigopis.feature.user.UserInteractor
 import com.sirekanyan.knigopis.feature.user.UserInteractorImpl
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -82,19 +85,22 @@ val appModule = applicationContext {
 private fun KoinContext.mainModule() {
     factory {
         val params = it.getContext().createParameters()
-        val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params)).also { p ->
-            p.view = LoginViewImpl(it.getRootView(), p)
-        }
+        val progressView = ProgressViewImpl(it.getRootView(R.id.swipeRefresh))
+        val loginPresenter = LoginPresenterImpl(it.getRouter(), get(params))
+        val notesPresenter = NotesPresenterImpl(get())
         MainPresenterImpl(
             loginPresenter,
+            notesPresenter,
             it.getRouter(),
             get(),
             get(),
             get(),
             get(),
             get(),
-            get()
+            progressView // TODO: remove
         ).also { p ->
+            loginPresenter.view = LoginViewImpl(it.getRootView(), loginPresenter)
+            notesPresenter.view = NotesViewImpl(it.getRootView(R.id.notesPage), p, progressView)
             p.view = MainViewImpl(it.getRootView(), p, get(params))
         } as MainPresenter
     }
@@ -121,6 +127,9 @@ private fun ParameterProvider.getContext(): Context =
 
 private fun ParameterProvider.getRootView(): View =
     this[ROOT_VIEW_KEY]
+
+private fun ParameterProvider.getRootView(id: Int): View =
+    getRootView().findViewById(id)
 
 private fun <T> ParameterProvider.getRouter(): T =
     this[ROUTER_KEY]

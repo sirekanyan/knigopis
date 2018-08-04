@@ -5,14 +5,19 @@ import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.showProgressBar
 import com.sirekanyan.knigopis.common.extensions.toUriOrNull
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
+import com.sirekanyan.knigopis.feature.notes.NotesPresenter
+import com.sirekanyan.knigopis.feature.notes.NotesView
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.*
 import com.sirekanyan.knigopis.model.CurrentTab.*
-import com.sirekanyan.knigopis.repository.*
-import io.reactivex.Flowable
+import com.sirekanyan.knigopis.repository.AuthRepository
+import com.sirekanyan.knigopis.repository.BookRepository
+import com.sirekanyan.knigopis.repository.Configuration
+import com.sirekanyan.knigopis.repository.UserRepository
 
 interface MainPresenter : Presenter {
 
@@ -36,16 +41,18 @@ interface MainPresenter : Presenter {
 
 class MainPresenterImpl(
     private val loginPresenter: LoginPresenter,
+    private val notesPresenter: NotesPresenter,
     private val router: MainPresenter.Router,
     private val config: Configuration,
     private val auth: AuthRepository,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
-    private val noteRepository: NoteRepository,
-    private val resources: ResourceProvider
-) : BasePresenter<MainView>(loginPresenter),
+    private val resources: ResourceProvider,
+    private val progressView: ProgressView
+) : BasePresenter<MainView>(loginPresenter, notesPresenter),
     MainPresenter,
-    MainView.Callbacks {
+    MainView.Callbacks,
+    NotesView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
@@ -117,7 +124,7 @@ class MainPresenterImpl(
             when (tab) {
                 HOME_TAB -> refreshHomeTab()
                 USERS_TAB -> refreshUsersTab()
-                NOTES_TAB -> refreshNotesTab()
+                NOTES_TAB -> notesPresenter.refresh()
             }
         }
     }
@@ -232,7 +239,7 @@ class MainPresenterImpl(
     private fun refreshHomeTab() {
         bookRepository.observeBooks()
             .io2main()
-            .showProgressBar()
+            .showProgressBar(progressView)
             .bind({ books ->
                 view.updateBooks(books)
             }, {
@@ -244,7 +251,7 @@ class MainPresenterImpl(
     private fun refreshUsersTab() {
         userRepository.observeUsers()
             .io2main()
-            .showProgressBar()
+            .showProgressBar(progressView)
             .bind({ users ->
                 view.updateUsers(users)
             }, {
@@ -252,27 +259,5 @@ class MainPresenterImpl(
                 view.showUsersError(it)
             })
     }
-
-    private fun refreshNotesTab() {
-        noteRepository.observeNotes()
-            .io2main()
-            .showProgressBar()
-            .bind({ notes ->
-                view.updateNotes(notes)
-            }, {
-                logError("cannot load notes", it)
-                view.showNotesError(it)
-            })
-    }
-
-    private fun <T> Flowable<T>.showProgressBar(): Flowable<T> =
-        doOnSubscribe {
-            view.showProgress()
-        }.doOnNext {
-            view.hideProgress()
-        }.doFinally {
-            view.hideProgress()
-            view.hideSwipeRefresh()
-        }
 
 }
