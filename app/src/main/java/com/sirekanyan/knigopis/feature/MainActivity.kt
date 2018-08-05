@@ -27,6 +27,8 @@ import com.sirekanyan.knigopis.feature.users.getMainState
 import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
+import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.UserModel
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.Endpoint
 import org.koin.android.ext.android.inject
@@ -134,7 +136,15 @@ class MainActivity : BaseActivity(),
         startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
     }
 
-    override fun openUserScreen(id: String, name: String, image: String?) {
+    override fun openUserScreen(user: UserModel) {
+        openUserScreen(user.id, user.name, user.image)
+    }
+
+    override fun openUserScreen(note: NoteModel) {
+        openUserScreen(note.userId, note.userName, note.userImage)
+    }
+
+    private fun openUserScreen(id: String, name: String, image: String?) {
         startActivity(createUserIntent(id, name, image))
     }
 

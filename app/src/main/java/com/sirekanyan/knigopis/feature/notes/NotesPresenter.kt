@@ -13,7 +13,7 @@ import com.sirekanyan.knigopis.repository.NoteRepository
 interface NotesPresenter : PagePresenter {
 
     interface Router {
-        fun openUserScreen(id: String, name: String, image: String?)
+        fun openUserScreen(note: NoteModel)
     }
 
 }
@@ -40,7 +40,7 @@ class NotesPresenterImpl(
     }
 
     override fun onNoteClicked(note: NoteModel) {
-        router.openUserScreen(note.userId, note.userName, note.userImage)
+        router.openUserScreen(note)
     }
 
     override fun onNotesUpdated() {

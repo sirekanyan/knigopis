@@ -2,11 +2,12 @@ package com.sirekanyan.knigopis.common.extensions
 
 import android.app.Activity
 import android.view.View
+import android.view.ViewGroup
 import com.sirekanyan.knigopis.App
 
 fun Activity.app() = application as App
 
-fun Activity.getRootView(): View =
+fun Activity.getRootView(): ViewGroup =
     findViewById(android.R.id.content)
 
 fun Activity.showKeyboard(view: View) {

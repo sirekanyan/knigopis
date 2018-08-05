@@ -17,7 +17,7 @@ import com.sirekanyan.knigopis.repository.UserRepository
 interface UsersPresenter : PagePresenter {
 
     interface Router {
-        fun openUserScreen(id: String, name: String, image: String?)
+        fun openUserScreen(user: UserModel)
         fun openWebPage(uri: Uri)
     }
 
@@ -46,7 +46,7 @@ class UsersPresenterImpl(
     }
 
     override fun onUserClicked(user: UserModel) {
-        router.openUserScreen(user.id, user.name, user.image)
+        router.openUserScreen(user)
     }
 
     override fun onUserLongClicked(user: UserModel) {
