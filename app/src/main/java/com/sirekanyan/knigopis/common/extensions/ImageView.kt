@@ -13,12 +13,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.repository.isDarkConfiguration
+import com.sirekanyan.knigopis.repository.config.InMemory.isDarkModeEnabled
 
 private const val DARK_SATURATION = 0.33f
 
 private fun ImageView.setImage(url: String?, requestOptions: RequestOptions, placeholder: Int) {
-    if (isDarkConfiguration) {
+    if (isDarkModeEnabled) {
         val colorMatrix = ColorMatrix().apply { setSaturation(DARK_SATURATION) }
         colorFilter = ColorMatrixColorFilter(colorMatrix)
     }
