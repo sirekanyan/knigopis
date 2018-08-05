@@ -29,7 +29,7 @@ class UserViewHolder(
     }
 
     override fun onBind(position: Int, model: UserModel) {
-        userAvatar.setCircleImage(model.image)
+        userImage.setCircleImage(model.image)
         userNickname.text = model.name
         totalBooksCount.text = model.booksCount
         newBooksCount.text = model.newBooksCount

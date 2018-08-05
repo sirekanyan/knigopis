@@ -37,7 +37,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
-        android:id="@+id/toolbarImage"
+        android:id="@+id/userImage"
         android:layout_width="@dimen/avatar_size_expanded"
         android:layout_height="@dimen/avatar_size_expanded"
         android:layout_marginLeft="16dp"

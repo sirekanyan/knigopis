@@ -41,6 +41,7 @@ class UserActivity : BaseActivity() {
     private val dialogs by inject<DialogFactory>(parameters = createParameters())
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val userName by lazy { intent.getStringExtra(EXTRA_USER_NAME) }
+    private val userPhoto by lazy { intent.getStringExtra(EXTRA_USER_PHOTO) }
     private val booksAdapter = UserBooksAdapter(::onBookLongClicked)
     private lateinit var unsubscribeOption: MenuItem
 
@@ -51,11 +52,8 @@ class UserActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = userName
-        toolbarImage.setCircleImage(
-            intent.getStringExtra(EXTRA_USER_PHOTO),
-            R.drawable.oval_dark_placeholder_background
-        )
-        toolbarImage.setElevationRes(R.dimen.image_view_elevation)
+        userImage.setCircleImage(userPhoto, R.drawable.oval_dark_placeholder_background)
+        userImage.setElevationRes(R.dimen.image_view_elevation)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             interactor.addFriend(userId)

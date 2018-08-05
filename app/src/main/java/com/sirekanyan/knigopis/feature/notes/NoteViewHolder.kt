@@ -29,7 +29,7 @@ class NoteViewHolder(
         userNotes.text = model.noteContent
         userDate.text = model.noteDate
         userNickname.text = model.userName
-        userSmallAvatar.setCircleImage(model.userImage)
+        userImage.setCircleImage(model.userImage)
     }
 
 }
