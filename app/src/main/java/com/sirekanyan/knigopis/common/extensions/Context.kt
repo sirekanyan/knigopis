@@ -7,6 +7,9 @@ import android.net.ConnectivityManager
 import android.support.annotation.StringRes
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.sirekanyan.knigopis.R
+
+var isDarkTheme = false
 
 val Context.systemClipboardManager: ClipboardManager
     get() = getAndroidSystemService(Context.CLIPBOARD_SERVICE)
@@ -28,6 +31,11 @@ fun Context.toast(@StringRes messageId: Int, vararg args: Any) {
 
 fun Context.toast(@StringRes messageId: Int) {
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.setDarkTheme(isDark: Boolean) {
+    setTheme(if (isDark) R.style.DarkAppTheme else R.style.AppTheme)
+    isDarkTheme = isDark
 }
 
 private inline fun <reified T> Context.getAndroidSystemService(name: String) =

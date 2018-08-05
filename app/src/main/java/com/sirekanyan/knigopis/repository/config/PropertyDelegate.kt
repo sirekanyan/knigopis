@@ -23,10 +23,7 @@ class IntPreference : AbstractPreference<Int>(
     { key, value -> putInt(key, value) }
 )
 
-class BooleanPreference(onUpdate: ((Boolean) -> Unit)? = null) : AbstractPreference<Boolean>(
+class BooleanPreference : AbstractPreference<Boolean>(
     { key -> getBoolean(key, false) },
-    { key, value ->
-        onUpdate?.invoke(value)
-        putBoolean(key, value)
-    }
+    { key, value -> putBoolean(key, value) }
 )

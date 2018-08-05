@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.setDarkTheme
 import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity(),
     private val config by inject<Configuration>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(if (config.isDarkTheme) R.style.DarkAppTheme else R.style.AppTheme)
+        setDarkTheme(config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val restoredCurrentTab = savedInstanceState?.getMainState()?.currentTab

@@ -71,9 +71,7 @@ class BookActivity : BaseActivity() {
     private val today = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (config.isDarkTheme) {
-            setTheme(R.style.DarkAppTheme)
-        }
+        setDarkTheme(config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
         val bookId = intent.getStringExtra(EXTRA_BOOK_ID)

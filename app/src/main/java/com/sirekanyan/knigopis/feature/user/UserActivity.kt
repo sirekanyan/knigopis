@@ -46,9 +46,7 @@ class UserActivity : BaseActivity() {
     private lateinit var unsubscribeOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (config.isDarkTheme) {
-            setTheme(R.style.DarkAppTheme)
-        }
+        setDarkTheme(config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = userName
