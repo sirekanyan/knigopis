@@ -46,6 +46,7 @@
     <style name="ProfileAppTheme" parent="DarkAppTheme">
         <item name="colorPrimary">@color/common_deep_purple_700</item>
         <item name="colorPrimaryDark">@color/common_deep_purple_900</item>
+        <item name="colorAccent">@color/light.color_accent</item>
         <item name="android:windowBackground">@color/common_deep_purple_700</item>
         <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">
