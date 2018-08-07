@@ -58,7 +58,3 @@ fun View.startCollapseAnimation() {
         .setInterpolator(FastOutLinearInInterpolator())
         .scaleX(0f).scaleY(0f)
 }
-
-fun View.setTransitionNameCompat(name: String) {
-    ViewCompat.setTransitionName(this, name)
-}
