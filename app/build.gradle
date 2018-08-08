@@ -13,8 +13,8 @@ android {
         applicationId 'com.sirekanyan.knigopis'
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 22
-        versionName '0.2.0'
+        versionCode 23
+        versionName '0.2.1'
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STATIC_SERVER", '"https://knigopis.tk/img"'
