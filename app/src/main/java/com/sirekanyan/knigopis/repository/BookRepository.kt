@@ -35,7 +35,7 @@ class BookRepositoryImpl(
     private val cache: CommonCache,
     private val auth: AuthRepository,
     private val plannedBookOrganizer: BookOrganizer<PlannedBook>,
-    private val finishedBookPrepare: BookOrganizer<FinishedBook>,
+    private val finishedBookOrganizer: BookOrganizer<FinishedBook>,
     networkChecker: NetworkChecker
 ) : CommonRepository<List<BookModel>>(networkChecker),
     BookRepository {
@@ -77,10 +77,8 @@ class BookRepositoryImpl(
             api.getFinishedBooks(auth.getAccessToken())
         )
             .map { (planned, finished) ->
-                mutableListOf<BookModel>().apply {
-                    addAll(plannedBookOrganizer.organize(planned))
-                    addAll(finishedBookPrepare.organize(finished))
-                }
+                plannedBookOrganizer.organize(planned)
+                    .plus(finishedBookOrganizer.organize(finished))
             }
 
     override fun findCached(): Maybe<List<BookModel>> =

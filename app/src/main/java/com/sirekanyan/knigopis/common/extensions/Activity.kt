@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sirekanyan.knigopis.App
 
-fun Activity.app() = application as App
+val Activity.app get() = application as App
 
 fun Activity.getRootView(): ViewGroup =
     findViewById(android.R.id.content)

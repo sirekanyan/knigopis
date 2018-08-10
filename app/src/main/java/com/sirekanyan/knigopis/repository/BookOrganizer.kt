@@ -52,7 +52,7 @@ class PlannedBookOrganizerImpl(
 
 }
 
-class FinishedBookPrepareImpl(
+class FinishedBookOrganizerImpl(
     private val resources: ResourceProvider
 ) : BookOrganizer<FinishedBook> {
 

@@ -17,7 +17,6 @@ android {
         versionName '0.2.1'
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "STATIC_SERVER", '"https://knigopis.tk/img"'
     }
     buildTypes {
         debug {
@@ -31,9 +30,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // support libraries
-    implementation "com.android.support:appcompat-v7:27.1.1"
-    implementation "com.android.support:design:27.1.1"
-    implementation "com.android.support:support-vector-drawable:27.1.1"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     // rxjava
@@ -43,13 +42,10 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
     // retrofit & okhttp
-    implementation "com.squareup.retrofit2:retrofit:2.3.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-
-    // dependency injection
-    implementation 'org.koin:koin-android:0.9.1'
 
     // etc
     implementation 'com.github.bumptech.glide:glide:4.7.1'

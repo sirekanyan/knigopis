@@ -1,11 +1,12 @@
 package com.sirekanyan.knigopis.common.functions
 
-import com.sirekanyan.knigopis.BuildConfig
+import com.sirekanyan.knigopis.BuildConfig.APPLICATION_ID
+import com.sirekanyan.knigopis.STATIC_API
 
-fun extra(name: String) = "${BuildConfig.APPLICATION_ID}.extra_$name"
+fun extra(name: String) = "$APPLICATION_ID.extra_$name"
 
 fun createUserImageUrl(userId: String): String {
-    return "${BuildConfig.STATIC_SERVER}/user/$userId"
+    return "$STATIC_API/user/$userId"
 }
 
 fun createBookImageUrl(bookTitle: String): String {
@@ -13,5 +14,5 @@ fun createBookImageUrl(bookTitle: String): String {
         .replace(Regex("\\W+"), "_")
         .replace(Regex("(^_|_$)"), "")
         .replace("ё", "е")
-    return "${BuildConfig.STATIC_SERVER}/book/$normalizedTitle"
+    return "$STATIC_API/book/$normalizedTitle"
 }
