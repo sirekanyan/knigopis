@@ -9,20 +9,18 @@ import android.view.Menu
 import android.view.MenuItem
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.createParameters
+import com.sirekanyan.knigopis.dependency.provideDialogs
+import com.sirekanyan.knigopis.dependency.provideInteractor
 import com.sirekanyan.knigopis.feature.book.createDoneBookIntent
 import com.sirekanyan.knigopis.feature.book.createTodoBookIntent
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.repository.Configuration
 import kotlinx.android.synthetic.main.user_activity.*
-import org.koin.android.ext.android.inject
 
 private val EXTRA_USER_ID = extra("user_id")
 private val EXTRA_USER_NAME = extra("user_name")
@@ -36,9 +34,8 @@ fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent 
 
 class UserActivity : BaseActivity() {
 
-    private val config by inject<Configuration>()
-    private val interactor by inject<UserInteractor>()
-    private val dialogs by inject<DialogFactory>(parameters = createParameters())
+    private val interactor by lazy { provideInteractor() }
+    private val dialogs by lazy { provideDialogs() }
     private val userId by lazy { intent.getStringExtra(EXTRA_USER_ID) }
     private val userName by lazy { intent.getStringExtra(EXTRA_USER_NAME) }
     private val userPhoto by lazy { intent.getStringExtra(EXTRA_USER_PHOTO) }
@@ -46,7 +43,7 @@ class UserActivity : BaseActivity() {
     private lateinit var unsubscribeOption: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(config.isDarkTheme)
+        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         toolbar.title = userName

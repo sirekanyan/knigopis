@@ -16,10 +16,7 @@ import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
 import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
-import com.sirekanyan.knigopis.repository.BookRepository
-import com.sirekanyan.knigopis.repository.Configuration
 import kotlinx.android.synthetic.main.book_edit.*
-import org.koin.android.ext.android.inject
 import java.util.*
 
 private val EXTRA_BOOK_ID = extra("book_id")
@@ -66,12 +63,11 @@ fun Context.createEditBookIntent(book: BookDataModel): Intent =
 
 class BookActivity : BaseActivity() {
 
-    private val config by inject<Configuration>()
-    private val repository by inject<BookRepository>()
+    private val repository by lazy { app.bookRepository }
     private val today = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(config.isDarkTheme)
+        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
         val bookId = intent.getStringExtra(EXTRA_BOOK_ID)

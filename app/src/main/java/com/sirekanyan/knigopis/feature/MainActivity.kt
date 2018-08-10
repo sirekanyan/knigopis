@@ -6,15 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.extensions.io2main
-import com.sirekanyan.knigopis.common.extensions.setDarkTheme
-import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
-import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
 import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.createParameters
+import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.book.createEditBookIntent
 import com.sirekanyan.knigopis.feature.book.createNewBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
@@ -29,9 +26,6 @@ import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.NoteModel
 import com.sirekanyan.knigopis.model.UserModel
-import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.Endpoint
-import org.koin.android.ext.android.inject
 import ru.ulogin.sdk.UloginAuthActivity
 
 private const val LOGIN_REQUEST_CODE = 0
@@ -45,12 +39,11 @@ class MainActivity : BaseActivity(),
     UsersPresenter.Router,
     NotesPresenter.Router {
 
-    private val presenter by inject<MainPresenter>(parameters = createParameters(this))
-    private val api by inject<Endpoint>()
-    private val config by inject<Configuration>()
+    private val presenter by lazy { providePresenter() }
+    private val api by lazy { app.endpoint }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(config.isDarkTheme)
+        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val restoredCurrentTab = savedInstanceState?.getMainState()?.currentTab

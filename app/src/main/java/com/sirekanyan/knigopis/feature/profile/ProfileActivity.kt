@@ -15,13 +15,9 @@ import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.dto.Profile
 import com.sirekanyan.knigopis.model.dto.User
-import com.sirekanyan.knigopis.repository.AuthRepository
-import com.sirekanyan.knigopis.repository.BookRepository
-import com.sirekanyan.knigopis.repository.Endpoint
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.profile_activity.*
-import org.koin.android.ext.android.inject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -29,9 +25,9 @@ fun Context.createProfileIntent() = Intent(this, ProfileActivity::class.java)
 
 class ProfileActivity : BaseActivity() {
 
-    private val api by inject<Endpoint>()
-    private val bookRepository by inject<BookRepository>()
-    private val auth by inject<AuthRepository>()
+    private val api by lazy { app.endpoint }
+    private val bookRepository by lazy { app.bookRepository }
+    private val auth by lazy { app.authRepository }
     private val todoList = Stack<BookDataModel>()
     private val doingList = Stack<BookDataModel>()
     private val doneList = Stack<BookDataModel>()
