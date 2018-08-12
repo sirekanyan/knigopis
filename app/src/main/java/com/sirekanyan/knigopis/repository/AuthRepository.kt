@@ -15,7 +15,7 @@ interface AuthRepository {
     fun getAccessToken(): String
     fun getUserProfile(): String?
     fun saveToken(token: String)
-    fun logout()
+    fun clear()
 }
 
 class AuthRepositoryImpl(
@@ -55,7 +55,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override fun logout() {
+    override fun clear() {
         preferences.edit().remove(TOKEN_KEY).remove(ACCESS_TOKEN_KEY).apply()
     }
 
