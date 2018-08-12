@@ -58,3 +58,15 @@ fun View.startCollapseAnimation() {
         .setInterpolator(FastOutLinearInInterpolator())
         .scaleX(0f).scaleY(0f)
 }
+
+fun View.showKeyboard(view: View) {
+    if (view.requestFocus()) {
+        context.systemInputMethodManager.showSoftInput(view, 0)
+    }
+}
+
+fun View.hideKeyboard() {
+    findFocus()?.let { view ->
+        context.systemInputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}

@@ -86,7 +86,7 @@ class BookActivity : BaseActivity() {
         toolbar.setOnMenuItemClickListener { saveMenuItem ->
             when (saveMenuItem.itemId) {
                 R.id.option_save_book -> {
-                    hideKeyboard()
+                    getRootView().hideKeyboard()
                     if (progressSeekBar.progress == MAX_BOOK_PRIORITY) {
                         repository.saveBook(
                             bookId,
