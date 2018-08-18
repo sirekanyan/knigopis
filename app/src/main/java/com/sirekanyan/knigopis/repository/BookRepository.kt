@@ -22,9 +22,9 @@ interface BookRepository {
 
     fun findCached(): Maybe<List<BookModel>>
 
-    fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable
+    fun saveBook(bookId: String?, book: FinishedBookToSend, wasFinished: Boolean): Completable
 
-    fun saveBook(bookId: String?, book: PlannedBookToSend, done: Boolean?): Completable
+    fun saveBook(bookId: String?, book: PlannedBookToSend, wasPlanned: Boolean): Completable
 
     fun deleteBook(book: BookDataModel): Completable
 
@@ -42,22 +42,20 @@ class BookRepositoryImpl(
 
     override fun observeBooks() = observe()
 
-    override fun saveBook(bookId: String?, book: FinishedBookToSend, done: Boolean?): Completable =
+    override fun saveBook(bookId: String?, book: FinishedBookToSend, wasFinished: Boolean): Completable =
         when {
             bookId == null -> api.createFinishedBook(auth.getAccessToken(), book)
-            done == null -> Completable.error(UnsupportedOperationException())
-            done -> api.updateFinishedBook(bookId, auth.getAccessToken(), book)
+            wasFinished -> api.updateFinishedBook(bookId, auth.getAccessToken(), book)
             else -> {
                 api.createFinishedBook(auth.getAccessToken(), book)
                     .andThen(api.deletePlannedBook(bookId, auth.getAccessToken()))
             }
         }
 
-    override fun saveBook(bookId: String?, book: PlannedBookToSend, done: Boolean?): Completable =
+    override fun saveBook(bookId: String?, book: PlannedBookToSend, wasPlanned: Boolean): Completable =
         when {
             bookId == null -> api.createPlannedBook(auth.getAccessToken(), book)
-            done == null -> Completable.error(UnsupportedOperationException())
-            !done -> api.updatePlannedBook(bookId, auth.getAccessToken(), book)
+            wasPlanned -> api.updatePlannedBook(bookId, auth.getAccessToken(), book)
             else -> {
                 api.createPlannedBook(auth.getAccessToken(), book)
                     .andThen(api.deleteFinishedBook(bookId, auth.getAccessToken()))
