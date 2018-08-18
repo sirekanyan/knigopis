@@ -30,7 +30,7 @@ class BookDataModel(
     val author: String,
     val isFinished: Boolean,
     val priority: Int,
-    val date: DateModel?,
+    val date: DateModel,
     val notes: String
 ) : BookModel(id, false, group) {
     val image = createBookImageUrl(title)

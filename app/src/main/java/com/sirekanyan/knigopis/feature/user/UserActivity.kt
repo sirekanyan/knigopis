@@ -17,8 +17,9 @@ import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.provideDialogs
 import com.sirekanyan.knigopis.dependency.provideInteractor
-import com.sirekanyan.knigopis.feature.book.createDoneBookIntent
-import com.sirekanyan.knigopis.feature.book.createTodoBookIntent
+import com.sirekanyan.knigopis.feature.book.createBookIntent
+import com.sirekanyan.knigopis.feature.book.createDoneBook
+import com.sirekanyan.knigopis.feature.book.createTodoBook
 import com.sirekanyan.knigopis.model.BookDataModel
 import kotlinx.android.synthetic.main.user_activity.*
 
@@ -139,10 +140,13 @@ class UserActivity : BaseActivity() {
         dialogs.showDialog(
             resources.getFullTitleString(book.title, book.author),
             createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
-                startActivity(createTodoBookIntent(book.title, book.author, userName))
+                val notes = getString(R.string.book_notes_copied, userName)
+                val todoBook = createTodoBook(book.title, book.author, notes)
+                startActivity(createBookIntent(todoBook))
             },
             createDialogItem(R.string.user_button_done, R.drawable.ic_playlist_add_check) {
-                startActivity(createDoneBookIntent(book.title, book.author))
+                val doneBook = createDoneBook(book.title, book.author)
+                startActivity(createBookIntent(doneBook))
             }
         )
     }

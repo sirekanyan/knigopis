@@ -18,7 +18,7 @@ fun PlannedBook.toBookModel(group: BookGroupModel) =
         author,
         false,
         priority,
-        null,
+        EMPTY_DATE,
         notes
     )
 

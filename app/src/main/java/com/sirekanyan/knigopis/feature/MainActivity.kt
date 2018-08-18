@@ -12,8 +12,9 @@ import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
-import com.sirekanyan.knigopis.feature.book.createEditBookIntent
-import com.sirekanyan.knigopis.feature.book.createNewBookIntent
+import com.sirekanyan.knigopis.feature.book.EMPTY_BOOK
+import com.sirekanyan.knigopis.feature.book.createBookIntent
+import com.sirekanyan.knigopis.feature.book.createEditBook
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
@@ -122,11 +123,11 @@ class MainActivity : BaseActivity(),
     }
 
     override fun openNewBookScreen() {
-        startActivityForResult(createNewBookIntent(), BOOK_REQUEST_CODE)
+        startActivityForResult(createBookIntent(EMPTY_BOOK), BOOK_REQUEST_CODE)
     }
 
     override fun openBookScreen(book: BookDataModel) {
-        startActivityForResult(createEditBookIntent(book), BOOK_REQUEST_CODE)
+        startActivityForResult(createBookIntent(createEditBook(book)), BOOK_REQUEST_CODE)
     }
 
     override fun openUserScreen(user: UserModel) {
