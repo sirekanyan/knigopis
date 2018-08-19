@@ -1,8 +1,6 @@
 package com.sirekanyan.knigopis.common.extensions
 
 import android.support.annotation.DimenRes
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
@@ -34,10 +32,6 @@ fun View.show() {
 fun View.hide() {
     animate().alpha(0f).setDuration(200)
         .withEndAction { visibility = View.GONE }
-}
-
-fun View.snackbar(@StringRes messageId: Int) {
-    Snackbar.make(this, messageId, Snackbar.LENGTH_LONG).show()
 }
 
 fun View.setElevationRes(@DimenRes elevation: Int) {

@@ -143,7 +143,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun openWebPage(uri: Uri) {
-        startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: toast(R.string.users_info_no_browser)
+        startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: showToast(R.string.users_info_no_browser)
     }
 
     override fun reopenScreen() {

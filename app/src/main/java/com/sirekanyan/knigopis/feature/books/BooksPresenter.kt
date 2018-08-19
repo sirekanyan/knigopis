@@ -1,8 +1,10 @@
 package com.sirekanyan.knigopis.feature.books
 
+import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.showProgressBar
+import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.PagePresenter
 import com.sirekanyan.knigopis.feature.PagesPresenter
@@ -66,7 +68,7 @@ class BooksPresenterImpl(
             .bind({
                 refresh()
             }, {
-                view.showBookDeleteError()
+                view.toast(R.string.books_error_delete)
                 logError("cannot delete finished book", it)
             })
     }

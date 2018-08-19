@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.isVisible
 import com.sirekanyan.knigopis.common.extensions.show
-import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.extensions.showToast
 import retrofit2.HttpException
 
 fun handleError(
@@ -16,7 +16,7 @@ fun handleError(
     adapter: RecyclerView.Adapter<*>
 ) {
     if (emptyPlaceholder.isVisible || adapter.itemCount > 0) {
-        emptyPlaceholder.context.toast(throwable.messageRes)
+        emptyPlaceholder.context.showToast(throwable.messageRes)
     } else {
         errorPlaceholder.setText(throwable.messageRes)
         errorPlaceholder.show()

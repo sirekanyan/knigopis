@@ -1,8 +1,10 @@
 package com.sirekanyan.knigopis.feature.profile
 
+import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.dto.Profile
@@ -155,7 +157,7 @@ class ProfilePresenterImpl(
                 view.quitEditMode()
                 refreshProfile()
             }, {
-                view.showSaveError()
+                view.toast(R.string.profile_error_save)
                 logError("cannot update profile", it)
             })
     }

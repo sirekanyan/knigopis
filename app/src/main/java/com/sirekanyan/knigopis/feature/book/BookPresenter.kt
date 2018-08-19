@@ -5,6 +5,7 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookAction
@@ -66,7 +67,7 @@ class BookPresenterImpl(
             .bind({
                 router.exit(ok = true)
             }, {
-                view.showSaveError()
+                view.toast(R.string.book_error_save)
                 logError("cannot post planned book", it)
             })
     }

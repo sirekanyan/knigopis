@@ -25,11 +25,11 @@ fun Context.startActivityOrNull(intent: Intent): Unit? =
         startActivity(intent)
     }
 
-fun Context.toast(@StringRes messageId: Int, vararg args: Any) {
+fun Context.showToast(@StringRes messageId: Int, vararg args: Any) {
     Toast.makeText(this, getString(messageId, *args), Toast.LENGTH_SHORT).show()
 }
 
-fun Context.toast(@StringRes messageId: Int) {
+fun Context.showToast(@StringRes messageId: Int) {
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
 }
 

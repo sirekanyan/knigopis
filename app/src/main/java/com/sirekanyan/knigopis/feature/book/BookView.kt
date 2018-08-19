@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.model.DateModel
@@ -12,7 +13,7 @@ import com.sirekanyan.knigopis.model.EditBookModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.book_edit.*
 
-interface BookView {
+interface BookView : CommonView {
 
     fun setTitle(@StringRes title: Int)
     fun setBook(book: EditBookModel)
@@ -22,7 +23,6 @@ interface BookView {
     fun showBookDate(isVisible: Boolean)
     fun showSaveOption(isVisible: Boolean)
     fun showSaveProgress(isVisible: Boolean)
-    fun showSaveError()
     fun showKeyboard()
 
     interface Callbacks {
@@ -131,10 +131,6 @@ class BookViewImpl(
     override fun showSaveProgress(isVisible: Boolean) {
         progressMenuItem.isVisible = isVisible
         progressMenuItem.actionView.show(isVisible)
-    }
-
-    override fun showSaveError() {
-        context.toast(R.string.book_error_save)
     }
 
     override fun showKeyboard() {

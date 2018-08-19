@@ -6,13 +6,14 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.model.BookDataModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.profile_activity.*
 import java.util.*
 
-interface ProfileView {
+interface ProfileView : CommonView {
 
     val isEditMode: Boolean
     val isNicknameChanged: Boolean
@@ -24,7 +25,6 @@ interface ProfileView {
     fun setDoneCount(count: Int)
     fun enterEditMode()
     fun quitEditMode()
-    fun showSaveError()
     fun setBooks(
         todo: Stack<BookDataModel>,
         doing: Stack<BookDataModel>,
@@ -109,10 +109,6 @@ class ProfileViewImpl(
         containerView.hideKeyboard()
         topProfileSpace.showNow()
         profileNicknameSwitcher.displayedChild = 0
-    }
-
-    override fun showSaveError() {
-        context.toast(R.string.profile_error_save)
     }
 
     override fun setBooks(

@@ -7,10 +7,10 @@ import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
+import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.getFullTitleString
 import com.sirekanyan.knigopis.common.extensions.hide
 import com.sirekanyan.knigopis.common.extensions.show
-import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.ProgressView
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -18,13 +18,12 @@ import com.sirekanyan.knigopis.model.BookModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.books_page.*
 
-interface BooksView : ProgressView {
+interface BooksView : CommonView, ProgressView {
 
     fun updateBooks(books: List<BookModel>)
     fun showBooksError(throwable: Throwable)
     fun showBookActions(book: BookDataModel)
     fun showBookDeleteDialog(book: BookDataModel)
-    fun showBookDeleteError()
 
     interface Callbacks {
         fun onAddBookClicked()
@@ -91,10 +90,6 @@ class BooksViewImpl(
                 d.dismiss()
             }
             .show()
-    }
-
-    override fun showBookDeleteError() {
-        context.toast(R.string.books_error_delete)
     }
 
 }
