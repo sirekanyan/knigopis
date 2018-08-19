@@ -12,17 +12,6 @@ fun createTodoBook(title: String, author: String, notes: String) =
 fun createDoneBook(title: String, author: String) =
     EditBookModel(BookAction.COPY, title = title, author = author, progress = MAX_BOOK_PRIORITY)
 
-fun createEditBook(book: BookDataModel) =
-    EditBookModel(
-        BookAction.EDIT,
-        book.id,
-        book.title,
-        book.author,
-        if (book.isFinished) MAX_BOOK_PRIORITY else book.priority,
-        if (book.isFinished) book.date else EMPTY_DATE,
-        book.notes
-    )
-
 @Parcelize
 class EditBookModel(
     val action: BookAction,

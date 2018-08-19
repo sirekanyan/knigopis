@@ -4,11 +4,9 @@ import android.text.SpannableString
 import android.text.format.DateUtils
 import android.text.style.SuperscriptSpan
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
+import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
-import com.sirekanyan.knigopis.model.dto.FinishedBook
-import com.sirekanyan.knigopis.model.dto.Note
-import com.sirekanyan.knigopis.model.dto.PlannedBook
-import com.sirekanyan.knigopis.model.dto.Subscription
+import com.sirekanyan.knigopis.model.dto.*
 
 fun PlannedBook.toBookModel(group: BookGroupModel) =
     BookDataModel(
@@ -60,4 +58,33 @@ fun Note.toNoteModel() =
         user.id,
         user.name,
         user.avatarUrl
+    )
+
+fun BookDataModel.toEditModel(): EditBookModel =
+    EditBookModel(
+        BookAction.EDIT,
+        id,
+        title,
+        author,
+        if (isFinished) MAX_BOOK_PRIORITY else priority,
+        if (isFinished) date else EMPTY_DATE,
+        notes
+    )
+
+fun EditBookModel.toPlannedBook(): PlannedBookToSend =
+    PlannedBookToSend(
+        title,
+        author,
+        notes,
+        progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
+    )
+
+fun EditBookModel.toFinishedBook(): FinishedBookToSend =
+    FinishedBookToSend(
+        title,
+        author,
+        date.day,
+        date.month,
+        date.year,
+        notes
     )

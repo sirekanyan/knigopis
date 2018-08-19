@@ -12,9 +12,7 @@ import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
-import com.sirekanyan.knigopis.model.EMPTY_BOOK
 import com.sirekanyan.knigopis.feature.book.createBookIntent
-import com.sirekanyan.knigopis.model.createEditBook
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
@@ -23,10 +21,7 @@ import com.sirekanyan.knigopis.feature.user.createUserIntent
 import com.sirekanyan.knigopis.feature.users.UsersPresenter
 import com.sirekanyan.knigopis.feature.users.getMainState
 import com.sirekanyan.knigopis.feature.users.saveMainState
-import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.CurrentTab
-import com.sirekanyan.knigopis.model.NoteModel
-import com.sirekanyan.knigopis.model.UserModel
+import com.sirekanyan.knigopis.model.*
 import ru.ulogin.sdk.UloginAuthActivity
 
 private const val LOGIN_REQUEST_CODE = 0
@@ -127,7 +122,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun openBookScreen(book: BookDataModel) {
-        startActivityForResult(createBookIntent(createEditBook(book)), BOOK_REQUEST_CODE)
+        startActivityForResult(createBookIntent(book.toEditModel()), BOOK_REQUEST_CODE)
     }
 
     override fun openUserScreen(user: UserModel) {

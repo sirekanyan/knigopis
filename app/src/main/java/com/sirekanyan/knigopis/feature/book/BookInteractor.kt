@@ -1,10 +1,9 @@
 package com.sirekanyan.knigopis.feature.book
 
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
-import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.model.EditBookModel
-import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
-import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
+import com.sirekanyan.knigopis.model.toFinishedBook
+import com.sirekanyan.knigopis.model.toPlannedBook
 import com.sirekanyan.knigopis.repository.BookRepository
 import io.reactivex.Completable
 
@@ -22,14 +21,5 @@ class BookInteractorImpl(private val repository: BookRepository) : BookInteracto
         } else {
             repository.saveBook(book.id, book.toPlannedBook(), initialBook.isPlanned)
         }
-
-    private fun EditBookModel.toPlannedBook(): PlannedBookToSend {
-        val priority = progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
-        return PlannedBookToSend(title, author, notes, priority)
-    }
-
-    private fun EditBookModel.toFinishedBook(): FinishedBookToSend {
-        return FinishedBookToSend(title, author, date.day, date.month, date.year, notes)
-    }
 
 }
