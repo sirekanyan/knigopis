@@ -17,8 +17,8 @@ class UserBookDataViewHolder(
 
     init {
         containerView.setOnLongClickListener {
-            model?.let {
-                onClick(it as BookDataModel)
+            model?.let { book ->
+                onClick(book as BookDataModel)
             }
             true
         }

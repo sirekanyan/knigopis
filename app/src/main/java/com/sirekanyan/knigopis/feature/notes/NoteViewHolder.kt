@@ -16,8 +16,8 @@ class NoteViewHolder(
 
     init {
         containerView.setOnClickListener {
-            model?.let {
-                onClick(it)
+            model?.let { note ->
+                onClick(note)
             }
         }
     }

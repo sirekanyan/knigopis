@@ -16,13 +16,13 @@ class UserViewHolder(
 
     init {
         containerView.setOnClickListener {
-            model?.let {
-                onClick(it)
+            model?.let { user ->
+                onClick(user)
             }
         }
         containerView.setOnLongClickListener {
-            model?.let {
-                onLongClick(it)
+            model?.let { user ->
+                onLongClick(user)
             }
             true
         }

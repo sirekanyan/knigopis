@@ -2,6 +2,7 @@ package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.android.NetworkChecker
 import com.sirekanyan.knigopis.model.NoteModel
+import com.sirekanyan.knigopis.model.dto.Note
 import com.sirekanyan.knigopis.model.toNoteModel
 import com.sirekanyan.knigopis.repository.cache.CacheKey
 import com.sirekanyan.knigopis.repository.cache.CommonCache
@@ -27,7 +28,7 @@ class NoteRepositoryImpl(
     override fun observeNotes() = observe()
 
     override fun loadFromNetwork(): Single<List<NoteModel>> =
-        api.getLatestBooksWithNotes().map { it.values.map { it.toNoteModel() } }
+        api.getLatestBooksWithNotes().map { it.values.map(Note::toNoteModel) }
 
     override fun findCached(): Maybe<List<NoteModel>> =
         cache.find(CacheKey.NOTES, genericType<List<NoteModel>>())

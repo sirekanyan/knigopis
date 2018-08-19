@@ -3,7 +3,6 @@ package com.sirekanyan.knigopis.feature.books
 import android.view.View
 import com.sirekanyan.knigopis.common.android.adapter.CommonViewHolder
 import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.extensions.setProgressSmoothly
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookModel
 import kotlinx.android.extensions.LayoutContainer
@@ -20,13 +19,13 @@ class BookDataViewHolder(
 
     init {
         containerView.setOnClickListener {
-            model?.let {
-                onClick(it as BookDataModel)
+            model?.let { book ->
+                onClick(book as BookDataModel)
             }
         }
         containerView.setOnLongClickListener {
-            model?.let {
-                onLongClick(it as BookDataModel)
+            model?.let { book ->
+                onLongClick(book as BookDataModel)
             }
             true
         }
