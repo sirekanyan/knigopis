@@ -2,17 +2,11 @@ package com.sirekanyan.knigopis.dependency
 
 import com.sirekanyan.knigopis.common.extensions.app
 import com.sirekanyan.knigopis.common.extensions.getRootView
-import com.sirekanyan.knigopis.feature.profile.ProfileActivity
-import com.sirekanyan.knigopis.feature.profile.ProfilePresenter
-import com.sirekanyan.knigopis.feature.profile.ProfilePresenterImpl
-import com.sirekanyan.knigopis.feature.profile.ProfileViewImpl
+import com.sirekanyan.knigopis.feature.profile.*
 
-fun ProfileActivity.providePresenter(): ProfilePresenter =
-    ProfilePresenterImpl(
-        this,
-        app.endpoint,
-        app.bookRepository,
-        app.authRepository
-    ).also { presenter ->
+fun ProfileActivity.providePresenter(): ProfilePresenter {
+    val interactor = ProfileInteractorImpl(app.endpoint, app.bookRepository, app.authRepository)
+    return ProfilePresenterImpl(this, interactor).also { presenter ->
         presenter.view = ProfileViewImpl(getRootView(), presenter)
     }
+}

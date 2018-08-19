@@ -3,19 +3,11 @@ package com.sirekanyan.knigopis.feature.profile
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
-import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.dto.Profile
 import com.sirekanyan.knigopis.model.dto.User
-import com.sirekanyan.knigopis.repository.AuthRepository
-import com.sirekanyan.knigopis.repository.BookRepository
-import com.sirekanyan.knigopis.repository.Endpoint
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.Observables
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 interface ProfilePresenter : Presenter {
 
@@ -32,9 +24,7 @@ interface ProfilePresenter : Presenter {
 
 class ProfilePresenterImpl(
     private val router: ProfilePresenter.Router,
-    private val api: Endpoint,
-    private val bookRepository: BookRepository,
-    private val authRepository: AuthRepository
+    private val interactor: ProfileInteractor
 ) : BasePresenter<ProfileView>(),
     ProfilePresenter,
     ProfileView.Callbacks {
@@ -87,13 +77,12 @@ class ProfilePresenterImpl(
     }
 
     override fun onLogoutOptionClicked() {
-        authRepository.clear()
+        interactor.logout()
         router.exit()
     }
 
     private fun refreshProfile() {
-        api.getProfile(authRepository.getAccessToken())
-            .io2main()
+        interactor.getProfile()
             .bind({ user ->
                 this.user = user
                 view.setNickname(user.nickname.orEmpty())
@@ -105,26 +94,16 @@ class ProfilePresenterImpl(
     }
 
     private fun refreshCounters() {
-        bookRepository.findCached()
-            .toSingle(listOf())
-            .map { it.filterIsInstance<BookDataModel>() }
-            .map { it.shuffled() }
-            .flatMapObservable {
-                Observables.zip(
-                    Observable.fromIterable(it),
-                    Observable.interval(5, TimeUnit.MILLISECONDS)
-                )
-            }
-            .io2main()
+        interactor.getBooks()
             .doOnSubscribe {
                 doneList.clear()
                 doingList.clear()
                 todoList.clear()
             }
-            .bind({ (book) ->
+            .bind({ book ->
                 addBookToList(book)
             }, {
-                logError("cannot get cached books", it)
+                logError("cannot get profile books", it)
             })
     }
 
@@ -146,12 +125,8 @@ class ProfilePresenterImpl(
     }
 
     private fun updateNickname(nickname: String) {
-        val id = user?.id ?: return
-        api.updateProfile(
-            id,
-            authRepository.getAccessToken(),
-            Profile(nickname, user?.fixedProfile.orEmpty())
-        ).io2main()
+        val user = user ?: return
+        interactor.updateProfile(user, nickname)
             .bind({
                 view.setNickname(nickname)
                 view.quitEditMode()
