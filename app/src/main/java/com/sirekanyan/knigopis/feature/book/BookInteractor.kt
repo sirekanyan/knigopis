@@ -2,6 +2,7 @@ package com.sirekanyan.knigopis.feature.book
 
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
+import com.sirekanyan.knigopis.model.EditBookModel
 import com.sirekanyan.knigopis.model.dto.FinishedBookToSend
 import com.sirekanyan.knigopis.model.dto.PlannedBookToSend
 import com.sirekanyan.knigopis.repository.BookRepository

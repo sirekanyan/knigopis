@@ -12,9 +12,9 @@ import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
-import com.sirekanyan.knigopis.feature.book.EMPTY_BOOK
+import com.sirekanyan.knigopis.model.EMPTY_BOOK
 import com.sirekanyan.knigopis.feature.book.createBookIntent
-import com.sirekanyan.knigopis.feature.book.createEditBook
+import com.sirekanyan.knigopis.model.createEditBook
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
 import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter

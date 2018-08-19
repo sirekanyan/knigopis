@@ -8,6 +8,7 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.model.DateModel
+import com.sirekanyan.knigopis.model.EditBookModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.book_edit.*
 

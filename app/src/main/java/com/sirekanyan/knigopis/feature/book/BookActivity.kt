@@ -9,6 +9,7 @@ import com.sirekanyan.knigopis.common.extensions.app
 import com.sirekanyan.knigopis.common.extensions.setDarkTheme
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.dependency.providePresenter
+import com.sirekanyan.knigopis.model.EditBookModel
 
 private val EXTRA_BOOK = extra("book")
 

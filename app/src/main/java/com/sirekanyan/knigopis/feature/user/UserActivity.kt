@@ -18,9 +18,9 @@ import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.provideDialogs
 import com.sirekanyan.knigopis.dependency.provideInteractor
 import com.sirekanyan.knigopis.feature.book.createBookIntent
-import com.sirekanyan.knigopis.feature.book.createDoneBook
-import com.sirekanyan.knigopis.feature.book.createTodoBook
 import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.createDoneBook
+import com.sirekanyan.knigopis.model.createTodoBook
 import kotlinx.android.synthetic.main.user_activity.*
 
 private val EXTRA_USER_ID = extra("user_id")

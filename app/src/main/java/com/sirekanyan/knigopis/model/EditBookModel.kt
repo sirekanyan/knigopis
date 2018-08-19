@@ -1,10 +1,7 @@
-package com.sirekanyan.knigopis.feature.book
+package com.sirekanyan.knigopis.model
 
 import android.os.Parcelable
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
-import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.DateModel
-import com.sirekanyan.knigopis.model.EMPTY_DATE
 import kotlinx.android.parcel.Parcelize
 
 val EMPTY_BOOK = EditBookModel(BookAction.NEW)

@@ -7,7 +7,9 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
 import com.sirekanyan.knigopis.common.functions.logError
+import com.sirekanyan.knigopis.model.BookAction
 import com.sirekanyan.knigopis.model.DateModel
+import com.sirekanyan.knigopis.model.EditBookModel
 import java.util.*
 
 interface BookPresenter : Presenter {
