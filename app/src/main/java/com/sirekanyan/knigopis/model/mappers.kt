@@ -88,3 +88,9 @@ fun EditBookModel.toFinishedBook(): FinishedBookToSend =
         date.year,
         notes
     )
+
+fun User.toProfileModel(): ProfileModel =
+    ProfileModel(id, name, photo, profile.orEmpty(), fixedProfile)
+
+fun ProfileModel.toProfile(): Profile =
+    Profile(name, profileUrl)

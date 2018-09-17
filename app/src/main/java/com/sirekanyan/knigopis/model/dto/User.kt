@@ -4,7 +4,7 @@ class User(
     val id: String,
     val nickname: String?,
     val photo: String?,
-    private val profile: String?,
+    val profile: String?,
     private val identity: String?,
     val booksCount: Int
 ) {
