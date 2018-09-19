@@ -4,9 +4,9 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.dto.Profile
 import com.sirekanyan.knigopis.model.dto.User
-import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Endpoint
+import com.sirekanyan.knigopis.repository.TokenStorage
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -25,7 +25,7 @@ interface ProfileInteractor {
 class ProfileInteractorImpl(
     private val api: Endpoint,
     private val bookRepository: BookRepository,
-    private val authRepository: AuthRepository
+    private val tokenStorage: TokenStorage
 ) : ProfileInteractor {
 
     override fun getProfile(): Single<User> =
@@ -51,7 +51,7 @@ class ProfileInteractorImpl(
             .io2main()
 
     override fun logout() {
-        authRepository.clear()
+        tokenStorage.clearTokens()
     }
 
 }

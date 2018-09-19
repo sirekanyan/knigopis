@@ -60,7 +60,7 @@ class MainPresenterImpl(
     }
 
     override fun resume() {
-        auth.loadAccessToken().bind({
+        auth.authorize().bind({
             refreshButtons()
             if (userLoggedIn) {
                 userLoggedIn = false

@@ -29,8 +29,11 @@ fun App.provideConfig(): Configuration =
 fun App.provideResources(): ResourceProvider =
     ResourceProviderImpl(this)
 
+fun App.provideTokenStorage(): TokenStorage =
+    TokenStorageImpl(this)
+
 fun App.provideAuthRepository(): AuthRepository =
-    AuthRepositoryImpl(this, endpoint)
+    AuthRepositoryImpl(endpoint, tokenStorage)
 
 fun App.provideBookRepository(): BookRepository {
     val planned = PlannedBookOrganizerImpl(resourceProvider, config)

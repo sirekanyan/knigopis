@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.dependency.*
 class App : Application() {
     val config by lazy(::provideConfig)
     val resourceProvider by lazy(::provideResources)
+    val tokenStorage by lazy(::provideTokenStorage)
     val authRepository by lazy(::provideAuthRepository)
     val bookRepository by lazy(::provideBookRepository)
     val userRepository by lazy(::provideUserRepository)
