@@ -17,6 +17,8 @@ import com.sirekanyan.knigopis.repository.*
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.CommonCacheImpl
 import com.sirekanyan.knigopis.repository.cache.HeadedModelDeserializer
+import com.sirekanyan.knigopis.repository.network.AuthInterceptor
+import com.sirekanyan.knigopis.repository.network.CookieStorage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -57,6 +59,8 @@ fun App.provideEndpoint(): Endpoint =
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(
             OkHttpClient.Builder()
+                .cookieJar(CookieStorage)
+                .addInterceptor(AuthInterceptor(tokenStorage))
                 .setDebugEnabled(BuildConfig.DEBUG)
                 .build()
         )
