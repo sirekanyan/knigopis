@@ -121,7 +121,7 @@ class MainViewImpl(
     }
 
     override fun setNavigation(itemId: Int) {
-        bottomNavigation.selectedItemId = itemId
+        bottomNavigation.menu.findItem(itemId).isChecked = true
     }
 
     override fun showLoginOption(isVisible: Boolean) {
