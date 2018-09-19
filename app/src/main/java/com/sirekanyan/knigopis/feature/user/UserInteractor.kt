@@ -5,7 +5,6 @@ import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.model.BookModel
 import com.sirekanyan.knigopis.model.createBookHeaderModel
 import com.sirekanyan.knigopis.model.toBookModel
-import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Endpoint
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -23,23 +22,22 @@ interface UserInteractor {
 }
 
 class UserInteractorImpl(
-    private val auth: AuthRepository,
     private val api: Endpoint,
     private val resources: ResourceProvider
 ) : UserInteractor {
 
     override fun addFriend(userId: String) =
-        api.createSubscription(userId, auth.getAccessToken())
+        api.createSubscription(userId)
             .toCompletable()
             .io2main()
 
     override fun removeFriend(userId: String) =
-        api.deleteSubscription(userId, auth.getAccessToken())
+        api.deleteSubscription(userId)
             .toCompletable()
             .io2main()
 
     override fun isFriend(userId: String) =
-        api.getSubscriptions(auth.getAccessToken())
+        api.getSubscriptions()
             .map { subscriptions -> subscriptions.any { it.subUser.id == userId } }
             .io2main()
 

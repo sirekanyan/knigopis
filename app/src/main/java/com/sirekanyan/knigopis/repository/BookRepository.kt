@@ -33,7 +33,6 @@ interface BookRepository {
 class BookRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
-    private val auth: AuthRepository,
     private val plannedBookOrganizer: BookOrganizer<PlannedBook>,
     private val finishedBookOrganizer: BookOrganizer<FinishedBook>,
     networkChecker: NetworkChecker
@@ -44,35 +43,35 @@ class BookRepositoryImpl(
 
     override fun saveBook(bookId: String?, book: FinishedBookToSend, wasFinished: Boolean): Completable =
         when {
-            bookId == null -> api.createFinishedBook(auth.getAccessToken(), book)
-            wasFinished -> api.updateFinishedBook(bookId, auth.getAccessToken(), book)
+            bookId == null -> api.createFinishedBook(book)
+            wasFinished -> api.updateFinishedBook(bookId, book)
             else -> {
-                api.createFinishedBook(auth.getAccessToken(), book)
-                    .andThen(api.deletePlannedBook(bookId, auth.getAccessToken()))
+                api.createFinishedBook(book)
+                    .andThen(api.deletePlannedBook(bookId))
             }
         }
 
     override fun saveBook(bookId: String?, book: PlannedBookToSend, wasPlanned: Boolean): Completable =
         when {
-            bookId == null -> api.createPlannedBook(auth.getAccessToken(), book)
-            wasPlanned -> api.updatePlannedBook(bookId, auth.getAccessToken(), book)
+            bookId == null -> api.createPlannedBook(book)
+            wasPlanned -> api.updatePlannedBook(bookId, book)
             else -> {
-                api.createPlannedBook(auth.getAccessToken(), book)
-                    .andThen(api.deleteFinishedBook(bookId, auth.getAccessToken()))
+                api.createPlannedBook(book)
+                    .andThen(api.deleteFinishedBook(bookId))
             }
         }
 
     override fun deleteBook(book: BookDataModel): Completable =
         if (book.isFinished) {
-            api.deleteFinishedBook(book.id, auth.getAccessToken())
+            api.deleteFinishedBook(book.id)
         } else {
-            api.deletePlannedBook(book.id, auth.getAccessToken())
+            api.deletePlannedBook(book.id)
         }
 
     override fun loadFromNetwork(): Single<List<BookModel>> =
         Singles.zip(
-            api.getPlannedBooks(auth.getAccessToken()),
-            api.getFinishedBooks(auth.getAccessToken())
+            api.getPlannedBooks(),
+            api.getFinishedBooks()
         )
             .map { (planned, finished) ->
                 plannedBookOrganizer.organize(planned)

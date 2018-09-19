@@ -28,10 +28,8 @@ class ProfileInteractorImpl(
     private val authRepository: AuthRepository
 ) : ProfileInteractor {
 
-    private val accessToken get() = authRepository.getAccessToken()
-
     override fun getProfile(): Single<User> =
-        api.getProfile(accessToken)
+        api.getProfile()
             .io2main()
 
     override fun getBooks(): Observable<BookDataModel> =
@@ -49,7 +47,7 @@ class ProfileInteractorImpl(
             .io2main()
 
     override fun updateProfile(user: User, nickname: String): Completable =
-        api.updateProfile(user.id, accessToken, Profile(nickname, user.fixedProfile))
+        api.updateProfile(user.id, Profile(nickname, user.fixedProfile))
             .io2main()
 
     override fun logout() {

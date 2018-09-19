@@ -21,7 +21,6 @@ interface UserRepository {
 class UserRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
-    private val auth: AuthRepository,
     networkChecker: NetworkChecker
 ) : CommonRepository<List<UserModel>>(networkChecker),
     UserRepository {
@@ -29,7 +28,7 @@ class UserRepositoryImpl(
     override fun observeUsers() = observe()
 
     override fun loadFromNetwork(): Single<List<UserModel>> =
-        api.getSubscriptions(auth.getAccessToken()).map { it.map(Subscription::toUserModel) }
+        api.getSubscriptions().map { it.map(Subscription::toUserModel) }
 
     override fun findCached(): Maybe<List<UserModel>> =
         cache.find(CacheKey.USERS, genericType<List<UserModel>>())
