@@ -6,7 +6,7 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.extensions.toast
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.dto.User
+import com.sirekanyan.knigopis.model.ProfileModel
 import java.util.*
 
 interface ProfilePresenter : Presenter {
@@ -32,7 +32,7 @@ class ProfilePresenterImpl(
     private val todoList = Stack<BookDataModel>()
     private val doingList = Stack<BookDataModel>()
     private val doneList = Stack<BookDataModel>()
-    private var user: User? = null
+    private var profile: ProfileModel? = null
 
     override fun init() {
         view.setTodoCount(0)
@@ -63,17 +63,16 @@ class ProfilePresenterImpl(
     }
 
     override fun onSaveOptionClicked(nickname: String) {
-        if (view.isNicknameChanged) {
-            updateNickname(nickname)
+        val profile = profile?.copy(name = nickname) ?: return
+        if (view.isProfileChanged) {
+            updateProfile(profile)
         } else {
             view.quitEditMode()
         }
     }
 
     override fun onShareOptionClicked() {
-        user?.fixedProfile?.let {
-            router.shareProfile(it)
-        }
+        profile?.shareUrl?.let(router::shareProfile)
     }
 
     override fun onLogoutOptionClicked() {
@@ -83,10 +82,9 @@ class ProfilePresenterImpl(
 
     private fun refreshProfile() {
         interactor.getProfile()
-            .bind({ user ->
-                this.user = user
-                view.setNickname(user.nickname.orEmpty())
-                view.setAvatar(user.photo)
+            .bind({ profile ->
+                this.profile = profile
+                view.setProfile(profile)
                 view.setEditOptionVisible(true)
             }) {
                 logError("cannot get profile", it)
@@ -124,11 +122,10 @@ class ProfilePresenterImpl(
         }
     }
 
-    private fun updateNickname(nickname: String) {
-        val user = user ?: return
-        interactor.updateProfile(user, nickname)
+    private fun updateProfile(profile: ProfileModel) {
+        interactor.updateProfile(profile)
             .bind({
-                view.setNickname(nickname)
+                view.setProfile(profile)
                 view.quitEditMode()
                 refreshProfile()
             }, {

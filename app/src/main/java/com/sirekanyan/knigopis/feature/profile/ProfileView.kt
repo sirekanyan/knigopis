@@ -9,6 +9,7 @@ import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.model.BookDataModel
+import com.sirekanyan.knigopis.model.ProfileModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.profile_activity.*
 import java.util.*
@@ -16,9 +17,8 @@ import java.util.*
 interface ProfileView : CommonView {
 
     val isEditMode: Boolean
-    val isNicknameChanged: Boolean
-    fun setNickname(name: String)
-    fun setAvatar(avatar: String?)
+    val isProfileChanged: Boolean
+    fun setProfile(profile: ProfileModel)
     fun setEditOptionVisible(isVisible: Boolean)
     fun setTodoCount(count: Int)
     fun setDoingCount(count: Int)
@@ -50,11 +50,10 @@ class ProfileViewImpl(
     private val context = containerView.context
     private lateinit var editOption: MenuItem
     override val isEditMode get() = profileNicknameSwitcher.displayedChild == 1
-    override val isNicknameChanged get() = profileNickname.text.toString() != profileNicknameEditText.text.toString()
+    override val isProfileChanged get() = profileNickname.text.toString() != profileNicknameEditText.text.toString()
 
     init {
         initToolbar(profileToolbar)
-
         profileNicknameEditText.setOnEditorActionListener { view, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -66,12 +65,9 @@ class ProfileViewImpl(
         }
     }
 
-    override fun setNickname(name: String) {
-        profileNickname.text = name
-    }
-
-    override fun setAvatar(avatar: String?) {
-        profileAvatar.setCircleImage(avatar)
+    override fun setProfile(profile: ProfileModel) {
+        profileNickname.text = profile.name
+        profileAvatar.setCircleImage(profile.imageUrl)
     }
 
     override fun setEditOptionVisible(isVisible: Boolean) {

@@ -2,8 +2,10 @@ package com.sirekanyan.knigopis.feature.profile
 
 import com.sirekanyan.knigopis.common.extensions.io2main
 import com.sirekanyan.knigopis.model.BookDataModel
-import com.sirekanyan.knigopis.model.dto.Profile
+import com.sirekanyan.knigopis.model.ProfileModel
 import com.sirekanyan.knigopis.model.dto.User
+import com.sirekanyan.knigopis.model.toProfile
+import com.sirekanyan.knigopis.model.toProfileModel
 import com.sirekanyan.knigopis.repository.BookRepository
 import com.sirekanyan.knigopis.repository.Endpoint
 import com.sirekanyan.knigopis.repository.TokenStorage
@@ -15,9 +17,9 @@ import java.util.concurrent.TimeUnit
 
 interface ProfileInteractor {
 
-    fun getProfile(): Single<User>
+    fun getProfile(): Single<ProfileModel>
     fun getBooks(): Observable<BookDataModel>
-    fun updateProfile(user: User, nickname: String): Completable
+    fun updateProfile(profile: ProfileModel): Completable
     fun logout()
 
 }
@@ -28,8 +30,9 @@ class ProfileInteractorImpl(
     private val tokenStorage: TokenStorage
 ) : ProfileInteractor {
 
-    override fun getProfile(): Single<User> =
+    override fun getProfile(): Single<ProfileModel> =
         api.getProfile()
+            .map(User::toProfileModel)
             .io2main()
 
     override fun getBooks(): Observable<BookDataModel> =
@@ -46,8 +49,8 @@ class ProfileInteractorImpl(
             .map { (book) -> book }
             .io2main()
 
-    override fun updateProfile(user: User, nickname: String): Completable =
-        api.updateProfile(user.id, Profile(nickname, user.fixedProfile))
+    override fun updateProfile(profile: ProfileModel): Completable =
+        api.updateProfile(profile.id, profile.toProfile())
             .io2main()
 
     override fun logout() {
