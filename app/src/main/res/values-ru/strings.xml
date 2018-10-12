@@ -37,7 +37,7 @@
     <string name="profile.text.todo">%d\nв очереди</string>
     <string name="profile.text.doing">%d\nв процессе</string>
     <string name="profile.text.done">%d\nпрочитано</string>
-    <string name="profile.text.random">%s — %d%%</string>
+    <string name="profile.text.random">%1$s — %2$d%%</string>
 
     <!-- profile menu -->
     <string name="profile.option.edit">Изменить</string>

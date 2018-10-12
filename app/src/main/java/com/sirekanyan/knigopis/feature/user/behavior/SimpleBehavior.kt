@@ -13,10 +13,10 @@ class SimpleBehavior(
 ) : CoordinatorLayout.Behavior<View>(context, attrs) {
 
     private val dependViewId: Int
-    private var behaviorHelper: BehaviorHelper? = null
     private val endState: SimpleViewState
     private val minHeight: Int
     private val maxHeight: Int
+    private var behaviorHelper: BehaviorHelper? = null
 
     init {
         val a = context.obtainStyledAttributes(attrs, ViewBehavior)
@@ -40,13 +40,14 @@ class SimpleBehavior(
         child: View,
         dependency: View
     ): Boolean {
-        behaviorHelper?.let { helper ->
-            val ratio = Math.abs(dependency.y) / (maxHeight - minHeight)
-            helper.updateDimensions(child, Math.min(1f, ratio))
-        } ?: run {
-            behaviorHelper =
-                    BehaviorHelper(child.simpleState, endState)
-        }
+        val ratio = Math.abs(dependency.y) / (maxHeight - minHeight)
+        getHelper(child.simpleState).updateDimensions(child, Math.min(1f, ratio))
         return false
     }
+
+    private fun getHelper(startState: SimpleViewState): BehaviorHelper =
+        behaviorHelper ?: BehaviorHelper(startState, endState).also {
+            behaviorHelper = it
+        }
+
 }

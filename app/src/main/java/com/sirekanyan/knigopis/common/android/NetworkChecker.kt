@@ -14,6 +14,6 @@ class NetworkCheckerImpl(app: Application) : NetworkChecker {
     private val connectivityManager = app.systemConnectivityManager
 
     override fun isNetworkAvailable(): Boolean =
-        connectivityManager.activeNetworkInfo?.isConnectedOrConnecting ?: false
+        connectivityManager.activeNetworkInfo?.isConnected ?: false
 
 }

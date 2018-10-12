@@ -9,5 +9,7 @@ fun String.orDefault(default: String) = if (isEmpty()) default else this
 fun String.toUriOrNull() =
     Uri.parse(this).takeIf(Uri::isValidHttpLink)
 
-private fun Uri.isValidHttpLink() =
-    scheme in HTTP_SCHEMES && !host.isNullOrBlank()
+private fun Uri.isValidHttpLink(): Boolean {
+    val scheme: String? = scheme
+    return scheme in HTTP_SCHEMES && !host.isNullOrBlank()
+}
