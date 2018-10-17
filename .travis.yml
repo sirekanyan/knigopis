@@ -3,3 +3,10 @@ android:
   components:
   - build-tools-28.0.3
   - android-28
+deploy:
+  provider: releases
+  api_key:
+    secure: nqUcIbpIkR7cC1JKC+s5nO8IzbyPlullNVZSO78h+AMjs4dolv1ReFAEdV1k9HBjNzem8veOApp7LqOZHrO3XjxTkm3tKfvgdbYusigVXIt6Fx8ww34RFDKHx5BHlNi5vwQ6kcAVmeZ2ZznXoqEYVIO5gIzC6vjKmu3+XAH0XQ4NCmiENneS4ZG1V4tslfTELdHXpiLGOydzuSMaA/YjVA2mgMZ0w82cjmBnh5ug5GUDiIyPaiVmzx8AJGpi90irHxWgIlMvFHDqJGv9S07eOHMTA1eRzDiynIEcx6jzAWNy69Bb3Oxi2AG2Nkg7+xv6gHOEpOc/aUr6cHVdxYqRC31l6g0CUvGX2Kv4BsroOlhrOTA1l/ix3WlEO7K4eO3yFy3TULq6XueP65nJp4BaHILtB+6jyuMCI5rf6lkP0uQMOz4oAfI44Uhjb7WE2H6dJPSRAtBO+OBCImKO8eDYzGHEo4NdAw1by3AqEfM5KCFONAlle6RIHV96iWhOGEqMNWsn/DUZzrXvoCr0nPRZ+gFPCwH6z6c7KuOQ7RUSGmKZnDN8bKp0Jd+ed3Zqp3QjeJwWSZ0tW+nu8mXnxQgwhnSpYinB+B6am98aRmExozk7Q8vEqE4cY9u+5yJSP55IJXR1pB7NHCpsWHmSqFVRz7fUPJ4l/bix/DjKjR9N4Ko=
+  file: app/build/outputs/apk/*/*.apk
+  on:
+    tags: true
