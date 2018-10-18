@@ -27,6 +27,20 @@ android {
             applicationIdSuffix '.debug'
         }
     }
+    afterEvaluate {
+        assembleRelease.doLast {
+            applicationVariants.find { it.name == 'release' }.outputs.each { output ->
+                if (output.outputFile.exists()) {
+                    file("version").text =
+                            ['versionName': output.apkData.versionName,
+                             'versionCode': output.apkData.versionCode,
+                             'apkSize'    : "${(output.outputFile.size().toFloat() / 1024 / 1024).round(2)} MB"]
+                                    .collect { key, value -> "$key: $value\n" }
+                                    .join()
+                }
+            }
+        }
+    }
 }
 
 dependencies {
