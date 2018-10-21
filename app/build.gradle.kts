@@ -34,20 +34,6 @@ android {
             applicationIdSuffix = ".debug"
         }
     }
-    task("updateReadme") {
-        dependsOn("assembleRelease")
-        doLast {
-            val releaseVariant = applicationVariants.first { it.name == "release" }
-            val releaseFiles = releaseVariant.outputs.map { it.outputFile }
-            val apkFile = releaseFiles.single { it.exists() && it.extension == "apk" }
-            val apkSize = "%.2f".format(apkFile.length().toFloat() / 1024 / 1024)
-            rootProject.file("README.md").printWriter().use { readme ->
-                rootProject.file("readme.md").forEachLine { line ->
-                    readme.appendln(line.replace("{{apkSize}}", apkSize))
-                }
-            }
-        }
-    }
 }
 
 dependencies {
@@ -61,18 +47,33 @@ dependencies {
     implementation("com.android.support.constraint:constraint-layout:1.1.3")
 
     // rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.1.11")
-    implementation("io.reactivex.rxjava2:rxkotlin:2.2.0")
-    implementation("io.reactivex.rxjava2:rxandroid:2.0.2")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.2")
+    implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
     implementation("com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar")
 
     // retrofit & okhttp
-    implementation("com.squareup.retrofit2:retrofit:2.3.0")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.3.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.3.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.1")
+    implementation("com.squareup.retrofit2:retrofit:2.4.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.4.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
 
     // etc
-    implementation("com.github.bumptech.glide:glide:4.7.1")
+    implementation("com.github.bumptech.glide:glide:4.8.0")
     implementation(files("libs/ulogin-sdk-v1.1.aar"))
+}
+
+task("updateReadme") {
+    dependsOn("assembleRelease")
+    doLast {
+        val releaseVariant = android.applicationVariants.first { it.name == "release" }
+        val releaseFiles = releaseVariant.outputs.map { it.outputFile }
+        val apkFile = releaseFiles.single { it.exists() && it.extension == "apk" }
+        val apkSize = "%.2f".format(apkFile.length().toFloat() / 1024 / 1024)
+        rootProject.file("README.md").printWriter().use { readme ->
+            rootProject.file("readme.md").forEachLine { line ->
+                readme.appendln(line.replace("{{apkSize}}", apkSize))
+            }
+        }
+    }
 }

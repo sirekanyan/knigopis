@@ -28,12 +28,10 @@ class UserInteractorImpl(
 
     override fun addFriend(userId: String) =
         api.createSubscription(userId)
-            .toCompletable()
             .io2main()
 
     override fun removeFriend(userId: String) =
         api.deleteSubscription(userId)
-            .toCompletable()
             .io2main()
 
     override fun isFriend(userId: String) =

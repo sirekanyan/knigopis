@@ -23,15 +23,15 @@ class AuthRepositoryImpl(
 
     override fun authorize(): Completable {
         val token = storage.token
-        return if (token != null && !isAuthorized()) {
+        return if (token == null || isAuthorized()) {
+            Completable.complete()
+        } else {
             api.getCredentials(token)
                 .io2main()
                 .doOnSuccess {
                     storage.accessToken = it.accessToken
                 }
-                .toCompletable()
-        } else {
-            Completable.complete()
+                .ignoreElement()
         }
     }
 

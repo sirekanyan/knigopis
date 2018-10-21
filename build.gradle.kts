@@ -12,11 +12,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        mavenCentral()
         google()
-        flatDir {
-            dirs("libs")
-        }
     }
 }
 

@@ -12,8 +12,7 @@ interface Permissions {
 
 }
 
-class PermissionsImpl(private val activity: Activity) :
-    Permissions {
+class PermissionsImpl(private val activity: Activity) : Permissions {
 
     override fun requestReadPhoneState(): Single<Permission> =
         RxPermissions(activity).requestEach(READ_PHONE_STATE).firstOrError()

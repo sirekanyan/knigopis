@@ -53,9 +53,9 @@ interface Endpoint {
     fun updateProfile(@Path("id") userId: String, @Body profile: Profile): Completable
 
     @POST("subscriptions/{subUserId}")
-    fun createSubscription(@Path("subUserId") userId: String): Single<Any>
+    fun createSubscription(@Path("subUserId") userId: String): Completable
 
     @DELETE("subscriptions/{subUserId}")
-    fun deleteSubscription(@Path("subUserId") userId: String): Single<Any>
+    fun deleteSubscription(@Path("subUserId") userId: String): Completable
 
 }
