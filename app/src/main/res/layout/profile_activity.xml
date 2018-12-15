@@ -55,7 +55,8 @@
             android:gravity="center"
             android:hint="@string/profile.hint.nickname"
             android:inputType="text"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            tools:ignore="Autofill" />
 
     </ViewSwitcher>
 

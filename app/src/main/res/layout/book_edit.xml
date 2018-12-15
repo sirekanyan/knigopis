@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="Autofill">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -78,8 +79,8 @@
                 android:id="@+id/bookImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/rectangle_placeholder_background"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/book_author_input"
@@ -174,8 +175,8 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/text_area_background"
                 android:drawableEnd="@drawable/ic_comment_gray"
-                android:drawablePadding="16dp"
                 android:drawableRight="@drawable/ic_comment_gray"
+                android:drawablePadding="16dp"
                 android:hint="@string/book.hint.notes"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"
