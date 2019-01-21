@@ -38,7 +38,7 @@ android {
 
 dependencies {
     // kotlin standard library
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11")
 
     // support libraries
     implementation("com.android.support:appcompat-v7:28.0.0")
@@ -47,16 +47,16 @@ dependencies {
     implementation("com.android.support.constraint:constraint-layout:1.1.3")
 
     // rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.2")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.5")
     implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
-    implementation("com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar")
+    implementation("com.github.tbruyelle:rxpermissions:0.10.2")
 
     // retrofit & okhttp
-    implementation("com.squareup.retrofit2:retrofit:2.4.0")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.4.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
+    implementation("com.squareup.retrofit2:retrofit:2.5.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.5.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.1")
 
     // etc
     implementation("com.github.bumptech.glide:glide:4.8.0")
