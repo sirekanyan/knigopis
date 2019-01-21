@@ -141,7 +141,7 @@ class UserViewImpl(
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.option_copy -> {
-                    callbacks.onNavigationBackClicked()
+                    callbacks.onCopyOptionClicked()
                     true
                 }
                 R.id.option_unsubscribe -> {
