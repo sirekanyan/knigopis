@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -7,10 +5,7 @@ plugins {
 }
 
 androidExtensions {
-    // fixme: https://youtrack.jetbrains.com/issue/KT-22213
-    configure(delegateClosureOf<AndroidExtensionsExtension> {
-        isExperimental = true
-    })
+    isExperimental = true
 }
 
 android {
@@ -38,7 +33,7 @@ android {
 
 dependencies {
     // kotlin standard library
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41")
 
     // support libraries
     implementation("com.android.support:appcompat-v7:28.0.0")
