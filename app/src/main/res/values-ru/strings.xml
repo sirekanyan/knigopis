@@ -2,7 +2,6 @@
     <!-- common -->
     <string name="common.title.app">Книгопись</string>
     <string name="common.error.network">Проверьте подключение к сети</string>
-    <string name="common.button.retry">Повторить</string>
     <string name="common.button.cancel">Отмена</string>
     <string name="common.info.dev">НЕ ПЫТАЙТЕСБ ЧТОТ0 N3МЕНИТЬ!</string>
     <plurals name="common.header.books">
@@ -96,9 +95,10 @@
 
     <!-- permissions -->
     <string name="permissions.title">Разрешения</string>
-    <string name="permissions.message.retry">Данное разрешение необходимо для авторизации через uLogin</string>
-    <string name="permissions.message.settings">Включите разрешение в настройках, чтобы авторизоваться с помощью uLogin</string>
-    <string name="permissions.button.settings">В настройки</string>
+    <string name="permissions.message.rationale">Для авторизации через uLogin необходимо дать разрешение на чтение идентификатора телефона.</string>
+    <string name="permissions.button.rationale">Продолжить</string>
+    <string name="permissions.message.settings">Разрешите доступ к телефону в\u00a0настройках</string>
+    <string name="permissions.button.settings">Настройки</string>
 
     <!-- social networks -->
     <string name="common.social.facebook">Фейсбук</string>

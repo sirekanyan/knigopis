@@ -2,7 +2,6 @@
     <!-- common -->
     <string name="common.title.app">Knigopis</string>
     <string name="common.error.network">Check your network connection</string>
-    <string name="common.button.retry">Retry</string>
     <string name="common.button.cancel">Cancel</string>
     <string name="common.info.dev">We Present A SPECIAL PRESENTATION</string>
     <plurals name="common.header.books">
@@ -95,9 +94,10 @@
 
     <!-- permissions -->
     <string name="permissions.title">Permissions</string>
-    <string name="permissions.message.retry">The permission is necessary to authorize you by using uLogin library, please allow in order to continue</string>
-    <string name="permissions.message.settings">Please allow permission in settings to authorize with uLogin</string>
-    <string name="permissions.button.settings">Goto settings</string>
+    <string name="permissions.message.rationale">Phone permission is necessary to authorize you by using uLogin library.</string>
+    <string name="permissions.button.rationale">Continue</string>
+    <string name="permissions.message.settings">Allow phone permission in settings</string>
+    <string name="permissions.button.settings">Settings</string>
 
     <!-- social networks -->
     <string name="common.social.facebook">Facebook</string>

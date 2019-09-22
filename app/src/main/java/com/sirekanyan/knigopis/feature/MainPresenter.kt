@@ -2,8 +2,10 @@ package com.sirekanyan.knigopis.feature
 
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
+import com.sirekanyan.knigopis.common.android.permissions.Permission
+import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
+import com.sirekanyan.knigopis.common.android.permissions.Permissions
 import com.sirekanyan.knigopis.common.functions.logError
-import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
@@ -20,8 +22,10 @@ interface MainPresenter : Presenter {
     fun back(): Boolean
     fun onLoginScreenResult(token: String)
     fun onBookScreenResult()
+    fun onPermissionResult(permissionResult: PermissionResult)
 
     interface Router {
+        fun openLoginScreen()
         fun openProfileScreen()
         fun reopenScreen()
     }
@@ -29,16 +33,17 @@ interface MainPresenter : Presenter {
 }
 
 class MainPresenterImpl(
-    private val loginPresenter: LoginPresenter,
     private val pagePresenters: Map<CurrentTab, PagePresenter>,
     private val router: MainPresenter.Router,
     private val config: Configuration,
-    private val auth: AuthRepository
-) : BasePresenter<MainView>(loginPresenter, *pagePresenters.values.toTypedArray()),
+    private val auth: AuthRepository,
+    private val permissions: Permissions
+) : BasePresenter<MainView>(*pagePresenters.values.toTypedArray()),
     MainPresenter,
     MainView.Callbacks,
     PagesPresenter,
-    ProgressView.Callbacks {
+    ProgressView.Callbacks,
+    Permissions.Callback {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
@@ -135,7 +140,17 @@ class MainPresenterImpl(
     }
 
     override fun onLoginOptionClicked() {
-        loginPresenter.login()
+        permissions.requestPermission(Permission.PHONE)
+    }
+
+    override fun onPermissionResult(permissionResult: PermissionResult) {
+        permissions.submitResult(permissionResult)
+    }
+
+    override fun onGranted(permission: Permission) {
+        if (permission == Permission.PHONE) {
+            router.openLoginScreen()
+        }
     }
 
     override fun onProfileOptionClicked() {

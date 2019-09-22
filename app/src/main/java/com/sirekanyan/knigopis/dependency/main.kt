@@ -1,13 +1,12 @@
 package com.sirekanyan.knigopis.dependency
 
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
+import com.sirekanyan.knigopis.common.android.permissions.PermissionsImpl
 import com.sirekanyan.knigopis.common.extensions.app
 import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.feature.*
 import com.sirekanyan.knigopis.feature.books.BooksPresenterImpl
 import com.sirekanyan.knigopis.feature.books.BooksViewImpl
-import com.sirekanyan.knigopis.feature.login.LoginPresenterImpl
-import com.sirekanyan.knigopis.feature.login.LoginViewImpl
 import com.sirekanyan.knigopis.feature.notes.NotesPresenterImpl
 import com.sirekanyan.knigopis.feature.notes.NotesViewImpl
 import com.sirekanyan.knigopis.feature.users.UsersPresenterImpl
@@ -19,12 +18,11 @@ import kotlinx.android.synthetic.main.notes_page.view.*
 import kotlinx.android.synthetic.main.users_page.view.*
 
 fun MainActivity.providePresenter(): MainPresenter {
-    val loginPresenter = LoginPresenterImpl(this, providePermissions())
     val booksPresenter = BooksPresenterImpl(this, app.bookRepository)
     val usersPresenter = UsersPresenterImpl(this, app.userRepository, app.resourceProvider)
     val notesPresenter = NotesPresenterImpl(this, app.noteRepository)
+    val permissions = PermissionsImpl(this, app.config)
     return MainPresenterImpl(
-        loginPresenter,
         mapOf(
             BOOKS_TAB to booksPresenter,
             USERS_TAB to usersPresenter,
@@ -32,12 +30,12 @@ fun MainActivity.providePresenter(): MainPresenter {
         ),
         this,
         app.config,
-        app.authRepository
+        app.authRepository,
+        permissions
     ).also { mainPresenter ->
         val rootView = getRootView()
         val progressView = ProgressViewImpl(rootView.swipeRefresh, mainPresenter)
         val dialogs: DialogFactory = provideDialogs()
-        loginPresenter.view = LoginViewImpl(rootView, loginPresenter)
         booksPresenter.also { p ->
             p.view = BooksViewImpl(rootView.booksPage, booksPresenter, progressView, dialogs)
             p.parent = mainPresenter
@@ -51,5 +49,6 @@ fun MainActivity.providePresenter(): MainPresenter {
             p.parent = mainPresenter
         }
         mainPresenter.view = MainViewImpl(rootView, mainPresenter)
+        permissions.callback = mainPresenter
     }
 }

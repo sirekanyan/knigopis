@@ -10,10 +10,12 @@ private const val PREFS_NAME = "config"
 interface Configuration {
     var isDarkTheme: Boolean
     var sortingMode: Int
+    var shouldShowSettings: Boolean
 }
 
 class ConfigurationImpl(context: Application) : Configuration {
     internal val prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     override var isDarkTheme by BooleanPreference()
     override var sortingMode by IntPreference()
+    override var shouldShowSettings by BooleanPreference()
 }

@@ -6,15 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
+import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
 import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent
 import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.book.createBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
-import com.sirekanyan.knigopis.feature.login.LoginPresenter
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
@@ -30,7 +29,6 @@ private val CURRENT_TAB_EXTRA = extra("current_tab")
 
 class MainActivity : BaseActivity(),
     MainPresenter.Router,
-    LoginPresenter.Router,
     BooksPresenter.Router,
     UsersPresenter.Router,
     NotesPresenter.Router {
@@ -99,6 +97,18 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        results: IntArray
+    ) {
+        if (permissions.size == 1 && results.size == 1) {
+            PermissionResult.create(requestCode, permissions.single(), results.single())?.let {
+                presenter.onPermissionResult(it)
+            }
+        }
+    }
+
     override fun onBackPressed() {
         if (!presenter.back()) {
             super.onBackPressed()
@@ -107,10 +117,6 @@ class MainActivity : BaseActivity(),
 
     override fun openLoginScreen() {
         startActivityForResult(createLoginIntent(), LOGIN_REQUEST_CODE)
-    }
-
-    override fun openSettingsScreen() {
-        startActivity(createAppSettingsIntent())
     }
 
     override fun openProfileScreen() {

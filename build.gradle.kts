@@ -13,12 +13,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven {
-            url = uri("https://jitpack.io")
-            content {
-                includeGroup("com.github.tbruyelle")
-            }
-        }
     }
 }
 

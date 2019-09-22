@@ -45,7 +45,6 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:2.2.5")
     implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
-    implementation("com.github.tbruyelle:rxpermissions:0.10.2")
 
     // retrofit & okhttp
     implementation("com.squareup.retrofit2:retrofit:2.6.1")
