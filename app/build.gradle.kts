@@ -33,7 +33,7 @@ android {
 
 dependencies {
     // kotlin standard library
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
     // support libraries
     implementation("com.android.support:appcompat-v7:28.0.0")
@@ -48,10 +48,10 @@ dependencies {
     implementation("com.github.tbruyelle:rxpermissions:0.10.2")
 
     // retrofit & okhttp
-    implementation("com.squareup.retrofit2:retrofit:2.5.0")
+    implementation("com.squareup.retrofit2:retrofit:2.6.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.5.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.12.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.2.0")
 
     // etc
     implementation("com.github.bumptech.glide:glide:4.8.0")

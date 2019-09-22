@@ -13,9 +13,9 @@ class AuthInterceptor(private val storage: TokenStorage) : Interceptor {
     override fun intercept(chain: Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        if (response.code() == UNAUTHORIZED_HTTP_CODE) {
+        if (response.code == UNAUTHORIZED_HTTP_CODE) {
             storage.accessToken?.let { accessToken ->
-                val urlWithAccessToken = request.url().newBuilder()
+                val urlWithAccessToken = request.url.newBuilder()
                     .addQueryParameter(ACCESS_TOKEN_PARAMETER_NAME, accessToken)
                     .build()
                 return chain.proceed(
