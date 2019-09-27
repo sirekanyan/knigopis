@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:popupTheme="@style/ToolbarPopupTheme"
+            app:popupTheme="?attr/toolbar_popup_theme"
             tools:title="@string/book.title.add" />
 
     </android.support.design.widget.AppBarLayout>

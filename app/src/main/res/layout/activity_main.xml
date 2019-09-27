@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:popupTheme="@style/ToolbarPopupTheme"
+            app:popupTheme="?attr/toolbar_popup_theme"
             app:title="@string/common.title.app" />
 
     </android.support.design.widget.AppBarLayout>

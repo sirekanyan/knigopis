@@ -30,6 +30,7 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">
             @color/light_navigation_bar_color
         </item>
+        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
@@ -50,6 +51,7 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">
             @color/dark_navigation_bar_color
         </item>
+        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Dark</item>
     </style>
 
     <style name="ProfileAppTheme" parent="DarkAppTheme">
@@ -64,8 +66,6 @@
     </style>
 
     <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light" />
 
     <style name="AboutItem">
         <item name="android:layout_height">wrap_content</item>

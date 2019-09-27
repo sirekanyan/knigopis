@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ToolbarPopupTheme"
+                app:popupTheme="?attr/toolbar_popup_theme"
                 app:titleMarginStart="@dimen/title_start_margin_collapsed" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
