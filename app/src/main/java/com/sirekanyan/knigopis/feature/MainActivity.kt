@@ -1,19 +1,19 @@
 package com.sirekanyan.knigopis.feature
 
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.ACTION_VIEW
+import android.content.Intent.*
 import android.net.Uri
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
 import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.book.createBookIntent
 import com.sirekanyan.knigopis.feature.books.BooksPresenter
+import com.sirekanyan.knigopis.feature.login.startLoginActivity
 import com.sirekanyan.knigopis.feature.notes.NotesPresenter
 import com.sirekanyan.knigopis.feature.profile.createProfileIntent
 import com.sirekanyan.knigopis.feature.user.createUserIntent
@@ -21,11 +21,16 @@ import com.sirekanyan.knigopis.feature.users.UsersPresenter
 import com.sirekanyan.knigopis.feature.users.getMainState
 import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.*
-import ru.ulogin.sdk.UloginAuthActivity
 
-private const val LOGIN_REQUEST_CODE = 0
 private const val BOOK_REQUEST_CODE = 1
 private val CURRENT_TAB_EXTRA = extra("current_tab")
+
+fun Context.startMainActivity() {
+    startActivity(
+        Intent(this, MainActivity::class.java)
+            .setFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
+    )
+}
 
 class MainActivity : BaseActivity(),
     MainPresenter.Router,
@@ -82,29 +87,10 @@ class MainActivity : BaseActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            LOGIN_REQUEST_CODE -> {
-                if (resultCode == RESULT_OK && data != null) {
-                    val userData = data.getSerializableExtra(UloginAuthActivity.USERDATA)
-                    val token = (userData as HashMap<*, *>)["token"].toString()
-                    presenter.onLoginScreenResult(token)
-                }
-            }
             BOOK_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK) {
                     presenter.onBookScreenResult()
                 }
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        results: IntArray
-    ) {
-        if (permissions.size == 1 && results.size == 1) {
-            PermissionResult.create(requestCode, permissions.single(), results.single())?.let {
-                presenter.onPermissionResult(it)
             }
         }
     }
@@ -116,7 +102,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun openLoginScreen() {
-        startActivityForResult(createLoginIntent(), LOGIN_REQUEST_CODE)
+        startLoginActivity()
     }
 
     override fun openProfileScreen() {

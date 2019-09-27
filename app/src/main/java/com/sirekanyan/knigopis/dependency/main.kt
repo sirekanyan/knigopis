@@ -1,7 +1,6 @@
 package com.sirekanyan.knigopis.dependency
 
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
-import com.sirekanyan.knigopis.common.android.permissions.PermissionsImpl
 import com.sirekanyan.knigopis.common.extensions.app
 import com.sirekanyan.knigopis.common.extensions.getRootView
 import com.sirekanyan.knigopis.feature.*
@@ -21,7 +20,6 @@ fun MainActivity.providePresenter(): MainPresenter {
     val booksPresenter = BooksPresenterImpl(this, app.bookRepository)
     val usersPresenter = UsersPresenterImpl(this, app.userRepository, app.resourceProvider)
     val notesPresenter = NotesPresenterImpl(this, app.noteRepository)
-    val permissions = PermissionsImpl(this, app.config)
     return MainPresenterImpl(
         mapOf(
             BOOKS_TAB to booksPresenter,
@@ -30,8 +28,7 @@ fun MainActivity.providePresenter(): MainPresenter {
         ),
         this,
         app.config,
-        app.authRepository,
-        permissions
+        app.authRepository
     ).also { mainPresenter ->
         val rootView = getRootView()
         val progressView = ProgressViewImpl(rootView.swipeRefresh, mainPresenter)
@@ -49,6 +46,5 @@ fun MainActivity.providePresenter(): MainPresenter {
             p.parent = mainPresenter
         }
         mainPresenter.view = MainViewImpl(rootView, mainPresenter)
-        permissions.callback = mainPresenter
     }
 }

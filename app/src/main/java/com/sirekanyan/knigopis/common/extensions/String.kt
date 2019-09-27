@@ -1,6 +1,9 @@
 package com.sirekanyan.knigopis.common.extensions
 
 import android.net.Uri
+import kotlin.random.Random
+
+val RANDOM_ID = Array(16) { Random.nextInt(0, 16).toString(16) }.joinToString("")
 
 private val HTTP_SCHEMES = setOf("http", "https")
 

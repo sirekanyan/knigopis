@@ -66,4 +66,13 @@
     <!-- profile theme -->
     <color name="image_placeholder_color_dark">@color/common_deep_purple_300</color>
 
+    <!-- login -->
+    <color name="social_vk">#5181B8</color>
+    <color name="social_go">#4A8BF6</color>
+    <color name="social_fb">#3B5998</color>
+    <color name="social_mr">#005FF9</color>
+    <color name="social_ya">#FFDB4D</color>
+    <color name="social_tw">#1DA1F2</color>
+    <color name="social_in">#333333</color>
+
 </resources>

@@ -2,9 +2,6 @@ package com.sirekanyan.knigopis.feature
 
 import com.sirekanyan.knigopis.common.BasePresenter
 import com.sirekanyan.knigopis.common.Presenter
-import com.sirekanyan.knigopis.common.android.permissions.Permission
-import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
-import com.sirekanyan.knigopis.common.android.permissions.Permissions
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.CurrentTab
@@ -20,9 +17,7 @@ interface MainPresenter : Presenter {
     fun start()
     fun resume()
     fun back(): Boolean
-    fun onLoginScreenResult(token: String)
     fun onBookScreenResult()
-    fun onPermissionResult(permissionResult: PermissionResult)
 
     interface Router {
         fun openLoginScreen()
@@ -36,19 +31,16 @@ class MainPresenterImpl(
     private val pagePresenters: Map<CurrentTab, PagePresenter>,
     private val router: MainPresenter.Router,
     private val config: Configuration,
-    private val auth: AuthRepository,
-    private val permissions: Permissions
+    private val auth: AuthRepository
 ) : BasePresenter<MainView>(*pagePresenters.values.toTypedArray()),
     MainPresenter,
     MainView.Callbacks,
     PagesPresenter,
-    ProgressView.Callbacks,
-    Permissions.Callback {
+    ProgressView.Callbacks {
 
     private val loadedTabs = mutableSetOf<CurrentTab>()
     private var currentTab: CurrentTab? = null
     private var booksChanged = false
-    private var userLoggedIn = false
 
     override val state
         get() = currentTab?.let { MainPresenterState(it) }
@@ -67,11 +59,6 @@ class MainPresenterImpl(
     override fun resume() {
         auth.authorize().bind({
             refreshButtons()
-            if (userLoggedIn) {
-                userLoggedIn = false
-                currentTab = BOOKS_TAB
-                refresh()
-            }
         }, {
             logError("cannot check credentials", it)
         })
@@ -116,11 +103,6 @@ class MainPresenterImpl(
         }
     }
 
-    override fun onLoginScreenResult(token: String) {
-        auth.saveToken(token)
-        userLoggedIn = true
-    }
-
     override fun onBookScreenResult() {
         booksChanged = true
     }
@@ -140,17 +122,7 @@ class MainPresenterImpl(
     }
 
     override fun onLoginOptionClicked() {
-        permissions.requestPermission(Permission.PHONE)
-    }
-
-    override fun onPermissionResult(permissionResult: PermissionResult) {
-        permissions.submitResult(permissionResult)
-    }
-
-    override fun onGranted(permission: Permission) {
-        if (permission == Permission.PHONE) {
-            router.openLoginScreen()
-        }
+        router.openLoginScreen()
     }
 
     override fun onProfileOptionClicked() {

@@ -24,6 +24,22 @@
     <string name="main.option.dark">Dark theme</string>
     <string name="main.option.clear">Clear cache</string>
 
+    <!-- login -->
+    <string name="login.title">Log in with…</string>
+    <string name="login.legacy">Legacy log in</string>
+    <string name="login.website.vk">VKontakte</string>
+    <string name="login.website.go">Google</string>
+    <string name="login.website.fb">Facebook</string>
+    <string name="login.website.mr">Mail.ru</string>
+    <string name="login.website.ya">Yandex</string>
+    <string name="login.website.tw">Twitter</string>
+    <string name="login.website.in">Instagram</string>
+    <string name="login.browser.title">No browsers found</string>
+    <array name="login.browsers">
+        <item>Install Firefox</item>
+        <item>Install Chrome</item>
+    </array>
+
     <!-- about -->
     <string name="about.text.idea">API:\nhttp://knigopis.com</string>
     <string name="about.text.developer">Development:\nvadik@sirekanyan.com</string>

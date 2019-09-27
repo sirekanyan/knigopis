@@ -29,8 +29,10 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="www.knigopis.com"
                     android:scheme="http" />
@@ -51,6 +53,20 @@
         <activity
             android:name="ru.ulogin.sdk.UloginAuthActivity"
             android:configChanges="orientation|screenSize" />
+
+        <activity android:name=".feature.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="532b8e7fc54c52b6df5b55181acc241a"
+                    android:path="/8e89f82ac2a6a7972452eae93e3bb734"
+                    android:scheme="e270636c0efc6cad95130113d3bbafc3" />
+            </intent-filter>
+        </activity>
 
     </application>
 

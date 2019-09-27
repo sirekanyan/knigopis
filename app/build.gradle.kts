@@ -40,6 +40,7 @@ dependencies {
     implementation("com.android.support:design:28.0.0")
     implementation("com.android.support:support-vector-drawable:28.0.0")
     implementation("com.android.support.constraint:constraint-layout:1.1.3")
+    implementation("com.android.support:customtabs:28.0.0")
 
     // rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.5")
