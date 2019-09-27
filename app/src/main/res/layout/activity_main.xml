@@ -8,19 +8,7 @@
     android:orientation="vertical"
     tools:context=".feature.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppBarTheme">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:popupTheme="?attr/toolbar_popup_theme"
-            app:title="@string/common.title.app" />
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/default_app_bar" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

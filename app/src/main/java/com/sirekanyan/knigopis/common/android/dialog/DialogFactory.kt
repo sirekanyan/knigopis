@@ -2,6 +2,7 @@ package com.sirekanyan.knigopis.common.android.dialog
 
 import android.content.Context
 import android.support.design.widget.BottomSheetDialog
+import android.view.View
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.inflate
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_item.view.*
@@ -21,7 +22,7 @@ class BottomSheetDialogFactory(private val context: Context) : DialogFactory {
         dialog.bottomSheetTitle.text = title
         val container = dialog.bottomSheetContainer
         items.forEach { item ->
-            val itemView = container.inflate(R.layout.bottom_sheet_dialog_item)
+            val itemView = container.inflate<View>(R.layout.bottom_sheet_dialog_item)
             itemView.bottomSheetItemIcon.setImageResource(item.iconRes)
             item.title.setValueTo(itemView.bottomSheetItemText)
             itemView.setOnClickListener {

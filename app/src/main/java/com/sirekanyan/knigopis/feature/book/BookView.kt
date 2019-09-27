@@ -12,6 +12,7 @@ import com.sirekanyan.knigopis.model.DateModel
 import com.sirekanyan.knigopis.model.EditBookModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.book_edit.*
+import kotlinx.android.synthetic.main.default_app_bar.*
 
 interface BookView : CommonView {
 

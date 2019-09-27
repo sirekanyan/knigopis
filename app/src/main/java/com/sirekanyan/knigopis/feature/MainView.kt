@@ -15,6 +15,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.about.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.books_page.*
+import kotlinx.android.synthetic.main.default_app_bar.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 

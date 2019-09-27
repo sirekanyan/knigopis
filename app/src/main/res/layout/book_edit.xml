@@ -8,20 +8,7 @@
     android:orientation="vertical"
     tools:ignore="Autofill">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppBarTheme">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:popupTheme="?attr/toolbar_popup_theme"
-            tools:title="@string/book.title.add" />
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/default_app_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
