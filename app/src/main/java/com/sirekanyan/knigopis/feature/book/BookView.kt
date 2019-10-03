@@ -1,9 +1,9 @@
 package com.sirekanyan.knigopis.feature.book
 
-import android.support.annotation.StringRes
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import androidx.annotation.StringRes
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.*

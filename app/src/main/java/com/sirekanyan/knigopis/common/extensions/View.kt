@@ -1,10 +1,10 @@
 package com.sirekanyan.knigopis.common.extensions
 
-import android.support.annotation.DimenRes
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.view.View
+import androidx.annotation.DimenRes
+import androidx.core.view.ViewCompat
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 
 val View.isVisible get() = visibility == View.VISIBLE
 

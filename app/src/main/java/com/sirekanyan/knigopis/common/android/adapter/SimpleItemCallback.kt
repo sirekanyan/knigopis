@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.common.android.adapter
 
-import android.support.v7.util.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 
 class SimpleItemCallback<T>(private val getId: (T) -> String) : ItemCallback<T>() {
 

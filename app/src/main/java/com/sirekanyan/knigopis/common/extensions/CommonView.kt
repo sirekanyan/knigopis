@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.common.extensions
 
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 
 fun CommonView.toast(messageId: Int, vararg args: Any) {

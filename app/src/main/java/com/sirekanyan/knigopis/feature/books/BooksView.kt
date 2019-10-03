@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.feature.books
 
-import android.support.v7.app.AlertDialog
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem

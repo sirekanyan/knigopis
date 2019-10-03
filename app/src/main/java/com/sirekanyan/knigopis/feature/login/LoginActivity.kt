@@ -7,9 +7,9 @@ import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import android.net.Uri
 import android.os.Bundle
-import android.support.customtabs.CustomTabsIntent
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
 import com.sirekanyan.knigopis.common.extensions.app
@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.Router {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             LOGIN_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK && data != null) {

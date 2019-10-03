@@ -1,10 +1,10 @@
 package com.sirekanyan.knigopis.feature.profile
 
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.Toolbar
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.*

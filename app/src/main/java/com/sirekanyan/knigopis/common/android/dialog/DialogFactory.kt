@@ -1,8 +1,8 @@
 package com.sirekanyan.knigopis.common.android.dialog
 
 import android.content.Context
-import android.support.design.widget.BottomSheetDialog
 import android.view.View
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.inflate
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_item.view.*

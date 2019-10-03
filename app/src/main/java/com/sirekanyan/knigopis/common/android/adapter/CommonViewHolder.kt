@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.common.android.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class CommonViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
 

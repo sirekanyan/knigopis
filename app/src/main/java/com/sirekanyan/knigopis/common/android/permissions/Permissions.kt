@@ -2,12 +2,12 @@ package com.sirekanyan.knigopis.common.android.permissions
 
 import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.permissions.Permissions.Callback
 import com.sirekanyan.knigopis.common.functions.createAppSettingsIntent

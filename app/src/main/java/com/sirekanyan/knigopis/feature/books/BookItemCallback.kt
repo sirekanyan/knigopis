@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.feature.books
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.BookHeaderModel
 import com.sirekanyan.knigopis.model.BookModel

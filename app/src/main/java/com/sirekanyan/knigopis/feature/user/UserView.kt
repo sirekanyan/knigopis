@@ -1,8 +1,8 @@
 package com.sirekanyan.knigopis.feature.user
 
-import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.dialog.DialogFactory
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem

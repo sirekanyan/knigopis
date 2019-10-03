@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.feature.users
 
-import android.support.v7.recyclerview.extensions.ListAdapter
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.android.adapter.SimpleItemCallback
 import com.sirekanyan.knigopis.common.extensions.inflate

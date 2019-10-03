@@ -1,7 +1,7 @@
 package com.sirekanyan.knigopis.common.android
 
-import android.support.annotation.StringRes
 import android.widget.TextView
+import androidx.annotation.StringRes
 
 interface StringResource {
     fun setValueTo(view: TextView)

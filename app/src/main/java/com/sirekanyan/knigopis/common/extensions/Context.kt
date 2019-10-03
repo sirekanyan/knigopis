@@ -4,9 +4,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.support.annotation.StringRes
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.sirekanyan.knigopis.R
 
 var isDarkTheme = false

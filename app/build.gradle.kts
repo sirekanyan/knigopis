@@ -35,12 +35,10 @@ dependencies {
     // kotlin standard library
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
-    // support libraries
-    implementation("com.android.support:appcompat-v7:28.0.0")
-    implementation("com.android.support:design:28.0.0")
-    implementation("com.android.support:support-vector-drawable:28.0.0")
-    implementation("com.android.support.constraint:constraint-layout:1.1.3")
-    implementation("com.android.support:customtabs:28.0.0")
+    // androidx libraries
+    implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("androidx.browser:browser:1.0.0")
 
     // rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.5")
@@ -54,6 +52,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.2.0")
 
     // etc
+    implementation("com.google.android.material:material:1.0.0")
     implementation("com.github.bumptech.glide:glide:4.8.0")
     implementation(files("libs/ulogin-sdk-v1.1.aar"))
 }

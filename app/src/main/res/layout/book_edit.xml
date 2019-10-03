@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:focusableInTouchMode="true">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/book_title_input"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
@@ -39,9 +39,9 @@
                     tools:ignore="LabelFor"
                     tools:text="Два капитана" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/book_author_input"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
@@ -60,7 +60,7 @@
                     tools:ignore="LabelFor"
                     tools:text="Вениамин Каверин" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/bookImage"
@@ -86,7 +86,7 @@
                 app:layout_constraintTop_toBottomOf="@id/book_author_input"
                 tools:text="20%" />
 
-            <android.support.v7.widget.AppCompatSeekBar
+            <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/progressSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@id/book_author_input"
                 tools:progress="20" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bookYearInput"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
@@ -115,9 +115,9 @@
                     tools:ignore="LabelFor"
                     tools:text="2012" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bookMonthInput"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
@@ -134,9 +134,9 @@
                     android:inputType="number"
                     tools:ignore="LabelFor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bookDayInput"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
@@ -153,9 +153,9 @@
                     android:inputType="number"
                     tools:ignore="LabelFor" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/notesTextArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 app:layout_constraintTop_toBottomOf="@id/bookYearInput"
                 tools:text="Неистово плюсую" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/bookDateInputGroup"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -180,7 +180,7 @@
                 app:constraint_referenced_ids="bookYearInput,bookMonthInput,bookDayInput"
                 tools:visibility="visible" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

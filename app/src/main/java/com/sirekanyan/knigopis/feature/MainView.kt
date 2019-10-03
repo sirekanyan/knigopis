@@ -1,9 +1,9 @@
 package com.sirekanyan.knigopis.feature
 
 import android.content.Context.MODE_PRIVATE
-import android.support.v7.app.AlertDialog
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.hide

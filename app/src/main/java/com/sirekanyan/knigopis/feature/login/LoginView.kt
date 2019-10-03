@@ -1,8 +1,8 @@
 package com.sirekanyan.knigopis.feature.login
 
-import android.support.v7.app.AlertDialog
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer

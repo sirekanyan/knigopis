@@ -1,6 +1,6 @@
 package com.sirekanyan.knigopis.model
 
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import com.sirekanyan.knigopis.R
 
 enum class CurrentTab(@IdRes val itemId: Int) {
