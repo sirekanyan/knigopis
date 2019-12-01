@@ -33,7 +33,7 @@ android {
 
 dependencies {
     // kotlin standard library
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
 
     // androidx libraries
     implementation("androidx.appcompat:appcompat:1.1.0")
@@ -41,19 +41,21 @@ dependencies {
     implementation("androidx.browser:browser:1.0.0")
 
     // rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.5")
-    implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.15")
+    implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
-    // retrofit & okhttp
-    implementation("com.squareup.retrofit2:retrofit:2.6.1")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.6.1")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.0")
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.6.2")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.2")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.2")
+
+    // okhttp
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.6") // use 3.12.x if minSdkVersion < 21
 
     // etc
     implementation("com.google.android.material:material:1.0.0")
-    implementation("com.github.bumptech.glide:glide:4.8.0")
+    implementation("com.github.bumptech.glide:glide:4.10.0")
     implementation(files("libs/ulogin-sdk-v1.1.aar"))
 }
 
