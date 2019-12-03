@@ -26,7 +26,7 @@
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_gravity="center_horizontal"
-        tools:src="@drawable/oval_placeholder_background" />
+        android:src="@drawable/oval_dark_placeholder_background" />
 
     <ViewSwitcher
         android:id="@+id/profileNicknameSwitcher"

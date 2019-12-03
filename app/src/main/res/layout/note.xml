@@ -12,8 +12,8 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/rectangle_placeholder_background"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/rectangle_placeholder_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,8 +86,8 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:src="@drawable/oval_placeholder_background"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/oval_placeholder_background" />
 
         </LinearLayout>
 

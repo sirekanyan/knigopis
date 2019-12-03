@@ -68,13 +68,13 @@
                 android:layout_height="0dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/rectangle_placeholder_background"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/book_author_input"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/book_title_input"
                 tools:ignore="ContentDescription"
+                tools:src="@drawable/rectangle_placeholder_background"
                 tools:visibility="visible" />
 
             <TextView
@@ -160,14 +160,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@drawable/text_area_background"
-                android:drawableEnd="@drawable/ic_comment_gray"
-                android:drawableRight="@drawable/ic_comment_gray"
                 android:drawablePadding="16dp"
                 android:hint="@string/book.hint.notes"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="2"
                 android:padding="16dp"
+                app:background="@drawable/text_area_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bookYearInput"
                 tools:text="Неистово плюсую" />

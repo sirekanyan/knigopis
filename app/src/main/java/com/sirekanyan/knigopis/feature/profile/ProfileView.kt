@@ -116,7 +116,7 @@ class ProfileViewImpl(
             profileTodoCount to todo,
             profileDoingCount to doing,
             profileDoneCount to done
-        ).forEach { view, list ->
+        ).forEach { (view, list) ->
             view.setOnClickListener {
                 if (!list.isEmpty()) {
                     showFooterBook(list.pop())

@@ -19,8 +19,9 @@
         <item name="colorAccent">@color/light.color_accent</item>
         <item name="android:windowBackground">@color/light.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="image_placeholder_color">@color/light_image_placeholder_color</item>
-        <item name="image_dark_placeholder_color">@color/light_image_dark_placeholder_color</item>
+        <item name="rectangle_placeholder_drawable">@drawable/rectangle_placeholder_background</item>
+        <item name="oval_placeholder_drawable">@drawable/oval_placeholder_background</item>
+        <item name="oval_dark_placeholder_drawable">@drawable/oval_dark_placeholder_background</item>
         <item name="recycler_divider_color">@color/black_12</item>
         <item name="book_progress_drawable">@drawable/progress_bar_background_light</item>
         <item name="android:textColorPrimary">@color/light.text_color_primary</item>
@@ -39,8 +40,9 @@
         <item name="colorAccent">@color/dark.color_accent</item>
         <item name="android:windowBackground">@color/dark.background_color</item>
         <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="image_placeholder_color">@color/dark_image_placeholder_color</item>
-        <item name="image_dark_placeholder_color">@color/dark_image_dark_placeholder_color</item>
+        <item name="rectangle_placeholder_drawable">@drawable/rectangle_placeholder_background_dark</item>
+        <item name="oval_placeholder_drawable">@drawable/oval_placeholder_background_dark</item>
+        <item name="oval_dark_placeholder_drawable">@drawable/oval_dark_placeholder_background_dark</item>
         <item name="recycler_divider_color">@color/white_12</item>
         <item name="book_progress_drawable">@drawable/progress_bar_background_dark</item>
         <item name="android:textColorPrimary">@color/dark.text_color_primary</item>
@@ -59,7 +61,7 @@
         <item name="colorPrimaryDark">@color/common_deep_purple_900</item>
         <item name="colorAccent">@color/light.color_accent</item>
         <item name="android:windowBackground">@color/common_deep_purple_700</item>
-        <item name="image_placeholder_color">@color/image_placeholder_color_dark</item>
+        <item name="oval_placeholder_drawable">@drawable/oval_dark_placeholder_background</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">
             @color/common_deep_purple_900
         </item>

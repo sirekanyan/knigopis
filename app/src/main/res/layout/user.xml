@@ -12,8 +12,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/oval_placeholder_background"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/oval_placeholder_background" />
 
     <TextView
         android:id="@+id/userNickname"
