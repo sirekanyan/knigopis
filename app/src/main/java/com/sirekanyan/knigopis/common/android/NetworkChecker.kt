@@ -13,6 +13,7 @@ class NetworkCheckerImpl(app: Application) : NetworkChecker {
 
     private val connectivityManager = app.systemConnectivityManager
 
+    @Suppress("DEPRECATION")
     override fun isNetworkAvailable(): Boolean =
         connectivityManager.activeNetworkInfo?.isConnected ?: false
 

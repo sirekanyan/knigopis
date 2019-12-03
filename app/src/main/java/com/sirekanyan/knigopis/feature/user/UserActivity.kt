@@ -28,8 +28,8 @@ class UserActivity : BaseActivity(), UserPresenter.Router {
 
     private val presenter by lazy {
         providePresenter(
-            intent.getStringExtra(EXTRA_USER_ID),
-            intent.getStringExtra(EXTRA_USER_NAME),
+            intent.getStringExtra(EXTRA_USER_ID)!!,
+            intent.getStringExtra(EXTRA_USER_NAME)!!,
             intent.getStringExtra(EXTRA_USER_IMAGE)
         )
     }
@@ -56,7 +56,7 @@ class UserActivity : BaseActivity(), UserPresenter.Router {
     }
 
     override fun copyToClipboard(text: String) {
-        systemClipboardManager.primaryClip = ClipData.newPlainText(null, text)
+        systemClipboardManager.setPrimaryClip(ClipData.newPlainText(null, text))
     }
 
 }

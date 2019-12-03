@@ -9,12 +9,12 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion(28)
-    buildToolsVersion("28.0.3")
+    compileSdkVersion(29)
+    buildToolsVersion("29.0.2")
     defaultConfig {
         applicationId = "com.sirekanyan.knigopis"
         minSdkVersion(16)
-        targetSdkVersion(28)
+        targetSdkVersion(29)
         versionCode = 25
         versionName = "0.2.3"
         setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")

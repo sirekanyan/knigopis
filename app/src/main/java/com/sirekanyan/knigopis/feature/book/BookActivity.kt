@@ -18,7 +18,7 @@ fun Context.createBookIntent(book: EditBookModel): Intent =
 
 class BookActivity : BaseActivity(), BookPresenter.Router {
 
-    private val presenter by lazy { providePresenter(intent.getParcelableExtra(EXTRA_BOOK)) }
+    private val presenter by lazy { providePresenter(intent.getParcelableExtra(EXTRA_BOOK)!!) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setDarkTheme(app.config.isDarkTheme)
