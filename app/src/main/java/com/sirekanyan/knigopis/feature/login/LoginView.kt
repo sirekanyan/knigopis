@@ -19,7 +19,6 @@ interface LoginView {
 
         fun onWebsiteClicked(website: Website)
         fun onInstallBrowserClicked(packageName: String)
-        fun onLegacyLoginClicked()
         fun onBackClicked()
 
     }
@@ -38,16 +37,6 @@ class LoginViewImpl(
         toolbar.setTitle(R.string.login_title)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener { callbacks.onBackClicked() }
-        toolbar.inflateMenu(R.menu.login_options)
-        toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.option_legacy_login -> {
-                    callbacks.onLegacyLoginClicked()
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     override fun addWebsite(website: Website) {

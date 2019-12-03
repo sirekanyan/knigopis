@@ -26,7 +26,6 @@
 
     <!-- login -->
     <string name="login.title">Log in with…</string>
-    <string name="login.legacy">Legacy log in</string>
     <string name="login.website.vk">VKontakte</string>
     <string name="login.website.go">Google</string>
     <string name="login.website.fb">Facebook</string>
@@ -107,13 +106,6 @@
 
     <!-- 🖍 notes tab -->
     <string name="notes.error.empty">No one is posted yet</string>
-
-    <!-- permissions -->
-    <string name="permissions.title">Permissions</string>
-    <string name="permissions.message.rationale">Phone permission is necessary to authorize you by using uLogin library.</string>
-    <string name="permissions.button.rationale">Continue</string>
-    <string name="permissions.message.settings">Allow phone permission in settings</string>
-    <string name="permissions.button.settings">Settings</string>
 
     <!-- social networks -->
     <string name="common.social.facebook">Facebook</string>

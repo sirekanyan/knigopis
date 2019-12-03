@@ -57,7 +57,6 @@ dependencies {
     // etc
     implementation("com.google.android.material:material:1.0.0")
     implementation("com.github.bumptech.glide:glide:4.10.0")
-    implementation(files("libs/ulogin-sdk-v1.1.aar"))
 }
 
 task("updateReadme") {

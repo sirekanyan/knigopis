@@ -4,7 +4,6 @@
     package="com.sirekanyan.knigopis">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -15,8 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="allowBackup,label">
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".feature.MainActivity"
@@ -49,10 +47,6 @@
             android:name=".feature.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ProfileAppTheme" />
-
-        <activity
-            android:name="ru.ulogin.sdk.UloginAuthActivity"
-            android:configChanges="orientation|screenSize" />
 
         <activity android:name=".feature.login.LoginActivity">
             <intent-filter>

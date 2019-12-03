@@ -27,7 +27,6 @@
 
     <!-- login -->
     <string name="login.title">Войти через…</string>
-    <string name="login.legacy">Старая авторизация</string>
     <string name="login.website.vk">Вконтакте</string>
     <string name="login.website.go">Google</string>
     <string name="login.website.fb">Фейсбук</string>
@@ -108,13 +107,6 @@
 
     <!-- 🖍 notes tab -->
     <string name="notes.error.empty">Нет новых комментариев</string>
-
-    <!-- permissions -->
-    <string name="permissions.title">Разрешения</string>
-    <string name="permissions.message.rationale">Для авторизации через uLogin необходимо дать разрешение на чтение идентификатора телефона.</string>
-    <string name="permissions.button.rationale">Продолжить</string>
-    <string name="permissions.message.settings">Разрешите доступ к телефону в\u00a0настройках</string>
-    <string name="permissions.button.settings">Настройки</string>
 
     <!-- social networks -->
     <string name="common.social.facebook">Фейсбук</string>

@@ -11,17 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.sirekanyan.knigopis.R
-import com.sirekanyan.knigopis.common.android.permissions.PermissionResult
 import com.sirekanyan.knigopis.common.extensions.app
 import com.sirekanyan.knigopis.common.extensions.setDarkTheme
-import com.sirekanyan.knigopis.common.functions.createLoginIntent
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.startMainActivity
-import ru.ulogin.sdk.UloginAuthActivity
 
 private const val MARKET_URI = "market://details?id="
 private const val GOOGLE_PLAY_URI = "https://play.google.com/store/apps/details?id="
-private const val LOGIN_REQUEST_CODE = 0
 
 fun Context.startLoginActivity() {
     startActivity(Intent(this, LoginActivity::class.java))
@@ -48,32 +44,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.Router {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        results: IntArray
-    ) {
-        if (permissions.size == 1 && results.size == 1) {
-            PermissionResult.create(requestCode, permissions.single(), results.single())?.let {
-                presenter.onPermissionResult(it)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            LOGIN_REQUEST_CODE -> {
-                if (resultCode == RESULT_OK && data != null) {
-                    val userData = data.getSerializableExtra(UloginAuthActivity.USERDATA)
-                    val token = (userData as HashMap<*, *>)["token"].toString()
-                    auth.saveToken(token)
-                    startMainActivity()
-                }
-            }
-        }
-    }
-
     override fun openBrowser(website: Website): Boolean {
         val toolbarColor = ContextCompat.getColor(this, website.color)
         val customTabsIntent = CustomTabsIntent.Builder().setToolbarColor(toolbarColor).build()
@@ -92,10 +62,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.Router {
         } catch (ex: ActivityNotFoundException) {
             startActivity(Intent(ACTION_VIEW, Uri.parse(GOOGLE_PLAY_URI + packageName)))
         }
-    }
-
-    override fun openLegacyLoginScreen() {
-        startActivityForResult(createLoginIntent(), LOGIN_REQUEST_CODE)
     }
 
     override fun close() {
