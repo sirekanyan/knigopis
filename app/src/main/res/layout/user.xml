@@ -5,7 +5,8 @@
     android:layout_height="56dp"
     android:background="?android:attr/selectableItemBackground"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/userImage"

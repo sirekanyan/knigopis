@@ -51,6 +51,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
 
     // okhttp
+    @Suppress("GradleDependency")
     implementation("com.squareup.okhttp3:logging-interceptor:3.12.6") // use 3.12.x if minSdkVersion < 21
 
     // etc
