@@ -22,8 +22,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:background="@drawable/rectangle_placeholder_background"
         tools:ignore="ContentDescription" />
 
@@ -32,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingEnd="16dp"
+        android:paddingStart="72dp"
         android:paddingLeft="72dp"
-        android:paddingRight="16dp"
-        android:paddingStart="72dp">
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/bookTitle"
