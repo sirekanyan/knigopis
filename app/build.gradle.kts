@@ -10,7 +10,7 @@ androidExtensions {
 
 android {
     compileSdkVersion(29)
-    buildToolsVersion("29.0.2")
+    buildToolsVersion("29.0.3")
     defaultConfig {
         applicationId = "com.sirekanyan.knigopis"
         minSdkVersion(16)
@@ -33,7 +33,7 @@ android {
 
 dependencies {
     // kotlin standard library
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
 
     // androidx libraries
     implementation("androidx.appcompat:appcompat:1.1.0")
