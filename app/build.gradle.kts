@@ -41,7 +41,7 @@ dependencies {
     implementation("androidx.browser:browser:1.0.0")
 
     // rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.15")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.19")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
@@ -55,8 +55,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:3.12.6") // use 3.12.x if minSdkVersion < 21
 
     // etc
-    implementation("com.google.android.material:material:1.0.0")
-    implementation("com.github.bumptech.glide:glide:4.10.0")
+    implementation("com.google.android.material:material:1.1.0")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
 }
 
 task("updateReadme") {
