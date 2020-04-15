@@ -18,6 +18,7 @@ class AuthInterceptor(private val storage: TokenStorage) : Interceptor {
                 val urlWithAccessToken = request.url().newBuilder()
                     .addQueryParameter(ACCESS_TOKEN_PARAMETER_NAME, accessToken)
                     .build()
+                response.close()
                 return chain.proceed(
                     request.newBuilder()
                         .url(urlWithAccessToken)
