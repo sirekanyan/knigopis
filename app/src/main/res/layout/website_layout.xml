@@ -14,7 +14,6 @@
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_login_go" />
 
@@ -24,9 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"

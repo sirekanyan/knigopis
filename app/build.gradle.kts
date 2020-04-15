@@ -13,7 +13,7 @@ android {
     buildToolsVersion("29.0.3")
     defaultConfig {
         applicationId = "com.sirekanyan.knigopis"
-        minSdkVersion(16)
+        minSdkVersion(21)
         targetSdkVersion(29)
         versionCode = 25
         versionName = "0.2.3"
