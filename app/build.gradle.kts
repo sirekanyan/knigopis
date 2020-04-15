@@ -15,8 +15,8 @@ android {
         applicationId = "com.sirekanyan.knigopis"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 25
-        versionName = "0.2.3"
+        versionCode = 27
+        versionName = "0.3.0"
         setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
