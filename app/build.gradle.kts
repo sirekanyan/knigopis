@@ -71,10 +71,17 @@ task("updateReadme") {
         val releaseVariant = android.applicationVariants.first { it.name == "release" }
         val releaseFiles = releaseVariant.outputs.map { it.outputFile }
         val apkFile = releaseFiles.single { it.exists() && it.extension == "apk" }
-        val apkSize = "%.2f".format(apkFile.length().toFloat() / 1024 / 1024)
+        val properties = mapOf(
+            "apkSize" to "%.2f".format(apkFile.length().toFloat() / 1024 / 1024),
+            "appVersion" to android.defaultConfig.versionName.orEmpty()
+        )
         rootProject.file("README.md").printWriter().use { readme ->
-            rootProject.file("readme.md").forEachLine { line ->
-                readme.appendln(line.replace("{{apkSize}}", apkSize))
+            rootProject.file("readme.md").forEachLine { inputLine ->
+                readme.appendln(
+                    properties.entries.fold(inputLine) { line, (key, value) ->
+                        line.replace("{{$key}}", value)
+                    }
+                )
             }
         }
     }

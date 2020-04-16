@@ -1,4 +1,4 @@
-# Knigopis
+# Knigopis 0.3.0
 Android app for http://knigopis.com
 
 [![Build Status](https://travis-ci.org/sirekanyan/knigopis.svg?branch=master)](https://travis-ci.org/sirekanyan/knigopis)
