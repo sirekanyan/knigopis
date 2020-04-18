@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.snackbar
 import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.functions.createUserPublicUrl
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
 import com.sirekanyan.knigopis.model.EditBookModel
@@ -60,7 +61,7 @@ class UserPresenterImpl(
     }
 
     override fun onCopyOptionClicked() {
-        val link = "http://www.knigopis.com/#/user/books?u=$userId"
+        val link = createUserPublicUrl(userId)
         router.copyToClipboard(link)
         view.toast(R.string.user_info_copied, link)
     }

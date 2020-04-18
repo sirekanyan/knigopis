@@ -8,7 +8,6 @@ class User(
     private val identity: String?,
     val booksCount: Int
 ) {
-    val fixedProfile get() = "http://www.knigopis.com/#/user/books?u=$id"
     val name get() = nickname ?: id
     val profiles get() = listOfNotNull(profile, identity)
 }

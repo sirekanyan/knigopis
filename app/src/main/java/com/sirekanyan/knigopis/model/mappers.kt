@@ -6,6 +6,7 @@ import android.text.style.SuperscriptSpan
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
+import com.sirekanyan.knigopis.common.functions.createUserPublicUrl
 import com.sirekanyan.knigopis.model.dto.*
 
 fun PlannedBook.toBookModel(group: BookGroupModel) =
@@ -90,7 +91,7 @@ fun EditBookModel.toFinishedBook(): FinishedBookToSend =
     )
 
 fun User.toProfileModel(): ProfileModel =
-    ProfileModel(id, name, photo, profile.orEmpty(), fixedProfile)
+    ProfileModel(id, name, photo, profile.orEmpty(), createUserPublicUrl(id))
 
 fun ProfileModel.toProfile(): Profile =
     Profile(name, profileUrl)
