@@ -1,5 +1,5 @@
 # Knigopis {{appVersion}}
-Android app for http://knigopis.com
+Android app for [knigopis.com](https://www.knigopis.com)
 
 [![Build Status](https://travis-ci.org/sirekanyan/knigopis.svg?branch=master)](https://travis-ci.org/sirekanyan/knigopis)
 [![APK Size](https://img.shields.io/badge/apk%20size-{{apkSize}}%20MB-brightgreen.svg)](https://travis-ci.org/sirekanyan/knigopis)

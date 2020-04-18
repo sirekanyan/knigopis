@@ -41,7 +41,7 @@
     </array>
 
     <!-- about -->
-    <string name="about.text.idea">API:\nhttp://knigopis.com</string>
+    <string name="about.text.idea">API:\nhttps://www.knigopis.com</string>
     <string name="about.text.developer">Разработка:\nvadik@sirekanyan.com</string>
     <string name="about.text.designer">Дизайн:\nanna@sirekanyan.com</string>
 
