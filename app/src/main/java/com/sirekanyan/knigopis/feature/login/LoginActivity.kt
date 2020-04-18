@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.Router {
     override fun openBrowser(website: Website): Boolean {
         val toolbarColor = ContextCompat.getColor(this, website.color)
         val customTabsIntent = CustomTabsIntent.Builder().setToolbarColor(toolbarColor).build()
-        customTabsIntent.intent.addFlags(FLAG_ACTIVITY_NO_HISTORY)
         return try {
             customTabsIntent.launchUrl(this, website.uri)
             true
