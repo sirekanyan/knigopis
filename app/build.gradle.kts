@@ -73,7 +73,8 @@ task("updateReadme") {
         val apkFile = releaseFiles.single { it.exists() && it.extension == "apk" }
         val properties = mapOf(
             "apkSize" to "%.2f".format(apkFile.length().toFloat() / 1024 / 1024),
-            "appVersion" to android.defaultConfig.versionName.orEmpty()
+            "appVersion" to android.defaultConfig.versionName.orEmpty(),
+            "minSdkVersion" to android.defaultConfig.minSdkVersion?.apiLevel?.toString().orEmpty()
         )
         rootProject.file("README.md").printWriter().use { readme ->
             rootProject.file("readme.md").forEachLine { inputLine ->
