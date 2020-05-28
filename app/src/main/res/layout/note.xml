@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:foreground="?android:selectableItemBackground"
     android:paddingTop="16dp">
 
     <ImageView
@@ -26,7 +26,7 @@
             android:id="@+id/bookTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             tools:text="Мастер и Маргарита Мастер и Маргарита Мастер и Маргарита Мастер и Маргарита" />
 
@@ -34,7 +34,7 @@
             android:id="@+id/bookAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="?android:textColorPrimary"
             android:textSize="14sp"
             tools:text="Михаил Булгаков Михаил Булгаков Михаил Булгаков Михаил Булгаков" />
 
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="?android:attr/textColorSecondary"
+            android:textColor="?android:textColorSecondary"
             tools:text="Заявленный жанр - ужасы. Отзыв на книге самого Стивена Кинга(а я фанатею от Кинга) обещает нам трястись от страха. Реальность: довольно тошнотворная история о геноциде и рассизме. Было интересно читать о жизни различных национальных меньшинств в Америке. О том, как сложно жилось (и, возможно, живется) коренным жителям континента. Это действительно то, от чего Америке никогда не отмыться. Сюжетная линия завязана на 4х основных и множества второстепенных героев. ... Но как книга, увы, художественной ценности произведение не несет. И тем более ни чем не пугает. Для разнообразия почитать можно. Оценка: 4 из 10" />
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:id="@+id/userDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorTertiary"
+                android:textColor="?android:textColorTertiary"
                 android:textSize="14sp"
                 tools:text="5 минут назад" />
 
@@ -66,14 +66,14 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/note_date_delimiter"
-                android:textColor="?android:attr/textColorTertiary"
+                android:textColor="?android:textColorTertiary"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/userNickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorTertiary"
+                android:textColor="?android:textColorTertiary"
                 android:textSize="14sp"
                 tools:text="Павел Дуров" />
 
@@ -93,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_gravity="bottom"
-        android:src="?attr/recycler_divider_color"
+        android:src="?recycler_divider_color"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>

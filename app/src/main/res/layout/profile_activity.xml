@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="?android:textColorPrimary"
             android:textSize="28sp"
             tools:text="Павел Дуров" />
 
@@ -68,7 +68,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="?android:attr/textColorTertiary" />
+        android:background="?android:textColorTertiary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="?android:attr/textColorTertiary" />
+        android:background="?android:textColorTertiary" />
 
     <TextView
         android:id="@+id/randomProfileBook"
@@ -99,7 +99,7 @@
         android:layout_height="56dp"
         android:gravity="center"
         android:padding="8dp"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         tools:text="Мастер и маргарита — 90%" />
 

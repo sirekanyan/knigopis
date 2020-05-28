@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTitleSize">?attr/actionBarSize</item>
+        <item name="android:windowTitleSize">?actionBarSize</item>
         <item name="android:windowTitleStyle">@style/SplashWindowTitle</item>
         <item name="android:windowTitleBackgroundStyle">@style/SplashWindowTitleBackground</item>
         <item name="android:windowBackground">@color/dark.background_color</item>
@@ -75,20 +75,20 @@
         <item name="android:autoLink">web|email</item>
         <item name="android:padding">8dp</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="AboutIconItem">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:tint">?android:attr/textColorSecondary</item>
+        <item name="android:tint">?android:textColorSecondary</item>
     </style>
 
     <style name="ProfileCaptionItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?android:selectableItemBackground</item>
         <item name="android:clickable">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:focusable">true</item>
@@ -100,7 +100,7 @@
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="TextInputLayoutStyle">

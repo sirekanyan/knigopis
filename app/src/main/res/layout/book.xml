@@ -4,7 +4,7 @@
     android:id="@+id/book_item_container"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:selectableItemBackground">
 
     <ProgressBar
         android:id="@+id/bookProgress"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="64dp"
         android:layout_marginRight="16dp"
-        android:progressDrawable="?attr/book_progress_drawable"
+        android:progressDrawable="?book_progress_drawable"
         tools:progress="80" />
 
     <ImageView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             tools:text="Мастер и Маргарита" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="?android:attr/textColorSecondary"
+            android:textColor="?android:textColorSecondary"
             android:textSize="14sp"
             tools:text="Михаил Булгаков" />
 

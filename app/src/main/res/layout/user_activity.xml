@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="?colorPrimary"
             app:expandedTitleGravity="center_vertical"
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="@dimen/title_start_margin_expanded"
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 app:layout_collapseMode="pin"
-                app:popupTheme="?attr/toolbar_popup_theme"
+                app:popupTheme="?toolbar_popup_theme"
                 app:titleMarginStart="@dimen/title_start_margin_collapsed" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

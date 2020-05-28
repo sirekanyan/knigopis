@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="?android:attr/windowBackground"
+    android:background="?android:windowBackground"
     tools:ignore="Overdraw">
 
     <View
         android:id="@+id/headerDivider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="?attr/recycler_divider_color"
+        android:background="?recycler_divider_color"
         android:visibility="invisible" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="sans-serif-medium"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?android:textColorSecondary"
         android:textSize="14sp"
         tools:text="К прочтению" />
 
@@ -33,7 +33,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="sans-serif"
-        android:textColor="?android:attr/textColorTertiary"
+        android:textColor="?android:textColorTertiary"
         android:textSize="14sp"
         tools:text="12 книг" />
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_gravity="bottom"
-        android:background="?attr/recycler_divider_color"
+        android:background="?recycler_divider_color"
         android:visibility="invisible" />
 
 </FrameLayout>
