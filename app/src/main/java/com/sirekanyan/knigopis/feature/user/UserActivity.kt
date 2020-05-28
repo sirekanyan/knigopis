@@ -6,8 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.extensions.app
-import com.sirekanyan.knigopis.common.extensions.setDarkTheme
 import com.sirekanyan.knigopis.common.extensions.systemClipboardManager
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.dependency.providePresenter
@@ -35,7 +33,6 @@ class UserActivity : BaseActivity(), UserPresenter.Router {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_activity)
         presenter.init()

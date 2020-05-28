@@ -3,13 +3,15 @@ package com.sirekanyan.knigopis.common.extensions
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.ConnectivityManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.sirekanyan.knigopis.R
 
-var isDarkTheme = false
+val Context.isNightMode: Boolean
+    get() = resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
 
 val Context.systemClipboardManager: ClipboardManager
     get() = getAndroidSystemService(Context.CLIPBOARD_SERVICE)
@@ -31,11 +33,6 @@ fun Context.showToast(@StringRes messageId: Int, vararg args: Any) {
 
 fun Context.showToast(@StringRes messageId: Int) {
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
-}
-
-fun Context.setDarkTheme(isDark: Boolean) {
-    setTheme(if (isDark) R.style.DarkAppTheme else R.style.AppTheme)
-    isDarkTheme = isDark
 }
 
 private inline fun <reified T> Context.getAndroidSystemService(name: String) =

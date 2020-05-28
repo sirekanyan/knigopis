@@ -22,8 +22,15 @@
     <string name="main.option.login">Войти</string>
     <string name="main.option.profile">Мой профиль</string>
     <string name="main.option.about">О приложении</string>
-    <string name="main.option.dark">Тёмная тема</string>
-    <string name="main.option.clear">Очистить кэш</string>
+    <string name="main_option_sort">Сортировать</string>
+    <string name="main_option_sort_by_progress">По прогрессу</string>
+    <string name="main_option_sort_by_time">По свежести</string>
+    <string name="main_option_sort_by_title">По названию</string>
+    <string name="main_option_sort_by_author">По автору</string>
+    <string name="main_option_theme">Тема приложения</string>
+    <string name="main_option_theme_light">Светлая</string>
+    <string name="main_option_theme_dark">Тёмная</string>
+    <string name="main_option_theme_default">Энергосбережение</string>
 
     <!-- login -->
     <string name="login.title">Войти через…</string>

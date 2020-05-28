@@ -8,7 +8,6 @@ import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
 import com.sirekanyan.knigopis.common.extensions.*
-import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.book.createBookIntent
@@ -23,7 +22,6 @@ import com.sirekanyan.knigopis.feature.users.saveMainState
 import com.sirekanyan.knigopis.model.*
 
 private const val BOOK_REQUEST_CODE = 1
-private val CURRENT_TAB_EXTRA = extra("current_tab")
 
 fun Context.startMainActivity() {
     startActivity(
@@ -46,10 +44,7 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val restoredCurrentTab = savedInstanceState?.getMainState()?.currentTab
-        val currentTab = intent.getIntExtra(CURRENT_TAB_EXTRA, 0)
-            .takeUnless { it == 0 }
-            ?.let { CurrentTab.getByItemId(it) }
-        presenter.init(restoredCurrentTab ?: currentTab)
+        presenter.init(restoredCurrentTab)
     }
 
     override fun onStart() {
@@ -132,16 +127,6 @@ class MainActivity : BaseActivity(),
 
     override fun openWebPage(uri: Uri) {
         startActivityOrNull(Intent(ACTION_VIEW, uri)) ?: showToast(R.string.users_info_no_browser)
-    }
-
-    override fun reopenScreen() {
-        finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        startActivity(intent.also { intent ->
-            presenter.state?.let { state ->
-                intent.putExtra(CURRENT_TAB_EXTRA, state.currentTab.itemId)
-            }
-        })
     }
 
 }

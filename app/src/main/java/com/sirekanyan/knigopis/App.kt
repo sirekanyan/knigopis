@@ -4,6 +4,7 @@ import android.app.Application
 import com.sirekanyan.knigopis.dependency.*
 
 class App : Application() {
+
     val config by lazy(::provideConfig)
     val resourceProvider by lazy(::provideResources)
     val tokenStorage by lazy(::provideTokenStorage)
@@ -15,4 +16,10 @@ class App : Application() {
     val endpoint by lazy(::provideEndpoint)
     val cache by lazy(::provideCache)
     val gson by lazy(::provideGson)
+
+    override fun onCreate() {
+        super.onCreate()
+        config.theme.setup()
+    }
+
 }

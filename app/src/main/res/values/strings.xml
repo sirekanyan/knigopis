@@ -21,8 +21,10 @@
     <string name="main.option.login">Login</string>
     <string name="main.option.profile">Profile</string>
     <string name="main.option.about">About</string>
-    <string name="main.option.dark">Dark theme</string>
-    <string name="main.option.clear">Clear cache</string>
+    <string name="main_option_theme">Theme</string>
+    <string name="main_option_theme_light">Light</string>
+    <string name="main_option_theme_dark">Dark</string>
+    <string name="main_option_theme_default">Set by Battery Saver</string>
 
     <!-- login -->
     <string name="login.title">Log in with…</string>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/option_login"
         android:title="@string/main.option.login"
         android:visible="false"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/option_profile"
@@ -14,21 +16,43 @@
         android:visible="false"
         app:showAsAction="never" />
 
+    <item android:title="@string/main_option_theme">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/option_light_theme"
+                    android:title="@string/main_option_theme_light" />
+                <item
+                    android:id="@+id/option_dark_theme"
+                    android:title="@string/main_option_theme_dark" />
+                <item
+                    android:id="@+id/option_default_theme"
+                    android:title="@string/main_option_theme_default" />
+            </group>
+        </menu>
+    </item>
+
     <item
         android:id="@+id/option_about"
         android:title="@string/main.option.about"
         app:showAsAction="never" />
 
+    <!-- for debug only -->
     <item
-        android:id="@+id/option_dark_theme"
-        android:checkable="true"
-        android:title="@string/main.option.dark"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/option_clear_cache"
-        android:title="@string/main.option.clear"
+        android:id="@+id/debug_option_clear_cache"
+        android:icon="@drawable/debug_ic_broom"
+        android:title="Clear cache"
         android:visible="false"
-        app:showAsAction="never" />
+        app:showAsAction="always"
+        tools:ignore="HardcodedText" />
+
+    <!-- for debug only -->
+    <item
+        android:id="@+id/debug_option_toggle_theme"
+        android:icon="@drawable/debug_ic_sunny"
+        android:title="Toggle theme"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="HardcodedText" />
 
 </menu>

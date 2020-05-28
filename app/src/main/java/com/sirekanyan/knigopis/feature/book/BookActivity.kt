@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.extensions.app
-import com.sirekanyan.knigopis.common.extensions.setDarkTheme
 import com.sirekanyan.knigopis.common.functions.extra
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.model.EditBookModel
@@ -21,7 +19,6 @@ class BookActivity : BaseActivity(), BookPresenter.Router {
     private val presenter by lazy { providePresenter(intent.getParcelableExtra(EXTRA_BOOK)!!) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_edit)
         presenter.init()

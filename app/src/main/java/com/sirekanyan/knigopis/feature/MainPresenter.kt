@@ -9,6 +9,7 @@ import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
 import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Configuration
+import com.sirekanyan.knigopis.repository.Theme
 
 interface MainPresenter : Presenter {
 
@@ -22,7 +23,6 @@ interface MainPresenter : Presenter {
     interface Router {
         fun openLoginScreen()
         fun openProfileScreen()
-        fun reopenScreen()
     }
 
 }
@@ -46,7 +46,7 @@ class MainPresenterImpl(
         get() = currentTab?.let { MainPresenterState(it) }
 
     override fun init(tab: CurrentTab?) {
-        view.setDarkThemeOptionChecked(config.isDarkTheme)
+        view.setThemeOptionChecked(Theme.getCurrent())
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
         this.currentTab = tab ?: defaultTab
     }
@@ -133,9 +133,9 @@ class MainPresenterImpl(
         view.showAboutDialog()
     }
 
-    override fun onDarkThemeOptionClicked(isChecked: Boolean) {
-        config.isDarkTheme = isChecked
-        router.reopenScreen()
+    override fun onThemeOptionClicked(theme: Theme) {
+        config.theme = theme
+        theme.setup()
     }
 
     override fun onRefreshSwiped() {

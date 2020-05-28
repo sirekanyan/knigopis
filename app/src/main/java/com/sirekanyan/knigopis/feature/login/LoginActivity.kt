@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
-import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.app
-import com.sirekanyan.knigopis.common.extensions.setDarkTheme
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.startMainActivity
 
@@ -29,7 +27,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.Router {
     private val auth by lazy { app.authRepository }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(app.config.isDarkTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
         presenter.init()

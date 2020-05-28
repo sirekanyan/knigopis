@@ -7,9 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.extensions.hide
+import com.sirekanyan.knigopis.common.extensions.isNightMode
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.repository.Theme
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.about.view.*
@@ -19,6 +21,8 @@ import kotlinx.android.synthetic.main.default_app_bar.*
 import kotlinx.android.synthetic.main.notes_page.*
 import kotlinx.android.synthetic.main.users_page.*
 
+private val DEBUG_OPTIONS = arrayOf(R.id.debug_option_clear_cache, R.id.debug_option_toggle_theme)
+
 interface MainView {
 
     fun showAboutDialog()
@@ -27,7 +31,7 @@ interface MainView {
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
     fun showProfileOption(isVisible: Boolean)
-    fun setDarkThemeOptionChecked(isChecked: Boolean)
+    fun setThemeOptionChecked(theme: Theme)
 
     interface Callbacks {
         fun onNavigationClicked(itemId: Int)
@@ -35,7 +39,7 @@ interface MainView {
         fun onLoginOptionClicked()
         fun onProfileOptionClicked()
         fun onAboutOptionClicked()
-        fun onDarkThemeOptionClicked(isChecked: Boolean)
+        fun onThemeOptionClicked(theme: Theme)
     }
 
 }
@@ -48,7 +52,6 @@ class MainViewImpl(
     private val context = containerView.context
     private val loginOption: MenuItem
     private val profileOption: MenuItem
-    private val darkThemeOption: MenuItem
 
     init {
         toolbar.inflateMenu(R.menu.options)
@@ -69,15 +72,22 @@ class MainViewImpl(
                     callbacks.onAboutOptionClicked()
                     true
                 }
-                R.id.option_dark_theme -> {
-                    item.isChecked = !item.isChecked
-                    callbacks.onDarkThemeOptionClicked(item.isChecked)
+                R.id.option_light_theme,
+                R.id.option_dark_theme,
+                R.id.option_default_theme -> {
+                    item.isChecked = true
+                    callbacks.onThemeOptionClicked(Theme.getById(item.itemId))
                     true
                 }
-                R.id.option_clear_cache -> {
+                R.id.debug_option_clear_cache -> {
                     context.cacheDir.deleteRecursively()
                     context.getSharedPreferences(COMMON_PREFS_NAME, MODE_PRIVATE)
                         .edit().clear().apply()
+                    true
+                }
+                R.id.debug_option_toggle_theme -> {
+                    val newTheme = if (context.isNightMode) Theme.LIGHT else Theme.DARK
+                    callbacks.onThemeOptionClicked(newTheme)
                     true
                 }
                 else -> false
@@ -85,8 +95,9 @@ class MainViewImpl(
         }
         loginOption = toolbar.menu.findItem(R.id.option_login)
         profileOption = toolbar.menu.findItem(R.id.option_profile)
-        darkThemeOption = toolbar.menu.findItem(R.id.option_dark_theme)
-        toolbar.menu.findItem(R.id.option_clear_cache).isVisible = BuildConfig.DEBUG
+        DEBUG_OPTIONS.forEach { debugOption ->
+            toolbar.menu.findItem(debugOption).isVisible = BuildConfig.DEBUG
+        }
     }
 
     override fun showAboutDialog() {
@@ -133,8 +144,8 @@ class MainViewImpl(
         profileOption.isVisible = isVisible
     }
 
-    override fun setDarkThemeOptionChecked(isChecked: Boolean) {
-        darkThemeOption.isChecked = isChecked
+    override fun setThemeOptionChecked(theme: Theme) {
+        toolbar.menu.findItem(theme.id).isChecked = true
     }
 
 }
