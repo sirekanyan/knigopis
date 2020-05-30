@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_edit"
         android:title="@string/profile.option.edit"
         android:visible="false"
-        app:iconTint="@color/white"
+        app:iconTint="?colorOnPrimary"
         app:showAsAction="ifRoom" />
 
     <item

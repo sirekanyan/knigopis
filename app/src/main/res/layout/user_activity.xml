@@ -9,11 +9,11 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:theme="@style/AppBarTheme">
+        android:layout_height="@dimen/app_bar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
+            style="@style/Widget.Knigopis.CollapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?colorPrimary"
@@ -24,12 +24,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
+                android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:popupTheme="?toolbar_popup_theme"
                 app:titleMarginStart="@dimen/title_start_margin_collapsed" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -52,7 +52,7 @@
         app:toX="64dp"
         app:toY="8dp"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/oval_dark_placeholder_background" />
+        tools:src="@drawable/oval_placeholder_on_primary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userBooksRecyclerView"
@@ -82,7 +82,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:tint="@color/white"
         android:visibility="gone"
         app:backgroundTint="@drawable/subscribe_button_background"
         app:layout_anchor="@id/app_bar"

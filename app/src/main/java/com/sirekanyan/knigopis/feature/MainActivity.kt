@@ -7,7 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import com.sirekanyan.knigopis.R
 import com.sirekanyan.knigopis.common.BaseActivity
-import com.sirekanyan.knigopis.common.extensions.*
+import com.sirekanyan.knigopis.common.extensions.app
+import com.sirekanyan.knigopis.common.extensions.io2main
+import com.sirekanyan.knigopis.common.extensions.showToast
+import com.sirekanyan.knigopis.common.extensions.startActivityOrNull
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.dependency.providePresenter
 import com.sirekanyan.knigopis.feature.book.createBookIntent
@@ -40,7 +43,7 @@ class MainActivity : BaseActivity(),
     private val api by lazy { app.endpoint }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setDarkTheme(app.config.isDarkTheme)
+        setTheme(R.style.Theme_Knigopis)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val restoredCurrentTab = savedInstanceState?.getMainState()?.currentTab

@@ -13,14 +13,14 @@
         android:label="@string/common.title.app"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.Knigopis"
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".feature.MainActivity"
             android:label="@string/common.title.app"
             android:launchMode="singleTop"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/Theme.Knigopis.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -55,7 +55,7 @@
         <activity
             android:name=".feature.profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ProfileAppTheme" />
+            android:theme="@style/Theme.Knigopis.Profile" />
 
         <activity android:name=".feature.login.LoginActivity">
             <intent-filter>

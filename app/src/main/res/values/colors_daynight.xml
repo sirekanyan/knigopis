@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="knigopis_color_primary">@color/common_blue_gray_500</color>
+    <color name="knigopis_color_primary_variant">@color/common_blue_gray_700</color>
+    <color name="knigopis_color_secondary">@color/common_teal_accent_700</color>
+    <color name="knigopis_text_color_primary">@color/white_87</color>
+    <color name="knigopis_text_color_secondary">@color/white_60</color>
+    <color name="knigopis_text_color_tertiary">@color/white_38</color>
+    <color name="knigopis_color_background">@color/common_grey_850</color>
+    <color name="knigopis_color_bottom_navigation">@color/common_grey_875</color>
+    <color name="knigopis_color_divider">@color/white_12</color>
+    <color name="profile_color_primary">@color/common_blue_gray_700</color>
+    <color name="profile_color_primary_variant">@color/common_blue_gray_800</color>
+</resources>

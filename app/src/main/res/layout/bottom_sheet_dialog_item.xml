@@ -5,15 +5,15 @@
     android:layout_height="48dp"
     android:background="?android:selectableItemBackground"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    tools:background="@color/white">
+    android:paddingRight="16dp">
 
     <ImageView
         android:id="@+id/bottomSheetItemIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
-        android:tint="#777777"
+        android:tint="?android:textColorSecondary"
+        android:tintMode="src_in"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_edit" />
 

@@ -1,73 +1,64 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Knigopis" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/knigopis_color_primary</item>
+        <item name="colorPrimaryVariant">@color/knigopis_color_primary_variant</item>
+        <item name="colorOnPrimary">@color/common_white</item>
+        <item name="colorSecondary">@color/knigopis_color_secondary</item>
+        <item name="colorSecondaryVariant">@color/knigopis_color_secondary</item>
+        <item name="colorOnSecondary">@color/common_white</item>
+        <item name="android:textColorPrimary">@color/knigopis_text_color_primary</item>
+        <item name="android:textColorSecondary">@color/knigopis_text_color_secondary</item>
+        <item name="android:textColorTertiary">@color/knigopis_text_color_tertiary</item>
+        <item name="android:colorBackground">@color/knigopis_color_background</item>
+        <item name="colorSurface">@color/knigopis_color_background</item>
+        <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="actionMenuTextColor">?colorOnPrimary</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Knigopis.ActionButton.Overflow</item>
+        <item name="android:statusBarColor">?colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/common_grey_950</item>
+    </style>
+
+    <style name="Theme.Knigopis.Splash" parent="Theme.Knigopis">
+        <item name="colorPrimary">@color/splash_color_primary</item>
+        <item name="colorPrimaryVariant">@color/splash_color_primary_variant</item>
+        <item name="android:colorBackground">@color/splash_color_background</item>
         <item name="android:windowTitleSize">?actionBarSize</item>
         <item name="android:windowTitleStyle">@style/SplashWindowTitle</item>
         <item name="android:windowTitleBackgroundStyle">@style/SplashWindowTitleBackground</item>
-        <item name="android:windowBackground">@color/dark.background_color</item>
         <item name="android:windowNoTitle">false</item>
-        <item name="colorPrimary">@color/dark.color_primary</item>
-        <item name="colorPrimaryDark">@color/dark.color_primary_dark</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
-            @color/dark_navigation_bar_color
-        </item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/light.color_primary</item>
-        <item name="colorPrimaryDark">@color/light.color_primary_dark</item>
-        <item name="colorAccent">@color/light.color_accent</item>
-        <item name="android:windowBackground">@color/light.background_color</item>
-        <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="rectangle_placeholder_drawable">@drawable/rectangle_placeholder_background</item>
-        <item name="oval_placeholder_drawable">@drawable/oval_placeholder_background</item>
-        <item name="oval_dark_placeholder_drawable">@drawable/oval_dark_placeholder_background</item>
-        <item name="recycler_divider_color">@color/black_12</item>
-        <item name="book_progress_drawable">@drawable/progress_bar_background_light</item>
-        <item name="android:textColorPrimary">@color/light.text_color_primary</item>
-        <item name="android:textColorSecondary">@color/light.text_color_secondary</item>
-        <item name="android:textColorTertiary">@color/light.text_color_tertiary</item>
-        <item name="bottom_navigation_color">@color/light.bottom_navigation</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
-            @color/light_navigation_bar_color
-        </item>
-        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
+    <style name="Theme.Knigopis.Profile" parent="Theme.Knigopis">
+        <item name="colorPrimary">@color/profile_color_primary</item>
+        <item name="colorPrimaryVariant">@color/profile_color_primary_variant</item>
+        <item name="android:colorBackground">?colorPrimary</item>
+        <item name="android:navigationBarColor">?colorPrimaryVariant</item>
     </style>
 
-    <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/dark.color_primary</item>
-        <item name="colorPrimaryDark">@color/dark.color_primary_dark</item>
-        <item name="colorAccent">@color/dark.color_accent</item>
-        <item name="android:windowBackground">@color/dark.background_color</item>
-        <item name="android:listDivider">@drawable/recycler_view_divider</item>
-        <item name="rectangle_placeholder_drawable">@drawable/rectangle_placeholder_background_dark</item>
-        <item name="oval_placeholder_drawable">@drawable/oval_placeholder_background_dark</item>
-        <item name="oval_dark_placeholder_drawable">@drawable/oval_dark_placeholder_background_dark</item>
-        <item name="recycler_divider_color">@color/white_12</item>
-        <item name="book_progress_drawable">@drawable/progress_bar_background_dark</item>
-        <item name="android:textColorPrimary">@color/dark.text_color_primary</item>
-        <item name="android:textColorSecondary">@color/dark.text_color_secondary</item>
-        <item name="android:textColorTertiary">@color/dark.text_color_tertiary</item>
-        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
-        <item name="bottom_navigation_color">@color/dark.bottom_navigation</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
-            @color/dark_navigation_bar_color
-        </item>
-        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Dark</item>
+    <style name="Theme.Knigopis.Profile.Content" parent="Theme.Knigopis.Profile">
+        <item name="android:textColorPrimary">@color/white_87</item>
+        <item name="android:textColorSecondary">@color/white_60</item>
+        <item name="android:textColorTertiary">@color/white_38</item>
     </style>
 
-    <style name="ProfileAppTheme" parent="DarkAppTheme">
-        <item name="colorPrimary">@color/common_deep_purple_700</item>
-        <item name="colorPrimaryDark">@color/common_deep_purple_900</item>
-        <item name="colorAccent">@color/light.color_accent</item>
-        <item name="android:windowBackground">@color/common_deep_purple_700</item>
-        <item name="oval_placeholder_drawable">@drawable/oval_dark_placeholder_background</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
-            @color/common_deep_purple_900
-        </item>
+    <style name="Widget.Knigopis.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_menu_overflow</item>
     </style>
 
-    <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Widget.Knigopis.CollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
+        <item name="expandedTitleTextAppearance">@style/Text.Knigopis.ExpandedTitle</item>
+        <item name="collapsedTitleTextAppearance">@style/Text.Knigopis.CollapsedTitle</item>
+    </style>
+
+    <style name="Text.Knigopis.ExpandedTitle" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="Text.Knigopis.CollapsedTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
 
     <style name="AboutItem">
         <item name="android:layout_height">wrap_content</item>
@@ -103,11 +94,14 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="TextInputLayoutStyle">
+    <style name="Widget.Knigopis.TextInputLayout.Filled" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
-        <item name="android:paddingLeft">-4dp</item>
-        <item name="android:paddingRight">-4dp</item>
+    </style>
+
+    <style name="Widget.Knigopis.TextInputLayout.Outlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
     <style name="PlaceholderStyle">
@@ -122,17 +116,15 @@
     </style>
 
     <style name="WhiteAccent">
-        <item name="colorAccent">@color/white</item>
+        <item name="colorSecondary">?colorOnPrimary</item>
     </style>
 
     <style name="SplashWindowTitleBackground">
-        <item name="android:background">@color/dark.color_primary</item>
+        <item name="android:background">?colorPrimary</item>
     </style>
 
-    <style name="SplashWindowTitle">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+    <style name="SplashWindowTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">?colorOnPrimary</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
     </style>

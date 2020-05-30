@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/progress">
-        <clip android:drawable="@color/dark_book_progress_color" />
+        <clip>
+            <shape
+                android:shape="rectangle"
+                android:tint="?colorPrimary">
+                <solid android:color="@color/grey_50" />
+            </shape>
+        </clip>
     </item>
 </layer-list>

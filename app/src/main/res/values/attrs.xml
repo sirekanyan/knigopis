@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="toolbar_popup_theme" format="reference" />
-    <attr name="bottom_navigation_color" format="reference|color" />
-    <attr name="rectangle_placeholder_drawable" format="reference" />
-    <attr name="oval_placeholder_drawable" format="reference" />
-    <attr name="oval_dark_placeholder_drawable" format="reference" />
-    <attr name="recycler_divider_color" format="reference|color" />
-    <attr name="book_progress_drawable" format="reference" />
     <declare-styleable name="ViewBehavior">
         <attr name="appBarLayout" format="reference" />
         <attr name="appBarMaxHeight" format="dimension" />

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
+    android:theme="@style/Theme.Knigopis.Profile.Content"
     tools:ignore="ContentDescription">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/profileToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:elevation="0dp"
+        android:theme="@style/Theme.Knigopis.Profile" />
 
     <View
         android:id="@+id/topProfileSpace"
@@ -26,7 +26,7 @@
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/oval_dark_placeholder_background" />
+        android:src="@drawable/oval_placeholder_on_primary" />
 
     <ViewSwitcher
         android:id="@+id/profileNicknameSwitcher"

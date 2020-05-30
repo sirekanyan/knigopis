@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
-import android.util.TypedValue
 import android.widget.ImageView
-import androidx.annotation.AttrRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -21,16 +21,13 @@ private const val DARK_SATURATION = 0.33f
 private fun ImageView.setImage(
     url: String?,
     requestOptions: RequestOptions,
-    @AttrRes placeholderAttr: Int
+    @DrawableRes placeholderRes: Int
 ) {
-    if (isDarkTheme) {
+    if (context.isNightMode) {
         val colorMatrix = ColorMatrix().apply { setSaturation(DARK_SATURATION) }
         colorFilter = ColorMatrixColorFilter(colorMatrix)
     }
-    val placeholder = TypedValue().let { typedValue ->
-        context.theme.resolveAttribute(placeholderAttr, typedValue, false)
-        typedValue.data
-    }
+    val placeholder = ContextCompat.getDrawable(context, placeholderRes)
     Glide.with(context)
         .load(url)
         .apply(requestOptions.placeholder(placeholder))
@@ -38,11 +35,19 @@ private fun ImageView.setImage(
         .into(this)
 }
 
-fun ImageView.setCircleImage(url: String?, @AttrRes placeholder: Int? = null) {
+fun ImageView.setCircleImage(url: String?) {
     setImage(
         url,
         RequestOptions.circleCropTransform(),
-        placeholder ?: R.attr.oval_placeholder_drawable
+        R.drawable.oval_placeholder_background
+    )
+}
+
+fun ImageView.setCircleImageOnPrimary(url: String?) {
+    setImage(
+        url,
+        RequestOptions.circleCropTransform(),
+        R.drawable.oval_placeholder_on_primary
     )
 }
 
@@ -50,7 +55,7 @@ fun ImageView.setSquareImage(url: String?) {
     setImage(
         url,
         RequestOptions.centerCropTransform(),
-        R.attr.rectangle_placeholder_drawable
+        R.drawable.rectangle_placeholder_background
     )
 }
 

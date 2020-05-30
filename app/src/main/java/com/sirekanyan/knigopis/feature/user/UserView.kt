@@ -68,7 +68,7 @@ class UserViewImpl(
     }
 
     override fun setImage(url: String?) {
-        userImage.setCircleImage(url, R.attr.oval_dark_placeholder_drawable)
+        userImage.setCircleImageOnPrimary(url)
         userImage.setElevationRes(R.dimen.image_view_elevation)
     }
 

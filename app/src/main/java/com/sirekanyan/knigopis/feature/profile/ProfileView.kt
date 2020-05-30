@@ -67,7 +67,7 @@ class ProfileViewImpl(
 
     override fun setProfile(profile: ProfileModel) {
         profileNickname.text = profile.name
-        profileAvatar.setCircleImage(profile.imageUrl)
+        profileAvatar.setCircleImageOnPrimary(profile.imageUrl)
     }
 
     override fun setEditOptionVisible(isVisible: Boolean) {

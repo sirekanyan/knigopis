@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_color_primary">@color/common_deep_purple_500</color>
+    <color name="splash_color_primary_variant">@color/common_deep_purple_700</color>
+    <color name="splash_color_background">@color/common_white</color>
+</resources>
