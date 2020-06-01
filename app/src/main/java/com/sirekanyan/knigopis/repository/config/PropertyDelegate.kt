@@ -19,6 +19,7 @@ class PreferenceDelegate<T>(
 
 }
 
+@Suppress("Unused")
 fun intPreference(): PreferenceDelegate<Int> =
     PreferenceDelegate({ key -> getInt(key, 0) }, { key, value -> putInt(key, value) })
 

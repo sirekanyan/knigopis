@@ -25,10 +25,11 @@ class PlannedBookOrganizerImpl(
 ) : BookOrganizer<PlannedBook> {
 
     override fun sort(books: List<PlannedBook>): List<PlannedBook> =
-        if (config.sortingMode == 0) {
-            books.sortedByDescending(PlannedBook::priority)
-        } else {
-            books.sortedByDescending(PlannedBook::updatedAt)
+        when (config.sorting) {
+            Sorting.DEFAULT -> books.sortedByDescending(PlannedBook::priority)
+            Sorting.BY_TIME -> books.sortedByDescending(PlannedBook::updatedAt)
+            Sorting.BY_TITLE -> books.sortedBy(PlannedBook::title)
+            Sorting.BY_AUTHOR -> books.sortedBy(PlannedBook::author)
         }
 
     override fun group(books: List<PlannedBook>): List<BookModel> {

@@ -11,6 +11,7 @@ import com.sirekanyan.knigopis.common.extensions.isNightMode
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.repository.Sorting
 import com.sirekanyan.knigopis.repository.Theme
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
 import kotlinx.android.extensions.LayoutContainer
@@ -31,14 +32,15 @@ interface MainView {
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
     fun showProfileOption(isVisible: Boolean)
+    fun setSortOptionChecked(sorting: Sorting)
     fun setThemeOptionChecked(theme: Theme)
 
     interface Callbacks {
         fun onNavigationClicked(itemId: Int)
-        fun onToolbarClicked()
         fun onLoginOptionClicked()
         fun onProfileOptionClicked()
         fun onAboutOptionClicked()
+        fun onSortOptionClicked(sorting: Sorting)
         fun onThemeOptionClicked(theme: Theme)
     }
 
@@ -55,9 +57,8 @@ class MainViewImpl(
 
     init {
         toolbar.inflateMenu(R.menu.options)
-        toolbar.setOnClickListener {
-            callbacks.onToolbarClicked()
-        }
+        val sortOptions = Sorting.values().map(Sorting::id)
+        val themeOptions = Theme.values().map(Theme::id)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.option_login -> {
@@ -72,9 +73,12 @@ class MainViewImpl(
                     callbacks.onAboutOptionClicked()
                     true
                 }
-                R.id.option_light_theme,
-                R.id.option_dark_theme,
-                R.id.option_default_theme -> {
+                in sortOptions -> {
+                    item.isChecked = true
+                    callbacks.onSortOptionClicked(Sorting.getById(item.itemId))
+                    true
+                }
+                in themeOptions -> {
                     item.isChecked = true
                     callbacks.onThemeOptionClicked(Theme.getById(item.itemId))
                     true
@@ -117,6 +121,7 @@ class MainViewImpl(
         booksPage.show(tab == BOOKS_TAB)
         usersPage.show(tab == USERS_TAB)
         notesPage.show(tab == NOTES_TAB)
+        toolbar.menu.findItem(R.id.option_sort).isVisible = tab == BOOKS_TAB
     }
 
     override fun showNavigation(isVisible: Boolean) {
@@ -142,6 +147,10 @@ class MainViewImpl(
 
     override fun showProfileOption(isVisible: Boolean) {
         profileOption.isVisible = isVisible
+    }
+
+    override fun setSortOptionChecked(sorting: Sorting) {
+        toolbar.menu.findItem(sorting.id).isChecked = true
     }
 
     override fun setThemeOptionChecked(theme: Theme) {

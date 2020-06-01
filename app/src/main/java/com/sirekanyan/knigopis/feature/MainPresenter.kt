@@ -9,6 +9,7 @@ import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
 import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Configuration
+import com.sirekanyan.knigopis.repository.Sorting
 import com.sirekanyan.knigopis.repository.Theme
 
 interface MainPresenter : Presenter {
@@ -46,6 +47,7 @@ class MainPresenterImpl(
         get() = currentTab?.let { MainPresenterState(it) }
 
     override fun init(tab: CurrentTab?) {
+        view.setSortOptionChecked(config.sorting)
         view.setThemeOptionChecked(Theme.getCurrent())
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
         this.currentTab = tab ?: defaultTab
@@ -114,9 +116,9 @@ class MainPresenterImpl(
         }
     }
 
-    override fun onToolbarClicked() {
+    override fun onSortOptionClicked(sorting: Sorting) {
         if (currentTab == BOOKS_TAB) {
-            config.sortingMode = if (config.sortingMode == 0) 1 else 0
+            config.sorting = sorting
             refresh(isForce = true)
         }
     }
