@@ -13,7 +13,7 @@ interface ProfilePresenter : Presenter {
 
     fun init()
     fun start()
-    fun back(): Boolean
+    fun back()
 
     interface Router {
         fun shareProfile(profileUrl: String)
@@ -46,16 +46,16 @@ class ProfilePresenterImpl(
         refreshCounters()
     }
 
-    override fun back(): Boolean =
+    override fun back() {
         if (view.isEditMode) {
             view.quitEditMode()
-            true
         } else {
-            false
+            router.exit()
         }
+    }
 
     override fun onNavigationBackClicked() {
-        router.exit()
+        back()
     }
 
     override fun onEditOptionClicked() {

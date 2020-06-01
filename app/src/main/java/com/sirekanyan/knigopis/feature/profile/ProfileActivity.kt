@@ -39,9 +39,7 @@ class ProfileActivity : BaseActivity(), ProfilePresenter.Router {
     }
 
     override fun onBackPressed() {
-        if (!presenter.back()) {
-            super.onBackPressed()
-        }
+        presenter.back()
     }
 
 }
