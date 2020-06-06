@@ -19,6 +19,14 @@ android {
         versionName = "0.3.1"
         setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")
         vectorDrawables.useSupportLibrary = true
+        manifestPlaceholders = mapOf(
+            "LOGIN_CALLBACK_SCHEME" to "e270636c0efc6cad95130113d3bbafc3",
+            "LOGIN_CALLBACK_HOST" to "532b8e7fc54c52b6df5b55181acc241a",
+            "LOGIN_CALLBACK_PATH" to "$versionCode"
+        )
+        manifestPlaceholders.forEach { (key, value) ->
+            buildConfigField("String", key, "\"$value\"")
+        }
     }
     buildTypes {
         getByName("release") {

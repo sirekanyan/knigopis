@@ -65,9 +65,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="532b8e7fc54c52b6df5b55181acc241a"
-                    android:path="/8e89f82ac2a6a7972452eae93e3bb734"
-                    android:scheme="e270636c0efc6cad95130113d3bbafc3" />
+                    android:host="${LOGIN_CALLBACK_HOST}"
+                    android:path="/${LOGIN_CALLBACK_PATH}"
+                    android:scheme="${LOGIN_CALLBACK_SCHEME}" />
             </intent-filter>
         </activity>
 

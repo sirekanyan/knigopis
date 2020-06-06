@@ -1,13 +1,14 @@
 package com.sirekanyan.knigopis.feature.login
 
 import android.net.Uri
+import com.sirekanyan.knigopis.BuildConfig.*
 import com.sirekanyan.knigopis.common.extensions.RANDOM_ID
 
 val LOGIN_CALLBACK_URI: Uri =
     Uri.Builder()
-        .scheme("e270636c0efc6cad95130113d3bbafc3")
-        .authority("532b8e7fc54c52b6df5b55181acc241a")
-        .path("8e89f82ac2a6a7972452eae93e3bb734")
+        .scheme(LOGIN_CALLBACK_SCHEME)
+        .authority(LOGIN_CALLBACK_HOST)
+        .path(LOGIN_CALLBACK_PATH)
         .build()
 private val LOGIN_URI: Uri =
     Uri.Builder()
