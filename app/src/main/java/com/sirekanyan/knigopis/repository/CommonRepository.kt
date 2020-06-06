@@ -22,7 +22,7 @@ abstract class CommonRepository<T>(private val networkChecker: NetworkChecker) {
                     .toMaybe()
             )
         } else {
-            findCached().toFlowable()
+            findCached().toSingle().toFlowable()
         }
 
 }
