@@ -14,9 +14,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
+import com.bumptech.glide.request.transition.TransitionFactory
 import com.sirekanyan.knigopis.R
 
 private const val DARK_SATURATION = 0.33f
+private val crossFadeTransitionFactory = TransitionFactory { _, _ ->
+    DrawableCrossFadeTransition(300, true)
+}
 
 private fun ImageView.setImage(
     url: String?,
@@ -31,7 +36,7 @@ private fun ImageView.setImage(
     Glide.with(context)
         .load(url)
         .apply(requestOptions.placeholder(placeholder))
-        .transition(DrawableTransitionOptions.withCrossFade())
+        .transition(DrawableTransitionOptions.with(crossFadeTransitionFactory))
         .into(this)
 }
 
