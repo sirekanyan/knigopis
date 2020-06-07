@@ -1,7 +1,12 @@
 package com.sirekanyan.knigopis
 
 import android.app.Application
+import android.content.Context
 import com.sirekanyan.knigopis.dependency.*
+import org.acra.ACRA
+import org.acra.config.CoreConfigurationBuilder
+import org.acra.config.HttpSenderConfigurationBuilder
+import org.acra.sender.HttpSender
 
 class App : Application() {
 
@@ -16,6 +21,21 @@ class App : Application() {
     val endpoint by lazy(::provideEndpoint)
     val cache by lazy(::provideCache)
     val gson by lazy(::provideGson)
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        initCrashReporting()
+    }
+
+    private fun initCrashReporting() {
+        val builder = CoreConfigurationBuilder(this)
+            .setBuildConfigClass(BuildConfig::class.java)
+        builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
+            .setUri("https://collector.tracepot.com/93c9aa62")
+            .setHttpMethod(HttpSender.Method.POST)
+            .setEnabled(true)
+        ACRA.init(this, builder)
+    }
 
     override fun onCreate() {
         super.onCreate()
