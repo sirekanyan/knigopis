@@ -34,6 +34,7 @@ interface MainView {
     fun showProfileOption(isVisible: Boolean)
     fun setSortOptionChecked(sorting: Sorting)
     fun setThemeOptionChecked(theme: Theme)
+    fun setCrashReportOptionChecked(isChecked: Boolean)
 
     interface Callbacks {
         fun onNavigationClicked(itemId: Int)
@@ -42,6 +43,7 @@ interface MainView {
         fun onAboutOptionClicked()
         fun onSortOptionClicked(sorting: Sorting)
         fun onThemeOptionClicked(theme: Theme)
+        fun onCrashReportOptionClicked(isChecked: Boolean)
     }
 
 }
@@ -81,6 +83,11 @@ class MainViewImpl(
                 in themeOptions -> {
                     item.isChecked = true
                     callbacks.onThemeOptionClicked(Theme.getById(item.itemId))
+                    true
+                }
+                R.id.option_crash_report -> {
+                    item.isChecked = !item.isChecked
+                    callbacks.onCrashReportOptionClicked(item.isChecked)
                     true
                 }
                 R.id.debug_option_clear_cache -> {
@@ -155,6 +162,10 @@ class MainViewImpl(
 
     override fun setThemeOptionChecked(theme: Theme) {
         toolbar.menu.findItem(theme.id).isChecked = true
+    }
+
+    override fun setCrashReportOptionChecked(isChecked: Boolean) {
+        toolbar.menu.findItem(R.id.option_crash_report).isChecked = isChecked
     }
 
 }

@@ -24,7 +24,9 @@ class App : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        initCrashReporting()
+        if (config.crashReportEnabled) {
+            initCrashReporting()
+        }
     }
 
     private fun initCrashReporting() {

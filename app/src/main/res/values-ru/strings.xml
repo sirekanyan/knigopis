@@ -31,6 +31,7 @@
     <string name="main_option_theme_light">Светлая</string>
     <string name="main_option_theme_dark">Тёмная</string>
     <string name="main_option_theme_default">Энергосбережение</string>
+    <string name="main.option.crash_report">Отчеты об ошибках</string>
 
     <!-- login -->
     <string name="login.title">Войти через…</string>

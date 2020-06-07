@@ -30,6 +30,7 @@
     <string name="main_option_theme_light">Light</string>
     <string name="main_option_theme_dark">Dark</string>
     <string name="main_option_theme_default">Set by Battery Saver</string>
+    <string name="main.option.crash_report">Crash reporting</string>
 
     <!-- login -->
     <string name="login.title">Log in with…</string>

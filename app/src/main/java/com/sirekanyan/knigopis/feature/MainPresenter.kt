@@ -11,6 +11,7 @@ import com.sirekanyan.knigopis.repository.AuthRepository
 import com.sirekanyan.knigopis.repository.Configuration
 import com.sirekanyan.knigopis.repository.Sorting
 import com.sirekanyan.knigopis.repository.Theme
+import org.acra.ACRA
 
 interface MainPresenter : Presenter {
 
@@ -49,6 +50,7 @@ class MainPresenterImpl(
     override fun init(tab: CurrentTab?) {
         view.setSortOptionChecked(config.sorting)
         view.setThemeOptionChecked(Theme.getCurrent())
+        view.setCrashReportOptionChecked(config.crashReportEnabled)
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
         this.currentTab = tab ?: defaultTab
     }
@@ -133,6 +135,13 @@ class MainPresenterImpl(
 
     override fun onAboutOptionClicked() {
         view.showAboutDialog()
+    }
+
+    override fun onCrashReportOptionClicked(isChecked: Boolean) {
+        config.crashReportEnabled = isChecked
+        if (!isChecked) {
+            ACRA.getErrorReporter().handleException(Exception("Crash reporting was disabled"))
+        }
     }
 
     override fun onThemeOptionClicked(theme: Theme) {

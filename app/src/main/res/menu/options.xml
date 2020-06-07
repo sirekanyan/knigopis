@@ -58,6 +58,12 @@
         android:title="@string/main.option.about"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/option_crash_report"
+        android:checkable="true"
+        android:title="@string/main.option.crash_report"
+        app:showAsAction="never" />
+
     <!-- for debug only -->
     <item
         android:id="@+id/debug_option_clear_cache"

@@ -23,7 +23,6 @@ class PreferenceDelegate<T>(
 fun intPreference(): PreferenceDelegate<Int> =
     PreferenceDelegate({ key -> getInt(key, 0) }, { key, value -> putInt(key, value) })
 
-@Suppress("Unused")
 fun booleanPreference(): PreferenceDelegate<Boolean> =
     PreferenceDelegate({ key -> getBoolean(key, false) }, { key, value -> putBoolean(key, value) })
 
