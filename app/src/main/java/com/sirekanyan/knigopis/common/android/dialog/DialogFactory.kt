@@ -27,7 +27,7 @@ class BottomSheetDialogFactory(private val context: Context) : DialogFactory {
             item.title.setValueTo(itemView.bottomSheetItemText)
             itemView.setOnClickListener {
                 item.onClick()
-                dialog.hide()
+                dialog.dismiss()
             }
             container.addView(itemView)
         }
