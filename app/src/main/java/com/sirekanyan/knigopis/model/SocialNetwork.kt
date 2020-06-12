@@ -15,6 +15,7 @@ enum class SocialNetwork(
     FACEBOOK(R.string.common_social_facebook, R.drawable.ic_social_facebook, "www.facebook.com"),
     INSTAGRAM(R.string.common_social_instagram, R.drawable.ic_social_instagram, "www.instagram.com"),
     TWITTER(R.string.common_social_twitter, R.drawable.ic_social_twitter, "twitter.com"),
+    TELEGRAM(R.string.common_social_telegram, R.drawable.ic_social_telegram, "t.me"),
     GOOGLE(R.string.common_social_googleplus, R.drawable.ic_social_googleplus, "plus.google.com"),
     VK_COM(R.string.common_social_vkontakte, R.drawable.ic_social_vkontakte, "vk.com"),
     MAIL_RU(R.string.common_social_mailru, R.drawable.ic_social_mailru, "my.mail.ru"),
