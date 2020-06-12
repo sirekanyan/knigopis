@@ -54,11 +54,32 @@ class PlannedBookOrganizerImpl(
 }
 
 class FinishedBookOrganizerImpl(
-    private val resources: ResourceProvider
+    private val resources: ResourceProvider,
+    private val config: Configuration
 ) : BookOrganizer<FinishedBook> {
 
     override fun sort(books: List<FinishedBook>): List<FinishedBook> =
-        books.sortedByDescending(FinishedBook::order)
+        when (config.sorting) {
+            Sorting.BY_TITLE -> {
+                books.sortedWith(
+                    compareByDescending(FinishedBook::readYear)
+                        .then(compareBy(FinishedBook::title))
+                )
+            }
+            Sorting.BY_AUTHOR -> {
+                books.sortedWith(
+                    compareByDescending(FinishedBook::readYear)
+                        .then(compareBy(FinishedBook::author))
+                        .then(compareBy(FinishedBook::title))
+                )
+            }
+            else -> {
+                books.sortedWith(
+                    compareByDescending(FinishedBook::order)
+                        .then(compareBy(FinishedBook::title))
+                )
+            }
+        }
 
     override fun group(books: List<FinishedBook>): List<BookModel> {
         var first = true

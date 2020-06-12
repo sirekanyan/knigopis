@@ -39,7 +39,7 @@ fun App.provideAuthRepository(): AuthRepository =
 
 fun App.provideBookRepository(): BookRepository {
     val planned = PlannedBookOrganizerImpl(resourceProvider, config)
-    val finished = FinishedBookOrganizerImpl(resourceProvider)
+    val finished = FinishedBookOrganizerImpl(resourceProvider, config)
     return BookRepositoryImpl(endpoint, cache, planned, finished, networkChecker)
 }
 
