@@ -6,6 +6,7 @@ import android.text.style.SuperscriptSpan
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
+import com.sirekanyan.knigopis.common.functions.createUserImageUrl
 import com.sirekanyan.knigopis.common.functions.createUserPublicUrl
 import com.sirekanyan.knigopis.model.dto.*
 
@@ -37,7 +38,7 @@ fun Subscription.toUserModel() =
     UserModel(
         subUser.id,
         subUser.name,
-        subUser.photo,
+        createUserImageUrl(subUser.id),
         subUser.booksCount.takeIf { it > 0 }?.toString(),
         newBooksCount.takeIf { it > 0 }?.let { count ->
             val str = "+$count"
@@ -57,41 +58,26 @@ fun Note.toNoteModel() =
         notes,
         DateUtils.getRelativeTimeSpanString(fixedCreatedAt.time).toString(),
         user.id,
-        user.name,
-        user.avatarUrl
+        user.nickname ?: user.id,
+        createUserImageUrl(user.id)
     )
 
-fun BookDataModel.toEditModel(): EditBookModel =
-    EditBookModel(
-        BookAction.EDIT,
-        id,
-        title,
-        author,
-        if (isFinished) MAX_BOOK_PRIORITY else priority,
-        if (isFinished) date else EMPTY_DATE,
-        notes
-    )
+fun BookDataModel.toEditModel(): EditBookModel {
+    val progress = if (isFinished) MAX_BOOK_PRIORITY else priority
+    val dateModel = if (isFinished) date else EMPTY_DATE
+    return EditBookModel(BookAction.EDIT, id, title, author, progress, dateModel, notes)
+}
 
-fun EditBookModel.toPlannedBook(): PlannedBookToSend =
-    PlannedBookToSend(
-        title,
-        author,
-        notes,
-        progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
-    )
+fun EditBookModel.toPlannedBook(): PlannedBookToSend {
+    val priority = progress.takeIf { it in (MIN_BOOK_PRIORITY..MAX_BOOK_PRIORITY) }
+    return PlannedBookToSend(title, author, notes, priority)
+}
 
 fun EditBookModel.toFinishedBook(): FinishedBookToSend =
-    FinishedBookToSend(
-        title,
-        author,
-        date.day,
-        date.month,
-        date.year,
-        notes
-    )
+    FinishedBookToSend(title, author, date.day, date.month, date.year, notes)
 
 fun User.toProfileModel(): ProfileModel =
-    ProfileModel(id, name, photo, profile.orEmpty(), createUserPublicUrl(id))
+    ProfileModel(id, name, createUserImageUrl(id), profile.orEmpty(), createUserPublicUrl(id))
 
 fun ProfileModel.toProfile(): Profile =
     Profile(name, profileUrl)

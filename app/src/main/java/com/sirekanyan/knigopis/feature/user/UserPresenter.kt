@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.android.ResourceProvider
 import com.sirekanyan.knigopis.common.extensions.snackbar
 import com.sirekanyan.knigopis.common.extensions.toast
+import com.sirekanyan.knigopis.common.functions.createUserImageUrl
 import com.sirekanyan.knigopis.common.functions.createUserPublicUrl
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -31,7 +32,6 @@ class UserPresenterImpl(
     private val interactor: UserInteractor,
     private val userId: String,
     private val userName: String,
-    private val userImage: String?,
     private val resources: ResourceProvider
 ) : BasePresenter<UserView>(),
     UserPresenter,
@@ -39,7 +39,7 @@ class UserPresenterImpl(
 
     override fun init() {
         view.setTitle(userName)
-        view.setImage(userImage)
+        view.setImage(createUserImageUrl(userId))
     }
 
     override fun start() {

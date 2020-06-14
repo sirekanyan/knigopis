@@ -60,7 +60,7 @@ class MainActivity : BaseActivity(),
                 api.getUser(userId)
                     .io2main()
                     .bind({ user ->
-                        openUserScreen(userId, user.name, user.photo)
+                        openUserScreen(userId, user.name)
                     }, {
                         logError("Cannot get user", it)
                     })
@@ -117,15 +117,15 @@ class MainActivity : BaseActivity(),
     }
 
     override fun openUserScreen(user: UserModel) {
-        openUserScreen(user.id, user.name, user.image)
+        openUserScreen(user.id, user.name)
     }
 
     override fun openUserScreen(note: NoteModel) {
-        openUserScreen(note.userId, note.userName, note.userImage)
+        openUserScreen(note.userId, note.userName)
     }
 
-    private fun openUserScreen(id: String, name: String, image: String?) {
-        startActivity(createUserIntent(id, name, image))
+    private fun openUserScreen(id: String, name: String) {
+        startActivity(createUserIntent(id, name))
     }
 
     override fun openWebPage(uri: Uri) {

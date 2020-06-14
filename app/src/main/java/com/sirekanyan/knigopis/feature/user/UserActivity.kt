@@ -14,21 +14,18 @@ import com.sirekanyan.knigopis.model.EditBookModel
 
 private val EXTRA_USER_ID = extra("user_id")
 private val EXTRA_USER_NAME = extra("user_name")
-private val EXTRA_USER_IMAGE = extra("user_image")
 
-fun Context.createUserIntent(id: String, name: String, avatar: String?): Intent =
+fun Context.createUserIntent(id: String, name: String): Intent =
     Intent(this, UserActivity::class.java)
         .putExtra(EXTRA_USER_ID, id)
         .putExtra(EXTRA_USER_NAME, name)
-        .putExtra(EXTRA_USER_IMAGE, avatar)
 
 class UserActivity : BaseActivity(), UserPresenter.Router {
 
     private val presenter by lazy {
         providePresenter(
-            intent.getStringExtra(EXTRA_USER_ID)!!,
-            intent.getStringExtra(EXTRA_USER_NAME)!!,
-            intent.getStringExtra(EXTRA_USER_IMAGE)
+            checkNotNull(intent.getStringExtra(EXTRA_USER_ID)),
+            checkNotNull(intent.getStringExtra(EXTRA_USER_NAME))
         )
     }
 

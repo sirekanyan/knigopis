@@ -2,8 +2,7 @@ package com.sirekanyan.knigopis.model.dto
 
 class User(
     val id: String,
-    val nickname: String?,
-    val photo: String?,
+    private val nickname: String?,
     val profile: String?,
     private val identity: String?,
     val booksCount: Int
