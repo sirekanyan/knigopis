@@ -5,15 +5,15 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.sirekanyan.knigopis.R
 
-fun Uri.toSocialNetwork() = SocialNetwork.values().find { it.host == host }
+fun Uri.toSocialNetwork() = SocialNetwork.values().find { host in it.hosts }
 
 enum class SocialNetwork(
     @StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int,
-    val host: String
+    vararg val hosts: String
 ) {
     FACEBOOK(R.string.common_social_facebook, R.drawable.ic_social_facebook, "www.facebook.com"),
-    INSTAGRAM(R.string.common_social_instagram, R.drawable.ic_social_instagram, "www.instagram.com"),
+    INSTAGRAM(R.string.common_social_instagram, R.drawable.ic_social_instagram, "instagram.com", "www.instagram.com"),
     TWITTER(R.string.common_social_twitter, R.drawable.ic_social_twitter, "twitter.com"),
     TELEGRAM(R.string.common_social_telegram, R.drawable.ic_social_telegram, "t.me"),
     GOOGLE(R.string.common_social_googleplus, R.drawable.ic_social_googleplus, "plus.google.com"),
