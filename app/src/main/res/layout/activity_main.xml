@@ -41,17 +41,18 @@
                 android:alpha="0"
                 tools:alpha="1" />
 
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_navigation_height"
+                android:layout_gravity="bottom"
+                android:background="@color/knigopis_color_bottom_navigation"
+                android:visibility="gone"
+                app:elevation="0dp"
+                app:menu="@menu/navigation" />
+
         </FrameLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/knigopis_color_bottom_navigation"
-        android:visibility="gone"
-        app:menu="@menu/navigation" />
 
 </LinearLayout>

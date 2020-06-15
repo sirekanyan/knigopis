@@ -11,9 +11,7 @@
     <color name="common_blue_gray_500">#607D8B</color>
     <color name="common_teal_accent_700">#00BFA5</color>
     <color name="common_grey_950">#101010</color>
-    <color name="common_grey_875">#292929</color>
     <color name="common_grey_850">#303030</color>
-    <color name="common_grey_50">#FAFAFA</color>
     <color name="common_white">#ffffff</color>
     <color name="white_12">#1FFFFFFF</color>
     <color name="white_38">#61FFFFFF</color>
@@ -26,6 +24,10 @@
     <color name="grey_12">#1F808080</color>
     <color name="grey_50">#80808080</color>
     <color name="ic_launcher_background">#512DA8</color>
+
+    <!-- bottom navigation -->
+    <color name="common_grey_875">#FB292929</color>
+    <color name="common_grey_50">#FBFAFAFA</color>
 
     <!-- login -->
     <color name="social_vk">#5181B8</color>

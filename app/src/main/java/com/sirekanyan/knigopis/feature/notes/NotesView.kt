@@ -1,6 +1,7 @@
 package com.sirekanyan.knigopis.feature.notes
 
 import android.view.View
+import com.sirekanyan.knigopis.common.android.recycler.BottomOffsetItemDecoration
 import com.sirekanyan.knigopis.common.extensions.hide
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.common.functions.handleError
@@ -33,6 +34,7 @@ class NotesViewImpl(
 
     init {
         notesRecyclerView.adapter = notesAdapter
+        notesRecyclerView.addItemDecoration(BottomOffsetItemDecoration(containerView.context))
     }
 
     override fun updateNotes(notes: List<NoteModel>) {
