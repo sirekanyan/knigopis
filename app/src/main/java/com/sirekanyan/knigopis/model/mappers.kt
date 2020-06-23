@@ -1,8 +1,6 @@
 package com.sirekanyan.knigopis.model
 
-import android.text.SpannableString
 import android.text.format.DateUtils
-import android.text.style.SuperscriptSpan
 import com.sirekanyan.knigopis.MAX_BOOK_PRIORITY
 import com.sirekanyan.knigopis.MIN_BOOK_PRIORITY
 import com.sirekanyan.knigopis.common.functions.createBookImageUrl
@@ -40,12 +38,7 @@ fun Subscription.toUserModel() =
         subUser.name,
         createUserImageUrl(subUser.id),
         subUser.booksCount.takeIf { it > 0 }?.toString(),
-        newBooksCount.takeIf { it > 0 }?.let { count ->
-            val str = "+$count"
-            SpannableString(str).also {
-                it.setSpan(SuperscriptSpan(), 0, str.length, 0)
-            }
-        },
+        newBooksCount.takeIf { it > 0 }?.let { "+$it" },
         subUser.profiles
     )
 

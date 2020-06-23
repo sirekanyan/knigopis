@@ -3,7 +3,9 @@ package com.sirekanyan.knigopis.repository.cache
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
+import com.sirekanyan.knigopis.common.functions.logError
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import java.lang.reflect.Type
@@ -30,7 +32,12 @@ class CommonCacheImpl(
     override fun <T> find(key: CacheKey, type: Type): Maybe<T> =
         Maybe.fromCallable {
             prefs.getString(key.storeValue, null)?.let { json ->
-                gson.fromJson<T>(json, type)
+                try {
+                    gson.fromJson<T>(json, type)
+                } catch (exception: JsonSyntaxException) {
+                    logError("cannot parse json from cache", exception)
+                    null
+                }
             }
         }
 

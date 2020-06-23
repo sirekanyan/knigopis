@@ -32,7 +32,7 @@ class UserViewHolder(
         userImage.setCircleImage(model.image)
         userNickname.text = model.name
         totalBooksCount.text = model.booksCount
-        newBooksCount.text = model.newBooksCount
+        newBooksCount.text = model.newBooksCountFormatted
     }
 
 }
