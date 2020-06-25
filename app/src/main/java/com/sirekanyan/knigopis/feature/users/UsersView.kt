@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.common.android.dialog.DialogItem
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.recycler.BottomOffsetItemDecoration
 import com.sirekanyan.knigopis.common.extensions.hide
+import com.sirekanyan.knigopis.common.extensions.keepOnTop
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.ProgressView
@@ -48,7 +49,9 @@ class UsersViewImpl(
     override fun updateUsers(users: List<UserModel>) {
         usersPlaceholder.show(users.isEmpty())
         usersErrorPlaceholder.hide()
-        usersAdapter.submitList(users)
+        usersAdapter.submitList(users) {
+            usersRecyclerView.keepOnTop()
+        }
         callbacks.onUsersUpdated()
     }
 

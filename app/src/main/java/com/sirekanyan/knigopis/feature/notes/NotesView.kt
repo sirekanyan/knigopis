@@ -3,6 +3,7 @@ package com.sirekanyan.knigopis.feature.notes
 import android.view.View
 import com.sirekanyan.knigopis.common.android.recycler.BottomOffsetItemDecoration
 import com.sirekanyan.knigopis.common.extensions.hide
+import com.sirekanyan.knigopis.common.extensions.keepOnTop
 import com.sirekanyan.knigopis.common.extensions.show
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.ProgressView
@@ -40,7 +41,9 @@ class NotesViewImpl(
     override fun updateNotes(notes: List<NoteModel>) {
         notesPlaceholder.show(notes.isEmpty())
         notesErrorPlaceholder.hide()
-        notesAdapter.submitList(notes)
+        notesAdapter.submitList(notes) {
+            notesRecyclerView.keepOnTop()
+        }
         callbacks.onNotesUpdated()
     }
 
