@@ -12,6 +12,8 @@
     <dimen name="avatar_size_expanded">88dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="app_bar_height">160dp</dimen>
+    <dimen name="swipe_refresh_start_offset">36dp</dimen>
+    <dimen name="swipe_refresh_end_offset">80dp</dimen>
     <dimen name="bottom_navigation_height">56dp</dimen>
     <dimen name="title_start_margin_expanded">120dp</dimen>
     <dimen name="title_start_margin_collapsed">48dp</dimen>
