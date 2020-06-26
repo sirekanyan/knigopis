@@ -49,7 +49,6 @@ class UserViewImpl(
 ) : UserView,
     LayoutContainer {
 
-    private val context = containerView.context
     private val unsubscribeOption: MenuItem
     private val booksAdapter = UserBooksAdapter(callbacks::onBookLongClicked)
 
@@ -124,7 +123,7 @@ class UserViewImpl(
 
     override fun showActionsDialog(title: String, author: String, book: BookDataModel) {
         dialogs.showDialog(
-            context.resources.getFullTitleString(book.title, book.author),
+            resources.getFullTitleString(book.title, book.author),
             createDialogItem(R.string.user_button_todo, R.drawable.ic_playlist_add) {
                 callbacks.onTodoActionClicked(book)
             },

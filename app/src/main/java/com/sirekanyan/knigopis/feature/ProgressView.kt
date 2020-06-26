@@ -2,12 +2,14 @@ package com.sirekanyan.knigopis.feature
 
 import android.view.View
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.hide
+import com.sirekanyan.knigopis.common.extensions.resources
 import com.sirekanyan.knigopis.common.extensions.show
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_main.*
 
-interface ProgressView {
+interface ProgressView : CommonView {
 
     fun showProgress()
     fun hideProgress()
@@ -25,7 +27,6 @@ class ProgressViewImpl(
 ) : ProgressView,
     LayoutContainer {
 
-    private val resources = containerView.resources
     private val startOffset = resources.getDimensionPixelSize(R.dimen.swipe_refresh_start_offset)
     private val endOffset = resources.getDimensionPixelSize(R.dimen.swipe_refresh_end_offset)
 

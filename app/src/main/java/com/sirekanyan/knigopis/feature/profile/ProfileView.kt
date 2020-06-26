@@ -47,7 +47,6 @@ class ProfileViewImpl(
 ) : ProfileView,
     LayoutContainer {
 
-    private val context = containerView.context
     private lateinit var editOption: MenuItem
     override val isEditMode get() = profileNicknameSwitcher.displayedChild == 1
     override val isProfileChanged get() = profileNickname.text.toString() != profileNicknameEditText.text.toString()
@@ -157,7 +156,7 @@ class ProfileViewImpl(
         randomProfileBook.alpha = 1f
         randomProfileBook.text = context.getString(
             R.string.profile_text_random,
-            context.resources.getTitleString(book.title),
+            resources.getTitleString(book.title),
             book.priority
         )
         randomProfileBook.animate()

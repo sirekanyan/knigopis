@@ -6,6 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.toast.CommonView
+import com.sirekanyan.knigopis.common.extensions.context
 import com.sirekanyan.knigopis.common.extensions.hide
 import com.sirekanyan.knigopis.common.extensions.isNightMode
 import com.sirekanyan.knigopis.common.extensions.show
@@ -24,7 +26,7 @@ import kotlinx.android.synthetic.main.users_page.*
 
 private val DEBUG_OPTIONS = arrayOf(R.id.debug_option_clear_cache, R.id.debug_option_toggle_theme)
 
-interface MainView {
+interface MainView : CommonView {
 
     fun showAboutDialog()
     fun showPage(tab: CurrentTab)
@@ -53,7 +55,6 @@ class MainViewImpl(
     private val callbacks: MainView.Callbacks
 ) : MainView, LayoutContainer {
 
-    private val context = containerView.context
     private val loginOption: MenuItem
     private val profileOption: MenuItem
 

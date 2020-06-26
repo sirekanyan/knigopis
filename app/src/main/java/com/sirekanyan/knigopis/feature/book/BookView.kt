@@ -42,7 +42,6 @@ class BookViewImpl(
 ) : BookView,
     LayoutContainer {
 
-    private val context = containerView.context
     private val saveMenuItem: MenuItem
     private val progressMenuItem: MenuItem
     private val bookAction = initialBook.action

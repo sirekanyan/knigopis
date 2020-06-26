@@ -6,6 +6,7 @@ import com.sirekanyan.knigopis.common.android.dialog.DialogItem
 import com.sirekanyan.knigopis.common.android.dialog.createDialogItem
 import com.sirekanyan.knigopis.common.android.recycler.BottomOffsetItemDecoration
 import com.sirekanyan.knigopis.common.android.recycler.TopOffsetItemDecoration
+import com.sirekanyan.knigopis.common.extensions.context
 import com.sirekanyan.knigopis.common.extensions.hide
 import com.sirekanyan.knigopis.common.extensions.keepOnTop
 import com.sirekanyan.knigopis.common.extensions.show
@@ -44,8 +45,8 @@ class UsersViewImpl(
 
     init {
         usersRecyclerView.adapter = usersAdapter
-        usersRecyclerView.addItemDecoration(TopOffsetItemDecoration(containerView.context))
-        usersRecyclerView.addItemDecoration(BottomOffsetItemDecoration(containerView.context))
+        usersRecyclerView.addItemDecoration(TopOffsetItemDecoration(context))
+        usersRecyclerView.addItemDecoration(BottomOffsetItemDecoration(context))
     }
 
     override fun updateUsers(users: List<UserModel>) {

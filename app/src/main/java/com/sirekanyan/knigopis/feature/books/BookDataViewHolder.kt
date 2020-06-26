@@ -15,8 +15,6 @@ class BookDataViewHolder(
 ) : CommonViewHolder<BookModel>(containerView),
     LayoutContainer {
 
-    private val resources = containerView.resources
-
     init {
         containerView.setOnClickListener {
             model?.let { book ->

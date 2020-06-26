@@ -4,13 +4,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.toast.CommonView
+import com.sirekanyan.knigopis.common.extensions.context
 import com.sirekanyan.knigopis.common.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.default_app_bar.*
 import kotlinx.android.synthetic.main.login_activity.*
 import kotlinx.android.synthetic.main.website_layout.view.*
 
-interface LoginView {
+interface LoginView : CommonView {
 
     fun addWebsite(website: Website)
     fun showNoBrowserDialog()
@@ -30,8 +32,6 @@ class LoginViewImpl(
     private val callbacks: LoginView.Callbacks
 ) : LoginView,
     LayoutContainer {
-
-    private val context = containerView.context
 
     init {
         toolbar.setTitle(R.string.login_title)

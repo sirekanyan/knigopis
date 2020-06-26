@@ -9,9 +9,7 @@ import com.sirekanyan.knigopis.common.android.header.HeaderItemDecoration
 import com.sirekanyan.knigopis.common.android.header.StickyHeaderImpl
 import com.sirekanyan.knigopis.common.android.recycler.BottomOffsetItemDecoration
 import com.sirekanyan.knigopis.common.android.toast.CommonView
-import com.sirekanyan.knigopis.common.extensions.getFullTitleString
-import com.sirekanyan.knigopis.common.extensions.hide
-import com.sirekanyan.knigopis.common.extensions.show
+import com.sirekanyan.knigopis.common.extensions.*
 import com.sirekanyan.knigopis.common.functions.handleError
 import com.sirekanyan.knigopis.feature.ProgressView
 import com.sirekanyan.knigopis.model.BookDataModel
@@ -45,8 +43,6 @@ class BooksViewImpl(
     private val dialogs: DialogFactory
 ) : BooksView, LayoutContainer, ProgressView by progressView {
 
-    private val context = containerView.context
-    private val resources = context.resources
     private val booksAdapter = BooksAdapter(callbacks::onBookClicked, callbacks::onBookLongClicked)
 
     init {
