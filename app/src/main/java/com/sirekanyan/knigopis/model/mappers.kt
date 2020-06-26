@@ -37,8 +37,8 @@ fun Subscription.toUserModel() =
         subUser.id,
         subUser.name,
         createUserImageUrl(subUser.id),
-        subUser.booksCount.takeIf { it > 0 }?.toString(),
-        newBooksCount.takeIf { it > 0 }?.let { "+$it" },
+        subUser.booksCount.takeIf { it > 0 },
+        newBooksCount.takeIf { it > 0 },
         subUser.profiles
     )
 
