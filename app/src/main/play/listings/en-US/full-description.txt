@@ -1,0 +1,5 @@
+Keep list of books you've read.
+
+This app is unofficial mobile version of web application https://www.knigopis.com
+
+Source code is open and available on GitHub under MIT license: https://github.com/sirekanyan/knigopis

@@ -1,0 +1,23 @@
+v0.3.4
+- Added ability to sort your subscriptions
+- Other improvements and fixes
+
+v0.3.3
+- UI improvements and minor fixes
+
+v0.3.2
+- Added crash reporting (disabled by default)
+- Minor bugfixes
+
+v0.3.1
+- Better dark theme
+- Minor bugfixes
+
+v0.3.0
+- Auhtorization rework, removed closed-source libraries
+
+v0.2.3
+- Enabled TLS encryption
+
+v0.2.2
+- App size reduced by 40%
