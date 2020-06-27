@@ -26,6 +26,7 @@ android {
         manifestPlaceholders.forEach { (key, value) ->
             buildConfigField("String", key, "\"$value\"")
         }
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         getByName("release") {
