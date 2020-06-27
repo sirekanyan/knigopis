@@ -6,6 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.menu.addAll
+import com.sirekanyan.knigopis.common.android.menu.optionIds
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.context
 import com.sirekanyan.knigopis.common.extensions.hide
@@ -60,7 +62,7 @@ class MainViewImpl(
 
     init {
         toolbar.inflateMenu(R.menu.options)
-        val sortOptions = BookSorting.values().map(BookSorting::id)
+        toolbar.menu.findItem(R.id.option_sort_books).addAll(BookSorting.values())
         val themeOptions = Theme.values().map(Theme::id)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -76,7 +78,7 @@ class MainViewImpl(
                     callbacks.onAboutOptionClicked()
                     true
                 }
-                in sortOptions -> {
+                in optionIds<BookSorting>() -> {
                     item.isChecked = true
                     callbacks.onSortOptionClicked(BookSorting.getById(item.itemId))
                     true

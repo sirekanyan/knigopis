@@ -20,20 +20,7 @@
         android:id="@+id/option_sort_books"
         android:title="@string/main_option_sort">
         <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/option_sort_by_progress"
-                    android:title="@string/main_option_sort_by_progress" />
-                <item
-                    android:id="@+id/option_sort_by_time"
-                    android:title="@string/main_option_sort_by_time" />
-                <item
-                    android:id="@+id/option_sort_by_title"
-                    android:title="@string/main_option_sort_by_title" />
-                <item
-                    android:id="@+id/option_sort_by_author"
-                    android:title="@string/main_option_sort_by_author" />
-            </group>
+            <!-- dynamic content -->
         </menu>
     </item>
 
