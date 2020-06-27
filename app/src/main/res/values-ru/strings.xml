@@ -23,8 +23,8 @@
     <string name="main.option.profile">Мой профиль</string>
     <string name="main.option.about">О приложении</string>
     <string name="main_option_sort">Сортировать</string>
+    <string name="main_option_sort_by_time">По актуальности</string>
     <string name="main_option_sort_by_progress">По прогрессу</string>
-    <string name="main_option_sort_by_time">По свежести</string>
     <string name="main_option_sort_by_title">По названию</string>
     <string name="main_option_sort_by_author">По автору</string>
     <string name="main_option_sort_users_by_time">По активности</string>

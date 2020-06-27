@@ -26,8 +26,8 @@ class PlannedBookOrganizerImpl(
 
     override fun sort(books: List<PlannedBook>): List<PlannedBook> =
         when (config.bookSorting) {
-            BookSorting.DEFAULT -> books.sortedByDescending(PlannedBook::priority)
-            BookSorting.BY_TIME -> books.sortedByDescending(PlannedBook::updatedAt)
+            BookSorting.DEFAULT -> books.sortedByDescending(PlannedBook::updatedAt)
+            BookSorting.BY_PROGRESS -> books.sortedByDescending(PlannedBook::priority)
             BookSorting.BY_TITLE -> books.sortedBy(PlannedBook::title)
             BookSorting.BY_AUTHOR -> books.sortedBy(PlannedBook::author)
         }

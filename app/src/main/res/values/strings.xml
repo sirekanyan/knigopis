@@ -22,8 +22,8 @@
     <string name="main.option.profile">Profile</string>
     <string name="main.option.about">About</string>
     <string name="main_option_sort">Sort</string>
-    <string name="main_option_sort_by_progress">By progress</string>
     <string name="main_option_sort_by_time">By update time</string>
+    <string name="main_option_sort_by_progress">By progress</string>
     <string name="main_option_sort_by_title">By title</string>
     <string name="main_option_sort_by_author">By author</string>
     <string name="main_option_sort_users_by_time">By update time</string>
