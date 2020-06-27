@@ -9,13 +9,13 @@ private const val PREFS_NAME = "config"
 
 interface Configuration {
     var theme: Theme
-    var sorting: Sorting
+    var bookSorting: BookSorting
     var crashReportEnabled: Boolean
 }
 
 class ConfigurationImpl(context: Application) : Configuration {
     internal val prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     override var theme by enumPreference(Theme.DEFAULT)
-    override var sorting by enumPreference(Sorting.DEFAULT)
+    override var bookSorting by enumPreference(BookSorting.DEFAULT)
     override var crashReportEnabled by booleanPreference()
 }

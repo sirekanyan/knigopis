@@ -8,8 +8,8 @@ import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
 import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
 import com.sirekanyan.knigopis.repository.AuthRepository
+import com.sirekanyan.knigopis.repository.BookSorting
 import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.Sorting
 import com.sirekanyan.knigopis.repository.Theme
 import org.acra.ACRA
 
@@ -48,7 +48,7 @@ class MainPresenterImpl(
         get() = currentTab?.let { MainPresenterState(it) }
 
     override fun init(tab: CurrentTab?) {
-        view.setSortOptionChecked(config.sorting)
+        view.setSortOptionChecked(config.bookSorting)
         view.setThemeOptionChecked(Theme.getCurrent())
         view.setCrashReportOptionChecked(config.crashReportEnabled)
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
@@ -118,9 +118,9 @@ class MainPresenterImpl(
         }
     }
 
-    override fun onSortOptionClicked(sorting: Sorting) {
+    override fun onSortOptionClicked(sorting: BookSorting) {
         if (currentTab == BOOKS_TAB) {
-            config.sorting = sorting
+            config.bookSorting = sorting
             refresh(isForce = true)
         }
     }

@@ -17,7 +17,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/option_sort"
+        android:id="@+id/option_sort_books"
         android:title="@string/main_option_sort">
         <menu>
             <group android:checkableBehavior="single">
