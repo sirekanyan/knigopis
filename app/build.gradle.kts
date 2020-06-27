@@ -15,8 +15,8 @@ android {
         applicationId = "com.sirekanyan.knigopis"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 30
-        versionName = "0.3.3"
+        versionCode = 31
+        versionName = "0.3.4"
         setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")
         manifestPlaceholders = mapOf(
             "LOGIN_CALLBACK_SCHEME" to "e270636c0efc6cad95130113d3bbafc3",
