@@ -26,6 +26,10 @@
     <string name="main_option_sort_by_time">By update time</string>
     <string name="main_option_sort_by_title">By title</string>
     <string name="main_option_sort_by_author">By author</string>
+    <string name="main_option_sort_users_by_time">By update time</string>
+    <string name="main_option_sort_users_by_name">By nickname</string>
+    <string name="main_option_sort_users_by_count">By books count</string>
+    <string name="main_option_sort_users_by_new_count">By new books count</string>
     <string name="main_option_theme">Theme</string>
     <string name="main_option_theme_light">Light</string>
     <string name="main_option_theme_dark">Dark</string>

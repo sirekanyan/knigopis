@@ -5,12 +5,8 @@ import com.sirekanyan.knigopis.common.Presenter
 import com.sirekanyan.knigopis.common.functions.logError
 import com.sirekanyan.knigopis.feature.users.MainPresenterState
 import com.sirekanyan.knigopis.model.CurrentTab
-import com.sirekanyan.knigopis.model.CurrentTab.BOOKS_TAB
-import com.sirekanyan.knigopis.model.CurrentTab.NOTES_TAB
-import com.sirekanyan.knigopis.repository.AuthRepository
-import com.sirekanyan.knigopis.repository.BookSorting
-import com.sirekanyan.knigopis.repository.Configuration
-import com.sirekanyan.knigopis.repository.Theme
+import com.sirekanyan.knigopis.model.CurrentTab.*
+import com.sirekanyan.knigopis.repository.*
 import org.acra.ACRA
 
 interface MainPresenter : Presenter {
@@ -48,7 +44,8 @@ class MainPresenterImpl(
         get() = currentTab?.let { MainPresenterState(it) }
 
     override fun init(tab: CurrentTab?) {
-        view.setSortOptionChecked(config.bookSorting)
+        view.setOptionChecked(config.bookSorting)
+        view.setOptionChecked(config.userSorting)
         view.setThemeOptionChecked(Theme.getCurrent())
         view.setCrashReportOptionChecked(config.crashReportEnabled)
         val defaultTab = if (auth.isAuthorized()) BOOKS_TAB else NOTES_TAB
@@ -121,6 +118,13 @@ class MainPresenterImpl(
     override fun onSortOptionClicked(sorting: BookSorting) {
         if (currentTab == BOOKS_TAB) {
             config.bookSorting = sorting
+            refresh(isForce = true)
+        }
+    }
+
+    override fun onUserSortOptionClicked(sorting: UserSorting) {
+        if (currentTab == USERS_TAB) {
+            config.userSorting = sorting
             refresh(isForce = true)
         }
     }

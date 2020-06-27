@@ -27,6 +27,10 @@
     <string name="main_option_sort_by_time">По свежести</string>
     <string name="main_option_sort_by_title">По названию</string>
     <string name="main_option_sort_by_author">По автору</string>
+    <string name="main_option_sort_users_by_time">По активности</string>
+    <string name="main_option_sort_users_by_name">По имени</string>
+    <string name="main_option_sort_users_by_count">По числу книг</string>
+    <string name="main_option_sort_users_by_new_count">По числу новых книг</string>
     <string name="main_option_theme">Тема приложения</string>
     <string name="main_option_theme_light">Светлая</string>
     <string name="main_option_theme_dark">Тёмная</string>

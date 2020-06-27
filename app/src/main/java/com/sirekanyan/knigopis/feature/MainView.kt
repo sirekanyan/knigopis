@@ -6,7 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.sirekanyan.knigopis.BuildConfig
 import com.sirekanyan.knigopis.R
+import com.sirekanyan.knigopis.common.android.menu.OptionItem
 import com.sirekanyan.knigopis.common.android.menu.addAll
+import com.sirekanyan.knigopis.common.android.menu.getOption
 import com.sirekanyan.knigopis.common.android.menu.optionIds
 import com.sirekanyan.knigopis.common.android.toast.CommonView
 import com.sirekanyan.knigopis.common.extensions.context
@@ -17,6 +19,7 @@ import com.sirekanyan.knigopis.model.CurrentTab
 import com.sirekanyan.knigopis.model.CurrentTab.*
 import com.sirekanyan.knigopis.repository.BookSorting
 import com.sirekanyan.knigopis.repository.Theme
+import com.sirekanyan.knigopis.repository.UserSorting
 import com.sirekanyan.knigopis.repository.cache.COMMON_PREFS_NAME
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.about.view.*
@@ -36,7 +39,7 @@ interface MainView : CommonView {
     fun setNavigation(itemId: Int)
     fun showLoginOption(isVisible: Boolean)
     fun showProfileOption(isVisible: Boolean)
-    fun setSortOptionChecked(sorting: BookSorting)
+    fun setOptionChecked(item: OptionItem)
     fun setThemeOptionChecked(theme: Theme)
     fun setCrashReportOptionChecked(isChecked: Boolean)
 
@@ -46,6 +49,7 @@ interface MainView : CommonView {
         fun onProfileOptionClicked()
         fun onAboutOptionClicked()
         fun onSortOptionClicked(sorting: BookSorting)
+        fun onUserSortOptionClicked(sorting: UserSorting)
         fun onThemeOptionClicked(theme: Theme)
         fun onCrashReportOptionClicked(isChecked: Boolean)
     }
@@ -63,9 +67,10 @@ class MainViewImpl(
     init {
         toolbar.inflateMenu(R.menu.options)
         toolbar.menu.findItem(R.id.option_sort_books).addAll(BookSorting.values())
+        toolbar.menu.findItem(R.id.option_sort_users).addAll(UserSorting.values())
         val themeOptions = Theme.values().map(Theme::id)
         toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
+            when (val itemId = item.itemId) {
                 R.id.option_login -> {
                     callbacks.onLoginOptionClicked()
                     true
@@ -80,12 +85,17 @@ class MainViewImpl(
                 }
                 in optionIds<BookSorting>() -> {
                     item.isChecked = true
-                    callbacks.onSortOptionClicked(BookSorting.getById(item.itemId))
+                    callbacks.onSortOptionClicked(getOption(itemId))
+                    true
+                }
+                in optionIds<UserSorting>() -> {
+                    item.isChecked = true
+                    callbacks.onUserSortOptionClicked(getOption(itemId))
                     true
                 }
                 in themeOptions -> {
                     item.isChecked = true
-                    callbacks.onThemeOptionClicked(Theme.getById(item.itemId))
+                    callbacks.onThemeOptionClicked(Theme.getById(itemId))
                     true
                 }
                 R.id.option_crash_report -> {
@@ -132,6 +142,7 @@ class MainViewImpl(
         usersPage.show(tab == USERS_TAB)
         notesPage.show(tab == NOTES_TAB)
         toolbar.menu.findItem(R.id.option_sort_books).isVisible = tab == BOOKS_TAB
+        toolbar.menu.findItem(R.id.option_sort_users).isVisible = tab == USERS_TAB
     }
 
     override fun showNavigation(isVisible: Boolean) {
@@ -159,8 +170,8 @@ class MainViewImpl(
         profileOption.isVisible = isVisible
     }
 
-    override fun setSortOptionChecked(sorting: BookSorting) {
-        toolbar.menu.findItem(sorting.id).isChecked = true
+    override fun setOptionChecked(item: OptionItem) {
+        toolbar.menu.findItem(item.id).isChecked = true
     }
 
     override fun setThemeOptionChecked(theme: Theme) {

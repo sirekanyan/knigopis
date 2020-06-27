@@ -38,13 +38,15 @@ fun App.provideAuthRepository(): AuthRepository =
     AuthRepositoryImpl(endpoint, tokenStorage)
 
 fun App.provideBookRepository(): BookRepository {
-    val planned = PlannedBookOrganizerImpl(resourceProvider, config)
-    val finished = FinishedBookOrganizerImpl(resourceProvider, config)
-    return BookRepositoryImpl(endpoint, cache, planned, finished, networkChecker)
+    val plannedOrganizer = PlannedBookOrganizerImpl(resourceProvider, config)
+    val finishedOrganizer = FinishedBookOrganizerImpl(resourceProvider, config)
+    return BookRepositoryImpl(endpoint, cache, plannedOrganizer, finishedOrganizer, networkChecker)
 }
 
-fun App.provideUserRepository(): UserRepository =
-    UserRepositoryImpl(endpoint, cache, networkChecker)
+fun App.provideUserRepository(): UserRepository {
+    val organizer = UserOrganizer(config)
+    return UserRepositoryImpl(endpoint, cache, organizer, networkChecker)
+}
 
 fun App.provideNoteRepository(): NoteRepository =
     NoteRepositoryImpl(endpoint, cache, networkChecker)

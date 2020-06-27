@@ -2,8 +2,6 @@ package com.sirekanyan.knigopis.repository
 
 import com.sirekanyan.knigopis.common.android.NetworkChecker
 import com.sirekanyan.knigopis.model.UserModel
-import com.sirekanyan.knigopis.model.dto.Subscription
-import com.sirekanyan.knigopis.model.toUserModel
 import com.sirekanyan.knigopis.repository.cache.CacheKey
 import com.sirekanyan.knigopis.repository.cache.CommonCache
 import com.sirekanyan.knigopis.repository.cache.genericType
@@ -21,6 +19,7 @@ interface UserRepository {
 class UserRepositoryImpl(
     private val api: Endpoint,
     private val cache: CommonCache,
+    private val organizer: UserOrganizer,
     networkChecker: NetworkChecker
 ) : CommonRepository<List<UserModel>>(networkChecker),
     UserRepository {
@@ -28,7 +27,7 @@ class UserRepositoryImpl(
     override fun observeUsers() = observe()
 
     override fun loadFromNetwork(): Single<List<UserModel>> =
-        api.getSubscriptions().map { it.map(Subscription::toUserModel) }
+        api.getSubscriptions().map(organizer::organize)
 
     override fun findCached(): Maybe<List<UserModel>> =
         cache.find(CacheKey.USERS, genericType<List<UserModel>>())

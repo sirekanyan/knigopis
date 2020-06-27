@@ -18,7 +18,21 @@
 
     <item
         android:id="@+id/option_sort_books"
-        android:title="@string/main_option_sort">
+        android:title="@string/main_option_sort"
+        android:visible="false"
+        tools:title="Sort (books)"
+        tools:visible="true">
+        <menu>
+            <!-- dynamic content -->
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/option_sort_users"
+        android:title="@string/main_option_sort"
+        android:visible="false"
+        tools:title="Sort (users)"
+        tools:visible="true">
         <menu>
             <!-- dynamic content -->
         </menu>
